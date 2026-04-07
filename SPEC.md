@@ -25,6 +25,7 @@
 - требования к editor-layer и renderer-layer;
 - обязательный порядок реализации;
 - состав стандартных и кастомных возможностей;
+- состав желательных зависимостей и dev tooling;
 - критерии готовности этапов;
 - спорные архитектурные вопросы и допустимые варианты решений.
 
@@ -95,7 +96,8 @@
 - SCSS-архитектура;
 - reusable field system для кастомных блоков;
 - media gallery / slider block;
-- sidebar navigation, строящаяся из JSON editor content на позднем этапе.
+- sidebar navigation, строящаяся из JSON editor content на позднем этапе;
+- code quality tooling и git hooks.
 
 ### 4.2. Что не входит в scope
 
@@ -126,29 +128,9 @@
 
 ---
 
-## 5. Цели первой версии
+## 5. Технологический стек
 
-Первая версия проекта должна обеспечивать:
-
-- рабочий Editor.js внутри Vue-приложения;
-- подключение стандартных block tools;
-- подключение стандартных inline tools;
-- сохранение результата в JSON;
-- подстановку начальных данных из статического JSON или из `localStorage`;
-- рендер сохранённого контента на отдельной preview/render-странице;
-- экспорт JSON;
-- reset локального draft;
-- архитектурную основу для дальнейшего роста.
-
-### Важно
-
-`Import JSON` не относится к обязательным функциям первой версии и должен рассматриваться как **поздний utility-сценарий**, а не как часть базового MVP.
-
----
-
-## 6. Технологический стек
-
-### 6.1. Обязательный стек
+### 5.1. Обязательный стек
 
 - **Vue 3**
 - **Composition API**
@@ -157,13 +139,150 @@
 - **Editor.js**
 - **SCSS**
 
-### 6.2. Дополнительные зависимости, допускаемые на поздних этапах
+### 5.2. Дополнительные зависимости, допускаемые на поздних этапах
 
 - `zod` — для валидации данных;
 - `imask` — для input masks;
 - `Swiper` — обязательно для слайдерных сценариев;
-- `Fancybox` — для просмотра медиа в popup/viewer-режиме;
+- `@fancyapps/ui` — для просмотра медиа в popup/viewer-режиме;
 - community/official plugins Editor.js — по необходимости.
+
+### 5.3. Базовые зависимости проекта
+
+#### Базовые зависимости приложения
+
+Следует ориентироваться на актуальные версии:
+
+- `vue`
+- `typescript`
+- `vite`
+- `sass`
+- `vue-router` — если страницы редактора и preview оформляются как отдельные маршруты.
+
+#### Базовые зависимости Editor.js
+
+Следует использовать актуальные совместимые версии:
+
+- `@editorjs/editorjs`
+- `@editorjs/header`
+- `@editorjs/list`
+- `@editorjs/image`
+- `@editorjs/quote`
+- `@editorjs/delimiter`
+- `@editorjs/table`
+- `@editorjs/embed`
+
+Примечание:
+
+- `@editorjs/paragraph` **не обязателен к установке**, так как Paragraph tool входит в Editor.js по умолчанию; отдельная установка требуется только если понадобится
+  кастомная реализация Paragraph tool.
+- Если потребуется отдельный checklist-сценарий, его следует анализировать уже после проверки актуального `@editorjs/list`, так как современный List Tool уже
+  покрывает nesting, ordered/unordered и checklist-сценарии.
+
+#### Базовые зависимости для inline tools
+
+Следует ориентироваться на актуальные совместимые версии:
+
+- `@editorjs/marker`
+- `@editorjs/underline`
+- `@editorjs/inline-code` — необязательный, более поздний
+- сторонний plugin для `strikethrough` — сначала попытаться использовать готовое решение, затем при необходимости реализовать свой
+
+Желательные кандидаты для предварительной проверки:
+
+- `editorjs-strikethrough`
+- `@gabbydgab/editorjs-strikethrough`
+
+Окончательный выбор должен быть сделан только после проверки совместимости с остальными inline tools и сохранением/повторной загрузкой контента.
+
+#### Зависимости для media/viewer-сценариев
+
+- `swiper`
+- `@fancyapps/ui`
+
+Примечание:
+
+- Для современных версий Swiper следует учитывать, что пакет больше не поставляет `.scss`/`.less` исходники, а официальные стили идут как обычный CSS. Это не мешает
+  использовать Swiper в проекте, но требует отдельного внимания при интеграции со SCSS-архитектурой. Импорт официальных стилей следует рассматривать как
+  инфраструктурный CSS-слой, а не как replacement для module SCSS.
+
+### 5.4. Code quality и git hooks
+
+В проекте необходимо настроить и использовать:
+
+- `.prettierrc.json`
+- `.prettierignore`
+- `stylelint.config.mjs`
+- `.stylelintignore`
+- `husky`
+
+Также рекомендуется добавить:
+
+- `lint-staged`
+
+#### Рекомендуемые dev dependencies
+
+Следует ориентироваться на актуальные версии:
+
+- `prettier`
+- `stylelint`
+- `stylelint-config-standard-scss`
+- `stylelint-config-recommended-vue` или `stylelint-config-standard-vue` как Vue-ориентированный слой конфигурации
+- `husky`
+- `lint-staged` — рекомендуется
+
+Примечания:
+
+- `.prettierignore` должен использоваться явно, а не заменяться только `.gitignore`.
+- Для Stylelint необходимо явно поддержать SCSS и Vue SFC. На практике допустимы два рабочих направления:
+    1. `stylelint-config-standard-scss` + `stylelint-config-recommended-vue/scss`;
+    2. `stylelint-config-standard-scss` + Vue-oriented config уровня `stylelint-config-standard-vue`.
+- Если используется конфиг, который задаёт `customSyntax` для `.vue`, он должен быть подключён корректно и в нужном порядке, чтобы избежать `CssSyntaxError`.
+- `husky` должен настраиваться через `husky init` и `prepare` script.
+- `lint-staged` рекомендуется использовать как companion tool к Husky для запуска форматтеров и линтеров только на staged files.
+
+---
+
+## 6. Базовая матрица plugin availability
+
+### 6.1. Что можно использовать как готовое решение
+
+#### Official / ecosystem tools, которые следует пробовать первыми
+
+- Core editor: `@editorjs/editorjs`
+- Block tools: `@editorjs/header`, `@editorjs/list`, `@editorjs/image`, `@editorjs/quote`, `@editorjs/delimiter`, `@editorjs/table`, `@editorjs/embed`
+- Inline tools: `@editorjs/marker`, `@editorjs/underline`, `@editorjs/inline-code`
+
+#### Community / сторонние решения, которые стоит сначала проверить
+
+- `strikethrough` inline tool
+- дополнительные media-related forks только если official tools не покрывают нужный сценарий
+- дополнительные tunes только если они реально нужны и проходят проверку по качеству/поддержке
+
+### 6.2. Что почти наверняка потребуется реализовывать вручную
+
+Вручную следует планировать:
+
+- `AnchorTune`
+- `SpacingTune`
+- `LabelTune`
+- кастомный inline tool для **цвета текста**
+- reusable plain fields
+- reusable rich fields
+- custom media fields для кастомных блоков
+- simple custom blocks (`CTA`, `Section Intro`, `Notice`, `Banner`, `SpacerBlock` при необходимости)
+- composite blocks (`TwoColumns`, media gallery / slider)
+- sidebar navigation builder из JSON
+
+### 6.3. Что нужно дополнительно проверять до фиксации в ТЗ как «готовое»
+
+Следует обязательно проверять на практике:
+
+- стабильность `strikethrough` plugin;
+- насколько текущий `@editorjs/list` покрывает нужные nested list сценарии;
+- нужен ли отдельный nested list plugin вообще;
+- насколько current `@editorjs/image` удобен без backend upload и не проще ли для custom blocks использовать отдельные media fields;
+- насколько удобно и стабильно работает Fancybox URL/deep-linking в выбранной реализации.
 
 ---
 
@@ -186,23 +305,24 @@
 1. Архитектурный каркас.
 2. Shared-слой и registry блоков.
 3. Источник данных и базовый editor shell.
-4. Стандартные block tools.
-5. Стандартные inline tools.
-6. Renderer.
-7. Export / Reset draft UX.
-8. Базовые tunes.
-9. Plain field system.
-10. Первый простой custom block.
-11. Первый nested editor scenario.
-12. Composite blocks.
-13. Обязательные rich fields.
-14. Кастомные inline tools.
-15. Обязательный media gallery / slider block.
-16. Sidebar navigation из JSON.
-17. Поздние utility-сценарии (`Import JSON`).
-18. Валидация.
-19. Маски.
-20. Некритичные улучшения.
+4. Code quality tooling (`prettier`, `stylelint`, `husky`).
+5. Стандартные block tools.
+6. Стандартные inline tools.
+7. Renderer.
+8. Export / Reset draft UX.
+9. Базовые tunes.
+10. Plain field system.
+11. Первый простой custom block.
+12. Первый nested editor scenario.
+13. Composite blocks.
+14. Обязательные rich fields.
+15. Кастомные inline tools.
+16. Обязательный media gallery / slider block.
+17. Sidebar navigation из JSON.
+18. Поздние utility-сценарии (`Import JSON`).
+19. Валидация.
+20. Маски.
+21. Некритичные улучшения.
 
 ### 7.3. Принцип кастомизации
 
@@ -1323,11 +1443,10 @@ Sidebar navigation не должна зависеть от будущих page-l
 
 Необходимо проверить:
 
-- корректное извлечение navigation data из JSON;
-- корректную генерацию flat navigation;
-- корректную генерацию tree navigation на втором этапе;
-- корректный рендер sidebar;
-- корректный скролл к anchor.
+- корректное построение navigation из JSON;
+- отсутствие зависимости от DOM scanning;
+- корректный скролл по anchor;
+- устойчивость при отсутствии `LabelTune` и/или `AnchorTune` у части блоков.
 
 ---
 
@@ -1407,13 +1526,13 @@ lifecycle.
 
 Ошибки должны отображаться под конкретным полем.
 
-#### Nested editors
+#### Nested editors / rich fields
 
 Ошибки должны отображаться под конкретным nested editor как под цельным полем.
 
 #### Внутренние блоки nested editor
 
-Отдельная адресная валидация внутренних paragraph/header/list block-элементов не является обязательной для первой версии и может быть отложена.
+Адресная валидация внутренних paragraph/header/list block-элементов не является обязательной для первой версии и может быть отложена.
 
 ### 28.4. Минимальная валидация
 
@@ -1427,7 +1546,7 @@ lifecycle.
 
 ### 28.5. Полная валидация
 
-Более сложная валидация и маски относятся к одному из последних этапов.
+Более сложная валидация структуры блоков, nested data и поздние masks относятся к одному из последних этапов.
 
 ### 28.6. Критерии готовности этапа
 
@@ -1458,15 +1577,68 @@ lifecycle.
 - embed URL;
 - статичные mp4/webm из проекта.
 
-### 29.3. Что не требуется
+### 29.3. Кастомные media fields
+
+Для кастомных блоков изображения и видео следует в первую очередь рассматривать как **отдельные поля блока**, а не как nested editor с единственным image/video tool.
+
+Предпочтительные направления:
+
+- `createImageField`
+- `createVideoField`
+- `createMediaItemsField`
+
+Nested editor с единственным image tool не является основным решением для media fields.
+
+### 29.4. Что не требуется
 
 Не требуется реализовывать полноценный upload flow до появления бэкенда.
 
 ---
 
-## 30. Спорные и неоднозначные архитектурные вопросы
+## 30. Важные технические уточнения и потенциальные ошибки понимания
 
-### 30.1. SpacerBlock vs SpacingTune
+### 30.1. Paragraph tool
+
+Paragraph tool встроен в Editor.js по умолчанию. Его не нужно устанавливать отдельно, если не требуется специальная кастомизация.
+
+### 30.2. Built-in inline tools
+
+У Editor.js по умолчанию встроены только `bold`, `italic` и `link` как built-in inline tools. `marker`, `underline`, `inline-code` и `strikethrough` требуют
+отдельных plugins или кастомной реализации.
+
+### 30.3. List strategy
+
+Для текущей архитектуры не следует планировать отдельный “simple list plugin” и отдельный “nested list plugin” как две разные пользовательские сущности. Текущая
+стратегия с одним основным List Tool и поэтапным расширением выглядит корректно.
+
+### 30.4. Single-purpose nested editors
+
+Editor.js является block editor, а не single-field rich text editor. Сценарий “ровно один block в nested editor” реализуем, но потребует собственной логики
+ограничения и/или валидации.
+
+### 30.5. Image tool без backend
+
+Official Image Tool существует, но полноценный upload workflow без backend по сути нужно будет эмулировать через URL/static files/custom uploader callbacks. Для
+custom blocks это не отменяет предпочтительность отдельных media fields.
+
+### 30.6. Sidebar navigation
+
+Построение sidebar navigation из JSON реализуемо и является правильным направлением. Сбор navigation из DOM после рендера следует считать менее предпочтительным.
+
+### 30.7. Swiper styles
+
+Современный Swiper поставляет официальные стили как CSS, а не как SCSS. Это не делает сценарий нереализуемым, но должно быть явно учтено в интеграции.
+
+### 30.8. Strikethrough stability
+
+Для `underline` / `strikethrough` в экосистеме Editor.js есть признаки более капризного поведения при частичном снятии форматирования, поэтому этот инструмент
+требует отдельной внимательной проверки совместимости.
+
+---
+
+## 31. Спорные и неоднозначные архитектурные вопросы
+
+### 31.1. SpacerBlock vs SpacingTune
 
 #### Предпочтительное решение
 
@@ -1476,17 +1648,17 @@ lifecycle.
 
 `SpacerBlock` может быть добавлен позже как отдельный технический блок, если редактору действительно понадобится самостоятельный пустой layout-блок.
 
-### 30.2. Plain field vs rich field
+### 31.2. Plain field vs rich field
 
 #### Предпочтительное решение
 
 По умолчанию следует использовать plain fields.
 
-#### Обязательное расширение
+#### Обязательное позднее расширение
 
-После plain field system необходимо обязательно реализовать rich fields.
+Rich fields должны быть добавлены позднее как обязательный этап, а не как факультативная возможность.
 
-### 30.3. Заголовок как input или как nested header editor
+### 31.3. Заголовок как input или как nested header editor
 
 #### Предпочтительное долгосрочное решение
 
@@ -1496,15 +1668,14 @@ Nested header editor с inline tools и нативным выбором уров
 
 `input + select(level)` как временный первый этап.
 
-### 30.4. Marker vs custom text color tool
+### 31.4. Marker vs custom text-color tool
 
 #### Зафиксированное решение
 
-Для фона текста используется стандартный `Marker`.
+- для **фона текста** используется стандартный `Marker`;
+- для **цвета текста** реализуется отдельный кастомный inline tool.
 
-Для цвета текста реализуется отдельный кастомный inline tool.
-
-### 30.5. Class vs data-attributes для кастомных inline стилей
+### 31.5. Class vs data-attributes для кастомных inline стилей
 
 #### Предпочтительное решение
 
@@ -1514,7 +1685,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 `data-*` может быть выбран позднее, если появится необходимость в более абстрактной theme-model.
 
-### 30.6. Степень раннего архитектурного усложнения
+### 31.6. Степень раннего архитектурного усложнения
 
 #### Предпочтительное решение
 
@@ -1524,29 +1695,29 @@ Nested header editor с inline tools и нативным выбором уров
 
 Полноценный heavy framework для tools/tunes/helpers до появления реальной сложности.
 
-### 30.7. Media block: один общий блок или два
+### 31.7. Sidebar navigation: flat vs tree
 
-#### Предпочтительное решение
+#### Предпочтительный путь
 
-Начинать с одного общего media block с режимом `slider | gallery`.
+Сначала реализовать flat navigation, затем tree navigation.
 
-#### Допустимая альтернатива
+#### Что не рекомендуется
 
-Если позже различие по UX и данным станет слишком сильным, разделить на два отдельных блока.
+Сразу внедрять вложенную navigation и accordion behavior без проверки базового плоского сценария.
 
-### 30.8. Sidebar navigation: flat или tree
+### 31.8. Stylelint для Vue + SCSS
 
-#### Предпочтительное решение
+#### Предпочтительный путь
 
-Сначала реализовать flat navigation.
+Использовать актуальный shared config, который умеет разбирать `.vue` и `lang="scss"`.
 
-#### Позднее расширение
+#### Что важно
 
-Позже реализовать tree navigation, строящуюся в первую очередь по уровням заголовков.
+Порядок `extends` и выбранный `customSyntax` должны быть проверены сразу после настройки, иначе возможны ложные ошибки парсинга.
 
 ---
 
-## 31. Последовательность этапов реализации
+## 32. Последовательность этапов реализации
 
 ### Этап 1. Инициализация проекта
 
@@ -1567,7 +1738,29 @@ Nested header editor с inline tools и нативным выбором уров
 
 - создан рабочий каркас фронтенд-проекта.
 
-### Этап 2. Shared-слой и registry
+### Этап 2. Code quality tooling
+
+Содержимое этапа:
+
+- `.prettierrc.json`
+- `.prettierignore`
+- `stylelint.config.mjs`
+- `.stylelintignore`
+- `husky`
+- при желании `lint-staged`
+
+Проверка:
+
+- Prettier форматирует проект предсказуемо;
+- Stylelint корректно проверяет `.scss` и `.vue`;
+- Husky-хук запускается при коммите;
+- staged workflow не ломает рабочий процесс.
+
+Критерий готовности:
+
+- проект имеет рабочую минимальную инфраструктуру форматирования и git hooks.
+
+### Этап 3. Shared-слой и registry
 
 Содержимое этапа:
 
@@ -1585,7 +1778,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - есть единая типизированная модель данных.
 
-### Этап 3. Editor shell и источник данных
+### Этап 4. Editor shell и источник данных
 
 Содержимое этапа:
 
@@ -1603,7 +1796,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - есть рабочий каркас взаимодействия с данными.
 
-### Этап 4. Стандартные block tools
+### Этап 5. Стандартные block tools
 
 Содержимое этапа:
 
@@ -1617,7 +1810,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - редактор стабильно работает на стандартных блоках.
 
-### Этап 5. Стандартные inline tools
+### Этап 6. Стандартные inline tools
 
 Содержимое этапа:
 
@@ -1632,7 +1825,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - стандартные inline tools стабильны.
 
-### Этап 6. Renderer
+### Этап 7. Renderer
 
 Содержимое этапа:
 
@@ -1647,7 +1840,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - preview отображает контент, сохранённый редактором.
 
-### Этап 7. Export и Reset draft
+### Этап 8. Export и Reset draft UX
 
 Содержимое этапа:
 
@@ -1658,13 +1851,13 @@ Nested header editor с inline tools и нативным выбором уров
 Проверка:
 
 - экспортируется актуальный JSON;
-- reset возвращает данные к `default-page.json`.
+- reset возвращает проект к `default-page.json`.
 
 Критерий готовности:
 
 - есть базовый UX управления локальным контентом.
 
-### Этап 8. Tunes
+### Этап 9. Tunes
 
 Содержимое этапа:
 
@@ -1680,7 +1873,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - базовые метаданные блока работают.
 
-### Этап 9. Plain field system
+### Этап 10. Plain field system
 
 Содержимое этапа:
 
@@ -1689,8 +1882,8 @@ Nested header editor с inline tools и нативным выбором уров
 - select;
 - toggle;
 - radio group;
-- media field basics;
-- field wrappers.
+- field wrappers;
+- базовые media fields.
 
 Проверка:
 
@@ -1700,7 +1893,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - есть минимальная reusable система plain fields.
 
-### Этап 10. Первый простой custom block
+### Этап 11. Первый простой custom block
 
 Содержимое этапа:
 
@@ -1714,7 +1907,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - хотя бы один custom block работает end-to-end.
 
-### Этап 11. Первый nested editor block
+### Этап 12. Первый nested editor block
 
 Содержимое этапа:
 
@@ -1726,9 +1919,9 @@ Nested header editor с inline tools и нативным выбором уров
 
 Критерий готовности:
 
-- реализован первый single-purpose rich field scenario.
+- реализован первый single-purpose rich field.
 
-### Этап 12. Composite blocks
+### Этап 13. Composite blocks
 
 Содержимое этапа:
 
@@ -1742,7 +1935,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 - сложные кастомные блоки работают стабильно.
 
-### Этап 13. Rich fields
+### Этап 14. Reusable rich fields
 
 Содержимое этапа:
 
@@ -1751,17 +1944,18 @@ Nested header editor с inline tools и нативным выбором уров
 
 Проверка:
 
-- rich fields reusable и стабильны.
+- rich fields используются повторно и стабильно.
 
 Критерий готовности:
 
-- rich fields могут использоваться в нескольких block scenarios.
+- reusable rich fields готовы для массового использования в custom blocks.
 
-### Этап 14. Кастомный inline tool для цвета текста
+### Этап 15. Кастомные inline tools
 
 Содержимое этапа:
 
-- кастомный text color inline tool.
+- кастомный text color inline tool;
+- при необходимости собственный strikethrough fallback.
 
 Проверка:
 
@@ -1769,60 +1963,59 @@ Nested header editor с inline tools и нативным выбором уров
 
 Критерий готовности:
 
-- text color tool корректно работает в боевых сценариях.
+- кастомные inline tools корректно работают в боевых сценариях.
 
-### Этап 15. Media gallery / slider block
+### Этап 16. Media gallery / slider block
 
 Содержимое этапа:
 
-- первый этап media block с `slider | gallery` режимом;
+- первый этап media block;
 - Swiper;
-- Fancybox basics;
-- galleryId;
-- url sync basics.
+- Fancybox integration;
+- grouping / caption.
 
 Проверка:
 
-- media block стабильно сохраняется и рендерится.
+- slider и gallery режимы работают;
+- JSON сохраняется и восстанавливается.
 
 Критерий готовности:
 
-- реализован первый обязательный media block.
+- первый этап media gallery / slider блока готов.
 
-### Этап 16. Sidebar navigation
+### Этап 17. Sidebar navigation из JSON
 
 Содержимое этапа:
 
-- flat navigation из JSON;
-- позже — tree navigation.
+- flat navigation;
+- затем tree navigation.
 
 Проверка:
 
-- navigation строится из JSON, а не из DOM;
-- sidebar корректно рендерится;
-- anchor navigation работает.
+- navigation строится из JSON;
+- anchor-скролл работает;
+- fallback-сценарии корректны.
 
 Критерий готовности:
 
-- есть рабочая navigation-подсистема как минимум в flat-режиме.
+- sidebar navigation работает без DOM scanning.
 
-### Этап 17. Import JSON
+### Этап 18. Import JSON
 
 Содержимое этапа:
 
-- ручной import JSON;
-- базовая проверка структуры.
+- поздний utility-сценарий Import JSON.
 
 Проверка:
 
-- импортируемый JSON читается;
-- данные подставляются в editor и localStorage.
+- базовая проверка файла;
+- загрузка в editor state и localStorage.
 
 Критерий готовности:
 
-- реализован поздний utility-сценарий ручной подмены контента.
+- import работает как вспомогательная ручная утилита.
 
-### Этап 18. Валидация
+### Этап 19. Валидация
 
 Содержимое этапа:
 
@@ -1838,19 +2031,18 @@ Nested header editor с inline tools и нативным выбором уров
 
 - проект поддерживает базовую валидацию plain и rich полей.
 
-### Этап 19. Masks и некритичные улучшения
+### Этап 20. Masks и некритичные улучшения
 
 Содержимое этапа:
 
 - IMask;
 - polished interactions;
 - поздние tunes;
-- late media/navigation improvements;
 - optional enhancements.
 
 Проверка:
 
-- все поздние улучшения не ломают базовый сценарий.
+- поздние улучшения не ломают базовый сценарий.
 
 Критерий готовности:
 
@@ -1858,7 +2050,7 @@ Nested header editor с inline tools и нативным выбором уров
 
 ---
 
-## 32. Финальная позиция по реализации
+## 33. Финальная позиция по реализации
 
 Проект должен разрабатываться по принципу:
 
