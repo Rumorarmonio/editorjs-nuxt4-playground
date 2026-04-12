@@ -1,1 +1,1 @@
-# EditorJs + Vue3 Playground
+# EditorJs + Nuxt 4 Playground
