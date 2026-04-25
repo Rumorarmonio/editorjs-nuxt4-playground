@@ -7,13 +7,15 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
     "nuxt": "^4.4.2"
   },
   "devDependencies": {
     "sass": "^1.99.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.2.7"
   }
 }
