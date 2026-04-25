@@ -1,0 +1,11 @@
+.list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 24px;
+  line-height: 1.7;
+
+  .list {
+    margin-top: 8px;
+  }
+}

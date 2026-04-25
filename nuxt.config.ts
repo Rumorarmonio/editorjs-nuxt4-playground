@@ -1,4 +1,6 @@
 const baseURL = import.meta.env.NUXT_APP_BASE_URL || '/'
+const normalizedBaseURL = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL
+const previewRoute = `${normalizedBaseURL}/preview`
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-04-25',
@@ -9,7 +11,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   nitro: {
     prerender: {
-      routes: [baseURL],
+      routes: [baseURL, previewRoute],
     },
   },
   ssr: false,

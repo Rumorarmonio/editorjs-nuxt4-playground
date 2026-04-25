@@ -2,6 +2,7 @@ export { editorBlockRegistry } from './registry/block-registry'
 export { EDITOR_DRAFT_STORAGE_KEY } from './constants/draft-storage'
 export {
   clearEditorDraft,
+  isKnownEditorContentData,
   readEditorDraft,
   resolveEditorContent,
   writeEditorDraft,

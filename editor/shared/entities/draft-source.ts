@@ -61,7 +61,7 @@ export function clearEditorDraft(storage: DraftStorage): void {
   storage.removeItem(EDITOR_DRAFT_STORAGE_KEY)
 }
 
-function isKnownEditorContentData(
+export function isKnownEditorContentData(
   value: unknown,
 ): value is EditorContentData {
   if (!isEditorOutputData(value)) {
@@ -74,5 +74,128 @@ function isKnownEditorContentData(
 function isKnownEditorContentBlock(
   block: EditorOutputData['blocks'][number],
 ): boolean {
-  return block.type in editorBlockRegistry
+  if (!(block.type in editorBlockRegistry)) {
+    return false
+  }
+
+  switch (block.type) {
+    case 'paragraph':
+      return isParagraphBlockData(block.data)
+    case 'header':
+      return isHeaderBlockData(block.data)
+    case 'list':
+      return isListBlockData(block.data)
+    case 'quote':
+      return isQuoteBlockData(block.data)
+    case 'delimiter':
+      return isRecord(block.data)
+    case 'table':
+      return isTableBlockData(block.data)
+    case 'embed':
+      return isEmbedBlockData(block.data)
+    case 'image':
+      return isImageBlockData(block.data)
+    default:
+      return false
+  }
+}
+
+function isParagraphBlockData(value: unknown): boolean {
+  return isRecord(value) && typeof value.text === 'string'
+}
+
+function isHeaderBlockData(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    typeof value.text === 'string' &&
+    isHeaderLevel(value.level)
+  )
+}
+
+function isListBlockData(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    isListStyle(value.style) &&
+    Array.isArray(value.items) &&
+    value.items.every(isListBlockItem)
+  )
+}
+
+function isListBlockItem(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    typeof value.content === 'string' &&
+    Array.isArray(value.items) &&
+    value.items.every(isListBlockItem)
+  )
+}
+
+function isQuoteBlockData(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    typeof value.text === 'string' &&
+    (value.caption === undefined || typeof value.caption === 'string') &&
+    (value.alignment === undefined ||
+      value.alignment === 'left' ||
+      value.alignment === 'center')
+  )
+}
+
+function isTableBlockData(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    (value.withHeadings === undefined ||
+      typeof value.withHeadings === 'boolean') &&
+    Array.isArray(value.content) &&
+    value.content.every(isTableRow)
+  )
+}
+
+function isTableRow(value: unknown): boolean {
+  return Array.isArray(value) && value.every((cell) => typeof cell === 'string')
+}
+
+function isEmbedBlockData(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    typeof value.service === 'string' &&
+    typeof value.source === 'string' &&
+    typeof value.embed === 'string' &&
+    (value.width === undefined || typeof value.width === 'number') &&
+    (value.height === undefined || typeof value.height === 'number') &&
+    (value.caption === undefined || typeof value.caption === 'string')
+  )
+}
+
+function isImageBlockData(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    isRecord(value.file) &&
+    typeof value.file.url === 'string' &&
+    (value.caption === undefined || typeof value.caption === 'string') &&
+    (value.alt === undefined || typeof value.alt === 'string') &&
+    (value.withBorder === undefined || typeof value.withBorder === 'boolean') &&
+    (value.withBackground === undefined ||
+      typeof value.withBackground === 'boolean') &&
+    (value.stretched === undefined || typeof value.stretched === 'boolean')
+  )
+}
+
+function isHeaderLevel(value: unknown): boolean {
+  return (
+    value === 1 ||
+    value === 2 ||
+    value === 3 ||
+    value === 4 ||
+    value === 5 ||
+    value === 6
+  )
+}
+
+function isListStyle(value: unknown): boolean {
+  return value === 'ordered' || value === 'unordered' || value === 'checklist'
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
 }

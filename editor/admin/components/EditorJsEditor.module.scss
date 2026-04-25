@@ -1,0 +1,35 @@
+.wrapper {
+  position: relative;
+  min-height: 520px;
+}
+
+.holder {
+  min-height: 520px;
+  padding: 24px 0;
+
+  :global(.codex-editor) {
+    color: var(--color-text);
+  }
+
+  :global(.ce-block__content),
+  :global(.ce-toolbar__content) {
+    max-width: 720px;
+  }
+}
+
+.status,
+.error {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.status {
+  color: var(--color-muted);
+}
+
+.error {
+  color: #b42318;
+}
