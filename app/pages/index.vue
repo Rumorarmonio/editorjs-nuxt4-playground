@@ -1,8 +1,14 @@
 <template>
   <main :class="$style.page">
-    <section :class="$style.intro" aria-labelledby="page-title">
+    <section
+      :class="$style.intro"
+      aria-labelledby="page-title"
+    >
       <p :class="$style.kicker">Nuxt 4 bootstrap</p>
-      <h1 id="page-title" :class="$style.title">
+      <h1
+        id="page-title"
+        :class="$style.title"
+      >
         Editor.js architecture playground
       </h1>
       <p :class="$style.description">

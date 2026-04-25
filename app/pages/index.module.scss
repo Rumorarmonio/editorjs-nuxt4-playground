@@ -7,17 +7,17 @@
 
 .intro {
   display: grid;
-  max-width: 760px;
   gap: 16px;
+  max-width: 760px;
 }
 
 .kicker {
   margin: 0;
-  color: var(--color-muted);
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0;
   text-transform: uppercase;
+  color: var(--color-muted);
 }
 
 .title {
@@ -30,8 +30,8 @@
 .description {
   max-width: 600px;
   margin: 0;
-  color: var(--color-muted);
   font-size: 1.125rem;
   line-height: 1.7;
+  color: var(--color-muted);
   transition: color $transition-base;
 }
