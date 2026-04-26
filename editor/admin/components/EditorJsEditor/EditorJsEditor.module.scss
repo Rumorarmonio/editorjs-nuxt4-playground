@@ -16,6 +16,10 @@
     max-width: 720px;
   }
 
+  :global(.ce-toolbar) {
+    z-index: 10;
+  }
+
   :global(.editor-embed-input) {
     display: grid;
     gap: 8px;
