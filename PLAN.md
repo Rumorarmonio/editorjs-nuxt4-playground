@@ -110,7 +110,7 @@
 
 1. Спроектировать минимальный контракт nested rich paragraph data для `SectionIntro` без общей reusable rich field abstraction — выполнено.
 2. Добавить shared type, registry entry и normalization/guard для `SectionIntro` — выполнено.
-3. Реализовать helper для создания и уничтожения одного nested Editor.js instance внутри custom block field.
+3. Реализовать helper для создания и уничтожения одного nested Editor.js instance внутри custom block field — выполнено.
 4. Реализовать `SectionIntro` tool class с plain title и rich paragraph field.
 5. Подключить `SectionIntro` в Editor.js config/toolbox.
 6. Добавить renderer component и mapping `block.type -> component`.
