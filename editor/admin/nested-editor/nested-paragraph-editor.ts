@@ -44,6 +44,8 @@ export function createNestedParagraphEditor(
   let isDestroyed = false
 
   holder.className = 'editor-nested-paragraph-editor'
+  holder.addEventListener('keydown', stopNestedKeyboardEvent)
+  holder.addEventListener('keyup', stopNestedKeyboardEvent)
 
   async function initialize(): Promise<void> {
     if (initializePromise) {
@@ -106,6 +108,8 @@ export function createNestedParagraphEditor(
 
   function destroy(): void {
     isDestroyed = true
+    holder.removeEventListener('keydown', stopNestedKeyboardEvent)
+    holder.removeEventListener('keyup', stopNestedKeyboardEvent)
 
     if (!editor) {
       holder.replaceChildren()
@@ -147,6 +151,10 @@ async function createNestedParagraphTools(): Promise<EditorConfig['tools']> {
     },
     strikethrough: Strikethrough as unknown as ToolConstructable,
   }
+}
+
+function stopNestedKeyboardEvent(event: KeyboardEvent): void {
+  event.stopPropagation()
 }
 
 function cloneSectionIntroDescriptionData(
