@@ -87,23 +87,63 @@
       "data": {
         "withHeadings": true,
         "content": [
-          ["Tool", "Purpose", "Inline example"],
-          ["Header", "Page structure", "<mark class=\"cdx-marker\">Marked heading</mark>"],
-          ["List", "Nested content", "<s class=\"cdx-strikethrough\">Old item</s>"],
-          ["Quote", "Callout text", "<span class=\"inline-code\">OutputData</span>"]
+          [
+            "Tool",
+            "Purpose",
+            "Inline example"
+          ],
+          [
+            "Header",
+            "Page structure",
+            "<mark class=\"cdx-marker\">Marked heading</mark>"
+          ],
+          [
+            "List",
+            "Nested content",
+            "<s class=\"cdx-strikethrough\">Old item</s>"
+          ],
+          [
+            "Quote",
+            "Callout text",
+            "<span class=\"inline-code\">OutputData</span>"
+          ]
         ]
       }
     },
     {
-      "id": "embed-block",
+      "id": "embed-youtube",
       "type": "embed",
       "data": {
         "service": "youtube",
-        "source": "https://www.youtube.com/watch?v=v6R4rbtvUIE",
-        "embed": "https://www.youtube.com/embed/v6R4rbtvUIE",
+        "source": "https://youtu.be/smnZAYTp1ME?si=rNPpEuEnsZzydMJU",
+        "embed": "https://www.youtube.com/embed/smnZAYTp1ME",
         "width": 580,
-        "height": 320,
-        "caption": "Embed block with a static preview link"
+        "height": 326,
+        "caption": "Embed block caption with <b>bold</b>, <u class=\"cdx-underline\">underline</u>, and <span class=\"inline-code\">inline code</span>"
+      }
+    },
+    {
+      "id": "embed-vimeo",
+      "type": "embed",
+      "data": {
+        "service": "vimeo",
+        "source": "https://vimeo.com/834790671",
+        "embed": "https://player.vimeo.com/video/834790671?title=0&amp;byline=0",
+        "width": 580,
+        "height": 326,
+        "caption": "Vimeo embed example"
+      }
+    },
+    {
+      "id": "LqzeBsHqf0",
+      "type": "embed",
+      "data": {
+        "service": "coub",
+        "source": "https://coub.com/embed/1y05v0",
+        "embed": "https://coub.com/embed/1y05v0",
+        "width": 580,
+        "height": 326,
+        "caption": "Coub embed example"
       }
     },
     {

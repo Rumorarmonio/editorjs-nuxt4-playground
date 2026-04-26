@@ -9,6 +9,7 @@ import type {
   EditorContentBlock,
   EditorContentData,
 } from '~~/editor/shared'
+import { getAllowedEmbedIframeUrl } from '~~/editor/shared'
 
 defineProps<{
   content: EditorContentData
@@ -55,7 +56,6 @@ function isImageBlock(block: EditorContentBlock): block is EditorBlock<'image'> 
 function getHeaderTag(level: EditorBlock<'header'>['data']['level']): string {
   return `h${level}`
 }
-
 </script>
 
 <template>
@@ -126,7 +126,18 @@ function getHeaderTag(level: EditorBlock<'header'>['data']['level']): string {
         v-else-if="isEmbedBlock(block)"
         :class="$style.embed"
       >
+        <iframe
+          v-if="getAllowedEmbedIframeUrl(block.data)"
+          :height="block.data.height ?? 320"
+          :src="getAllowedEmbedIframeUrl(block.data) ?? ''"
+          :title="getInlineText(block.data.caption || block.data.source)"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+        />
         <a
+          v-else
           :href="block.data.source"
           rel="noreferrer"
           target="_blank"

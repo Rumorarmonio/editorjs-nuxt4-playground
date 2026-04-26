@@ -1,6 +1,12 @@
 export { editorBlockRegistry } from './registry/block-registry'
 export { EDITOR_DRAFT_STORAGE_KEY } from './constants/draft-storage'
 export {
+  createEmbedDataFromSource,
+  getAllowedEmbedIframeUrl,
+  supportedEmbedServiceLabels,
+  supportedEmbedServices,
+} from './embeds/embed-services'
+export {
   clearEditorDraft,
   isKnownEditorContentData,
   readEditorDraft,

@@ -42,10 +42,10 @@
 - Этап 1 — завершён
 - Этап 2 — завершён
 - Этап 3 — завершён: реализованы editor shell, preview shell, загрузка данных с приоритетом `localStorage` draft -> `content/default-page.json`, подключены `Editor.js` runtime и стандартные block tools
-- Этап 4 — частично выполнен: стандартные inline tools подключены и добавлены в демонстрационный контент; ручная browser-проверка save/load комбинаций ещё нужна
+- Этап 4 — завершён: стандартные inline tools подключены, ручная проверка базовых комбинаций выполнена, embed caption получил inline toolbar и manual toolbox-вставку YouTube URL
 - Этап 5 — не начат
 - Этап 6 — выполнен досрочно: code quality tooling настроен в начале проекта; static build и GitHub Pages deployment реализованы сейчас через `nuxt generate` и GitHub Actions
 
 ## Следующий этап
 
-Следующий крупный этап: вручную проверить save/load совместимость стандартных inline tools в header, paragraph, list, quote и table, затем перейти к renderer UX-действиям `Export JSON` / `Reset draft`.
+Следующий крупный этап: реализовать renderer UX-действия `Export JSON` / `Reset draft`.

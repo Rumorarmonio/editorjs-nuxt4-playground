@@ -2,6 +2,7 @@ import type {
   EditorConfig,
   ToolConstructable,
 } from '@editorjs/editorjs/types'
+import { ManualEmbedToolConstructable } from '~~/editor/admin/tools/ManualEmbedTool'
 
 export const editorInlineToolbar = [
   'bold',
@@ -20,7 +21,6 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
     { default: Quote },
     { default: Delimiter },
     { default: Table },
-    { default: Embed },
     { default: ImageTool },
     { default: Marker },
     { default: Underline },
@@ -32,7 +32,6 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
     import('@editorjs/quote'),
     import('@editorjs/delimiter'),
     import('@editorjs/table'),
-    import('@editorjs/embed'),
     import('@editorjs/image'),
     import('@editorjs/marker'),
     import('@editorjs/underline'),
@@ -74,8 +73,15 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
       },
     },
     embed: {
-      class: Embed as unknown as ToolConstructable,
-      inlineToolbar: false,
+      class: ManualEmbedToolConstructable,
+      inlineToolbar: editorInlineToolbar,
+      config: {
+        services: {
+          youtube: true,
+          vimeo: true,
+          coub: true,
+        },
+      },
     },
     image: {
       class: ImageTool as unknown as ToolConstructable,
