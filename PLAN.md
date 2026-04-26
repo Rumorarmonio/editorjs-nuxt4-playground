@@ -60,11 +60,24 @@
 - Renderer и базовый JSON workflow — завершено: renderer-слой и preview-страница уже были реализованы ранее, теперь добавлены UX-действия `Export JSON` и `Reset draft`.
 - Code quality и deployment — завершено: code quality tooling настроен в начале проекта, Husky pre-commit hook подключён к `npm run check`; static build и GitHub Pages deployment реализованы через `nuxt generate` и GitHub Actions.
 
-## Активный этап
+### Базовые Block Tunes
+
+Базовый слой Block Tunes завершён. В него вошли:
+
+- `AnchorTune` для якорей блоков;
+- `SpacingTune` для управляемых верхних и нижних отступов;
+- `LabelTune` для человекочитаемых label/title блоков;
+- shared-типизация, нормализация и guard для tune data;
+- renderer-обработка `anchor`, `spacing` и `label`;
+- демонстрационные tune examples в `content/default-page.json`.
+
+Ручная browser-проверка подтвердила `save/load`, preview/render, reset draft и export JSON на блоках с tune data и без них. `npm run check` проходит.
+
+## Детали завершённого этапа
 
 ### Базовые Block Tunes
 
-Статус: активен, реализация добавлена, требуется ручная browser-проверка save/load workflow.
+Статус: завершён.
 
 Цель этапа: добавить первый слой кастомизации блоков через tune-метаданные, не переходя пока к custom blocks, nested editors, composite blocks и media workflow.
 
@@ -89,7 +102,7 @@
 - импорт JSON;
 - i18n, theme switching и расширенная keyboard navigation.
 
-## План активного этапа
+## План завершённого этапа
 
 1. Изучить фактический формат `tunes` в `Editor.js OutputData` на текущей версии и зафиксировать минимальную типизацию в shared-слое — выполнено.
 2. Подготовить общую базу для простых block tunes в `editor/admin/tunes`: интерфейс данных, helpers для sanitization/normalization и единый подход к UI — выполнено.
@@ -98,9 +111,9 @@
 5. Реализовать `LabelTune`: editor UI, сохранение label/title в `tunes`, без реализации sidebar navigation на этом этапе — выполнено.
 6. Обновить renderer и `content/default-page.json`, чтобы preview демонстрировал применение базовых tunes — выполнено.
 7. Обновить draft-source guard для допуска известных tune data и защиты от некорректных значений — выполнено.
-8. Проверить `save/load`, preview/render, reset draft и export JSON на блоках с tune data и без них — ожидает ручной browser-проверки.
+8. Проверить `save/load`, preview/render, reset draft и export JSON на блоках с tune data и без них — выполнено.
 
-## Критерии готовности активного этапа
+## Критерии готовности завершённого этапа
 
 - `AnchorTune`, `SpacingTune` и `LabelTune` доступны в Editor.js UI для поддерживаемых стандартных блоков.
 - Значения tunes сохраняются в JSON и не теряются после reload.
