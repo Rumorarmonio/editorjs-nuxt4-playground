@@ -91,6 +91,121 @@
     font-size: 0.75rem;
     color: #b42318;
   }
+
+  :global(.editor-plain-field) {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  :global(.editor-plain-field__label) {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  :global(.editor-plain-field__control) {
+    width: 100%;
+    min-height: 38px;
+    padding: 8px 10px;
+    font: inherit;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+  }
+
+  :global(.editor-plain-field__control--textarea) {
+    min-height: 96px;
+    resize: vertical;
+  }
+
+  :global(.editor-plain-field__hint),
+  :global(.editor-plain-field__error) {
+    margin: 0;
+    font-size: 0.75rem;
+  }
+
+  :global(.editor-plain-field__hint) {
+    color: var(--color-muted);
+  }
+
+  :global(.editor-plain-field__error) {
+    color: #b42318;
+  }
+
+  :global(.editor-plain-field--invalid .editor-plain-field__control) {
+    border-color: #b42318;
+  }
+
+  :global(.editor-plain-field__toggle) {
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+  }
+
+  :global(.editor-plain-field__toggle-input) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+
+  :global(.editor-plain-field__toggle-track) {
+    position: relative;
+    display: inline-flex;
+    width: 42px;
+    height: 24px;
+    padding: 2px;
+    background: var(--color-border);
+    border-radius: 999px;
+    transition: background var(--transition-base);
+  }
+
+  :global(.editor-plain-field__toggle-thumb) {
+    width: 20px;
+    height: 20px;
+    background: var(--color-surface);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgb(32 33 36 / 0.2);
+    transition: transform var(--transition-base);
+  }
+
+  :global(
+      .editor-plain-field__toggle-input:checked
+        + .editor-plain-field__toggle-track
+    ) {
+    background: var(--color-accent);
+  }
+
+  :global(
+      .editor-plain-field__toggle-input:checked
+        + .editor-plain-field__toggle-track
+        .editor-plain-field__toggle-thumb
+    ) {
+    transform: translateX(18px);
+  }
+
+  :global(.editor-plain-field__radio-group) {
+    display: grid;
+    gap: 6px;
+  }
+
+  :global(.editor-plain-field__radio) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text);
+  }
+
+  :global(.editor-plain-field--disabled) {
+    opacity: 0.6;
+  }
 }
 
 .status,

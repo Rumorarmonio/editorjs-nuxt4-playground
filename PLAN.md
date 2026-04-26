@@ -8,14 +8,14 @@
 
 - Базовая версия редактора завершена.
 - Базовый слой Block Tunes завершён.
-- Активный этап: Plain field system.
-- Следующий крупный этап после Plain field system: первый простой custom block без nested editors.
+- Активный этап: первый простой custom block без nested editors.
+- Plain field system завершён.
 
-## Активный этап
+## Последний завершённый этап
 
 ### Plain field system
 
-Статус: запланирован, реализация ещё не начата.
+Статус: завершён.
 
 Цель этапа: подготовить минимальную reusable-систему plain fields для будущих custom blocks, не переходя пока к первому custom block, nested editors и rich fields.
 
@@ -45,19 +45,19 @@
 - light/dark theme switching;
 - расширенная keyboard navigation за пределами естественного tab-порядка.
 
-## План активного этапа
+## План завершённого этапа
 
-1. Зафиксировать минимальный контракт plain field: `name`, `label`, `value`, `hint`, `error`, disabled/read-only states и callback изменения — ожидает реализации.
-2. Спроектировать структуру `editor/admin/fields` без новых зависимостей и без Vue runtime внутри Editor.js tool classes — ожидает реализации.
-3. Реализовать общий field wrapper и базовые DOM helpers для plain fields, переиспользуя подход `editor/admin/tunes/tune-ui.ts` там, где он подходит — ожидает реализации.
-4. Реализовать text input и textarea fields с нормальным `input/change` flow — ожидает реализации.
-5. Реализовать select, radio group и toggle fields; toggle должен сохранять boolean, а не UI-specific значение — ожидает реализации.
-6. Подготовить базовый контракт для image/url/file fields с явным `alt` для image-based сценариев, но без backend upload и gallery логики — ожидает реализации.
-7. Добавить minimal usage harness или внутренний пример для проверки полей, если без него нельзя надёжно проверить удобство использования внутри будущих custom tools — ожидает решения перед реализацией.
-8. Проверить, что field helpers можно использовать из будущего Editor.js block tool без нарушения save/load модели — ожидает реализации.
-9. Запустить `npm run check` после реализации этапа — ожидает реализации.
+1. Зафиксировать минимальный контракт plain field: `name`, `label`, `value`, `hint`, `error`, disabled/read-only states и callback изменения — выполнено.
+2. Спроектировать структуру `editor/admin/fields` без новых зависимостей и без Vue runtime внутри Editor.js tool classes — выполнено.
+3. Реализовать общий field wrapper и базовые DOM helpers для plain fields, переиспользуя подход `editor/admin/tunes/tune-ui.ts` там, где он подходит — выполнено.
+4. Реализовать text input и textarea fields с нормальным `input/change` flow — выполнено.
+5. Реализовать select, radio group и toggle fields; toggle должен сохранять boolean, а не UI-specific значение — выполнено.
+6. Подготовить базовый контракт для image/url/file fields с явным `alt` для image-based сценариев, но без backend upload и gallery логики — выполнено.
+7. Добавить minimal usage harness или внутренний пример для проверки полей, если без него нельзя надёжно проверить удобство использования внутри будущих custom tools — решено не добавлять отдельный harness; первое реальное использование будет в следующем custom block этапе.
+8. Проверить, что field helpers можно использовать из будущего Editor.js block tool без нарушения save/load модели — выполнено на уровне DOM API и типового контракта; runtime-проверка будет в первом custom block.
+9. Запустить `npm run check` после реализации этапа — выполнено.
 
-## Критерии готовности активного этапа
+## Критерии готовности завершённого этапа
 
 - В `editor/admin/fields` есть минимальная reusable plain field system.
 - Plain fields имеют единообразный wrapper: label, control, optional hint, optional error.
@@ -70,7 +70,7 @@
 
 ## Следующий крупный этап
 
-После завершения Plain field system следующий этап по `SPEC.md`: первый простой custom block без nested editors.
+Следующий этап по `SPEC.md`: первый простой custom block без nested editors.
 
 ## Завершённые этапы
 
@@ -167,3 +167,17 @@
 - `npm run check` проходит.
 
 Итог: ручная browser-проверка подтвердила `save/load`, preview/render, reset draft и export JSON на блоках с tune data и без них. `npm run check` проходит.
+
+### Plain field system
+
+Статус: завершён.
+
+Итог:
+
+- Добавлен `editor/admin/fields` с базовым контрактом plain field и DOM wrapper helpers.
+- Реализованы text input, URL input, textarea, select, radio group и toggle fields.
+- Toggle хранит и отдаёт boolean-значение.
+- Подготовлены file/image-oriented value contracts; image value содержит обязательный `alt`.
+- Добавлены theme-friendly глобальные классы `editor-plain-field*` в editor shell styles.
+- Отдельный visible usage harness не добавлялся; первое runtime-использование запланировано в следующем custom block этапе.
+- `npm run check` проходит.
