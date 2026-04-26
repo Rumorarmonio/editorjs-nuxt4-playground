@@ -3,6 +3,7 @@ import type {
   ToolConstructable,
 } from '@editorjs/editorjs/types'
 import { ManualEmbedToolConstructable } from '~~/editor/admin/tools/ManualEmbedTool'
+import InlineCodeTool from '~~/editor/admin/tools/InlineCodeTool'
 import { AnchorTuneConstructable } from '~~/editor/admin/tunes/AnchorTune'
 import { LabelTuneConstructable } from '~~/editor/admin/tunes/LabelTune'
 import { SpacingTuneConstructable } from '~~/editor/admin/tunes/SpacingTune'
@@ -30,7 +31,6 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
     { default: ImageTool },
     { default: Marker },
     { default: Underline },
-    { default: InlineCode },
     { default: Strikethrough },
   ] = await Promise.all([
     import('@editorjs/header'),
@@ -41,7 +41,6 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
     import('@editorjs/image'),
     import('@editorjs/marker'),
     import('@editorjs/underline'),
-    import('@editorjs/inline-code'),
     import('@sotaproject/strikethrough'),
   ])
 
@@ -105,7 +104,7 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
     },
     underline: Underline as unknown as ToolConstructable,
     inlineCode: {
-      class: InlineCode as unknown as ToolConstructable,
+      class: InlineCodeTool as unknown as ToolConstructable,
       shortcut: 'CMD+SHIFT+C',
     },
     strikethrough: Strikethrough as unknown as ToolConstructable,

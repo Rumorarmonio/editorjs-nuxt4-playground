@@ -25,7 +25,7 @@
       "id": "intro-inline",
       "type": "paragraph",
       "data": {
-        "text": "This default page demonstrates standard block tools and inline tools: <b>bold</b>, <i>italic</i>, <a href=\"https://editorjs.io/\">link</a>, <u class=\"cdx-underline\">underline</u>, <mark class=\"cdx-marker\">marker</mark>, <s class=\"cdx-strikethrough\">strikethrough</s>, and <span class=\"inline-code\">inline code</span>."
+        "text": "This default page demonstrates standard block tools and inline tools: <b>bold</b>, <i>italic</i>, <a href=\"https://editorjs.io/\">link</a>, <u class=\"cdx-underline\">underline</u>, <mark class=\"cdx-marker\">marker</mark>, <s class=\"cdx-strikethrough\">strikethrough</s>, and <code class=\"inline-code\">inline code</code>."
       },
       "tunes": {
         "label": {
@@ -77,7 +77,7 @@
             "meta": {},
             "items": [
               {
-                "content": "Nested item with <mark class=\"cdx-marker\">marker</mark> and <span class=\"inline-code\">inline code</span>.",
+                "content": "Nested item with <mark class=\"cdx-marker\">marker</mark> and <code class=\"inline-code\">inline code</code>.",
                 "meta": {},
                 "items": []
               }
@@ -141,7 +141,7 @@
           [
             "Quote",
             "Callout text",
-            "<span class=\"inline-code\">OutputData</span>"
+            "<code class=\"inline-code\">OutputData</code>"
           ]
         ]
       },
@@ -164,7 +164,7 @@
         "embed": "https://www.youtube.com/embed/smnZAYTp1ME",
         "width": 580,
         "height": 326,
-        "caption": "Embed block caption with <b>bold</b>, <u class=\"cdx-underline\">underline</u>, and <span class=\"inline-code\">inline code</span>"
+        "caption": "Embed block caption with <b>bold</b>, <u class=\"cdx-underline\">underline</u>, and <code class=\"inline-code\">inline code</code>"
       }
     },
     {
