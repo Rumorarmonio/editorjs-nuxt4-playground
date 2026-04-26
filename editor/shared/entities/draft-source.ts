@@ -1,5 +1,8 @@
 import { EDITOR_DRAFT_STORAGE_KEY } from '~~/editor/shared/constants/draft-storage'
-import { isNoticeBlockData } from '~~/editor/shared/blocks/custom-block-data'
+import {
+  isNoticeBlockData,
+  isSectionIntroBlockData,
+} from '~~/editor/shared/blocks/custom-block-data'
 import { editorBlockRegistry } from '~~/editor/shared/registry/block-registry'
 import { isKnownBlockTuneData } from '~~/editor/shared/tunes/block-tunes'
 import { isEditorOutputData } from '~~/editor/shared/types/editor-output'
@@ -103,6 +106,8 @@ function isKnownEditorContentBlock(
       return isImageBlockData(block.data)
     case 'notice':
       return isNoticeBlockData(block.data)
+    case 'sectionIntro':
+      return isSectionIntroBlockData(block.data)
     default:
       return false
   }

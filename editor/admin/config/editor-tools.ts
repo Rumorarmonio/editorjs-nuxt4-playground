@@ -8,6 +8,7 @@ import { AnchorTuneConstructable } from '~~/editor/admin/tunes/AnchorTune'
 import { LabelTuneConstructable } from '~~/editor/admin/tunes/LabelTune'
 import { SpacingTuneConstructable } from '~~/editor/admin/tunes/SpacingTune'
 import { NoticeToolConstructable } from '~~/editor/admin/tools/blocks/NoticeTool'
+import { SectionIntroToolConstructable } from '~~/editor/admin/tools/blocks/SectionIntroTool'
 import { editorBlockTuneNames } from '~~/editor/shared'
 
 export const editorInlineToolbar = [
@@ -100,6 +101,7 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
       },
     },
     notice: NoticeToolConstructable,
+    sectionIntro: SectionIntroToolConstructable,
     marker: {
       class: Marker as unknown as ToolConstructable,
       shortcut: 'CMD+SHIFT+M',

@@ -14,6 +14,7 @@ import {
   getAllowedEmbedIframeUrl,
   getKnownBlockTuneData,
   normalizeNoticeBlockData,
+  normalizeSectionIntroBlockData,
 } from '~~/editor/shared'
 
 defineProps<{
@@ -72,6 +73,12 @@ function isNoticeBlock(
   block: EditorContentBlock,
 ): block is EditorBlock<'notice'> {
   return block.type === 'notice'
+}
+
+function isSectionIntroBlock(
+  block: EditorContentBlock,
+): block is EditorBlock<'sectionIntro'> {
+  return block.type === 'sectionIntro'
 }
 
 function getHeaderTag(level: EditorBlock<'header'>['data']['level']): string {
@@ -260,6 +267,23 @@ function getBlockStyle(
             {{ normalizeNoticeBlockData(block.data).text }}
           </p>
         </aside>
+
+        <section
+          v-else-if="isSectionIntroBlock(block)"
+          :class="$style.sectionIntro"
+        >
+          <h2
+            v-if="normalizeSectionIntroBlockData(block.data).title"
+            :class="$style.sectionIntroTitle"
+          >
+            {{ normalizeSectionIntroBlockData(block.data).title }}
+          </h2>
+          <EditorContentRenderer
+            v-if="normalizeSectionIntroBlockData(block.data).description.blocks.length"
+            :class="$style.sectionIntroContent"
+            :content="normalizeSectionIntroBlockData(block.data).description"
+          />
+        </section>
 
         <pre
           v-else

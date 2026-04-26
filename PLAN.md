@@ -77,7 +77,7 @@
 
 ### Первый nested editor block / первый single-purpose rich field
 
-Статус: активен.
+Статус: реализация завершена, ожидает ручной browser-проверки lifecycle.
 
 Цель этапа: реализовать первый простой custom block с одним nested Editor.js instance и проверить single-purpose rich field lifecycle без перехода к composite blocks.
 
@@ -111,12 +111,12 @@
 1. Спроектировать минимальный контракт nested rich paragraph data для `SectionIntro` без общей reusable rich field abstraction — выполнено.
 2. Добавить shared type, registry entry и normalization/guard для `SectionIntro` — выполнено.
 3. Реализовать helper для создания и уничтожения одного nested Editor.js instance внутри custom block field — выполнено.
-4. Реализовать `SectionIntro` tool class с plain title и rich paragraph field.
-5. Подключить `SectionIntro` в Editor.js config/toolbox.
-6. Добавить renderer component и mapping `block.type -> component`.
-7. Добавить demo content для проверки preview/reset.
-8. Проверить lifecycle nested editor: create, edit, save, reload, render, destroy, export JSON, reset draft.
-9. Запустить `npm run check`.
+4. Реализовать `SectionIntro` tool class с plain title и rich paragraph field — выполнено.
+5. Подключить `SectionIntro` в Editor.js config/toolbox — выполнено.
+6. Добавить renderer component и mapping `block.type -> component` — выполнено.
+7. Добавить demo content для проверки preview/reset — выполнено.
+8. Проверить lifecycle nested editor: create, edit, save, reload, render, destroy, export JSON, reset draft — ожидает ручной browser-проверки.
+9. Запустить `npm run check` — выполнено.
 
 ## Критерии готовности этапа
 

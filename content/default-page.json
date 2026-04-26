@@ -286,6 +286,33 @@
         },
         "label": {}
       }
+    },
+    {
+      "id": "section-intro-block",
+      "type": "sectionIntro",
+      "data": {
+        "title": "Nested editor field",
+        "description": {
+          "time": 1777075200000,
+          "version": "2.31.6",
+          "blocks": [
+            {
+              "id": "section-intro-description",
+              "type": "paragraph",
+              "data": {
+                "text": "This SectionIntro block stores its description as nested paragraph-only Editor.js output with <b>bold</b>, <i>italic</i>, and <code class=\"inline-code\">inline code</code>."
+              }
+            }
+          ]
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {
+          "top": "medium"
+        },
+        "label": {}
+      }
     }
   ]
 }

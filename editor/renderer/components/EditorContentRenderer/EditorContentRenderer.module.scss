@@ -167,6 +167,28 @@
   color: var(--color-muted);
 }
 
+.sectionIntro {
+  display: grid;
+  gap: 10px;
+  padding: 20px 0 4px;
+}
+
+.sectionIntroTitle {
+  margin: 0;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.sectionIntroContent {
+  max-width: 100%;
+
+  .paragraph {
+    font-size: 1.125rem;
+    color: var(--color-muted);
+  }
+}
+
 .unsupported {
   margin: 0;
   padding: 14px;
