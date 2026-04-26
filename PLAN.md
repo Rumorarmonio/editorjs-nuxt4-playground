@@ -8,8 +8,8 @@
 
 - Базовая версия редактора завершена.
 - Базовый слой Block Tunes завершён.
-- Активный этап: первый простой custom block без nested editors.
 - Plain field system завершён.
+- Активный этап: первый простой custom block без nested editors.
 
 ## Последний завершённый этап
 
@@ -17,60 +17,62 @@
 
 Статус: завершён.
 
-Цель этапа: подготовить минимальную reusable-систему plain fields для будущих custom blocks, не переходя пока к первому custom block, nested editors и rich fields.
+Итог: подготовлена минимальная reusable plain field system в `editor/admin/fields`; реализованы text/URL input, textarea, select, radio group, boolean toggle и file/image-oriented value contracts. `npm run check` проходит.
+
+## Активный этап
+
+### Первый простой custom block
+
+Статус: активен.
+
+Цель этапа: реализовать один простой custom block без nested editors и проверить полный цикл `create -> edit -> save -> reload -> render`.
+
+Выбранный первый блок: `Notice`, потому что он проверяет data type, tool class, plain field UI, save/load и renderer без раннего перехода к media workflow, rich fields или nested Editor.js.
 
 В scope входят:
 
-1. Общий field wrapper для custom tool UI: label, control, optional hint, optional error.
-2. Базовая типизация и единый контракт plain field components/helpers в `editor/admin/fields`.
-3. Text input field.
-4. Textarea field.
-5. Select field.
-6. Toggle field для boolean-значений с визуальным toggle-представлением.
-7. Radio group field.
-8. Базовые URL/file/image-oriented поля или подготовленный контракт для них, без полноценного media workflow.
-9. Минимальные стили plain fields через theme-friendly class names, CSS variables и существующие SCSS-подходы.
-10. Подготовка к будущему использованию в custom block tools без привязки к конкретному блоку.
+1. Shared data type для `Notice` и регистрация нового block type в registry/guards.
+2. Editor.js tool class для `Notice` в `editor/admin/tools/blocks`.
+3. Использование `editor/admin/fields` для plain editor UI: `title`, `text`, `type`.
+4. Renderer component для `Notice` в renderer-layer.
+5. Поддержка save/load для нового блока и fallback/normalization некорректных значений.
+6. Демонстрационный блок в `content/default-page.json`, если это нужно для проверки reset/preview.
+7. Проверка полного цикла create/edit/save/reload/render и `npm run check`.
 
 Вне scope текущего этапа:
 
-- реализация первого custom block;
 - nested Editor.js instances;
-- rich fields с inline tools;
+- rich fields и inline tools внутри custom block fields;
+- CTA/Banner с image/media workflow;
 - media gallery / slider block;
 - production upload/storage workflow;
-- полноценная валидация и masks;
+- валидация через `zod`;
 - Import JSON;
-- i18n-словарь для всех field labels;
-- light/dark theme switching;
-- расширенная keyboard navigation за пределами естественного tab-порядка.
+- i18n, theme switching и расширенная keyboard navigation.
 
-## План завершённого этапа
+## План активного этапа
 
-1. Зафиксировать минимальный контракт plain field: `name`, `label`, `value`, `hint`, `error`, disabled/read-only states и callback изменения — выполнено.
-2. Спроектировать структуру `editor/admin/fields` без новых зависимостей и без Vue runtime внутри Editor.js tool classes — выполнено.
-3. Реализовать общий field wrapper и базовые DOM helpers для plain fields, переиспользуя подход `editor/admin/tunes/tune-ui.ts` там, где он подходит — выполнено.
-4. Реализовать text input и textarea fields с нормальным `input/change` flow — выполнено.
-5. Реализовать select, radio group и toggle fields; toggle должен сохранять boolean, а не UI-specific значение — выполнено.
-6. Подготовить базовый контракт для image/url/file fields с явным `alt` для image-based сценариев, но без backend upload и gallery логики — выполнено.
-7. Добавить minimal usage harness или внутренний пример для проверки полей, если без него нельзя надёжно проверить удобство использования внутри будущих custom tools — решено не добавлять отдельный harness; первое реальное использование будет в следующем custom block этапе.
-8. Проверить, что field helpers можно использовать из будущего Editor.js block tool без нарушения save/load модели — выполнено на уровне DOM API и типового контракта; runtime-проверка будет в первом custom block.
-9. Запустить `npm run check` после реализации этапа — выполнено.
+1. Добавить тип данных `Notice` и зарегистрировать block type в shared registry.
+2. Реализовать tool class `Notice` с plain fields и простым `save()` результатом.
+3. Подключить `Notice` в Editor.js config/toolbox.
+4. Добавить renderer component и mapping `block.type -> component`.
+5. Обновить draft-source guard/normalization так, чтобы корректный `Notice` проходил, а повреждённые данные не ломали preview.
+6. Добавить demo content для проверки preview/reset, если это не создаст лишний шум.
+7. Проверить create/edit/save/reload/render, export/reset draft и запустить `npm run check`.
 
-## Критерии готовности завершённого этапа
+## Критерии готовности активного этапа
 
-- В `editor/admin/fields` есть минимальная reusable plain field system.
-- Plain fields имеют единообразный wrapper: label, control, optional hint, optional error.
-- Реализованы text input, textarea, select, radio group и toggle.
-- Toggle визуально является переключателем, а в данных остаётся boolean.
-- Plain fields не пытаются поддерживать inline tools; для rich text явно оставлен будущий rich field/nested editor путь.
-- Image-oriented контракт предусматривает явный `alt` для будущих image fields.
-- Поля можно использовать внутри будущих custom block tools без новых зависимостей и без перепроектирования renderer-layer.
+- `Notice` можно создать из Editor.js toolbox.
+- `Notice` редактируется через plain fields из `editor/admin/fields`.
+- Данные блока сохраняются в JSON и корректно восстанавливаются после reload.
+- Renderer отображает `Notice` без зависимости от editor runtime.
+- Preview, `Export JSON` и `Reset draft` работают с новым block type.
+- Некорректные значения `Notice.type` не ломают editor и preview.
 - `npm run check` проходит.
 
 ## Следующий крупный этап
 
-Следующий этап по `SPEC.md`: первый простой custom block без nested editors.
+Следующий этап по `SPEC.md`: первый nested editor block / первый single-purpose rich field.
 
 ## Завершённые этапы
 
