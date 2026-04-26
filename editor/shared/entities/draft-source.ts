@@ -1,5 +1,6 @@
 import { EDITOR_DRAFT_STORAGE_KEY } from '~~/editor/shared/constants/draft-storage'
 import { editorBlockRegistry } from '~~/editor/shared/registry/block-registry'
+import { isKnownBlockTuneData } from '~~/editor/shared/tunes/block-tunes'
 import { isEditorOutputData } from '~~/editor/shared/types/editor-output'
 import type {
   EditorContentData,
@@ -75,6 +76,10 @@ function isKnownEditorContentBlock(
   block: EditorOutputData['blocks'][number],
 ): boolean {
   if (!(block.type in editorBlockRegistry)) {
+    return false
+  }
+
+  if (!isKnownBlockTuneData(block.tunes)) {
     return false
   }
 

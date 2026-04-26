@@ -3,6 +3,10 @@ import type {
   ToolConstructable,
 } from '@editorjs/editorjs/types'
 import { ManualEmbedToolConstructable } from '~~/editor/admin/tools/ManualEmbedTool'
+import { AnchorTuneConstructable } from '~~/editor/admin/tunes/AnchorTune'
+import { LabelTuneConstructable } from '~~/editor/admin/tunes/LabelTune'
+import { SpacingTuneConstructable } from '~~/editor/admin/tunes/SpacingTune'
+import { editorBlockTuneNames } from '~~/editor/shared'
 
 export const editorInlineToolbar = [
   'bold',
@@ -13,6 +17,8 @@ export const editorInlineToolbar = [
   'strikethrough',
   'inlineCode',
 ] satisfies NonNullable<EditorConfig['inlineToolbar']>
+
+export const editorBlockTunes = [...editorBlockTuneNames]
 
 export async function createEditorTools(): Promise<EditorConfig['tools']> {
   const [
@@ -103,6 +109,9 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
       shortcut: 'CMD+SHIFT+C',
     },
     strikethrough: Strikethrough as unknown as ToolConstructable,
+    anchor: AnchorTuneConstructable,
+    spacing: SpacingTuneConstructable,
+    label: LabelTuneConstructable,
   }
 }
 

@@ -1,6 +1,6 @@
 .renderer {
   display: grid;
-  gap: 18px;
+  gap: 0;
   width: 100%;
   max-width: 760px;
   color: var(--color-text);
@@ -28,6 +28,11 @@
     background: #eef3ee;
     border-radius: 4px;
   }
+}
+
+.block {
+  min-width: 0;
+  scroll-margin-top: 24px;
 }
 
 .heading {

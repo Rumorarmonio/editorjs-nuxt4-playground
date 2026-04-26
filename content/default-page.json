@@ -8,6 +8,17 @@
       "data": {
         "text": "Editor.js Nuxt playground",
         "level": 1
+      },
+      "tunes": {
+        "anchor": {
+          "anchor": "top"
+        },
+        "label": {
+          "label": "Page title"
+        },
+        "spacing": {
+          "bottom": "medium"
+        }
       }
     },
     {
@@ -15,6 +26,11 @@
       "type": "paragraph",
       "data": {
         "text": "This default page demonstrates standard block tools and inline tools: <b>bold</b>, <i>italic</i>, <a href=\"https://editorjs.io/\">link</a>, <u class=\"cdx-underline\">underline</u>, <mark class=\"cdx-marker\">marker</mark>, <s class=\"cdx-strikethrough\">strikethrough</s>, and <span class=\"inline-code\">inline code</span>."
+      },
+      "tunes": {
+        "label": {
+          "label": "Inline tools intro"
+        }
       }
     },
     {
@@ -23,6 +39,14 @@
       "data": {
         "text": "Heading level 2 with <mark class=\"cdx-marker\">marker</mark>",
         "level": 2
+      },
+      "tunes": {
+        "anchor": {
+          "anchor": "heading-level-2"
+        },
+        "label": {
+          "label": "Heading level 2"
+        }
       }
     },
     {
@@ -74,6 +98,18 @@
         "text": "Renderer and editor layers should stay <b>separate</b>, while the saved JSON remains portable.",
         "caption": "Project architecture note with <i>inline formatting</i>",
         "alignment": "left"
+      },
+      "tunes": {
+        "anchor": {
+          "anchor": "architecture-note"
+        },
+        "label": {
+          "label": "Architecture note"
+        },
+        "spacing": {
+          "top": "medium",
+          "bottom": "medium"
+        }
       }
     },
     {
@@ -108,6 +144,15 @@
             "<span class=\"inline-code\">OutputData</span>"
           ]
         ]
+      },
+      "tunes": {
+        "label": {
+          "label": "Standard tools table"
+        },
+        "spacing": {
+          "top": "small",
+          "bottom": "large"
+        }
       }
     },
     {
@@ -132,6 +177,11 @@
         "width": 580,
         "height": 326,
         "caption": "Vimeo embed example"
+      },
+      "tunes": {
+        "spacing": {
+          "top": "large"
+        }
       }
     },
     {
@@ -144,6 +194,11 @@
         "width": 580,
         "height": 326,
         "caption": "Coub embed example"
+      },
+      "tunes": {
+        "spacing": {
+          "top": "large"
+        }
       }
     },
     {
@@ -158,6 +213,17 @@
         "withBorder": true,
         "withBackground": false,
         "stretched": false
+      },
+      "tunes": {
+        "anchor": {
+          "anchor": "image-example"
+        },
+        "label": {
+          "label": "Image example"
+        },
+        "spacing": {
+          "top": "large"
+        }
       }
     }
   ]

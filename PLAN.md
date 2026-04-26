@@ -64,7 +64,7 @@
 
 ### Базовые Block Tunes
 
-Статус: активен.
+Статус: активен, реализация добавлена, требуется ручная browser-проверка save/load workflow.
 
 Цель этапа: добавить первый слой кастомизации блоков через tune-метаданные, не переходя пока к custom blocks, nested editors, composite blocks и media workflow.
 
@@ -91,14 +91,14 @@
 
 ## План активного этапа
 
-1. Изучить фактический формат `tunes` в `Editor.js OutputData` на текущей версии и зафиксировать минимальную типизацию в shared-слое.
-2. Подготовить общую базу для простых block tunes в `editor/admin/tunes`: интерфейс данных, helpers для sanitization/normalization и единый подход к UI.
-3. Реализовать `AnchorTune`: editor UI, сохранение в `tunes`, renderer-атрибут `id`, базовая нормализация значения.
-4. Реализовать `SpacingTune`: editor UI, ограниченный набор безопасных значений, сохранение в `tunes`, применение renderer-классов или CSS variables.
-5. Реализовать `LabelTune`: editor UI, сохранение label/title в `tunes`, без реализации sidebar navigation на этом этапе.
-6. Обновить renderer и `content/default-page.json`, чтобы preview демонстрировал применение базовых tunes.
-7. Обновить draft-source guard для допуска известных tune data и защиты от некорректных значений.
-8. Проверить `save/load`, preview/render, reset draft и export JSON на блоках с tune data и без них.
+1. Изучить фактический формат `tunes` в `Editor.js OutputData` на текущей версии и зафиксировать минимальную типизацию в shared-слое — выполнено.
+2. Подготовить общую базу для простых block tunes в `editor/admin/tunes`: интерфейс данных, helpers для sanitization/normalization и единый подход к UI — выполнено.
+3. Реализовать `AnchorTune`: editor UI, сохранение в `tunes`, renderer-атрибут `id`, базовая нормализация значения — выполнено.
+4. Реализовать `SpacingTune`: editor UI, ограниченный набор безопасных значений, сохранение в `tunes`, применение renderer-классов или CSS variables — выполнено.
+5. Реализовать `LabelTune`: editor UI, сохранение label/title в `tunes`, без реализации sidebar navigation на этом этапе — выполнено.
+6. Обновить renderer и `content/default-page.json`, чтобы preview демонстрировал применение базовых tunes — выполнено.
+7. Обновить draft-source guard для допуска известных tune data и защиты от некорректных значений — выполнено.
+8. Проверить `save/load`, preview/render, reset draft и export JSON на блоках с tune data и без них — ожидает ручной browser-проверки.
 
 ## Критерии готовности активного этапа
 

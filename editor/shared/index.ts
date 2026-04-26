@@ -18,6 +18,17 @@ export {
   DEFAULT_EDITOR_DATA_VERSION,
 } from './types/create-editor-content-data'
 export { isEditorOutputData } from './types/editor-output'
+export {
+  editorBlockTuneNames,
+  getKnownBlockTuneData,
+  isKnownBlockTuneData,
+  normalizeAnchorTuneData,
+  normalizeAnchorValue,
+  normalizeLabelTuneData,
+  normalizeLabelValue,
+  normalizeSpacingTuneData,
+  spacingTuneValues,
+} from './tunes/block-tunes'
 
 export type {
   EmbedBlockData,
@@ -61,4 +72,12 @@ export type {
   EditorOutputBlock,
   EditorOutputData,
 } from './types/editor-output'
+export type {
+  AnchorTuneData,
+  EditorBlockTuneName,
+  KnownEditorBlockTuneData,
+  LabelTuneData,
+  SpacingTuneData,
+  SpacingTuneValue,
+} from './tunes/block-tunes'
 export type { DraftStorage } from './entities/draft-source'
