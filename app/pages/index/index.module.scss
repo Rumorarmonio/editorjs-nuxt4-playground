@@ -42,13 +42,13 @@
   justify-content: center;
   min-height: 42px;
   padding: 10px 16px;
-  border: 1px solid var(--color-accent);
-  border-radius: 6px;
   font-weight: 700;
   line-height: 1.2;
   text-decoration: none;
   color: #fff;
   background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -61,9 +61,9 @@
 
 .sidebar,
 .editorPanel {
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: var(--color-surface);
 }
 
 .sidebar {
@@ -119,11 +119,11 @@
   color: var(--color-accent);
 }
 
-@media (max-width: 760px) {
+@media (width <= 760px) {
   .header,
   .actions {
-    align-items: stretch;
     flex-direction: column;
+    align-items: stretch;
   }
 
   .workspace {

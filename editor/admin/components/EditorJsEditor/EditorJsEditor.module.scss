@@ -20,20 +20,20 @@
     display: grid;
     gap: 8px;
     padding: 14px;
+    background: #fbfcfb;
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    background: #fbfcfb;
   }
 
   :global(.editor-embed-input__field) {
     width: 100%;
     min-height: 40px;
     padding: 8px 10px;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
     font: inherit;
     color: var(--color-text);
     background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
   }
 
   :global(.editor-embed-input__hint) {
