@@ -9,6 +9,7 @@
 - Базовая версия редактора завершена.
 - Базовый слой Block Tunes завершён.
 - Plain field system завершён.
+- Первый простой custom block завершён.
 - Активный этап: первый nested editor block / первый single-purpose rich field.
 
 ## Предыдущий завершённый этап
@@ -78,9 +79,57 @@
 
 Статус: активен.
 
-Цель этапа: определить и реализовать следующий шаг после простого custom block — первый nested editor block или первый single-purpose rich field.
+Цель этапа: реализовать первый простой custom block с одним nested Editor.js instance и проверить single-purpose rich field lifecycle без перехода к composite blocks.
 
-План этапа ещё не детализирован.
+Выбранный блок: `SectionIntro`, потому что он естественно проверяет rich text поле для вводного текста, но остаётся достаточно простым: один plain title и одно rich paragraph field. `TwoColumns`, media workflow и reusable rich fields остаются следующими этапами.
+
+В scope входят:
+
+1. Shared data type для `SectionIntro`, где rich поле хранится как вложенный Editor.js-compatible output.
+2. Минимальная инфраструктура nested editor для одного поля внутри custom block tool.
+3. Ограниченный whitelist tools для вложенного editor: только paragraph на первом шаге.
+4. Подключение inline tools во вложенном paragraph field, если они совместимы с текущей конфигурацией.
+5. Editor.js tool class для `SectionIntro` с plain title и nested rich description.
+6. Renderer component для `SectionIntro`, который рендерит nested content через renderer-layer без зависимости от editor runtime.
+7. Draft guard/normalization для нового block type и вложенных данных.
+8. Demo content в `content/default-page.json` для preview/reset проверки.
+9. Проверка create/edit/save/reload/render, корректного destroy nested editor instance, export/reset draft и `npm run check`.
+
+Вне scope этапа:
+
+- `TwoColumns` и другие composite blocks;
+- reusable `RichParagraphField` / `RichHeaderField` как общая field system;
+- nested header field;
+- media fields и media gallery / slider;
+- custom inline tools;
+- production validation через `zod`;
+- Import JSON;
+- i18n, theme switching и расширенная keyboard navigation.
+
+## План этапа
+
+1. Спроектировать минимальный контракт nested rich paragraph data для `SectionIntro` без общей reusable rich field abstraction.
+2. Добавить shared type, registry entry и normalization/guard для `SectionIntro`.
+3. Реализовать helper для создания и уничтожения одного nested Editor.js instance внутри custom block field.
+4. Реализовать `SectionIntro` tool class с plain title и rich paragraph field.
+5. Подключить `SectionIntro` в Editor.js config/toolbox.
+6. Добавить renderer component и mapping `block.type -> component`.
+7. Добавить demo content для проверки preview/reset.
+8. Проверить lifecycle nested editor: create, edit, save, reload, render, destroy, export JSON, reset draft.
+9. Запустить `npm run check`.
+
+## Критерии готовности этапа
+
+- `SectionIntro` можно создать из Editor.js toolbox.
+- Внутри блока создаётся ровно один nested editor instance для rich paragraph field.
+- Nested editor использует ограниченный набор tools и не превращается в общий mini-editor.
+- Inline formatting в rich paragraph field сохраняется и восстанавливается, если совместимость подтверждена.
+- `SectionIntro` сохраняет nested data в JSON и корректно восстанавливается после reload.
+- Renderer отображает plain title и nested rich content без зависимости от editor runtime.
+- Draft guard не пропускает явно повреждённые вложенные данные и не ломает preview.
+- Nested editor instance корректно уничтожается при destroy блока.
+- Preview, `Export JSON` и `Reset draft` работают с новым block type.
+- `npm run check` проходит.
 
 ## Завершённые этапы
 
