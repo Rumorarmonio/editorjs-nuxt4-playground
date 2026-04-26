@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue'
 import defaultPageContent from '~~/content/default-page.json'
 import {
+  clearEditorDraft,
   resolveEditorContent,
   writeEditorDraft,
   type EditorContentData,
@@ -47,11 +48,21 @@ export function useEditorContentSource() {
     }
   }
 
+  function resetDraft(): void {
+    if (!import.meta.client) {
+      return
+    }
+
+    clearEditorDraft(localStorage)
+    resolvedContent.value = createDefaultResolvedContent()
+  }
+
   return {
     isReady,
+    loadContent,
+    resetDraft,
     resolvedContent,
     saveDraft,
     sourceLabel,
-    loadContent,
   }
 }

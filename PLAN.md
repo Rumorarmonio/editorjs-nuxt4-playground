@@ -43,9 +43,9 @@
 - Этап 2 — завершён
 - Этап 3 — завершён: реализованы editor shell, preview shell, загрузка данных с приоритетом `localStorage` draft -> `content/default-page.json`, подключены `Editor.js` runtime и стандартные block tools
 - Этап 4 — завершён: стандартные inline tools подключены, ручная проверка базовых комбинаций выполнена, embed caption получил inline toolbar и manual toolbox-вставку YouTube URL
-- Этап 5 — не начат
+- Этап 5 — завершён: renderer-слой и preview-страница уже были реализованы ранее, теперь добавлены UX-действия `Export JSON` и `Reset draft`
 - Этап 6 — выполнен досрочно: code quality tooling настроен в начале проекта; static build и GitHub Pages deployment реализованы сейчас через `nuxt generate` и GitHub Actions
 
 ## Следующий этап
 
-Следующий крупный этап: реализовать renderer UX-действия `Export JSON` / `Reset draft`.
+Следующий крупный этап: определить новый scope после базовой версии — например custom blocks, tunes, nested editors, media workflow или дополнительный accessibility/theme polish.
