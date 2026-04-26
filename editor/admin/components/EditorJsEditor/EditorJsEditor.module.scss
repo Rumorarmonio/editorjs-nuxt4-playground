@@ -206,6 +206,24 @@
   :global(.editor-plain-field--disabled) {
     opacity: 0.6;
   }
+
+  :global(.editor-notice-tool) {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    background: #fbfcfb;
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 6px;
+  }
+
+  :global(.editor-notice-tool[data-notice-type='success']) {
+    border-left-color: #16803c;
+  }
+
+  :global(.editor-notice-tool[data-notice-type='warning']) {
+    border-left-color: #b7791f;
+  }
 }
 
 .status,

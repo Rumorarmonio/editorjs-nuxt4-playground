@@ -1,6 +1,10 @@
 export { editorBlockRegistry } from './registry/block-registry'
 export { EDITOR_DRAFT_STORAGE_KEY } from './constants/draft-storage'
 export {
+  normalizeNoticeBlockData,
+  noticeBlockTypes,
+} from './blocks/custom-block-data'
+export {
   createEmbedDataFromSource,
   getAllowedEmbedIframeUrl,
   supportedEmbedServiceLabels,
@@ -42,6 +46,11 @@ export type {
   StandardBlockDataMap,
   TableBlockData,
 } from './blocks/standard-block-data'
+export type {
+  CustomBlockDataMap,
+  NoticeBlockData,
+  NoticeBlockType,
+} from './blocks/custom-block-data'
 export type {
   EditorImageUploader,
   EditorImageUploadResult,

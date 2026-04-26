@@ -225,6 +225,67 @@
           "top": "large"
         }
       }
+    },
+    {
+      "id": "custom-plugins-header",
+      "type": "header",
+      "data": {
+        "text": "Custom plugins",
+        "level": 2
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {}
+      }
+    },
+    {
+      "id": "notice-block",
+      "type": "notice",
+      "data": {
+        "title": "Draft source is active",
+        "text": "The editor loads saved local draft data first and falls back to this default JSON after reset.",
+        "type": "info"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {
+          "top": "medium"
+        },
+        "label": {}
+      }
+    },
+    {
+      "id": "notice-block-success",
+      "type": "notice",
+      "data": {
+        "title": "Content saved successfully",
+        "text": "After saving, the same Notice data can be reopened in the editor and rendered on the preview page.",
+        "type": "success"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {
+          "top": "medium"
+        },
+        "label": {}
+      }
+    },
+    {
+      "id": "notice-block-warning",
+      "type": "notice",
+      "data": {
+        "title": "Plain fields only",
+        "text": "Inline tools are intentionally unavailable here; rich fields and nested editors are planned as a later step.",
+        "type": "warning"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {
+          "top": "medium"
+        },
+        "label": {}
+      }
     }
   ]
 }

@@ -52,13 +52,13 @@
 
 ## План активного этапа
 
-1. Добавить тип данных `Notice` и зарегистрировать block type в shared registry.
-2. Реализовать tool class `Notice` с plain fields и простым `save()` результатом.
-3. Подключить `Notice` в Editor.js config/toolbox.
-4. Добавить renderer component и mapping `block.type -> component`.
-5. Обновить draft-source guard/normalization так, чтобы корректный `Notice` проходил, а повреждённые данные не ломали preview.
-6. Добавить demo content для проверки preview/reset, если это не создаст лишний шум.
-7. Проверить create/edit/save/reload/render, export/reset draft и запустить `npm run check`.
+1. Добавить тип данных `Notice` и зарегистрировать block type в shared registry — выполнено.
+2. Реализовать tool class `Notice` с plain fields и простым `save()` результатом — выполнено.
+3. Подключить `Notice` в Editor.js config/toolbox — выполнено.
+4. Добавить renderer component и mapping `block.type -> component` — выполнено.
+5. Обновить draft-source guard/normalization так, чтобы корректный `Notice` проходил, а повреждённые данные не ломали preview — выполнено.
+6. Добавить demo content для проверки preview/reset, если это не создаст лишний шум — выполнено.
+7. Проверить create/edit/save/reload/render, export/reset draft и запустить `npm run check` — частично выполнено: `npm run check` проходит, ручная browser-проверка полного цикла ещё нужна.
 
 ## Критерии готовности активного этапа
 

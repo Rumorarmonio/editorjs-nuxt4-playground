@@ -7,6 +7,7 @@ import InlineCodeTool from '~~/editor/admin/tools/InlineCodeTool'
 import { AnchorTuneConstructable } from '~~/editor/admin/tunes/AnchorTune'
 import { LabelTuneConstructable } from '~~/editor/admin/tunes/LabelTune'
 import { SpacingTuneConstructable } from '~~/editor/admin/tunes/SpacingTune'
+import { NoticeToolConstructable } from '~~/editor/admin/tools/blocks/NoticeTool'
 import { editorBlockTuneNames } from '~~/editor/shared'
 
 export const editorInlineToolbar = [
@@ -98,6 +99,7 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
         },
       },
     },
+    notice: NoticeToolConstructable,
     marker: {
       class: Marker as unknown as ToolConstructable,
       shortcut: 'CMD+SHIFT+M',

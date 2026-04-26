@@ -1,3 +1,4 @@
+import type { CustomBlockDataMap } from '~~/editor/shared/blocks/custom-block-data'
 import type { StandardBlockDataMap } from '~~/editor/shared/blocks/standard-block-data'
 import type {
   EditorBlockFromDataMapByType,
@@ -39,11 +40,15 @@ export const editorBlockRegistry = {
     type: 'image',
     title: 'Image',
   },
-} as const satisfies EditorBlockRegistry<keyof StandardBlockDataMap & string>
+  notice: {
+    type: 'notice',
+    title: 'Notice',
+  },
+} as const satisfies EditorBlockRegistry<keyof EditorBlockDataMap & string>
 
 export type EditorBlockType = keyof typeof editorBlockRegistry
 
-export type EditorBlockDataMap = StandardBlockDataMap
+export type EditorBlockDataMap = StandardBlockDataMap & CustomBlockDataMap
 
 export type EditorBlock<
   TType extends EditorBlockType = EditorBlockType,

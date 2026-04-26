@@ -10,7 +10,11 @@ import type {
   EditorContentBlock,
   EditorContentData,
 } from '~~/editor/shared'
-import { getAllowedEmbedIframeUrl, getKnownBlockTuneData } from '~~/editor/shared'
+import {
+  getAllowedEmbedIframeUrl,
+  getKnownBlockTuneData,
+  normalizeNoticeBlockData,
+} from '~~/editor/shared'
 
 defineProps<{
   content: EditorContentData
@@ -62,6 +66,12 @@ function isEmbedBlock(block: EditorContentBlock): block is EditorBlock<'embed'> 
 
 function isImageBlock(block: EditorContentBlock): block is EditorBlock<'image'> {
   return block.type === 'image'
+}
+
+function isNoticeBlock(
+  block: EditorContentBlock,
+): block is EditorBlock<'notice'> {
+  return block.type === 'notice'
 }
 
 function getHeaderTag(level: EditorBlock<'header'>['data']['level']): string {
@@ -229,6 +239,27 @@ function getBlockStyle(
             v-html="sanitizeInlineHtml(block.data.caption)"
           />
         </figure>
+
+        <aside
+          v-else-if="isNoticeBlock(block)"
+          :class="[
+            $style.notice,
+            $style[`notice_${normalizeNoticeBlockData(block.data).type}`],
+          ]"
+        >
+          <p
+            v-if="normalizeNoticeBlockData(block.data).title"
+            :class="$style.noticeTitle"
+          >
+            {{ normalizeNoticeBlockData(block.data).title }}
+          </p>
+          <p
+            v-if="normalizeNoticeBlockData(block.data).text"
+            :class="$style.noticeText"
+          >
+            {{ normalizeNoticeBlockData(block.data).text }}
+          </p>
+        </aside>
 
         <pre
           v-else
