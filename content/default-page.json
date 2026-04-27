@@ -92,6 +92,46 @@
       }
     },
     {
+      "id": "checklist-block",
+      "type": "list",
+      "data": {
+        "style": "checklist",
+        "meta": {},
+        "items": [
+          {
+            "content": "Checked checklist item with <b>bold text</b>",
+            "meta": {
+              "checked": true
+            },
+            "items": []
+          },
+          {
+            "content": "Unchecked checklist item with <code class=\"inline-code\">inline code</code>",
+            "meta": {
+              "checked": false
+            },
+            "items": [
+              {
+                "content": "Nested checked item",
+                "meta": {
+                  "checked": true
+                },
+                "items": []
+              }
+            ]
+          }
+        ]
+      },
+      "tunes": {
+        "label": {
+          "label": "Checklist example"
+        },
+        "spacing": {
+          "top": "medium"
+        }
+      }
+    },
+    {
       "id": "quote-block",
       "type": "quote",
       "data": {
