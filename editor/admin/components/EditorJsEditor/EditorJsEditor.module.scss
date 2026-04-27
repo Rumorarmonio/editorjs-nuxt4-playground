@@ -370,11 +370,89 @@
     max-width: none;
   }
 
+  :global(.editor-media-gallery-tool) {
+    display: grid;
+    gap: 16px;
+    padding: 16px;
+    background: #fbfcfb;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+  }
+
+  :global(.editor-media-gallery-tool__settings) {
+    display: grid;
+    align-items: end;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  :global(.editor-media-gallery-tool__cards) {
+    display: grid;
+    gap: 12px;
+  }
+
+  :global(.editor-media-gallery-tool__card) {
+    display: grid;
+    gap: 12px;
+    padding: 14px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+  }
+
+  :global(.editor-media-gallery-tool__card-header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  :global(.editor-media-gallery-tool__card-title) {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  :global(.editor-media-gallery-tool__card-buttons),
+  :global(.editor-media-gallery-tool__actions) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  :global(.editor-media-gallery-tool__card-fields) {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  :global(.editor-media-gallery-tool__card-fields .editor-rich-field__editor),
+  :global(.editor-media-gallery-tool__card-fields .editor-plain-field:has(textarea)) {
+    grid-column: 1 / -1;
+  }
+
+  :global(.editor-media-gallery-tool__button) {
+    min-height: 34px;
+    padding: 6px 10px;
+    font: inherit;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  :global(.editor-media-gallery-tool__button:disabled) {
+    opacity: 0.5;
+    cursor: default;
+  }
+
   @media (width <= 720px) {
     :global(.editor-two-columns-tool__controls),
     :global(.editor-two-columns-tool__columns),
     :global(.editor-two-columns-tool__columns[data-layout='leftWide']),
-    :global(.editor-two-columns-tool__columns[data-layout='rightWide']) {
+    :global(.editor-two-columns-tool__columns[data-layout='rightWide']),
+    :global(.editor-media-gallery-tool__settings),
+    :global(.editor-media-gallery-tool__card-fields) {
       grid-template-columns: 1fr;
     }
 

@@ -52,6 +52,10 @@ export const editorBlockRegistry = {
     type: 'twoColumns',
     title: 'Two columns',
   },
+  mediaGallery: {
+    type: 'mediaGallery',
+    title: 'Media gallery',
+  },
 } as const satisfies EditorBlockRegistry<keyof EditorBlockDataMap & string>
 
 export type EditorBlockType = keyof typeof editorBlockRegistry

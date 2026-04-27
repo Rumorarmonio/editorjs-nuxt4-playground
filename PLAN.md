@@ -14,51 +14,92 @@
 - Reusable rich fields завершены.
 - Composite blocks / `TwoColumns` завершён.
 - Custom inline tools завершён.
-- Активный этап: media gallery / slider block.
+- Media gallery / slider block завершён.
+- Активный этап: sidebar navigation из JSON.
 
 ## Активный этап
 
-### Media gallery / slider block
+### Sidebar navigation из JSON
 
 Статус: активный.
 
-Цель этапа: реализовать первый обязательный media composite block с режимами `slider` и `gallery`, отдельными media fields для карточек, стабильным save/load/render и базовым viewer behavior.
+Цель этапа: реализовать первую navigation-подсистему, которая строит плоский список ссылок из JSON editor content, используя `AnchorTune` и `LabelTune`, без сканирования итогового DOM.
 
 В scope входят:
 
+1. Helper в shared/navigation для построения flat navigation из `EditorContentData`.
+2. Источник пунктов: блоки с валидным `AnchorTune.anchor` и `LabelTune.label`.
+3. Fallback label только если он уже безопасно выводится из JSON блока без DOM-сканирования и лишней эвристики.
+4. Renderer/sidebar component для обычного списка anchor-ссылок.
+5. Подключение sidebar к preview/render странице без зависимости от editor runtime.
+6. Обработка дубликатов anchor по тому же правилу, что использует renderer для block `id`.
+7. Demo content уже содержит anchor/label examples; обновлять JSON только если не хватает данных для проверки.
+8. Проверка flat navigation, переходов по anchor, `Reset draft` и `Export JSON`.
+
+Вне scope этапа:
+
+- tree navigation на основе уровней заголовков;
+- collapse / expand и accordion behavior;
+- page-level sidebar options будущего fullstack-проекта;
+- Import JSON;
+- production validation через `zod`;
+- i18n, theme switching и расширенная keyboard navigation.
+
+## План этапа
+
+1. Проанализировать текущие tune helpers, renderer anchor logic и preview layout.
+2. Спроектировать минимальный `NavigationItem` contract для flat sidebar.
+3. Реализовать builder из `EditorContentData` с учётом `AnchorTune`, `LabelTune` и duplicate anchors.
+4. Добавить renderer component для sidebar navigation.
+5. Подключить sidebar на preview странице рядом с текущим renderer.
+6. Проверить anchor navigation на default content и draft content.
+7. Запустить `npm run check`.
+
+## Критерии готовности этапа
+
+- Navigation строится из JSON, а не из DOM.
+- Flat navigation отображает блоки с `label + anchor`.
+- Anchor links ведут к тем же `id`, которые renderer назначает блокам.
+- Дубликаты anchor не ломают navigation.
+- Sidebar не зависит от editor runtime.
+- Базовый preview layout остаётся работоспособным на desktop и mobile.
+- `npm run check` проходит.
+
+Следующий крупный этап после завершения sidebar navigation: Import JSON.
+
+## Последний завершённый этап
+
+### Media gallery / slider block
+
+Статус: завершён.
+
+Цель этапа: реализовать первый обязательный media composite block с режимами `slider` и `gallery`, отдельными media fields для карточек, стабильным save/load/render и базовым viewer behavior.
+
+В scope вошли:
+
 1. Shared data contract для media block: режим `slider | gallery`, `galleryId`, `enableFancybox`, `syncUrlWithFancybox` и массив карточек.
-2. Первый контракт карточки: один media item `image | video`, caption, `alt` для изображений и optional rich description, если текущая rich field инфраструктура позволит подключить его без лишнего усложнения.
+2. Первый контракт карточки: один media item `image | video`, caption, `alt` для изображений и optional rich description.
 3. Custom media fields в editor/admin UI без nested Editor.js для image/video как базового способа работы с media.
 4. Block UI для управления карточками: добавление, удаление, изменение порядка и редактирование полей.
 5. Editor.js tool class для media gallery / slider block.
 6. Renderer component, который отображает `gallery` как сетку карточек, а `slider` через Swiper.
 7. Базовая интеграция Fancybox: включение/выключение viewer, группировка по `galleryId` и начальная поддержка URL sync.
 8. Draft guard/normalization для нового block type и вложенных media item данных.
-9. Demo content в `content/default-page.json` для проверки preview/reset.
+9. Demo content в `content/default-page.json`: отдельный gallery example и отдельный slider example.
 10. Проверка save/load/render, `Export JSON`, `Reset draft`, Swiper, Fancybox, caption и `alt`.
-
-Вне scope этапа:
-
-- полноценный backend upload/storage workflow;
-- несколько media items внутри одной карточки;
-- сложная внутренняя media-структура слайда;
-- полноценная production validation через `zod`;
-- sidebar navigation;
-- Import JSON;
-- i18n, theme switching и расширенная keyboard navigation.
 
 ## План этапа
 
-1. Проанализировать текущие field helpers, rich fields, renderer mapping и image/embed contracts перед выбором минимальной data schema.
-2. Спроектировать shared-типы и normalizers для media block, media card и media item.
-3. Подготовить минимальные `createImageField` / `createVideoField` или общий media field helper на базе existing plain field system.
-4. Реализовать Editor.js tool UI для настроек блока и управления массивом карточек.
-5. Подключить media block в Editor.js config/toolbox и draft guard.
-6. Добавить renderer component для `gallery` режима и `slider` режима на Swiper.
-7. Добавить базовый Fancybox viewer с группировкой по `galleryId` и начальной URL sync логикой.
-8. Добавить demo content для проверки preview/reset.
-9. Проверить create/edit/save/reload/render, reorder/delete cards, export/reset draft, Swiper и Fancybox.
-10. Запустить `npm run check`.
+1. Проанализировать текущие field helpers, rich fields, renderer mapping и image/embed contracts перед выбором минимальной data schema — выполнено.
+2. Спроектировать shared-типы и normalizers для media block, media card и media item — выполнено.
+3. Подготовить минимальные `createImageField` / `createVideoField` или общий media field helper на базе existing plain field system — выполнено как локальный media card UI на plain/rich fields без nested Editor.js для media.
+4. Реализовать Editor.js tool UI для настроек блока и управления массивом карточек — выполнено.
+5. Подключить media block в Editor.js config/toolbox и draft guard — выполнено.
+6. Добавить renderer component для `gallery` режима и `slider` режима на Swiper — выполнено.
+7. Добавить базовый Fancybox viewer с группировкой по `galleryId` и начальной URL sync логикой — выполнено.
+8. Добавить demo content для проверки preview/reset — выполнено.
+9. Проверить create/edit/save/reload/render, reorder/delete cards, export/reset draft, Swiper и Fancybox — выполнено.
+10. Запустить `npm run check` — выполнено.
 
 ## Критерии готовности этапа
 
@@ -73,9 +114,9 @@
 - Preview, `Export JSON` и `Reset draft` работают с новым block type.
 - `npm run check` проходит.
 
-Следующий крупный этап после завершения media gallery / slider block: sidebar navigation из JSON.
+Итог: первый media gallery / slider block завершён. Добавлены shared-типы и normalizers `MediaGalleryBlockData`, registry entry, draft guard, `MediaGalleryTool`, renderer-компонент `EditorMediaGalleryBlock`, Swiper/Fancybox styles, зависимости `swiper` и `@fancyapps/ui`, а также отдельные gallery/slider examples в `content/default-page.json`. `npm run check` и `npm run build` проходят; ручная browser-проверка подтвердила создание и редактирование media block, переключение `gallery/slider`, add/remove/reorder карточек, save/reload/render, export/reset draft, Swiper navigation и Fancybox viewer.
 
-## Последний завершённый этап
+## Предыдущий завершённый этап
 
 ### Custom inline tools
 

@@ -2,12 +2,16 @@ export { editorBlockRegistry } from './registry/block-registry'
 export { EDITOR_DRAFT_STORAGE_KEY } from './constants/draft-storage'
 export {
   normalizeNoticeBlockData,
+  normalizeMediaGalleryBlockData,
+  normalizeMediaGalleryItemData,
   normalizeRichHeaderFieldData,
   normalizeRichParagraphFieldData,
   normalizeSectionIntroBlockData,
   normalizeSectionIntroDescriptionData,
   normalizeTwoColumnsBlockData,
   normalizeTwoColumnsContentData,
+  mediaGalleryItemTypes,
+  mediaGalleryModes,
   noticeBlockTypes,
   twoColumnsLayoutVariants,
 } from './blocks/custom-block-data'
@@ -62,6 +66,10 @@ export type {
 } from './blocks/standard-block-data'
 export type {
   CustomBlockDataMap,
+  MediaGalleryBlockData,
+  MediaGalleryItemData,
+  MediaGalleryItemType,
+  MediaGalleryMode,
   NoticeBlockData,
   NoticeBlockType,
   RichHeaderBlockData,

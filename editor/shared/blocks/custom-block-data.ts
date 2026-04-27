@@ -35,8 +35,16 @@ export const twoColumnsLayoutVariants = [
   'rightWide',
 ] as const
 
+export const mediaGalleryModes = ['gallery', 'slider'] as const
+
+export const mediaGalleryItemTypes = ['image', 'video'] as const
+
 export type TwoColumnsLayoutVariant =
   (typeof twoColumnsLayoutVariants)[number]
+
+export type MediaGalleryMode = (typeof mediaGalleryModes)[number]
+
+export type MediaGalleryItemType = (typeof mediaGalleryItemTypes)[number]
 
 export type TwoColumnsContentBlock =
   | EditorOutputBlock<'paragraph', ParagraphBlockData>
@@ -63,10 +71,28 @@ export interface TwoColumnsBlockData {
   right: TwoColumnsContentData
 }
 
+export interface MediaGalleryItemData {
+  id: string
+  type: MediaGalleryItemType
+  url: string
+  alt: string
+  caption: string
+  description: RichParagraphFieldData
+}
+
+export interface MediaGalleryBlockData {
+  mode: MediaGalleryMode
+  galleryId: string
+  enableFancybox: boolean
+  syncUrlWithFancybox: boolean
+  items: MediaGalleryItemData[]
+}
+
 export interface CustomBlockDataMap {
   notice: NoticeBlockData
   sectionIntro: SectionIntroBlockData
   twoColumns: TwoColumnsBlockData
+  mediaGallery: MediaGalleryBlockData
 }
 
 export function normalizeNoticeBlockData(value: unknown): NoticeBlockData {
@@ -158,6 +184,49 @@ export function normalizeTwoColumnsContentData(
   return value
 }
 
+export function normalizeMediaGalleryBlockData(
+  value: unknown,
+): MediaGalleryBlockData {
+  if (!isRecord(value)) {
+    return createDefaultMediaGalleryBlockData()
+  }
+
+  return {
+    mode: isMediaGalleryMode(value.mode) ? value.mode : 'gallery',
+    galleryId: normalizePlainValue(value.galleryId),
+    enableFancybox:
+      typeof value.enableFancybox === 'boolean'
+        ? value.enableFancybox
+        : true,
+    syncUrlWithFancybox:
+      typeof value.syncUrlWithFancybox === 'boolean'
+        ? value.syncUrlWithFancybox
+        : false,
+    items: Array.isArray(value.items)
+      ? value.items.map(normalizeMediaGalleryItemData)
+      : [],
+  }
+}
+
+export function normalizeMediaGalleryItemData(
+  value: unknown,
+): MediaGalleryItemData {
+  if (!isRecord(value)) {
+    return createDefaultMediaGalleryItemData()
+  }
+
+  const type = isMediaGalleryItemType(value.type) ? value.type : 'image'
+
+  return {
+    id: normalizePlainValue(value.id) || createMediaGalleryItemId(),
+    type,
+    url: normalizeUrlValue(value.url),
+    alt: type === 'image' ? normalizePlainValue(value.alt) : '',
+    caption: normalizePlainValue(value.caption),
+    description: normalizeRichParagraphFieldData(value.description),
+  }
+}
+
 export function isSectionIntroBlockData(
   value: unknown,
 ): value is SectionIntroBlockData {
@@ -223,6 +292,34 @@ export function isTwoColumnsContentData(
   )
 }
 
+export function isMediaGalleryBlockData(
+  value: unknown,
+): value is MediaGalleryBlockData {
+  return (
+    isRecord(value) &&
+    isMediaGalleryMode(value.mode) &&
+    typeof value.galleryId === 'string' &&
+    typeof value.enableFancybox === 'boolean' &&
+    typeof value.syncUrlWithFancybox === 'boolean' &&
+    Array.isArray(value.items) &&
+    value.items.every(isMediaGalleryItemData)
+  )
+}
+
+export function isMediaGalleryItemData(
+  value: unknown,
+): value is MediaGalleryItemData {
+  return (
+    isRecord(value) &&
+    typeof value.id === 'string' &&
+    isMediaGalleryItemType(value.type) &&
+    typeof value.url === 'string' &&
+    typeof value.alt === 'string' &&
+    typeof value.caption === 'string' &&
+    isRichParagraphFieldData(value.description)
+  )
+}
+
 function createDefaultNoticeBlockData(): NoticeBlockData {
   return {
     title: '',
@@ -269,6 +366,27 @@ function createDefaultTwoColumnsContentData(): TwoColumnsContentData {
   }
 }
 
+function createDefaultMediaGalleryBlockData(): MediaGalleryBlockData {
+  return {
+    mode: 'gallery',
+    galleryId: '',
+    enableFancybox: true,
+    syncUrlWithFancybox: false,
+    items: [createDefaultMediaGalleryItemData()],
+  }
+}
+
+function createDefaultMediaGalleryItemData(): MediaGalleryItemData {
+  return {
+    id: createMediaGalleryItemId(),
+    type: 'image',
+    url: '',
+    alt: '',
+    caption: '',
+    description: createDefaultRichParagraphFieldData(),
+  }
+}
+
 function isNoticeBlockType(value: unknown): value is NoticeBlockType {
   return noticeBlockTypes.includes(value as NoticeBlockType)
 }
@@ -277,6 +395,16 @@ function isTwoColumnsLayoutVariant(
   value: unknown,
 ): value is TwoColumnsLayoutVariant {
   return twoColumnsLayoutVariants.includes(value as TwoColumnsLayoutVariant)
+}
+
+function isMediaGalleryMode(value: unknown): value is MediaGalleryMode {
+  return mediaGalleryModes.includes(value as MediaGalleryMode)
+}
+
+function isMediaGalleryItemType(
+  value: unknown,
+): value is MediaGalleryItemType {
+  return mediaGalleryItemTypes.includes(value as MediaGalleryItemType)
 }
 
 function isRichParagraphFieldBlock(
@@ -366,4 +494,16 @@ function isListBlockItem(value: unknown): value is ListBlockItem {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function normalizePlainValue(value: unknown): string {
+  return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : ''
+}
+
+function normalizeUrlValue(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : ''
+}
+
+function createMediaGalleryItemId(): string {
+  return `media-${Math.random().toString(36).slice(2, 10)}`
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import EditorContentList from '~~/editor/renderer/components/EditorContentList/EditorContentList.vue'
+import EditorMediaGalleryBlock from '~~/editor/renderer/components/EditorMediaGalleryBlock/EditorMediaGalleryBlock.vue'
 import {
   getInlineText,
   sanitizeInlineHtml,
@@ -15,6 +16,7 @@ import type {
 import {
   getAllowedEmbedIframeUrl,
   getKnownBlockTuneData,
+  normalizeMediaGalleryBlockData,
   normalizeNoticeBlockData,
   normalizeSectionIntroBlockData,
   normalizeTwoColumnsBlockData,
@@ -88,6 +90,12 @@ function isTwoColumnsBlock(
   block: EditorContentBlock,
 ): block is EditorBlock<'twoColumns'> {
   return block.type === 'twoColumns'
+}
+
+function isMediaGalleryBlock(
+  block: EditorContentBlock,
+): block is EditorBlock<'mediaGallery'> {
+  return block.type === 'mediaGallery'
 }
 
 function asEditorContentData(data: TwoColumnsContentData): EditorContentData {
@@ -340,6 +348,11 @@ function getBlockStyle(
             :class="$style.twoColumnsColumn"
           />
         </section>
+
+        <EditorMediaGalleryBlock
+          v-else-if="isMediaGalleryBlock(block)"
+          :data="normalizeMediaGalleryBlockData(block.data)"
+        />
 
         <pre
           v-else

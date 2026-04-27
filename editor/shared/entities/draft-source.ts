@@ -1,6 +1,7 @@
 import { EDITOR_DRAFT_STORAGE_KEY } from '~~/editor/shared/constants/draft-storage'
 import {
   isNoticeBlockData,
+  isMediaGalleryBlockData,
   isSectionIntroBlockData,
   isTwoColumnsBlockData,
 } from '~~/editor/shared/blocks/custom-block-data'
@@ -111,6 +112,8 @@ function isKnownEditorContentBlock(
       return isSectionIntroBlockData(block.data)
     case 'twoColumns':
       return isTwoColumnsBlockData(block.data)
+    case 'mediaGallery':
+      return isMediaGalleryBlockData(block.data)
     default:
       return false
   }

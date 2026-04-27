@@ -431,6 +431,152 @@
           "label": "Two columns"
         }
       }
+    },
+    {
+      "id": "media-gallery-block",
+      "type": "mediaGallery",
+      "data": {
+        "mode": "gallery",
+        "galleryId": "default-media-gallery",
+        "enableFancybox": true,
+        "syncUrlWithFancybox": false,
+        "items": [
+          {
+            "id": "media-gallery-image",
+            "type": "image",
+            "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='540' viewBox='0 0 960 540'%3E%3Crect width='960' height='540' fill='%23eef3ee'/%3E%3Crect x='96' y='90' width='768' height='360' rx='18' fill='%23ffffff'/%3E%3Ccircle cx='258' cy='270' r='96' fill='%230f766e'/%3E%3Cpath d='M420 360 540 225l84 96 54-60 114 99H420Z' fill='%235e6268'/%3E%3C/svg%3E",
+            "alt": "Abstract media gallery card illustration",
+            "caption": "Gallery card with explicit image alt",
+            "description": {
+              "time": 1777075200000,
+              "version": "2.31.6",
+              "blocks": [
+                {
+                  "id": "media-gallery-image-description",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "Each card stores media fields separately from nested rich text."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "media-gallery-video",
+            "type": "video",
+            "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+            "alt": "",
+            "caption": "Video card for Fancybox and slider checks",
+            "description": {
+              "time": 1777075200000,
+              "version": "2.31.6",
+              "blocks": [
+                {
+                  "id": "media-gallery-video-description",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "Video items do not require alt text, but can still keep caption and description."
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {
+          "anchor": "media-gallery"
+        },
+        "spacing": {
+          "top": "large"
+        },
+        "label": {
+          "label": "Media gallery"
+        }
+      }
+    },
+    {
+      "id": "media-slider-block",
+      "type": "mediaGallery",
+      "data": {
+        "mode": "slider",
+        "galleryId": "default-media-slider",
+        "enableFancybox": true,
+        "syncUrlWithFancybox": false,
+        "items": [
+          {
+            "id": "media-slider-first-image",
+            "type": "image",
+            "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='540' viewBox='0 0 960 540'%3E%3Crect width='960' height='540' fill='%23f6f8f6'/%3E%3Crect x='110' y='92' width='740' height='356' rx='18' fill='%23ffffff' stroke='%23d9e0db' stroke-width='4'/%3E%3Crect x='170' y='150' width='280' height='240' rx='12' fill='%230f766e'/%3E%3Crect x='500' y='170' width='250' height='38' rx='8' fill='%23202124'/%3E%3Crect x='500' y='240' width='300' height='28' rx='7' fill='%235e6268'/%3E%3Crect x='500' y='292' width='230' height='28' rx='7' fill='%235e6268'/%3E%3C/svg%3E",
+            "alt": "First media slider card illustration",
+            "caption": "Slider image card with Fancybox enabled",
+            "description": {
+              "time": 1777075200000,
+              "version": "2.31.6",
+              "blocks": [
+                {
+                  "id": "media-slider-first-description",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "This block uses <b>slider</b> mode and renders through Swiper on the preview page."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "media-slider-video",
+            "type": "video",
+            "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+            "alt": "",
+            "caption": "Slider video card",
+            "description": {
+              "time": 1777075200000,
+              "version": "2.31.6",
+              "blocks": [
+                {
+                  "id": "media-slider-video-description",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "The same card contract supports video URLs without image alt text."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "media-slider-second-image",
+            "type": "image",
+            "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='540' viewBox='0 0 960 540'%3E%3Crect width='960' height='540' fill='%23eef3ee'/%3E%3Crect x='128' y='118' width='704' height='304' rx='20' fill='%23ffffff'/%3E%3Cpath d='M190 360 340 210l112 116 76-82 242 116H190Z' fill='%230f766e'/%3E%3Ccircle cx='704' cy='184' r='54' fill='%23b7791f'/%3E%3C/svg%3E",
+            "alt": "Second media slider card illustration",
+            "caption": "Second image slide",
+            "description": {
+              "time": 1777075200000,
+              "version": "2.31.6",
+              "blocks": [
+                {
+                  "id": "media-slider-second-description",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "Multiple cards make the slider navigation and pagination visible."
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {
+          "anchor": "media-slider"
+        },
+        "spacing": {
+          "top": "large"
+        },
+        "label": {
+          "label": "Media slider"
+        }
+      }
     }
   ]
 }
