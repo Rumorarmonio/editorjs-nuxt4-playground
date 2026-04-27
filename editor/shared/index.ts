@@ -6,7 +6,10 @@ export {
   normalizeRichParagraphFieldData,
   normalizeSectionIntroBlockData,
   normalizeSectionIntroDescriptionData,
+  normalizeTwoColumnsBlockData,
+  normalizeTwoColumnsContentData,
   noticeBlockTypes,
+  twoColumnsLayoutVariants,
 } from './blocks/custom-block-data'
 export {
   createEmbedDataFromSource,
@@ -61,6 +64,10 @@ export type {
   SectionIntroBlockData,
   SectionIntroDescriptionBlock,
   SectionIntroDescriptionData,
+  TwoColumnsBlockData,
+  TwoColumnsContentBlock,
+  TwoColumnsContentData,
+  TwoColumnsLayoutVariant,
 } from './blocks/custom-block-data'
 export type {
   EditorImageUploader,

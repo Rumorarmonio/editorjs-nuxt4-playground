@@ -238,6 +238,52 @@
     border-radius: 6px;
   }
 
+  :global(.editor-two-columns-tool) {
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+    background: #fbfcfb;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+  }
+
+  :global(.editor-two-columns-tool__controls) {
+    display: grid;
+    align-items: end;
+    gap: 12px;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  :global(.editor-two-columns-tool__columns) {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  :global(.editor-two-columns-tool__columns[data-layout='leftWide']) {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  }
+
+  :global(.editor-two-columns-tool__columns[data-layout='rightWide']) {
+    grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
+  }
+
+  :global(.editor-two-columns-tool__columns[data-reversed='true']) {
+    direction: rtl;
+  }
+
+  :global(.editor-two-columns-tool__columns[data-reversed='true'] > *) {
+    direction: ltr;
+  }
+
+  :global(.editor-two-columns-tool__editor) {
+    min-height: 160px;
+    padding: 10px 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+  }
+
   :global(.editor-rich-field__editor) {
     min-height: 88px;
     padding: 10px 12px;
@@ -261,6 +307,28 @@
 
   :global(.editor-rich-field__editor .ce-paragraph) {
     line-height: 1.65;
+  }
+
+  :global(.editor-two-columns-tool__editor .codex-editor__redactor) {
+    padding-bottom: 0 !important;
+  }
+
+  :global(.editor-two-columns-tool__editor .ce-block__content),
+  :global(.editor-two-columns-tool__editor .ce-toolbar__content) {
+    max-width: none;
+  }
+
+  @media (width <= 720px) {
+    :global(.editor-two-columns-tool__controls),
+    :global(.editor-two-columns-tool__columns),
+    :global(.editor-two-columns-tool__columns[data-layout='leftWide']),
+    :global(.editor-two-columns-tool__columns[data-layout='rightWide']) {
+      grid-template-columns: 1fr;
+    }
+
+    :global(.editor-two-columns-tool__columns[data-reversed='true']) {
+      direction: ltr;
+    }
   }
 }
 

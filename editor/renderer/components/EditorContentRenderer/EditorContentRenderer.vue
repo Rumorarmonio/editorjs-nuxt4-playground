@@ -10,12 +10,14 @@ import type {
   EditorBlock,
   EditorContentBlock,
   EditorContentData,
+  TwoColumnsContentData,
 } from '~~/editor/shared'
 import {
   getAllowedEmbedIframeUrl,
   getKnownBlockTuneData,
   normalizeNoticeBlockData,
   normalizeSectionIntroBlockData,
+  normalizeTwoColumnsBlockData,
 } from '~~/editor/shared'
 
 defineProps<{
@@ -80,6 +82,29 @@ function isSectionIntroBlock(
   block: EditorContentBlock,
 ): block is EditorBlock<'sectionIntro'> {
   return block.type === 'sectionIntro'
+}
+
+function isTwoColumnsBlock(
+  block: EditorContentBlock,
+): block is EditorBlock<'twoColumns'> {
+  return block.type === 'twoColumns'
+}
+
+function asEditorContentData(data: TwoColumnsContentData): EditorContentData {
+  return data as EditorContentData
+}
+
+function getTwoColumnsLayoutClass(
+  layout: EditorBlock<'twoColumns'>['data']['layout'],
+): string | undefined {
+  switch (layout) {
+    case 'leftWide':
+      return style.twoColumnsLeftWide
+    case 'rightWide':
+      return style.twoColumnsRightWide
+    default:
+      return undefined
+  }
 }
 
 function getHeaderTag(level: EditorBlock<'header'>['data']['level']): string {
@@ -283,6 +308,36 @@ function getBlockStyle(
             v-if="normalizeRichParagraphContent(normalizeSectionIntroBlockData(block.data).description).blocks.length"
             :class="$style.sectionIntroContent"
             :content="normalizeRichParagraphContent(normalizeSectionIntroBlockData(block.data).description)"
+          />
+        </section>
+
+        <section
+          v-else-if="isTwoColumnsBlock(block)"
+          :class="[
+            $style.twoColumns,
+            getTwoColumnsLayoutClass(normalizeTwoColumnsBlockData(block.data).layout),
+            normalizeTwoColumnsBlockData(block.data).isReversed
+              ? $style.twoColumnsReversed
+              : '',
+          ]"
+        >
+          <EditorContentRenderer
+            v-if="normalizeTwoColumnsBlockData(block.data).left.blocks.length"
+            :class="$style.twoColumnsColumn"
+            :content="asEditorContentData(normalizeTwoColumnsBlockData(block.data).left)"
+          />
+          <div
+            v-else
+            :class="$style.twoColumnsColumn"
+          />
+          <EditorContentRenderer
+            v-if="normalizeTwoColumnsBlockData(block.data).right.blocks.length"
+            :class="$style.twoColumnsColumn"
+            :content="asEditorContentData(normalizeTwoColumnsBlockData(block.data).right)"
+          />
+          <div
+            v-else
+            :class="$style.twoColumnsColumn"
           />
         </section>
 

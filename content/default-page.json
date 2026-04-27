@@ -327,6 +327,70 @@
         },
         "label": {}
       }
+    },
+    {
+      "id": "two-columns-block",
+      "type": "twoColumns",
+      "data": {
+        "layout": "leftWide",
+        "isReversed": false,
+        "left": {
+          "time": 1777075200000,
+          "version": "2.31.6",
+          "blocks": [
+            {
+              "id": "two-columns-left-heading",
+              "type": "header",
+              "data": {
+                "text": "Composite block content",
+                "level": 3
+              }
+            },
+            {
+              "id": "two-columns-left-paragraph",
+              "type": "paragraph",
+              "data": {
+                "text": "The left column stores its own nested Editor.js output with <b>inline formatting</b>."
+              }
+            }
+          ]
+        },
+        "right": {
+          "time": 1777075200000,
+          "version": "2.31.6",
+          "blocks": [
+            {
+              "id": "two-columns-right-list",
+              "type": "list",
+              "data": {
+                "style": "unordered",
+                "meta": {},
+                "items": [
+                  {
+                    "content": "Separate nested output for the right column",
+                    "meta": {},
+                    "items": []
+                  },
+                  {
+                    "content": "Paragraph, header, and list tools are allowed",
+                    "meta": {},
+                    "items": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {
+          "top": "large"
+        },
+        "label": {
+          "label": "Two columns"
+        }
+      }
     }
   ]
 }

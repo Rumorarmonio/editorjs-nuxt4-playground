@@ -1,5 +1,7 @@
 import type {
   HeaderBlockData,
+  ListBlockData,
+  ListBlockItem,
   ParagraphBlockData,
 } from '~~/editor/shared/blocks/standard-block-data'
 import type {
@@ -27,6 +29,22 @@ export type RichHeaderBlockData = EditorOutputBlock<'header', HeaderBlockData>
 
 export type RichHeaderFieldData = EditorOutputData<RichHeaderBlockData>
 
+export const twoColumnsLayoutVariants = [
+  'equal',
+  'leftWide',
+  'rightWide',
+] as const
+
+export type TwoColumnsLayoutVariant =
+  (typeof twoColumnsLayoutVariants)[number]
+
+export type TwoColumnsContentBlock =
+  | EditorOutputBlock<'paragraph', ParagraphBlockData>
+  | EditorOutputBlock<'header', HeaderBlockData>
+  | EditorOutputBlock<'list', ListBlockData>
+
+export type TwoColumnsContentData = EditorOutputData<TwoColumnsContentBlock>
+
 export interface NoticeBlockData {
   title: string
   text: string
@@ -38,9 +56,17 @@ export interface SectionIntroBlockData {
   description: SectionIntroDescriptionData
 }
 
+export interface TwoColumnsBlockData {
+  layout: TwoColumnsLayoutVariant
+  isReversed: boolean
+  left: TwoColumnsContentData
+  right: TwoColumnsContentData
+}
+
 export interface CustomBlockDataMap {
   notice: NoticeBlockData
   sectionIntro: SectionIntroBlockData
+  twoColumns: TwoColumnsBlockData
 }
 
 export function normalizeNoticeBlockData(value: unknown): NoticeBlockData {
@@ -106,6 +132,32 @@ export function normalizeRichHeaderFieldData(
   return value
 }
 
+export function normalizeTwoColumnsBlockData(
+  value: unknown,
+): TwoColumnsBlockData {
+  if (!isRecord(value)) {
+    return createDefaultTwoColumnsBlockData()
+  }
+
+  return {
+    layout: isTwoColumnsLayoutVariant(value.layout) ? value.layout : 'equal',
+    isReversed:
+      typeof value.isReversed === 'boolean' ? value.isReversed : false,
+    left: normalizeTwoColumnsContentData(value.left),
+    right: normalizeTwoColumnsContentData(value.right),
+  }
+}
+
+export function normalizeTwoColumnsContentData(
+  value: unknown,
+): TwoColumnsContentData {
+  if (!isTwoColumnsContentData(value)) {
+    return createDefaultTwoColumnsContentData()
+  }
+
+  return value
+}
+
 export function isSectionIntroBlockData(
   value: unknown,
 ): value is SectionIntroBlockData {
@@ -147,6 +199,30 @@ export function isRichHeaderFieldData(
   )
 }
 
+export function isTwoColumnsBlockData(
+  value: unknown,
+): value is TwoColumnsBlockData {
+  return (
+    isRecord(value) &&
+    isTwoColumnsLayoutVariant(value.layout) &&
+    typeof value.isReversed === 'boolean' &&
+    isTwoColumnsContentData(value.left) &&
+    isTwoColumnsContentData(value.right)
+  )
+}
+
+export function isTwoColumnsContentData(
+  value: unknown,
+): value is TwoColumnsContentData {
+  return (
+    isRecord(value) &&
+    (value.time === undefined || typeof value.time === 'number') &&
+    (value.version === undefined || typeof value.version === 'string') &&
+    Array.isArray(value.blocks) &&
+    value.blocks.every(isTwoColumnsContentBlock)
+  )
+}
+
 function createDefaultNoticeBlockData(): NoticeBlockData {
   return {
     title: '',
@@ -178,8 +254,29 @@ function createDefaultRichHeaderFieldData(): RichHeaderFieldData {
   }
 }
 
+function createDefaultTwoColumnsBlockData(): TwoColumnsBlockData {
+  return {
+    layout: 'equal',
+    isReversed: false,
+    left: createDefaultTwoColumnsContentData(),
+    right: createDefaultTwoColumnsContentData(),
+  }
+}
+
+function createDefaultTwoColumnsContentData(): TwoColumnsContentData {
+  return {
+    blocks: [],
+  }
+}
+
 function isNoticeBlockType(value: unknown): value is NoticeBlockType {
   return noticeBlockTypes.includes(value as NoticeBlockType)
+}
+
+function isTwoColumnsLayoutVariant(
+  value: unknown,
+): value is TwoColumnsLayoutVariant {
+  return twoColumnsLayoutVariants.includes(value as TwoColumnsLayoutVariant)
 }
 
 function isRichParagraphFieldBlock(
@@ -207,6 +304,41 @@ function isRichHeaderFieldBlock(value: unknown): value is RichHeaderBlockData {
   )
 }
 
+function isTwoColumnsContentBlock(
+  value: unknown,
+): value is TwoColumnsContentBlock {
+  if (!isRecord(value)) {
+    return false
+  }
+
+  switch (value.type) {
+    case 'paragraph':
+      return isRichParagraphFieldBlock(value)
+    case 'header':
+      return isRichHeaderFieldBlock(value)
+    case 'list':
+      return isListBlock(value)
+    default:
+      return false
+  }
+}
+
+function isListBlock(
+  value: unknown,
+): value is EditorOutputBlock<'list', ListBlockData> {
+  return (
+    isRecord(value) &&
+    (value.id === undefined || typeof value.id === 'string') &&
+    value.type === 'list' &&
+    isRecord(value.data) &&
+    isListStyle(value.data.style) &&
+    (value.data.meta === undefined || isRecord(value.data.meta)) &&
+    Array.isArray(value.data.items) &&
+    value.data.items.every(isListBlockItem) &&
+    (value.tunes === undefined || isRecord(value.tunes))
+  )
+}
+
 function isHeaderLevel(value: unknown): value is HeaderBlockData['level'] {
   return (
     value === 1 ||
@@ -215,6 +347,20 @@ function isHeaderLevel(value: unknown): value is HeaderBlockData['level'] {
     value === 4 ||
     value === 5 ||
     value === 6
+  )
+}
+
+function isListStyle(value: unknown): value is ListBlockData['style'] {
+  return value === 'ordered' || value === 'unordered' || value === 'checklist'
+}
+
+function isListBlockItem(value: unknown): value is ListBlockItem {
+  return (
+    isRecord(value) &&
+    typeof value.content === 'string' &&
+    (value.meta === undefined || isRecord(value.meta)) &&
+    Array.isArray(value.items) &&
+    value.items.every(isListBlockItem)
   )
 }
 

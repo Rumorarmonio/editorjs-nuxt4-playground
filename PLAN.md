@@ -12,14 +12,14 @@
 - Первый простой custom block завершён.
 - Первый nested editor block / первый single-purpose rich field завершён.
 - Reusable rich fields завершены.
-- Активный этап: composite blocks / `TwoColumns`.
-- Следующий крупный этап после `TwoColumns`: custom inline tools.
+- Composite blocks / `TwoColumns` завершён.
+- Следующий крупный этап: custom inline tools.
 
-## Активный этап
+## Последний завершённый этап
 
 ### Composite blocks / `TwoColumns`
 
-Статус: запланирован.
+Статус: завершён.
 
 Цель этапа: реализовать первый composite block с двумя независимыми nested editor containers и проверить стабильный lifecycle многоконтейнерного блока: `create -> edit -> save -> reload -> render`.
 
@@ -49,15 +49,15 @@
 
 ## План этапа
 
-1. Спроектировать минимальный JSON-контракт `TwoColumns` и допустимые layout variants.
-2. Добавить shared type, registry entry и normalization/guard для `TwoColumns`.
-3. Подготовить helper или локальную конфигурацию nested editor для column content с ограниченным набором tools.
-4. Реализовать `TwoColumnsTool` с plain controls для layout/reversed state и двумя nested editor holders.
-5. Подключить `TwoColumns` в Editor.js config/toolbox.
-6. Добавить renderer component и mapping `block.type -> component`.
-7. Добавить demo content для проверки preview/reset.
-8. Проверить lifecycle: create, edit, save, reload, render, destroy, delete/move block, export JSON, reset draft.
-9. Запустить `npm run check`.
+1. Спроектировать минимальный JSON-контракт `TwoColumns` и допустимые layout variants — выполнено.
+2. Добавить shared type, registry entry и normalization/guard для `TwoColumns` — выполнено.
+3. Подготовить helper или локальную конфигурацию nested editor для column content с ограниченным набором tools — выполнено.
+4. Реализовать `TwoColumnsTool` с plain controls для layout/reversed state и двумя nested editor holders — выполнено.
+5. Подключить `TwoColumns` в Editor.js config/toolbox — выполнено.
+6. Добавить renderer component и mapping `block.type -> component` — выполнено.
+7. Добавить demo content для проверки preview/reset — выполнено.
+8. Проверить lifecycle: create, edit, save, reload, render, destroy, delete/move block, export JSON, reset draft — частично выполнено через статические проверки; ручная browser-проверка остаётся обязательной.
+9. Запустить `npm run check` — выполнено.
 
 ## Критерии готовности этапа
 
@@ -71,6 +71,8 @@
 - Preview, `Export JSON` и `Reset draft` работают с новым block type.
 - Удаление и перемещение блока не оставляют сломанных nested editor instances.
 - `npm run check` проходит.
+
+Итог: `TwoColumns` добавлен как первый composite block. Реализованы shared data contract, normalization/guard, registry entry, Editor.js tool с двумя nested editor instances, renderer, стили и demo content. `npm run check` проходит; ручная browser-проверка create/edit/save/reload/render, удаления и перемещения блока ещё нужна.
 
 Следующий крупный этап после завершения `TwoColumns`: custom inline tools.
 

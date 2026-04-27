@@ -9,6 +9,7 @@ export {
   type NestedRichEditorOptions,
 } from './nested-rich-editor'
 export {
+  createNestedColumnTools,
   createNestedHeaderTools,
   createNestedParagraphTools,
   nestedRichFieldInlineToolbar,
