@@ -11,6 +11,13 @@ export {
   type PlainImageFieldOptions,
 } from './media-field-contracts'
 export { createPlainRadioGroupField } from './radio-group-field'
+export {
+  createRichHeaderField,
+  createRichParagraphField,
+  type RichFieldControl,
+  type RichHeaderFieldOptions,
+  type RichParagraphFieldOptions,
+} from './rich-field'
 export { createPlainSelectField } from './select-field'
 export { createPlainTextareaField } from './textarea-field'
 export { createPlainTextField, createPlainUrlField } from './text-field'

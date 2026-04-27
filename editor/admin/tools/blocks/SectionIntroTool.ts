@@ -8,14 +8,13 @@ import type {
 import {
   createPlainTextField,
   type PlainFieldControl,
+  createRichParagraphField,
+  type RichFieldControl,
 } from '~~/editor/admin/fields'
-import {
-  createNestedParagraphEditor,
-  type NestedParagraphEditor,
-} from '~~/editor/admin/nested-editor'
 import {
   normalizeSectionIntroBlockData,
   type SectionIntroBlockData,
+  type SectionIntroDescriptionData,
 } from '~~/editor/shared'
 
 export default class SectionIntroTool implements BlockTool {
@@ -25,7 +24,8 @@ export default class SectionIntroTool implements BlockTool {
   private readonly readOnly: boolean
   private data: SectionIntroBlockData
   private titleField: PlainFieldControl<string, HTMLInputElement> | null = null
-  private descriptionEditor: NestedParagraphEditor | null = null
+  private descriptionField: RichFieldControl<SectionIntroDescriptionData> | null =
+    null
 
   static get toolbox(): ToolboxConfig {
     return {
@@ -44,8 +44,6 @@ export default class SectionIntroTool implements BlockTool {
 
   render(): HTMLElement {
     const wrapper = document.createElement('div')
-    const richField = document.createElement('div')
-    const richLabel = document.createElement('p')
 
     wrapper.className = 'editor-section-intro-tool'
 
@@ -61,8 +59,10 @@ export default class SectionIntroTool implements BlockTool {
       },
     })
 
-    this.descriptionEditor = createNestedParagraphEditor({
-      data: this.data.description,
+    this.descriptionField = createRichParagraphField({
+      name: 'section-intro-description',
+      label: 'Description',
+      value: this.data.description,
       readOnly: this.readOnly,
       placeholder: 'Write an introductory paragraph',
       onChange: () => {
@@ -70,14 +70,9 @@ export default class SectionIntroTool implements BlockTool {
       },
     })
 
-    richField.className = 'editor-section-intro-tool__rich-field'
-    richLabel.className = 'editor-section-intro-tool__rich-label'
-    richLabel.textContent = 'Description'
-    richField.append(richLabel, this.descriptionEditor.holder)
+    wrapper.append(this.titleField.root, this.descriptionField.root)
 
-    wrapper.append(this.titleField.root, richField)
-
-    void this.descriptionEditor.initialize()
+    void this.descriptionField.initialize()
 
     return wrapper
   }
@@ -86,7 +81,7 @@ export default class SectionIntroTool implements BlockTool {
     return normalizeSectionIntroBlockData({
       title: this.titleField?.getValue() ?? this.data.title,
       description:
-        (await this.descriptionEditor?.save()) ?? this.data.description,
+        (await this.descriptionField?.save()) ?? this.data.description,
     })
   }
 
@@ -102,8 +97,8 @@ export default class SectionIntroTool implements BlockTool {
   }
 
   destroy(): void {
-    this.descriptionEditor?.destroy()
-    this.descriptionEditor = null
+    this.descriptionField?.destroy()
+    this.descriptionField = null
   }
 
   private dispatchChange(): void {

@@ -1,4 +1,7 @@
-import type { ParagraphBlockData } from '~~/editor/shared/blocks/standard-block-data'
+import type {
+  HeaderBlockData,
+  ParagraphBlockData,
+} from '~~/editor/shared/blocks/standard-block-data'
 import type {
   EditorOutputBlock,
   EditorOutputData,
@@ -15,6 +18,14 @@ export type SectionIntroDescriptionBlock = EditorOutputBlock<
 
 export type SectionIntroDescriptionData =
   EditorOutputData<SectionIntroDescriptionBlock>
+
+export type RichParagraphBlockData = SectionIntroDescriptionBlock
+
+export type RichParagraphFieldData = SectionIntroDescriptionData
+
+export type RichHeaderBlockData = EditorOutputBlock<'header', HeaderBlockData>
+
+export type RichHeaderFieldData = EditorOutputData<RichHeaderBlockData>
 
 export interface NoticeBlockData {
   title: string
@@ -72,8 +83,24 @@ export function normalizeSectionIntroBlockData(
 export function normalizeSectionIntroDescriptionData(
   value: unknown,
 ): SectionIntroDescriptionData {
-  if (!isSectionIntroDescriptionData(value)) {
-    return createDefaultSectionIntroDescriptionData()
+  return normalizeRichParagraphFieldData(value)
+}
+
+export function normalizeRichParagraphFieldData(
+  value: unknown,
+): RichParagraphFieldData {
+  if (!isRichParagraphFieldData(value)) {
+    return createDefaultRichParagraphFieldData()
+  }
+
+  return value
+}
+
+export function normalizeRichHeaderFieldData(
+  value: unknown,
+): RichHeaderFieldData {
+  if (!isRichHeaderFieldData(value)) {
+    return createDefaultRichHeaderFieldData()
   }
 
   return value
@@ -92,12 +119,31 @@ export function isSectionIntroBlockData(
 export function isSectionIntroDescriptionData(
   value: unknown,
 ): value is SectionIntroDescriptionData {
+  return isRichParagraphFieldData(value)
+}
+
+export function isRichParagraphFieldData(
+  value: unknown,
+): value is RichParagraphFieldData {
   return (
     isRecord(value) &&
     (value.time === undefined || typeof value.time === 'number') &&
     (value.version === undefined || typeof value.version === 'string') &&
     Array.isArray(value.blocks) &&
-    value.blocks.every(isSectionIntroDescriptionBlock)
+    value.blocks.every(isRichParagraphFieldBlock)
+  )
+}
+
+export function isRichHeaderFieldData(
+  value: unknown,
+): value is RichHeaderFieldData {
+  return (
+    isRecord(value) &&
+    (value.time === undefined || typeof value.time === 'number') &&
+    (value.version === undefined || typeof value.version === 'string') &&
+    Array.isArray(value.blocks) &&
+    value.blocks.length <= 1 &&
+    value.blocks.every(isRichHeaderFieldBlock)
   )
 }
 
@@ -117,6 +163,16 @@ function createDefaultSectionIntroBlockData(): SectionIntroBlockData {
 }
 
 function createDefaultSectionIntroDescriptionData(): SectionIntroDescriptionData {
+  return createDefaultRichParagraphFieldData()
+}
+
+function createDefaultRichParagraphFieldData(): RichParagraphFieldData {
+  return {
+    blocks: [],
+  }
+}
+
+function createDefaultRichHeaderFieldData(): RichHeaderFieldData {
   return {
     blocks: [],
   }
@@ -126,9 +182,9 @@ function isNoticeBlockType(value: unknown): value is NoticeBlockType {
   return noticeBlockTypes.includes(value as NoticeBlockType)
 }
 
-function isSectionIntroDescriptionBlock(
+function isRichParagraphFieldBlock(
   value: unknown,
-): value is SectionIntroDescriptionBlock {
+): value is RichParagraphBlockData {
   return (
     isRecord(value) &&
     (value.id === undefined || typeof value.id === 'string') &&
@@ -136,6 +192,29 @@ function isSectionIntroDescriptionBlock(
     isRecord(value.data) &&
     typeof value.data.text === 'string' &&
     (value.tunes === undefined || isRecord(value.tunes))
+  )
+}
+
+function isRichHeaderFieldBlock(value: unknown): value is RichHeaderBlockData {
+  return (
+    isRecord(value) &&
+    (value.id === undefined || typeof value.id === 'string') &&
+    value.type === 'header' &&
+    isRecord(value.data) &&
+    typeof value.data.text === 'string' &&
+    isHeaderLevel(value.data.level) &&
+    (value.tunes === undefined || isRecord(value.tunes))
+  )
+}
+
+function isHeaderLevel(value: unknown): value is HeaderBlockData['level'] {
+  return (
+    value === 1 ||
+    value === 2 ||
+    value === 3 ||
+    value === 4 ||
+    value === 5 ||
+    value === 6
   )
 }
 

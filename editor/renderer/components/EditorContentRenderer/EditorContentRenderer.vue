@@ -4,6 +4,7 @@ import {
   getInlineText,
   sanitizeInlineHtml,
 } from '~~/editor/renderer/helpers/sanitize-inline-html'
+import { normalizeRichParagraphContent } from '~~/editor/renderer/helpers/rich-field-content'
 import { useCssModule } from 'vue'
 import type {
   EditorBlock,
@@ -279,9 +280,9 @@ function getBlockStyle(
             {{ normalizeSectionIntroBlockData(block.data).title }}
           </h2>
           <EditorContentRenderer
-            v-if="normalizeSectionIntroBlockData(block.data).description.blocks.length"
+            v-if="normalizeRichParagraphContent(normalizeSectionIntroBlockData(block.data).description).blocks.length"
             :class="$style.sectionIntroContent"
-            :content="normalizeSectionIntroBlockData(block.data).description"
+            :content="normalizeRichParagraphContent(normalizeSectionIntroBlockData(block.data).description)"
           />
         </section>
 

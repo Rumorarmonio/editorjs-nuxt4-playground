@@ -238,19 +238,7 @@
     border-radius: 6px;
   }
 
-  :global(.editor-section-intro-tool__rich-field) {
-    display: grid;
-    gap: 6px;
-  }
-
-  :global(.editor-section-intro-tool__rich-label) {
-    margin: 0;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: var(--color-text);
-  }
-
-  :global(.editor-nested-paragraph-editor) {
+  :global(.editor-rich-field__editor) {
     min-height: 88px;
     padding: 10px 12px;
     background: var(--color-surface);
@@ -258,16 +246,20 @@
     border-radius: 6px;
   }
 
-  :global(.editor-nested-paragraph-editor .codex-editor__redactor) {
+  :global(.editor-rich-field__editor--header) {
+    min-height: 64px;
+  }
+
+  :global(.editor-rich-field__editor .codex-editor__redactor) {
     padding-bottom: 0 !important;
   }
 
-  :global(.editor-nested-paragraph-editor .ce-block__content),
-  :global(.editor-nested-paragraph-editor .ce-toolbar__content) {
+  :global(.editor-rich-field__editor .ce-block__content),
+  :global(.editor-rich-field__editor .ce-toolbar__content) {
     max-width: none;
   }
 
-  :global(.editor-nested-paragraph-editor .ce-paragraph) {
+  :global(.editor-rich-field__editor .ce-paragraph) {
     line-height: 1.65;
   }
 }
