@@ -2,7 +2,8 @@
 
 ## Проект
 
-`Nuxt 4` playground для визуального редактора контента на `Editor.js` с отдельными editor-layer и renderer-layer, статическим JSON-источником и GitHub Pages deployment.
+`Nuxt 4` playground для визуального редактора контента на `Editor.js` с отдельными editor-layer и renderer-layer, статическим JSON-источником и GitHub Pages
+deployment.
 
 ## Текущий статус
 
@@ -18,17 +19,64 @@
 - Sidebar navigation из JSON завершён.
 - Import JSON завершён.
 - Валидация завершена.
-- Активный этап: Masks завершён.
+- Masks завершён.
+- Активный этап: Локализация UI редактора.
 
 ## Активный этап
+
+### Локализация UI редактора
+
+Статус: активный.
+
+Цель этапа: подключить минимальный слой локализации UI редактора и editor shell на `ru/en` без изменения content JSON schema.
+
+В scope входят:
+
+1. Подключение `vue-i18n` на уровне Nuxt/Vue-приложения.
+2. Создание словарей `ru/en` для editor shell и editor-related UI strings.
+3. Подготовка Editor.js `i18n.messages` через общий mapping.
+4. Перенос строк editor shell, tools, tunes и custom field UI в локализуемые словари без изменения content JSON.
+5. Минимальный сценарий смены языка: сохранить текущий editor state, пересоздать Editor.js instance и не потерять draft.
+
+Вне scope этапа:
+
+- многоязычный content model и хранение нескольких языковых версий контента;
+- обязательный бесшовный live switch без переинициализации Editor.js;
+- light/dark theme;
+- расширенная keyboard navigation и accessibility polish;
+- изменение content JSON schema.
+
+## План этапа
+
+1. Проанализировать текущие hardcoded UI strings в app shell, Editor.js config, custom tools, tunes и field builders.
+2. Спроектировать минимальную структуру словарей `i18n/locales` и `i18n/editor` без преждевременной CMS-локализации.
+3. Подключить `vue-i18n` к Nuxt и добавить locale state/switcher на уровне app/editor shell.
+4. Передать локаль и словари в `createEditorConfig`, tools, tunes и field builders.
+5. Реализовать сохранение текущего editor state перед пересозданием Editor.js при смене языка.
+6. Проверить `ru/en` UI, save/load, preview, Import JSON, validation errors, masks demo block, `Reset draft` и `Export JSON`.
+7. Запустить `npm run check`.
+
+## Критерии готовности этапа
+
+- Editor shell и editor-related UI доступны минимум на русском и английском языках.
+- Editor.js получает согласованные `i18n.messages`.
+- Custom tools, tunes и plain/rich field UI используют локализуемые строки.
+- Смена языка не меняет content JSON schema и не теряет текущий draft.
+- Save/load, Import JSON, validation, masks, preview, `Reset draft` и `Export JSON` остаются работоспособными.
+- `npm run check` проходит.
+
+Следующий крупный этап после завершения Локализации UI редактора: Light/Dark theme.
+
+## Последний завершённый этап
 
 ### Masks
 
 Статус: завершён.
 
-Цель этапа: определить и реализовать минимально необходимые input masks для текущих plain fields, если в существующем UI есть поля, где маска действительно улучшает ввод и не ломает данные.
+Цель этапа: определить и реализовать минимально необходимые input masks для текущих plain fields, если в существующем UI есть поля, где маска действительно улучшает
+ввод и не ломает данные.
 
-В scope входят:
+В scope вошли:
 
 1. Анализ текущих plain fields и custom blocks на предмет реально нужных masks.
 2. Создание отдельного demo-only custom block для проверки masked field scenarios: phone, date, time, price, card и email.
@@ -36,7 +84,7 @@
 4. Подключение masks только к релевантным plain fields и demo block без изменения основной content JSON schema.
 5. Проверка, что masks не ломают validation, save/load, Import JSON и renderer.
 
-Вне scope этапа:
+Вне scope этапа остались:
 
 - i18n, theme switching и расширенная keyboard navigation.
 - добавление masks "про запас" без реального поля;
@@ -47,7 +95,8 @@
 ## План этапа
 
 1. Проанализировать текущие поля на наличие phone/date/email/slug-like сценариев, где нужна маска — выполнено.
-2. Зафиксировать текущий вывод: в существующих доменных блоках реальный кандидат только slug-like `galleryId`; phone/date/time/price/card/email полей пока нет — выполнено.
+2. Зафиксировать текущий вывод: в существующих доменных блоках реальный кандидат только slug-like `galleryId`; phone/date/time/price/card/email полей пока нет —
+   выполнено.
 3. Добавить demo-only custom block `MaskedFieldsDemo` для проверки phone, date, time, price, card и email inputs — выполнено.
 4. Решить по результатам demo block, требуется ли `imask` на текущем этапе — выполнено; для demo phone/date/time/price/card/email scenarios подключён `imask`.
 5. Если требуется, добавить минимальную интеграцию в plain field system с lifecycle cleanup — выполнено.
@@ -63,15 +112,21 @@
 - Validation, save/load, Import JSON и renderer не ломаются.
 - `npm run check` проходит.
 
-Итог: Masks завершён. Добавлена зависимость `imask`, `createPlainTextField` получил опциональную mask-конфигурацию и lifecycle cleanup через `destroy()`. Добавлен demo-only custom block `maskedFieldsDemo` с полями phone, date, time, price, card и email, поддержкой save/load/import guard и простым renderer-выводом. Demo block добавлен в `content/default-page.json`, чтобы сценарий был виден в стартовом контенте. `npm run check` проходит с существующими предупреждениями `vue/no-v-html`; ручная browser-проверка save/load/preview/export/import/reset подтверждена.
+Итог: Masks завершён. Добавлена зависимость `imask`, `createPlainTextField` получил опциональную mask-конфигурацию и lifecycle cleanup через `destroy()`. Добавлен
+demo-only custom block `maskedFieldsDemo` с полями phone, date, time, price, card и email, поддержкой save/load/import guard и простым renderer-выводом. Demo block
+добавлен в `content/default-page.json`, чтобы сценарий был виден в стартовом контенте. `npm run check` проходит с существующими предупреждениями `vue/no-v-html`;
+ручная browser-проверка save/load/preview/export/import/reset подтверждена.
 
-## Последний завершённый этап
+Следующий крупный этап после завершения Masks: Локализация UI редактора.
+
+## Предыдущий завершённый этап
 
 ### Валидация
 
 Статус: завершён.
 
-Цель этапа: добавить базовую validation policy для plain fields и rich/nested field scenarios, чтобы ошибки отображались предсказуемо и критичные ошибки могли ограничивать сохранение/экспорт без изменения content JSON schema.
+Цель этапа: добавить базовую validation policy для plain fields и rich/nested field scenarios, чтобы ошибки отображались предсказуемо и критичные ошибки могли
+ограничивать сохранение/экспорт без изменения content JSON schema.
 
 В scope вошли:
 
@@ -111,7 +166,11 @@
 - Import JSON, `Reset draft` и preview workflow продолжают работать.
 - `npm run check` проходит.
 
-Итог: Валидация завершена. Добавлен shared validation layer для текущих custom blocks, field-level ошибки подключены в `Notice`, `SectionIntro`, `TwoColumns` и `MediaGallery`, editor save и preview export блокируются при критичных ошибках. SVG data URL для существующего demo media content признан допустимым media URL. После ручной проверки исправлены UX-регрессии: dropdown/delete доступен у невалидных блоков, ошибки очищаются при изменении полей, вложенные editor holders получают красную рамку при ошибке, а переход на preview доступен даже при content validation errors. `npm run check` проходит; ручная browser-проверка validation UX подтверждена.
+Итог: Валидация завершена. Добавлен shared validation layer для текущих custom blocks, field-level ошибки подключены в `Notice`, `SectionIntro`, `TwoColumns` и
+`MediaGallery`, editor save и preview export блокируются при критичных ошибках. SVG data URL для существующего demo media content признан допустимым media URL. После
+ручной проверки исправлены UX-регрессии: dropdown/delete доступен у невалидных блоков, ошибки очищаются при изменении полей, вложенные editor holders получают
+красную рамку при ошибке, а переход на preview доступен даже при content validation errors. `npm run check` проходит; ручная browser-проверка validation UX
+подтверждена.
 
 Следующий крупный этап после завершения Валидации: Masks.
 
@@ -121,7 +180,8 @@
 
 Статус: завершён.
 
-Цель этапа: добавить ручной import JSON как поздний utility-сценарий, чтобы пользователь мог подставить внешний `EditorContentData` в editor/localStorage workflow без бэкенда.
+Цель этапа: добавить ручной import JSON как поздний utility-сценарий, чтобы пользователь мог подставить внешний `EditorContentData` в editor/localStorage workflow
+без бэкенда.
 
 В scope входят:
 
@@ -157,7 +217,10 @@
 - `Export JSON` и `Reset draft` продолжают работать.
 - `npm run check` проходит.
 
-Итог: Import JSON завершён. Добавлен shared parse/validate helper на существующем `isKnownEditorContentData`, composable action для записи imported content в `localStorage` draft, import UI на editor и preview страницах с paste/file сценариями, сообщениями об успехе и ошибках. Editor-страница пересоздаёт `Editor.js` после успешного import, preview сразу перерисовывает renderer из draft. Review-замечания по несохранённым editor-правкам, reset-сообщениям и чтению файла исправлены. `npm run check` проходит; ручная browser-проверка подтверждена.
+Итог: Import JSON завершён. Добавлен shared parse/validate helper на существующем `isKnownEditorContentData`, composable action для записи imported content в
+`localStorage` draft, import UI на editor и preview страницах с paste/file сценариями, сообщениями об успехе и ошибках. Editor-страница пересоздаёт `Editor.js` после
+успешного import, preview сразу перерисовывает renderer из draft. Review-замечания по несохранённым editor-правкам, reset-сообщениям и чтению файла исправлены.
+`npm run check` проходит; ручная browser-проверка подтверждена.
 
 Следующий крупный этап после завершения Import JSON: Валидация.
 
@@ -167,7 +230,8 @@
 
 Статус: завершён.
 
-Цель этапа: реализовать первую navigation-подсистему, которая строит плоский список ссылок из JSON editor content, используя `AnchorTune` и `LabelTune`, без сканирования итогового DOM.
+Цель этапа: реализовать первую navigation-подсистему, которая строит плоский список ссылок из JSON editor content, используя `AnchorTune` и `LabelTune`, без
+сканирования итогового DOM.
 
 В scope входят:
 
@@ -209,7 +273,9 @@
 - Базовый preview layout остаётся работоспособным на desktop и mobile.
 - `npm run check` проходит.
 
-Итог: sidebar navigation из JSON завершён. Добавлены shared helper для итогового block anchor id, flat navigation builder из `EditorContentData`, renderer/sidebar component и подключение на preview странице. Navigation строится только из блоков с `AnchorTune.anchor` и `LabelTune.label`; дубликаты anchor получают те же suffix-id, что и renderer blocks. `npm run check` проходит; ручная browser-проверка подтвердила работоспособность этапа.
+Итог: sidebar navigation из JSON завершён. Добавлены shared helper для итогового block anchor id, flat navigation builder из `EditorContentData`, renderer/sidebar
+component и подключение на preview странице. Navigation строится только из блоков с `AnchorTune.anchor` и `LabelTune.label`; дубликаты anchor получают те же
+suffix-id, что и renderer blocks. `npm run check` проходит; ручная browser-проверка подтвердила работоспособность этапа.
 
 Следующий крупный этап после завершения sidebar navigation: Import JSON.
 
@@ -219,7 +285,8 @@
 
 Статус: завершён.
 
-Цель этапа: реализовать первый обязательный media composite block с режимами `slider` и `gallery`, отдельными media fields для карточек, стабильным save/load/render и базовым viewer behavior.
+Цель этапа: реализовать первый обязательный media composite block с режимами `slider` и `gallery`, отдельными media fields для карточек, стабильным save/load/render
+и базовым viewer behavior.
 
 В scope вошли:
 
@@ -238,7 +305,8 @@
 
 1. Проанализировать текущие field helpers, rich fields, renderer mapping и image/embed contracts перед выбором минимальной data schema — выполнено.
 2. Спроектировать shared-типы и normalizers для media block, media card и media item — выполнено.
-3. Подготовить минимальные `createImageField` / `createVideoField` или общий media field helper на базе existing plain field system — выполнено как локальный media card UI на plain/rich fields без nested Editor.js для media.
+3. Подготовить минимальные `createImageField` / `createVideoField` или общий media field helper на базе existing plain field system — выполнено как локальный media
+   card UI на plain/rich fields без nested Editor.js для media.
 4. Реализовать Editor.js tool UI для настроек блока и управления массивом карточек — выполнено.
 5. Подключить media block в Editor.js config/toolbox и draft guard — выполнено.
 6. Добавить renderer component для `gallery` режима и `slider` режима на Swiper — выполнено.
@@ -260,7 +328,10 @@
 - Preview, `Export JSON` и `Reset draft` работают с новым block type.
 - `npm run check` проходит.
 
-Итог: первый media gallery / slider block завершён. Добавлены shared-типы и normalizers `MediaGalleryBlockData`, registry entry, draft guard, `MediaGalleryTool`, renderer-компонент `EditorMediaGalleryBlock`, Swiper/Fancybox styles, зависимости `swiper` и `@fancyapps/ui`, а также отдельные gallery/slider examples в `content/default-page.json`. `npm run check` и `npm run build` проходят; ручная browser-проверка подтвердила создание и редактирование media block, переключение `gallery/slider`, add/remove/reorder карточек, save/reload/render, export/reset draft, Swiper navigation и Fancybox viewer.
+Итог: первый media gallery / slider block завершён. Добавлены shared-типы и normalizers `MediaGalleryBlockData`, registry entry, draft guard, `MediaGalleryTool`,
+renderer-компонент `EditorMediaGalleryBlock`, Swiper/Fancybox styles, зависимости `swiper` и `@fancyapps/ui`, а также отдельные gallery/slider examples в
+`content/default-page.json`. `npm run check` и `npm run build` проходят; ручная browser-проверка подтвердила создание и редактирование media block, переключение
+`gallery/slider`, add/remove/reorder карточек, save/reload/render, export/reset draft, Swiper navigation и Fancybox viewer.
 
 ## Предыдущий завершённый этап
 
@@ -268,9 +339,11 @@
 
 Статус: завершён.
 
-Цель этапа: реализовать кастомный inline tool для цвета текста и проверить его совместимость с уже подключёнными стандартными inline tools, основным editor и rich/nested editor scenarios.
+Цель этапа: реализовать кастомный inline tool для цвета текста и проверить его совместимость с уже подключёнными стандартными inline tools, основным editor и
+rich/nested editor scenarios.
 
-Выбранный tool: text color inline tool, потому что по `SPEC.md` стандартный `Marker` уже покрывает цвет фона текста, а следующим обязательным расширением должен стать собственный inline tool для цвета текста.
+Выбранный tool: text color inline tool, потому что по `SPEC.md` стандартный `Marker` уже покрывает цвет фона текста, а следующим обязательным расширением должен
+стать собственный inline tool для цвета текста.
 
 В scope входят:
 
@@ -317,7 +390,9 @@
 - Preview, `Export JSON` и `Reset draft` работают с новым inline markup.
 - `npm run check` проходит.
 
-Итог: custom inline tools завершён. Добавлены shared-контракт палитры, Editor.js inline tool, подключение в основной editor и nested/rich editor configs, renderer sanitizer, стили editor/renderer и demo content. `npm run check` проходит; ручная browser-проверка подтвердила применение text color, корректное отображение в редакторе и renderer, save/reload/render и совместимость с существующими inline tools.
+Итог: custom inline tools завершён. Добавлены shared-контракт палитры, Editor.js inline tool, подключение в основной editor и nested/rich editor configs, renderer
+sanitizer, стили editor/renderer и demo content. `npm run check` проходит; ручная browser-проверка подтвердила применение text color, корректное отображение в
+редакторе и renderer, save/reload/render и совместимость с существующими inline tools.
 
 Следующий крупный этап после завершения custom inline tools: media gallery / slider block.
 
@@ -327,9 +402,11 @@
 
 Статус: завершён.
 
-Цель этапа: реализовать первый composite block с двумя независимыми nested editor containers и проверить стабильный lifecycle многоконтейнерного блока: `create -> edit -> save -> reload -> render`.
+Цель этапа: реализовать первый composite block с двумя независимыми nested editor containers и проверить стабильный lifecycle многоконтейнерного блока:
+`create -> edit -> save -> reload -> render`.
 
-Выбранный блок: `TwoColumns`, потому что по `SPEC.md` он является первым обязательным composite scenario после nested editor и rich fields. Он проверяет работу нескольких nested editor instances внутри одного custom block без перехода к media gallery / slider и поздним UX-слоям.
+Выбранный блок: `TwoColumns`, потому что по `SPEC.md` он является первым обязательным composite scenario после nested editor и rich fields. Он проверяет работу
+нескольких nested editor instances внутри одного custom block без перехода к media gallery / slider и поздним UX-слоям.
 
 В scope входят:
 
@@ -378,7 +455,9 @@
 - Удаление и перемещение блока не оставляют сломанных nested editor instances.
 - `npm run check` проходит.
 
-Итог: `TwoColumns` добавлен как первый composite block. Реализованы shared data contract, normalization/guard, registry entry, Editor.js tool с двумя nested editor instances, renderer, стили и demo content. `npm run check` проходит; ручная browser-проверка подтвердила create/edit/save/reload/render, удаление и перемещение блока, export JSON и reset draft.
+Итог: `TwoColumns` добавлен как первый composite block. Реализованы shared data contract, normalization/guard, registry entry, Editor.js tool с двумя nested editor
+instances, renderer, стили и demo content. `npm run check` проходит; ручная browser-проверка подтвердила create/edit/save/reload/render, удаление и перемещение
+блока, export JSON и reset draft.
 
 Следующий крупный этап после завершения `TwoColumns`: custom inline tools.
 
@@ -388,7 +467,8 @@
 
 Статус: завершён.
 
-Итог: подготовлена минимальная reusable plain field system в `editor/admin/fields`; реализованы text/URL input, textarea, select, radio group, boolean toggle и file/image-oriented value contracts. `npm run check` проходит.
+Итог: подготовлена минимальная reusable plain field system в `editor/admin/fields`; реализованы text/URL input, textarea, select, radio group, boolean toggle и
+file/image-oriented value contracts. `npm run check` проходит.
 
 ## Завершённый этап
 
@@ -398,7 +478,8 @@
 
 Цель этапа: реализовать один простой custom block без nested editors и проверить полный цикл `create -> edit -> save -> reload -> render`.
 
-Выбранный первый блок: `Notice`, потому что он проверяет data type, tool class, plain field UI, save/load и renderer без раннего перехода к media workflow, rich fields или nested Editor.js.
+Выбранный первый блок: `Notice`, потому что он проверяет data type, tool class, plain field UI, save/load и renderer без раннего перехода к media workflow, rich
+fields или nested Editor.js.
 
 В scope входят:
 
@@ -441,7 +522,8 @@
 - Некорректные значения `Notice.type` не ломают editor и preview.
 - `npm run check` проходит.
 
-Итог: первый вертикальный срез custom block завершён. `Notice` реализован через shared type/normalization, Editor.js tool на plain fields, renderer, draft guard и demo content; ручная browser-проверка подтвердила create/edit/save/reload/render, export JSON и reset draft. `npm run check` проходит.
+Итог: первый вертикальный срез custom block завершён. `Notice` реализован через shared type/normalization, Editor.js tool на plain fields, renderer, draft guard и
+demo content; ручная browser-проверка подтвердила create/edit/save/reload/render, export JSON и reset draft. `npm run check` проходит.
 
 ## Последний завершённый этап
 
@@ -449,9 +531,11 @@
 
 Статус: этап завершён.
 
-Цель этапа: реализовать первый простой custom block с одним nested Editor.js instance и проверить single-purpose rich field lifecycle без перехода к composite blocks.
+Цель этапа: реализовать первый простой custom block с одним nested Editor.js instance и проверить single-purpose rich field lifecycle без перехода к composite
+blocks.
 
-Выбранный блок: `SectionIntro`, потому что он естественно проверяет rich text поле для вводного текста, но остаётся достаточно простым: один plain title и одно rich paragraph field. `TwoColumns`, media workflow и reusable rich fields на этом этапе оставались следующими шагами.
+Выбранный блок: `SectionIntro`, потому что он естественно проверяет rich text поле для вводного текста, но остаётся достаточно простым: один plain title и одно rich
+paragraph field. `TwoColumns`, media workflow и reusable rich fields на этом этапе оставались следующими шагами.
 
 В scope входят:
 
@@ -501,7 +585,9 @@
 - Preview, `Export JSON` и `Reset draft` работают с новым block type.
 - `npm run check` проходит.
 
-Итог: первый nested editor block / первый single-purpose rich field завершён. `SectionIntro` реализован через shared type/normalization, Editor.js tool с plain title и вложенным paragraph-only editor, renderer, draft guard и demo content; ручная browser-проверка подтвердила create/edit/save/reload/render, destroy, export JSON и reset draft. Конфликты `Enter` и слоёв dropdown/tune между внешним и вложенным editor исправлены.
+Итог: первый nested editor block / первый single-purpose rich field завершён. `SectionIntro` реализован через shared type/normalization, Editor.js tool с plain title
+и вложенным paragraph-only editor, renderer, draft guard и demo content; ручная browser-проверка подтвердила create/edit/save/reload/render, destroy, export JSON и
+reset draft. Конфликты `Enter` и слоёв dropdown/tune между внешним и вложенным editor исправлены.
 
 ## Последний завершённый этап
 
@@ -509,7 +595,8 @@
 
 Статус: завершён.
 
-Цель этапа: вынести проверенный nested editor lifecycle из single-purpose `SectionIntro` в минимальную reusable rich field system, пригодную для следующих custom blocks и composite blocks.
+Цель этапа: вынести проверенный nested editor lifecycle из single-purpose `SectionIntro` в минимальную reusable rich field system, пригодную для следующих custom
+blocks и composite blocks.
 
 В scope входят:
 
@@ -552,7 +639,9 @@
 - Nested editor instances корректно уничтожаются.
 - `npm run check` проходит.
 
-Итог: добавлены reusable `RichParagraphField` и `RichHeaderField`, общий helper nested rich editor lifecycle, shared-типы и normalizers для rich paragraph/header data, renderer helper для rich field content. `SectionIntro` переведён на `RichParagraphField` без изменения JSON-схемы `description`. `npm run check` проходит; ручная browser-проверка подтвердила runtime lifecycle через `SectionIntro`.
+Итог: добавлены reusable `RichParagraphField` и `RichHeaderField`, общий helper nested rich editor lifecycle, shared-типы и normalizers для rich paragraph/header
+data, renderer helper для rich field content. `SectionIntro` переведён на `RichParagraphField` без изменения JSON-схемы `description`. `npm run check` проходит;
+ручная browser-проверка подтвердила runtime lifecycle через `SectionIntro`.
 
 Следующий крупный этап после ручного подтверждения: composite blocks / `TwoColumns`.
 
@@ -597,10 +686,14 @@
 
 - Bootstrap Nuxt 4 и структура директорий — завершено.
 - Shared-слой и registry-основа — завершено.
-- Editor shell и источник данных — завершено: реализованы editor shell, preview shell, загрузка данных с приоритетом `localStorage` draft -> `content/default-page.json`, подключены `Editor.js` runtime и стандартные block tools.
-- Стандартные inline tools — завершено: inline tools подключены, ручная проверка базовых комбинаций выполнена, embed caption получил inline toolbar и manual toolbox-вставку YouTube URL.
-- Renderer и базовый JSON workflow — завершено: renderer-слой и preview-страница уже были реализованы ранее, теперь добавлены UX-действия `Export JSON` и `Reset draft`.
-- Code quality и deployment — завершено: code quality tooling настроен в начале проекта, Husky pre-commit hook подключён к `npm run check`; static build и GitHub Pages deployment реализованы через `nuxt generate` и GitHub Actions.
+- Editor shell и источник данных — завершено: реализованы editor shell, preview shell, загрузка данных с приоритетом `localStorage` draft ->
+  `content/default-page.json`, подключены `Editor.js` runtime и стандартные block tools.
+- Стандартные inline tools — завершено: inline tools подключены, ручная проверка базовых комбинаций выполнена, embed caption получил inline toolbar и manual
+  toolbox-вставку YouTube URL.
+- Renderer и базовый JSON workflow — завершено: renderer-слой и preview-страница уже были реализованы ранее, теперь добавлены UX-действия `Export JSON` и
+  `Reset draft`.
+- Code quality и deployment — завершено: code quality tooling настроен в начале проекта, Husky pre-commit hook подключён к `npm run check`; static build и GitHub
+  Pages deployment реализованы через `nuxt generate` и GitHub Actions.
 
 ### Базовые Block Tunes
 
