@@ -17,6 +17,7 @@ import {
   getBlockAnchorId,
   getAllowedEmbedIframeUrl,
   getKnownBlockTuneData,
+  normalizeMaskedFieldsDemoBlockData,
   normalizeMediaGalleryBlockData,
   normalizeNoticeBlockData,
   normalizeSectionIntroBlockData,
@@ -97,6 +98,12 @@ function isMediaGalleryBlock(
   block: EditorContentBlock,
 ): block is EditorBlock<'mediaGallery'> {
   return block.type === 'mediaGallery'
+}
+
+function isMaskedFieldsDemoBlock(
+  block: EditorContentBlock,
+): block is EditorBlock<'maskedFieldsDemo'> {
+  return block.type === 'maskedFieldsDemo'
 }
 
 function asEditorContentData(data: TwoColumnsContentData): EditorContentData {
@@ -335,6 +342,38 @@ function getBlockStyle(
           :data="normalizeMediaGalleryBlockData(block.data)"
           :fallback-gallery-id="`media-gallery-${block.id ?? index}`"
         />
+
+        <section
+          v-else-if="isMaskedFieldsDemoBlock(block)"
+          :class="$style.maskedFieldsDemo"
+        >
+          <dl :class="$style.maskedFieldsDemoList">
+            <div>
+              <dt>Phone</dt>
+              <dd>{{ normalizeMaskedFieldsDemoBlockData(block.data).phone || '-' }}</dd>
+            </div>
+            <div>
+              <dt>Date</dt>
+              <dd>{{ normalizeMaskedFieldsDemoBlockData(block.data).date || '-' }}</dd>
+            </div>
+            <div>
+              <dt>Time</dt>
+              <dd>{{ normalizeMaskedFieldsDemoBlockData(block.data).time || '-' }}</dd>
+            </div>
+            <div>
+              <dt>Price</dt>
+              <dd>{{ normalizeMaskedFieldsDemoBlockData(block.data).price || '-' }}</dd>
+            </div>
+            <div>
+              <dt>Card</dt>
+              <dd>{{ normalizeMaskedFieldsDemoBlockData(block.data).card || '-' }}</dd>
+            </div>
+            <div>
+              <dt>Email</dt>
+              <dd>{{ normalizeMaskedFieldsDemoBlockData(block.data).email || '-' }}</dd>
+            </div>
+          </dl>
+        </section>
 
         <pre
           v-else

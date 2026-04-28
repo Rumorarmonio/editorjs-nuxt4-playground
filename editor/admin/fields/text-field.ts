@@ -1,3 +1,4 @@
+import IMask from 'imask'
 import { applyFieldControlState, createPlainFieldWrapper } from './field-ui'
 import type { PlainFieldControl, PlainTextFieldOptions } from './types'
 
@@ -5,6 +6,7 @@ export function createPlainTextField(
   options: PlainTextFieldOptions,
 ): PlainFieldControl<string, HTMLInputElement> {
   const input = document.createElement('input')
+  const mask = options.mask ? IMask(input, options.mask) : null
 
   input.className = 'editor-plain-field__control'
   input.type = 'text'
@@ -20,9 +22,16 @@ export function createPlainTextField(
     input.inputMode = options.inputMode
   }
 
-  input.addEventListener('input', () => {
-    options.onChange(input.value)
-  })
+  if (mask) {
+    mask.value = options.value
+    mask.on('accept', () => {
+      options.onChange(mask.value)
+    })
+  } else {
+    input.addEventListener('input', () => {
+      options.onChange(input.value)
+    })
+  }
 
   const wrapper = createPlainFieldWrapper({
     ...options,
@@ -32,13 +41,21 @@ export function createPlainTextField(
   return {
     root: wrapper.root,
     control: input,
-    getValue: () => input.value,
+    getValue: () => mask?.value ?? input.value,
     setValue(value) {
+      if (mask) {
+        mask.value = value
+        return
+      }
+
       input.value = value
     },
     setError: wrapper.setError,
     setDisabled: wrapper.setDisabled,
     setReadOnly: wrapper.setReadOnly,
+    destroy() {
+      mask?.destroy()
+    },
   }
 }
 

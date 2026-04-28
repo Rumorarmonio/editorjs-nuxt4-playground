@@ -577,6 +577,29 @@
           "label": "Media slider"
         }
       }
+    },
+    {
+      "id": "masked-fields-demo-block",
+      "type": "maskedFieldsDemo",
+      "data": {
+        "phone": "+1 (555) 123-4567",
+        "date": "04/29/2026",
+        "time": "14:30",
+        "price": "$1,299.99",
+        "card": "4242 4242 4242 4242",
+        "email": "editor@example.com"
+      },
+      "tunes": {
+        "anchor": {
+          "anchor": "masked-fields-demo"
+        },
+        "spacing": {
+          "top": "large"
+        },
+        "label": {
+          "label": "Masked fields demo"
+        }
+      }
     }
   ]
 }

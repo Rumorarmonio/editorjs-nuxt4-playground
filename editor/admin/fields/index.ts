@@ -32,6 +32,7 @@ export type {
   PlainRadioGroupFieldOptions,
   PlainSelectFieldOptions,
   PlainTextareaFieldOptions,
+  PlainTextFieldMaskOptions,
   PlainTextFieldOptions,
   PlainToggleFieldOptions,
   PlainUrlFieldOptions,

@@ -36,6 +36,7 @@
     "@editorjs/underline": "^1.2.1",
     "@fancyapps/ui": "^6.1.13",
     "@sotaproject/strikethrough": "^1.0.1",
+    "imask": "^7.6.1",
     "nuxt": "^4.4.2",
     "swiper": "^12.1.3"
   },

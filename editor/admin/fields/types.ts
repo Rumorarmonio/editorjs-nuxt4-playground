@@ -1,4 +1,8 @@
+import type { FactoryArg } from 'imask'
+
 export type PlainFieldChangeHandler<TValue> = (value: TValue) => void
+
+export type PlainTextFieldMaskOptions = FactoryArg
 
 export interface PlainFieldBaseOptions<TValue> {
   name: string
@@ -28,6 +32,7 @@ export interface PlainFieldControl<
   setError: (error?: string) => void
   setDisabled: (disabled: boolean) => void
   setReadOnly: (readOnly: boolean) => void
+  destroy?: () => void
 }
 
 export interface PlainTextFieldOptions
@@ -35,6 +40,7 @@ export interface PlainTextFieldOptions
   placeholder?: string
   autocomplete?: string
   inputMode?: HTMLInputElement['inputMode']
+  mask?: PlainTextFieldMaskOptions
 }
 
 export interface PlainTextareaFieldOptions

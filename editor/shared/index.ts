@@ -4,6 +4,7 @@ export {
   normalizeNoticeBlockData,
   normalizeMediaGalleryBlockData,
   normalizeMediaGalleryItemData,
+  normalizeMaskedFieldsDemoBlockData,
   normalizeRichHeaderFieldData,
   normalizeRichParagraphFieldData,
   normalizeSectionIntroBlockData,
@@ -78,6 +79,7 @@ export type {
 } from './blocks/standard-block-data'
 export type {
   CustomBlockDataMap,
+  MaskedFieldsDemoBlockData,
   MediaGalleryBlockData,
   MediaGalleryItemData,
   MediaGalleryItemType,

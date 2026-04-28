@@ -225,6 +225,38 @@
   direction: ltr;
 }
 
+.maskedFieldsDemo {
+  padding: 16px;
+  background: #fbfcfb;
+  border: 1px dashed var(--color-border);
+  border-radius: 6px;
+}
+
+.maskedFieldsDemoList {
+  display: grid;
+  gap: 10px 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+
+  > div {
+    min-width: 0;
+  }
+
+  dt {
+    margin: 0 0 4px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono',
+      monospace;
+  }
+}
+
 .unsupported {
   margin: 0;
   padding: 14px;
@@ -244,5 +276,9 @@
 
   .twoColumnsReversed {
     direction: ltr;
+  }
+
+  .maskedFieldsDemoList {
+    grid-template-columns: 1fr;
   }
 }

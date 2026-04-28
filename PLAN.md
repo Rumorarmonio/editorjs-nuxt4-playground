@@ -18,13 +18,13 @@
 - Sidebar navigation из JSON завершён.
 - Import JSON завершён.
 - Валидация завершена.
-- Активный этап: Masks.
+- Активный этап: Masks завершён.
 
 ## Активный этап
 
 ### Masks
 
-Статус: активный.
+Статус: завершён.
 
 Цель этапа: определить и реализовать минимально необходимые input masks для текущих plain fields, если в существующем UI есть поля, где маска действительно улучшает ввод и не ломает данные.
 
@@ -46,13 +46,13 @@
 
 ## План этапа
 
-1. Проанализировать текущие поля на наличие phone/date/email/slug-like сценариев, где нужна маска.
-2. Зафиксировать текущий вывод: в существующих доменных блоках реальный кандидат только slug-like `galleryId`; phone/date/time/price/card/email полей пока нет.
-3. Добавить demo-only custom block `MaskedFieldsDemo` для проверки phone, date, time, price, card и email inputs.
-4. Решить по результатам demo block, требуется ли `imask` на текущем этапе.
-5. Если требуется, добавить минимальную интеграцию в plain field system с lifecycle cleanup.
-6. Проверить UX ввода, save/load, Import JSON, `Reset draft` и `Export JSON`.
-7. Запустить `npm run check`.
+1. Проанализировать текущие поля на наличие phone/date/email/slug-like сценариев, где нужна маска — выполнено.
+2. Зафиксировать текущий вывод: в существующих доменных блоках реальный кандидат только slug-like `galleryId`; phone/date/time/price/card/email полей пока нет — выполнено.
+3. Добавить demo-only custom block `MaskedFieldsDemo` для проверки phone, date, time, price, card и email inputs — выполнено.
+4. Решить по результатам demo block, требуется ли `imask` на текущем этапе — выполнено; для demo phone/date/time/price/card/email scenarios подключён `imask`.
+5. Если требуется, добавить минимальную интеграцию в plain field system с lifecycle cleanup — выполнено.
+6. Проверить UX ввода, save/load, Import JSON, `Reset draft` и `Export JSON` — выполнено; ручная browser-проверка подтверждена.
+7. Запустить `npm run check` — выполнено.
 
 ## Критерии готовности этапа
 
@@ -62,6 +62,8 @@
 - Masks не меняют content JSON schema.
 - Validation, save/load, Import JSON и renderer не ломаются.
 - `npm run check` проходит.
+
+Итог: Masks завершён. Добавлена зависимость `imask`, `createPlainTextField` получил опциональную mask-конфигурацию и lifecycle cleanup через `destroy()`. Добавлен demo-only custom block `maskedFieldsDemo` с полями phone, date, time, price, card и email, поддержкой save/load/import guard и простым renderer-выводом. Demo block добавлен в `content/default-page.json`, чтобы сценарий был виден в стартовом контенте. `npm run check` проходит с существующими предупреждениями `vue/no-v-html`; ручная browser-проверка save/load/preview/export/import/reset подтверждена.
 
 ## Последний завершённый этап
 

@@ -88,11 +88,21 @@ export interface MediaGalleryBlockData {
   items: MediaGalleryItemData[]
 }
 
+export interface MaskedFieldsDemoBlockData {
+  phone: string
+  date: string
+  time: string
+  price: string
+  card: string
+  email: string
+}
+
 export interface CustomBlockDataMap {
   notice: NoticeBlockData
   sectionIntro: SectionIntroBlockData
   twoColumns: TwoColumnsBlockData
   mediaGallery: MediaGalleryBlockData
+  maskedFieldsDemo: MaskedFieldsDemoBlockData
 }
 
 export function normalizeNoticeBlockData(value: unknown): NoticeBlockData {
@@ -227,6 +237,23 @@ export function normalizeMediaGalleryItemData(
   }
 }
 
+export function normalizeMaskedFieldsDemoBlockData(
+  value: unknown,
+): MaskedFieldsDemoBlockData {
+  if (!isRecord(value)) {
+    return createDefaultMaskedFieldsDemoBlockData()
+  }
+
+  return {
+    phone: normalizePlainValue(value.phone),
+    date: normalizePlainValue(value.date),
+    time: normalizePlainValue(value.time),
+    price: normalizePlainValue(value.price),
+    card: normalizePlainValue(value.card),
+    email: normalizePlainValue(value.email),
+  }
+}
+
 export function isSectionIntroBlockData(
   value: unknown,
 ): value is SectionIntroBlockData {
@@ -321,6 +348,20 @@ export function isMediaGalleryItemData(
   )
 }
 
+export function isMaskedFieldsDemoBlockData(
+  value: unknown,
+): value is MaskedFieldsDemoBlockData {
+  return (
+    isRecord(value) &&
+    typeof value.phone === 'string' &&
+    typeof value.date === 'string' &&
+    typeof value.time === 'string' &&
+    typeof value.price === 'string' &&
+    typeof value.card === 'string' &&
+    typeof value.email === 'string'
+  )
+}
+
 function createDefaultNoticeBlockData(): NoticeBlockData {
   return {
     title: '',
@@ -385,6 +426,17 @@ function createDefaultMediaGalleryItemData(): MediaGalleryItemData {
     alt: '',
     caption: '',
     description: createDefaultRichParagraphFieldData(),
+  }
+}
+
+function createDefaultMaskedFieldsDemoBlockData(): MaskedFieldsDemoBlockData {
+  return {
+    phone: '',
+    date: '',
+    time: '',
+    price: '',
+    card: '',
+    email: '',
   }
 }
 

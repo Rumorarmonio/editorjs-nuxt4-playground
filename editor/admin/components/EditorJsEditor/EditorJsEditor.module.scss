@@ -451,13 +451,30 @@
     cursor: default;
   }
 
+  :global(.editor-masked-fields-demo-tool) {
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+    background: #fbfcfb;
+    border: 1px dashed var(--color-border);
+    border-radius: 6px;
+  }
+
+  :global(.editor-masked-fields-demo-tool__fields) {
+    display: grid;
+    align-items: end;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   @media (width <= 720px) {
     :global(.editor-two-columns-tool__controls),
     :global(.editor-two-columns-tool__columns),
     :global(.editor-two-columns-tool__columns[data-layout='leftWide']),
     :global(.editor-two-columns-tool__columns[data-layout='rightWide']),
     :global(.editor-media-gallery-tool__settings),
-    :global(.editor-media-gallery-tool__card-fields) {
+    :global(.editor-media-gallery-tool__card-fields),
+    :global(.editor-masked-fields-demo-tool__fields) {
       grid-template-columns: 1fr;
     }
 

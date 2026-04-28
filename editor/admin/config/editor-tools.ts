@@ -12,6 +12,7 @@ import { NoticeToolConstructable } from '~~/editor/admin/tools/blocks/NoticeTool
 import { SectionIntroToolConstructable } from '~~/editor/admin/tools/blocks/SectionIntroTool'
 import { TwoColumnsToolConstructable } from '~~/editor/admin/tools/blocks/TwoColumnsTool'
 import { MediaGalleryToolConstructable } from '~~/editor/admin/tools/blocks/MediaGalleryTool'
+import { MaskedFieldsDemoToolConstructable } from '~~/editor/admin/tools/blocks/MaskedFieldsDemoTool'
 import { editorBlockTuneNames } from '~~/editor/shared'
 
 export const editorInlineToolbar = [
@@ -108,6 +109,7 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
     sectionIntro: SectionIntroToolConstructable,
     twoColumns: TwoColumnsToolConstructable,
     mediaGallery: MediaGalleryToolConstructable,
+    maskedFieldsDemo: MaskedFieldsDemoToolConstructable,
     marker: {
       class: Marker as unknown as ToolConstructable,
       shortcut: 'CMD+SHIFT+M',
