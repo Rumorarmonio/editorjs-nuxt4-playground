@@ -20,9 +20,57 @@ deployment.
 - Import JSON завершён.
 - Валидация завершена.
 - Masks завершён.
-- Активный этап: Локализация UI редактора завершён.
+- Локализация UI редактора завершена.
+- Активный этап: Light/Dark theme.
 
 ## Активный этап
+
+### Light/Dark theme
+
+Статус: активен.
+
+Цель этапа: добавить рабочий слой светлой/тёмной темы для editor shell, базового Editor.js UI, custom tools и renderer/preview UI без изменения content JSON schema.
+
+В scope входят:
+
+1. Theme state на уровне приложения/editor shell с сохранением пользовательского выбора.
+2. Theme tokens и CSS variables для светлой базовой темы и тёмной темы.
+3. Переключатель темы в editor/preview shell по текущему UI-паттерну проекта.
+4. Overrides для базового Editor.js UI, toolbar, popover, inline toolbar, tunes и control states.
+5. Темизация custom tools, plain/rich fields, validation errors, masks demo block, media gallery/slider и sidebar navigation.
+6. Минимальная проверка Swiper/Fancybox и preview renderer в обеих темах.
+
+Вне scope этапа:
+
+- изменение content JSON schema;
+- полноценная theme engine уровня CMS;
+- изменение дизайн-системы и крупный визуальный редизайн;
+- расширенная keyboard navigation и accessibility polish;
+- новые custom blocks, validation rules или media workflow;
+- многоязычный content model.
+
+## План этапа
+
+1. Проанализировать текущие SCSS tokens, CSS variables, editor global styles, component modules и сторонние CSS imports.
+2. Спроектировать минимальный theme state/composable и правило применения темы к app root без изменения content data.
+3. Добавить theme tokens/CSS variables для shell, renderer, fields, custom tools и editor-specific global styles.
+4. Подключить UI theme switcher на editor и preview страницах.
+5. Добавить Editor.js UI overrides для light/dark, включая toolbar, popovers, inline toolbar, block controls, selection, focus и error states.
+6. Пройти custom scenarios: Notice, SectionIntro, TwoColumns, MediaGallery/Swiper/Fancybox, MaskedFieldsDemo, Import JSON, validation errors и sidebar navigation.
+7. Запустить соразмерные проверки проекта после стилевых и TypeScript-изменений.
+
+## Критерии готовности этапа
+
+- Editor shell и preview shell корректно переключаются между light/dark.
+- Выбор темы сохраняется и восстанавливается без изменения content JSON schema.
+- Базовый Editor.js UI читаем и функционален в обеих темах.
+- Custom tools, plain/rich fields, validation errors, masks demo block, media gallery/slider и sidebar navigation читаемы в обеих темах.
+- Save/load, Import JSON, validation, masks, preview, `Reset draft` и `Export JSON` остаются работоспособными.
+- Соразмерные проверки проекта проходят.
+
+Следующий крупный этап после завершения Light/Dark theme: Клавиатурная навигация и accessibility polish.
+
+## Последний завершённый этап
 
 ### Локализация UI редактора
 
@@ -30,7 +78,7 @@ deployment.
 
 Цель этапа: подключить минимальный слой локализации UI редактора и editor shell на `ru/en` без изменения content JSON schema.
 
-В scope входят:
+В scope вошли:
 
 1. Подключение `vue-i18n` на уровне Nuxt/Vue-приложения.
 2. Создание словарей `ru/en` для editor shell и editor-related UI strings.
@@ -38,7 +86,7 @@ deployment.
 4. Перенос строк editor shell, tools, tunes и custom field UI в локализуемые словари без изменения content JSON.
 5. Минимальный сценарий смены языка: сохранить текущий editor state, пересоздать Editor.js instance и не потерять draft.
 
-Вне scope этапа:
+Вне scope этапа остались:
 
 - многоязычный content model и хранение нескольких языковых версий контента;
 - обязательный бесшовный live switch без переинициализации Editor.js;
@@ -69,7 +117,7 @@ deployment.
 
 Итог: Локализация UI редактора завершена. Добавлена зависимость `vue-i18n`, Nuxt plugin, locale state с сохранением в `localStorage`, словари `ru/en` для app shell и editor UI, Editor.js `i18n.messages` mapping, локализация custom tools, tunes, field UI, validation/import сообщений и переключатели языка на editor/preview страницах. При смене языка editor-страница сохраняет текущий state в draft и пересоздаёт Editor.js с новым словарём. Post-review fixes внесены; ручная browser-проверка подтвердила работоспособность этапа. `npm run check` проходит с существующими предупреждениями `vue/no-v-html`; `npm run build` проходит.
 
-## Последний завершённый этап
+## Предыдущий завершённый этап
 
 ### Masks
 
