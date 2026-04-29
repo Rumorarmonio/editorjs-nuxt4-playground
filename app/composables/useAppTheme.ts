@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, onMounted, watch } from 'vue'
+import { computed, watch, type Ref } from 'vue'
 
 export type AppTheme = 'system' | 'light' | 'dark'
 type ResolvedAppTheme = 'light' | 'dark'
@@ -6,6 +6,7 @@ type ResolvedAppTheme = 'light' | 'dark'
 const themeStorageKey = 'editorjs-vue3-theme'
 const defaultTheme: AppTheme = 'system'
 const themeMediaQuery = '(prefers-color-scheme: dark)'
+let isThemeRuntimeInitialized = false
 
 export const appThemeOptions = [
   'system',
@@ -25,8 +26,21 @@ function getSystemTheme(): ResolvedAppTheme {
   return window.matchMedia(themeMediaQuery).matches ? 'dark' : 'light'
 }
 
-function resolveTheme(theme: AppTheme): ResolvedAppTheme {
-  return theme === 'system' ? getSystemTheme() : theme
+function getStoredTheme(): AppTheme {
+  if (!import.meta.client) {
+    return defaultTheme
+  }
+
+  const storedTheme = window.localStorage.getItem(themeStorageKey)
+
+  return isAppTheme(storedTheme) ? storedTheme : defaultTheme
+}
+
+function resolveTheme(
+  theme: AppTheme,
+  systemTheme: ResolvedAppTheme,
+): ResolvedAppTheme {
+  return theme === 'system' ? systemTheme : theme
 }
 
 function applyTheme(theme: ResolvedAppTheme, preference: AppTheme): void {
@@ -39,13 +53,39 @@ function applyTheme(theme: ResolvedAppTheme, preference: AppTheme): void {
   document.documentElement.style.colorScheme = theme
 }
 
+function initializeThemeRuntime(
+  theme: Ref<AppTheme>,
+  systemTheme: Ref<ResolvedAppTheme>,
+): void {
+  if (!import.meta.client || isThemeRuntimeInitialized) {
+    return
+  }
+
+  const mediaQueryList = window.matchMedia(themeMediaQuery)
+  const updateSystemTheme = (): void => {
+    systemTheme.value = mediaQueryList.matches ? 'dark' : 'light'
+  }
+
+  isThemeRuntimeInitialized = true
+  theme.value = getStoredTheme()
+  updateSystemTheme()
+  mediaQueryList.addEventListener('change', updateSystemTheme)
+
+  watch(
+    [theme, systemTheme],
+    ([nextTheme, nextSystemTheme]) => {
+      applyTheme(resolveTheme(nextTheme, nextSystemTheme), nextTheme)
+    },
+    { immediate: true },
+  )
+}
+
 export function useAppTheme() {
-  const theme = useState<AppTheme>('app-theme', () => defaultTheme)
+  const theme = useState<AppTheme>('app-theme', getStoredTheme)
   const systemTheme = useState<ResolvedAppTheme>(
     'app-system-theme',
-    () => 'light',
+    getSystemTheme,
   )
-  let removeSystemThemeListener: (() => void) | null = null
   const currentTheme = computed(() => theme.value)
   const resolvedTheme = computed<ResolvedAppTheme>(() =>
     theme.value === 'system' ? systemTheme.value : theme.value,
@@ -59,38 +99,7 @@ export function useAppTheme() {
     }
   }
 
-  onMounted(() => {
-    const mediaQueryList = window.matchMedia(themeMediaQuery)
-    const updateSystemTheme = (): void => {
-      systemTheme.value = mediaQueryList.matches ? 'dark' : 'light'
-    }
-    const storedTheme = window.localStorage.getItem(themeStorageKey)
-
-    updateSystemTheme()
-
-    if (isAppTheme(storedTheme)) {
-      theme.value = storedTheme
-    }
-
-    mediaQueryList.addEventListener('change', updateSystemTheme)
-    applyTheme(resolveTheme(theme.value), theme.value)
-
-    removeSystemThemeListener = () => {
-      mediaQueryList.removeEventListener('change', updateSystemTheme)
-    }
-  })
-
-  onBeforeUnmount(() => {
-    removeSystemThemeListener?.()
-  })
-
-  watch(
-    [theme, systemTheme],
-    ([nextTheme]) => {
-      applyTheme(resolveTheme(nextTheme), nextTheme)
-    },
-    { immediate: import.meta.client },
-  )
+  initializeThemeRuntime(theme, systemTheme)
 
   return {
     appThemeOptions,
