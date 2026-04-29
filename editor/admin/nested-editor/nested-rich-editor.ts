@@ -4,6 +4,7 @@ import type {
   EditorOutputBlock,
   EditorOutputData,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 
 export interface NestedRichEditorOptions<
   TData extends EditorOutputData<EditorOutputBlock>,
@@ -66,6 +67,7 @@ export function createNestedRichEditor<
       holder,
       data: cloneRichEditorData(initialData),
       tools,
+      i18n: getCurrentEditorMessages().editorJs,
       inlineToolbar: options.inlineToolbar,
       defaultBlock: options.defaultBlock,
       readOnly: options.readOnly,

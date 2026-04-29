@@ -5,6 +5,7 @@
     "app/**/*",
     "content/**/*.json",
     "editor/**/*",
+    "i18n/**/*",
     "nuxt.config.*",
     "server/**/*",
     "shared/**/*"

@@ -14,12 +14,12 @@ import {
   normalizeMaskedFieldsDemoBlockData,
   type MaskedFieldsDemoBlockData,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 
 type MaskedFieldName = keyof MaskedFieldsDemoBlockData
 
 interface MaskedFieldConfig {
   name: MaskedFieldName
-  label: string
   placeholder: string
   inputMode?: HTMLInputElement['inputMode']
   autocomplete?: string
@@ -29,7 +29,6 @@ interface MaskedFieldConfig {
 const maskedFieldConfigs: readonly MaskedFieldConfig[] = [
   {
     name: 'phone',
-    label: 'Phone',
     placeholder: '+1 (555) 123-4567',
     inputMode: 'tel',
     autocomplete: 'tel',
@@ -39,7 +38,6 @@ const maskedFieldConfigs: readonly MaskedFieldConfig[] = [
   },
   {
     name: 'date',
-    label: 'Date',
     placeholder: '04/29/2026',
     inputMode: 'numeric',
     autocomplete: 'off',
@@ -49,7 +47,6 @@ const maskedFieldConfigs: readonly MaskedFieldConfig[] = [
   },
   {
     name: 'time',
-    label: 'Time',
     placeholder: '14:30',
     inputMode: 'numeric',
     autocomplete: 'off',
@@ -59,7 +56,6 @@ const maskedFieldConfigs: readonly MaskedFieldConfig[] = [
   },
   {
     name: 'price',
-    label: 'Price',
     placeholder: '$1,299.99',
     inputMode: 'decimal',
     autocomplete: 'off',
@@ -79,7 +75,6 @@ const maskedFieldConfigs: readonly MaskedFieldConfig[] = [
   },
   {
     name: 'card',
-    label: 'Card',
     placeholder: '4242 4242 4242 4242',
     inputMode: 'numeric',
     autocomplete: 'cc-number',
@@ -89,7 +84,6 @@ const maskedFieldConfigs: readonly MaskedFieldConfig[] = [
   },
   {
     name: 'email',
-    label: 'Email',
     placeholder: 'editor@example.com',
     inputMode: 'email',
     autocomplete: 'email',
@@ -111,8 +105,10 @@ export default class MaskedFieldsDemoTool implements BlockTool {
   >()
 
   static get toolbox(): ToolboxConfig {
+    const messages = getCurrentEditorMessages()
+
     return {
-      title: 'Masked fields demo',
+      title: messages.tools.maskedFieldsDemo.toolboxTitle,
       icon: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M3.75 2.75h10.5A1.75 1.75 0 0 1 16 4.5v9a1.75 1.75 0 0 1-1.75 1.75H3.75A1.75 1.75 0 0 1 2 13.5v-9a1.75 1.75 0 0 1 1.75-1.75Zm0 1.5a.25.25 0 0 0-.25.25v1h11v-1a.25.25 0 0 0-.25-.25H3.75Zm10.75 2.75h-11v6.5c0 .14.11.25.25.25h10.5c.14 0 .25-.11.25-.25V7ZM5 9h2.5v1.5H5V9Zm4 0h4v1.5H9V9Zm-4 2.5h5v1.5H5v-1.5Z"/></svg>',
     }
   }
@@ -130,6 +126,7 @@ export default class MaskedFieldsDemoTool implements BlockTool {
   render(): HTMLElement {
     const wrapper = document.createElement('div')
     const fieldsRoot = document.createElement('div')
+    const messages = getCurrentEditorMessages()
 
     wrapper.className = 'editor-masked-fields-demo-tool'
     fieldsRoot.className = 'editor-masked-fields-demo-tool__fields'
@@ -137,7 +134,7 @@ export default class MaskedFieldsDemoTool implements BlockTool {
     maskedFieldConfigs.forEach((config) => {
       const field = createPlainTextField({
         name: `masked-fields-demo-${config.name}`,
-        label: config.label,
+        label: messages.tools.maskedFieldsDemo.fields[config.name],
         value: this.data[config.name],
         placeholder: config.placeholder,
         inputMode: config.inputMode,

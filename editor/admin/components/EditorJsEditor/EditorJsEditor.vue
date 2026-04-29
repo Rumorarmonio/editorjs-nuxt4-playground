@@ -13,9 +13,11 @@ import {
   validateEditorContentData,
   type EditorContentData,
 } from '~~/editor/shared'
+import type { EditorUiMessages } from '~~/i18n'
 
 const props = defineProps<{
   initialData: EditorContentData
+  editorMessages: EditorUiMessages
 }>()
 
 const emit = defineEmits<{
@@ -43,15 +45,16 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
     const savedContent: unknown = await editor.value.save()
 
     if (!isKnownEditorContentData(savedContent)) {
-      errorMessage.value =
-        'Saved data contains block types that are not registered.'
+      errorMessage.value = props.editorMessages.core.unknownBlocksError
       return false
     }
 
     const duplicateAnchorValues = getDuplicateAnchorValues(savedContent.blocks)
 
     if (duplicateAnchorValues.length > 0) {
-      errorMessage.value = `Anchor values must be unique: ${duplicateAnchorValues.join(', ')}.`
+      errorMessage.value = props.editorMessages.core.duplicateAnchorsError(
+        duplicateAnchorValues.join(', '),
+      )
       return false
     }
 
@@ -71,15 +74,26 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
   } catch (error) {
     errorMessage.value =
       error instanceof Error && error.message.includes('validation errors')
-        ? 'Editor content has validation errors.'
-        : 'Editor content could not be saved.'
+        ? props.editorMessages.core.validationSaveError
+        : props.editorMessages.core.saveError
     return false
   } finally {
     isSaving.value = false
   }
 }
 
+async function getCurrentContent(): Promise<EditorContentData | null> {
+  if (!editor.value) {
+    return null
+  }
+
+  const savedContent: unknown = await editor.value.save()
+
+  return isKnownEditorContentData(savedContent) ? savedContent : null
+}
+
 defineExpose({
+  getCurrentContent,
   save,
 })
 
@@ -91,7 +105,7 @@ onMounted(async () => {
   try {
     const [{ default: EditorJS }, tools] = await Promise.all([
       import('@editorjs/editorjs'),
-      createEditorTools(),
+      createEditorTools(props.editorMessages),
     ])
 
     const instance = new EditorJS({
@@ -101,7 +115,8 @@ onMounted(async () => {
       tunes: editorBlockTunes,
       inlineToolbar: editorInlineToolbar,
       autofocus: true,
-      placeholder: 'Write content or press Tab to open the block toolbar',
+      i18n: props.editorMessages.editorJs,
+      placeholder: props.editorMessages.core.placeholder,
       onChange: () => {
         emit('changed')
       },
@@ -111,7 +126,7 @@ onMounted(async () => {
     await instance.isReady
     isReady.value = true
   } catch {
-    errorMessage.value = 'Editor.js could not be initialized.'
+    errorMessage.value = props.editorMessages.core.initError
   }
 })
 
@@ -135,7 +150,7 @@ function cloneEditorContent(content: EditorContentData): EditorContentData {
       v-if="!isReady && !errorMessage"
       :class="$style.status"
     >
-      Loading editor
+      {{ editorMessages.core.loading }}
     </p>
     <p
       v-if="errorMessage"

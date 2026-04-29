@@ -20,13 +20,13 @@ deployment.
 - Import JSON завершён.
 - Валидация завершена.
 - Masks завершён.
-- Активный этап: Локализация UI редактора.
+- Активный этап: Локализация UI редактора завершён.
 
 ## Активный этап
 
 ### Локализация UI редактора
 
-Статус: активный.
+Статус: завершён.
 
 Цель этапа: подключить минимальный слой локализации UI редактора и editor shell на `ru/en` без изменения content JSON schema.
 
@@ -48,13 +48,13 @@ deployment.
 
 ## План этапа
 
-1. Проанализировать текущие hardcoded UI strings в app shell, Editor.js config, custom tools, tunes и field builders.
-2. Спроектировать минимальную структуру словарей `i18n/locales` и `i18n/editor` без преждевременной CMS-локализации.
-3. Подключить `vue-i18n` к Nuxt и добавить locale state/switcher на уровне app/editor shell.
-4. Передать локаль и словари в `createEditorConfig`, tools, tunes и field builders.
-5. Реализовать сохранение текущего editor state перед пересозданием Editor.js при смене языка.
-6. Проверить `ru/en` UI, save/load, preview, Import JSON, validation errors, masks demo block, `Reset draft` и `Export JSON`.
-7. Запустить `npm run check`.
+1. Проанализировать текущие hardcoded UI strings в app shell, Editor.js config, custom tools, tunes и field builders — выполнено.
+2. Спроектировать минимальную структуру словарей `i18n/locales` и `i18n/editor` без преждевременной CMS-локализации — выполнено.
+3. Подключить `vue-i18n` к Nuxt и добавить locale state/switcher на уровне app/editor shell — выполнено.
+4. Передать локаль и словари в `createEditorConfig`, tools, tunes и field builders — выполнено.
+5. Реализовать сохранение текущего editor state перед пересозданием Editor.js при смене языка — выполнено.
+6. Проверить `ru/en` UI, save/load, preview, Import JSON, validation errors, masks demo block, `Reset draft` и `Export JSON` — выполнено через `npm run check`, `npm run build` и ручную browser-проверку.
+7. Запустить `npm run check` — выполнено.
 
 ## Критерии готовности этапа
 
@@ -66,6 +66,8 @@ deployment.
 - `npm run check` проходит.
 
 Следующий крупный этап после завершения Локализации UI редактора: Light/Dark theme.
+
+Итог: Локализация UI редактора завершена. Добавлена зависимость `vue-i18n`, Nuxt plugin, locale state с сохранением в `localStorage`, словари `ru/en` для app shell и editor UI, Editor.js `i18n.messages` mapping, локализация custom tools, tunes, field UI, validation/import сообщений и переключатели языка на editor/preview страницах. При смене языка editor-страница сохраняет текущий state в draft и пересоздаёт Editor.js с новым словарём. Post-review fixes внесены; ручная browser-проверка подтвердила работоспособность этапа. `npm run check` проходит с существующими предупреждениями `vue/no-v-html`; `npm run build` проходит.
 
 ## Последний завершённый этап
 

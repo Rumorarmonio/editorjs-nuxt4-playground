@@ -137,7 +137,10 @@ export type {
   SpacingTuneData,
   SpacingTuneValue,
 } from './tunes/block-tunes'
-export type { DraftStorage } from './entities/draft-source'
+export type {
+  DraftStorage,
+  ParseEditorContentJsonMessages,
+} from './entities/draft-source'
 export type {
   TextColorInlineName,
   TextColorInlineOption,

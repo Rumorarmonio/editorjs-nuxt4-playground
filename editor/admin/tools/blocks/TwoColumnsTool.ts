@@ -26,22 +26,19 @@ import {
   type TwoColumnsContentData,
   type TwoColumnsLayoutVariant,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 
 const layoutOptions = [
   {
-    label: 'Equal columns',
     value: 'equal',
   },
   {
-    label: 'Left wide',
     value: 'leftWide',
   },
   {
-    label: 'Right wide',
     value: 'rightWide',
   },
 ] as const satisfies ReadonlyArray<{
-  label: string
   value: TwoColumnsLayoutVariant
 }>
 
@@ -63,8 +60,10 @@ export default class TwoColumnsTool implements BlockTool {
   private rightColumnField: PlainFieldWrapper | null = null
 
   static get toolbox(): ToolboxConfig {
+    const messages = getCurrentEditorMessages()
+
     return {
-      title: 'Two columns',
+      title: messages.tools.twoColumns.toolboxTitle,
       icon: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M2.75 3h5.5v12h-5.5V3Zm7 0h5.5v12h-5.5V3Zm-5.5 1.5v9h2.5v-9h-2.5Zm7 0v9h2.5v-9h-2.5Z"/></svg>',
     }
   }
@@ -81,6 +80,7 @@ export default class TwoColumnsTool implements BlockTool {
     const wrapper = document.createElement('div')
     const controls = document.createElement('div')
     const columns = document.createElement('div')
+    const messages = getCurrentEditorMessages()
 
     wrapper.className = 'editor-two-columns-tool'
     controls.className = 'editor-two-columns-tool__controls'
@@ -88,10 +88,13 @@ export default class TwoColumnsTool implements BlockTool {
 
     this.layoutField = createPlainSelectField({
       name: 'two-columns-layout',
-      label: 'Layout',
+      label: messages.tools.twoColumns.layoutLabel,
       value: this.data.layout,
       readOnly: this.readOnly,
-      options: layoutOptions,
+      options: layoutOptions.map((option) => ({
+        ...option,
+        label: messages.tools.twoColumns.layoutOptions[option.value],
+      })),
       onChange: (value) => {
         this.data.layout = value
         this.syncLayoutAttributes(columns)
@@ -101,7 +104,7 @@ export default class TwoColumnsTool implements BlockTool {
 
     this.reversedField = createPlainToggleField({
       name: 'two-columns-reversed',
-      label: 'Reverse on render',
+      label: messages.tools.twoColumns.reverseLabel,
       value: this.data.isReversed,
       readOnly: this.readOnly,
       onChange: (value) => {
@@ -116,11 +119,13 @@ export default class TwoColumnsTool implements BlockTool {
 
     controls.append(this.layoutField.root, this.reversedField.root)
     this.leftColumnField = this.createColumnWrapper(
-      'Left column',
+      'left',
+      messages.tools.twoColumns.leftColumnLabel,
       this.leftEditor,
     )
     this.rightColumnField = this.createColumnWrapper(
-      'Right column',
+      'right',
+      messages.tools.twoColumns.rightColumnLabel,
       this.rightEditor,
     )
 
@@ -173,7 +178,7 @@ export default class TwoColumnsTool implements BlockTool {
       inlineToolbar: nestedRichFieldInlineToolbar,
       normalizeData: normalizeTwoColumnsContentData,
       createTools: createNestedColumnTools,
-      placeholder: 'Add paragraph, heading, or list',
+      placeholder: getCurrentEditorMessages().tools.twoColumns.placeholder,
       onChange: () => {
         this.leftColumnField?.setError(undefined)
         this.rightColumnField?.setError(undefined)
@@ -183,11 +188,12 @@ export default class TwoColumnsTool implements BlockTool {
   }
 
   private createColumnWrapper(
+    name: string,
     label: string,
     editor: NestedRichEditor<TwoColumnsContentData>,
   ): PlainFieldWrapper {
     return createPlainFieldWrapper({
-      name: `two-columns-${label.toLowerCase().replaceAll(' ', '-')}`,
+      name: `two-columns-${name}`,
       label,
       readOnly: this.readOnly,
       control: editor.holder,

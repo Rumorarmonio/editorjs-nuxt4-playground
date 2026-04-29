@@ -49,6 +49,14 @@
   gap: 12px;
 }
 
+.localeSwitcher {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .editorLink,
 .secondaryButton {
   display: inline-flex;
@@ -78,6 +86,12 @@
     opacity: 0.55;
     cursor: not-allowed;
   }
+}
+
+.activeLocaleButton {
+  color: #fff;
+  background: var(--color-text);
+  border-color: var(--color-text);
 }
 
 .success,
@@ -167,6 +181,10 @@
   .actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .localeSwitcher {
+    justify-content: stretch;
   }
 
   .importHeader,

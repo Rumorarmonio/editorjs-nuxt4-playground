@@ -1,0 +1,40 @@
+export const en = {
+  app: {
+    locale: {
+      label: 'Interface language',
+    },
+    common: {
+      loading: 'Loading',
+      loaded: 'Loaded',
+      source: 'Source',
+      blocks: 'Blocks',
+      status: 'Status',
+      chooseFile: 'Choose file',
+      importJson: 'Import JSON',
+      importPastedJson: 'Import pasted JSON',
+      importPlaceholder: 'Paste EditorContentData JSON',
+      importSuccess: 'JSON imported to local draft.',
+      importBrowserOnly: 'Import is available only in the browser.',
+      importReadError: 'JSON file could not be read.',
+      importSchemaError: 'JSON must match the current EditorContentData schema.',
+      importParseError: 'JSON could not be parsed.',
+      localDraft: 'Local draft',
+      defaultJson: 'Default JSON',
+    },
+    editorPage: {
+      kicker: 'Editor shell',
+      title: 'Content draft',
+      openPreview: 'Open preview',
+      saveDraft: 'Save draft',
+      saveSuccess: 'Draft saved locally.',
+      importConfirm: 'Import JSON and discard unsaved editor changes?',
+    },
+    previewPage: {
+      kicker: 'Preview shell',
+      title: 'Rendered content',
+      exportJson: 'Export JSON',
+      resetDraft: 'Reset draft',
+      backToEditor: 'Back to editor',
+    },
+  },
+}

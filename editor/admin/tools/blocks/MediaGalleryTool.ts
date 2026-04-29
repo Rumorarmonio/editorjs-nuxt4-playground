@@ -27,6 +27,7 @@ import {
   type MediaGalleryMode,
   type RichParagraphFieldData,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 
 interface MediaCardControls {
   root: HTMLElement
@@ -39,14 +40,12 @@ interface MediaCardControls {
 
 const modeOptions = mediaGalleryModes.map((mode) => {
   return {
-    label: mode === 'gallery' ? 'Gallery grid' : 'Slider',
     value: mode,
   }
 })
 
 const itemTypeOptions = mediaGalleryItemTypes.map((type) => {
   return {
-    label: type === 'image' ? 'Image' : 'Video',
     value: type,
   }
 })
@@ -70,8 +69,10 @@ export default class MediaGalleryTool implements BlockTool {
   private cardControls: MediaCardControls[] = []
 
   static get toolbox(): ToolboxConfig {
+    const messages = getCurrentEditorMessages()
+
     return {
-      title: 'Media gallery',
+      title: messages.tools.mediaGallery.toolboxTitle,
       icon: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.25A1.25 1.25 0 0 1 4.25 3h9.5A1.25 1.25 0 0 1 15 4.25v9.5A1.25 1.25 0 0 1 13.75 15h-9.5A1.25 1.25 0 0 1 3 13.75v-9.5Zm1.5.25v7.58l2.2-2.2a1 1 0 0 1 1.42 0l1.02 1.02 2.74-2.74a1 1 0 0 1 1.42 0l.2.2V4.5h-9Zm9 5.98-.9-.9-3.46 3.46-1.73-1.73-2.09 2.09h8.18v-2.92ZM6.75 7.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/></svg>',
     }
   }
@@ -89,6 +90,7 @@ export default class MediaGalleryTool implements BlockTool {
     const settings = document.createElement('div')
     const actions = document.createElement('div')
     const addButton = document.createElement('button')
+    const messages = getCurrentEditorMessages()
 
     wrapper.className = 'editor-media-gallery-tool'
     settings.className = 'editor-media-gallery-tool__settings'
@@ -102,10 +104,13 @@ export default class MediaGalleryTool implements BlockTool {
 
     this.modeField = createPlainSelectField<MediaGalleryMode>({
       name: 'media-gallery-mode',
-      label: 'Mode',
+      label: messages.tools.mediaGallery.modeLabel,
       value: this.data.mode,
       readOnly: this.readOnly,
-      options: modeOptions,
+      options: modeOptions.map((option) => ({
+        ...option,
+        label: messages.tools.mediaGallery.modeOptions[option.value],
+      })),
       onChange: (value) => {
         this.data.mode = value
         this.dispatchChange()
@@ -114,10 +119,10 @@ export default class MediaGalleryTool implements BlockTool {
 
     this.galleryIdField = createPlainTextField({
       name: 'media-gallery-id',
-      label: 'Gallery ID',
+      label: messages.tools.mediaGallery.galleryIdLabel,
       value: this.data.galleryId,
       readOnly: this.readOnly,
-      placeholder: 'project-gallery',
+      placeholder: messages.tools.mediaGallery.galleryIdPlaceholder,
       onChange: (value) => {
         this.data.galleryId = value
         this.galleryIdField?.setError(undefined)
@@ -127,7 +132,7 @@ export default class MediaGalleryTool implements BlockTool {
 
     this.fancyboxField = createPlainToggleField({
       name: 'media-gallery-fancybox',
-      label: 'Enable viewer',
+      label: messages.tools.mediaGallery.enableViewerLabel,
       value: this.data.enableFancybox,
       readOnly: this.readOnly,
       onChange: (value) => {
@@ -138,7 +143,7 @@ export default class MediaGalleryTool implements BlockTool {
 
     this.urlSyncField = createPlainToggleField({
       name: 'media-gallery-url-sync',
-      label: 'Sync URL',
+      label: messages.tools.mediaGallery.syncUrlLabel,
       value: this.data.syncUrlWithFancybox,
       readOnly: this.readOnly,
       onChange: (value) => {
@@ -149,7 +154,7 @@ export default class MediaGalleryTool implements BlockTool {
 
     addButton.className = 'editor-media-gallery-tool__button'
     addButton.type = 'button'
-    addButton.textContent = 'Add card'
+    addButton.textContent = messages.tools.mediaGallery.addCardButton
     addButton.disabled = this.readOnly
     addButton.addEventListener('click', () => {
       void this.addCard()
@@ -217,19 +222,26 @@ export default class MediaGalleryTool implements BlockTool {
     item: MediaGalleryItemData,
     index: number,
   ): MediaCardControls {
+    const messages = getCurrentEditorMessages()
     const root = document.createElement('section')
     const header = document.createElement('div')
     const title = document.createElement('p')
     const buttons = document.createElement('div')
-    const moveUpButton = this.createCardButton('Move up')
-    const moveDownButton = this.createCardButton('Move down')
-    const removeButton = this.createCardButton('Remove')
+    const moveUpButton = this.createCardButton(
+      messages.tools.mediaGallery.moveUpButton,
+    )
+    const moveDownButton = this.createCardButton(
+      messages.tools.mediaGallery.moveDownButton,
+    )
+    const removeButton = this.createCardButton(
+      messages.tools.mediaGallery.removeButton,
+    )
     const fields = document.createElement('div')
 
     root.className = 'editor-media-gallery-tool__card'
     header.className = 'editor-media-gallery-tool__card-header'
     title.className = 'editor-media-gallery-tool__card-title'
-    title.textContent = `Card ${index + 1}`
+    title.textContent = messages.tools.mediaGallery.cardTitle(index)
     buttons.className = 'editor-media-gallery-tool__card-buttons'
     fields.className = 'editor-media-gallery-tool__card-fields'
 
@@ -249,10 +261,13 @@ export default class MediaGalleryTool implements BlockTool {
 
     const type = createPlainSelectField<MediaGalleryItemType>({
       name: `media-gallery-${item.id}-type`,
-      label: 'Media type',
+      label: messages.tools.mediaGallery.mediaTypeLabel,
       value: item.type,
       readOnly: this.readOnly,
-      options: itemTypeOptions,
+      options: itemTypeOptions.map((option) => ({
+        ...option,
+        label: messages.tools.mediaGallery.itemTypeOptions[option.value],
+      })),
       onChange: (value) => {
         item.type = value
         if (value === 'video') {
@@ -267,10 +282,10 @@ export default class MediaGalleryTool implements BlockTool {
 
     const url = createPlainUrlField({
       name: `media-gallery-${item.id}-url`,
-      label: 'Media URL',
+      label: messages.tools.mediaGallery.mediaUrlLabel,
       value: item.url,
       readOnly: this.readOnly,
-      placeholder: 'https://example.com/media.jpg',
+      placeholder: messages.tools.mediaGallery.mediaUrlPlaceholder,
       onChange: (value) => {
         item.url = value
         url.setError(undefined)
@@ -280,10 +295,10 @@ export default class MediaGalleryTool implements BlockTool {
 
     const alt = createPlainTextField({
       name: `media-gallery-${item.id}-alt`,
-      label: 'Alt text',
+      label: messages.tools.mediaGallery.altLabel,
       value: item.alt,
       readOnly: this.readOnly,
-      placeholder: 'Describe the image',
+      placeholder: messages.tools.mediaGallery.altPlaceholder,
       onChange: (value) => {
         item.alt = value
         alt.setError(undefined)
@@ -293,11 +308,11 @@ export default class MediaGalleryTool implements BlockTool {
 
     const caption = createPlainTextareaField({
       name: `media-gallery-${item.id}-caption`,
-      label: 'Caption',
+      label: messages.tools.mediaGallery.captionLabel,
       value: item.caption,
       readOnly: this.readOnly,
       rows: 2,
-      placeholder: 'Short visible caption',
+      placeholder: messages.tools.mediaGallery.captionPlaceholder,
       onChange: (value) => {
         item.caption = value
         caption.setError(undefined)
@@ -307,10 +322,10 @@ export default class MediaGalleryTool implements BlockTool {
 
     const description = createRichParagraphField({
       name: `media-gallery-${item.id}-description`,
-      label: 'Description',
+      label: messages.tools.mediaGallery.descriptionLabel,
       value: item.description,
       readOnly: this.readOnly,
-      placeholder: 'Optional rich description',
+      placeholder: messages.tools.mediaGallery.descriptionPlaceholder,
       onChange: () => {
         description.setError(undefined)
         this.dispatchChange()

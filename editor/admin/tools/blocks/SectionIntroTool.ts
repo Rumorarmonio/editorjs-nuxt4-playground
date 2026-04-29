@@ -17,6 +17,7 @@ import {
   type SectionIntroBlockData,
   type SectionIntroDescriptionData,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 
 export default class SectionIntroTool implements BlockTool {
   static isReadOnlySupported = true
@@ -29,8 +30,10 @@ export default class SectionIntroTool implements BlockTool {
     null
 
   static get toolbox(): ToolboxConfig {
+    const messages = getCurrentEditorMessages()
+
     return {
-      title: 'Section intro',
+      title: messages.tools.sectionIntro.toolboxTitle,
       icon: '<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M3 2.75h12v2H3v-2Zm0 4h8.5v1.5H3v-1.5Zm0 3h12v1.5H3v-1.5Zm0 3h9.5v1.5H3v-1.5Z"/></svg>',
     }
   }
@@ -45,14 +48,15 @@ export default class SectionIntroTool implements BlockTool {
 
   render(): HTMLElement {
     const wrapper = document.createElement('div')
+    const messages = getCurrentEditorMessages()
 
     wrapper.className = 'editor-section-intro-tool'
 
     this.titleField = createPlainTextField({
       name: 'section-intro-title',
-      label: 'Title',
+      label: messages.tools.sectionIntro.titleLabel,
       value: this.data.title,
-      placeholder: 'Section title',
+      placeholder: messages.tools.sectionIntro.titlePlaceholder,
       readOnly: this.readOnly,
       onChange: (value) => {
         this.data.title = value
@@ -63,10 +67,10 @@ export default class SectionIntroTool implements BlockTool {
 
     this.descriptionField = createRichParagraphField({
       name: 'section-intro-description',
-      label: 'Description',
+      label: messages.tools.sectionIntro.descriptionLabel,
       value: this.data.description,
       readOnly: this.readOnly,
-      placeholder: 'Write an introductory paragraph',
+      placeholder: messages.tools.sectionIntro.descriptionPlaceholder,
       onChange: () => {
         this.descriptionField?.setError(undefined)
         this.dispatchChange()

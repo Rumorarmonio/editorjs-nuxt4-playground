@@ -5,16 +5,12 @@ import {
   type SpacingTuneData,
   type SpacingTuneValue,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 import { createTunePanel, createTuneSelectField } from './tune-ui'
 
 interface SpacingTuneConstructorOptions {
   data: unknown
 }
-
-const spacingOptions = spacingTuneValues.map((value) => ({
-  value,
-  label: formatSpacingOptionLabel(value),
-}))
 
 const spacingPreviewValue: Record<SpacingTuneValue, string> = {
   none: '0',
@@ -34,11 +30,16 @@ class SpacingTune implements BlockTune {
   }
 
   render(): HTMLElement {
-    const panel = createTunePanel('Spacing')
+    const messages = getCurrentEditorMessages()
+    const spacingOptions = spacingTuneValues.map((value) => ({
+      value,
+      label: messages.tunes.spacing.options[value],
+    }))
+    const panel = createTunePanel(messages.tunes.spacing.title)
 
     panel.append(
       createTuneSelectField({
-        label: 'Top',
+        label: messages.tunes.spacing.topLabel,
         value: this.data.top ?? 'none',
         options: spacingOptions,
         onChange: (value) => {
@@ -47,7 +48,7 @@ class SpacingTune implements BlockTune {
         },
       }),
       createTuneSelectField({
-        label: 'Bottom',
+        label: messages.tunes.spacing.bottomLabel,
         value: this.data.bottom ?? 'none',
         options: spacingOptions,
         onChange: (value) => {
@@ -87,7 +88,3 @@ class SpacingTune implements BlockTune {
 
 export const SpacingTuneConstructable =
   SpacingTune as unknown as BlockTuneConstructable
-
-function formatSpacingOptionLabel(value: SpacingTuneValue): string {
-  return `${value.charAt(0).toUpperCase()}${value.slice(1)}`
-}

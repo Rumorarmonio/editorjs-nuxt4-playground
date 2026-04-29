@@ -4,6 +4,7 @@ import {
   normalizeLabelValue,
   type LabelTuneData,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 import { createTunePanel, createTuneTextField } from './tune-ui'
 
 interface LabelTuneConstructorOptions {
@@ -21,13 +22,14 @@ class LabelTune implements BlockTune {
   }
 
   render(): HTMLElement {
-    const panel = createTunePanel('Label')
+    const messages = getCurrentEditorMessages()
+    const panel = createTunePanel(messages.tunes.label.title)
 
     panel.append(
       createTuneTextField({
-        label: 'Label',
+        label: messages.tunes.label.label,
         value: this.data.label ?? '',
-        placeholder: 'Sidebar title',
+        placeholder: messages.tunes.label.placeholder,
         onInput: (value) => {
           this.data.label = normalizeLabelValue(value)
           this.syncWrapper()

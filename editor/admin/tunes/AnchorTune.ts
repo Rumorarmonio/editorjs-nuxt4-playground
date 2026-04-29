@@ -8,6 +8,7 @@ import {
   normalizeAnchorValue,
   type AnchorTuneData,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 import { createTunePanel, createTuneTextField } from './tune-ui'
 
 interface AnchorTuneConstructorOptions {
@@ -31,11 +32,12 @@ class AnchorTune implements BlockTune {
   }
 
   render(): HTMLElement {
-    const panel = createTunePanel('Anchor')
+    const messages = getCurrentEditorMessages()
+    const panel = createTunePanel(messages.tunes.anchor.title)
     const field = createTuneTextField({
-      label: 'Anchor',
+      label: messages.tunes.anchor.label,
       value: this.data.anchor ?? '',
-      placeholder: 'section-anchor',
+      placeholder: messages.tunes.anchor.placeholder,
       onInput: (value) => {
         this.data.anchor = normalizeAnchorValue(value)
         this.syncWrapper()
@@ -47,7 +49,7 @@ class AnchorTune implements BlockTune {
     const hint = document.createElement('p')
 
     hint.className = 'editor-block-tune-field__error'
-    hint.textContent = 'This anchor is already used in another block.'
+    hint.textContent = messages.tunes.anchor.duplicateError
     hint.hidden = true
 
     field.append(hint)

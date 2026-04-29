@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import defaultPageContent from '~~/content/default-page.json'
 import {
   clearEditorDraft,
@@ -6,6 +6,7 @@ import {
   resolveEditorContent,
   writeEditorDraft,
   type EditorContentData,
+  type ParseEditorContentJsonMessages,
   type ResolvedEditorContent,
 } from '~~/editor/shared'
 
@@ -23,10 +24,6 @@ export function useEditorContentSource() {
     createDefaultResolvedContent(),
   )
   const isReady = ref(false)
-
-  const sourceLabel = computed(() =>
-    resolvedContent.value.source === 'draft' ? 'Local draft' : 'Default JSON',
-  )
 
   function loadContent(): void {
     if (!import.meta.client) {
@@ -49,12 +46,17 @@ export function useEditorContentSource() {
     }
   }
 
-  function importDraftJson(serializedContent: string): string | null {
+  function importDraftJson(
+    serializedContent: string,
+    messages?: ParseEditorContentJsonMessages & {
+      browserOnlyError: string
+    },
+  ): string | null {
     if (!import.meta.client) {
-      return 'Import is available only in the browser.'
+      return messages?.browserOnlyError ?? 'Import is available only in the browser.'
     }
 
-    const result = parseEditorContentJson(serializedContent)
+    const result = parseEditorContentJson(serializedContent, messages)
 
     if (!result.content) {
       return result.error
@@ -81,6 +83,5 @@ export function useEditorContentSource() {
     resetDraft,
     resolvedContent,
     saveDraft,
-    sourceLabel,
   }
 }

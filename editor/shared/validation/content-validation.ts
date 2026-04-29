@@ -13,6 +13,10 @@ import {
 } from '~~/editor/shared/blocks/custom-block-data'
 import type { ListBlockItem } from '~~/editor/shared/blocks/standard-block-data'
 import type { EditorContentData } from '~~/editor/shared/types/content'
+import {
+  getCurrentEditorMessages,
+  type EditorValidationMessages,
+} from '~~/i18n/editor'
 
 export interface ValidationIssue {
   path: string
@@ -69,6 +73,7 @@ export function validateEditorContentData(
 
 export function validateNoticeBlockData(
   value: Partial<NoticeBlockData>,
+  messages: EditorValidationMessages = getCurrentEditorMessages().validation,
 ): ValidationResult {
   const data = normalizeNoticeBlockData(value)
   const issues: ValidationIssue[] = []
@@ -76,22 +81,37 @@ export function validateNoticeBlockData(
   if (!hasText(data.title) && !hasText(data.text)) {
     issues.push({
       path: 'title',
-      message: 'Add a title or text.',
+      message: messages.noticeContentRequired,
     })
     issues.push({
       path: 'text',
-      message: 'Add a title or text.',
+      message: messages.noticeContentRequired,
     })
   }
 
-  pushMaxLengthIssue(issues, 'title', data.title, maxNoticeTitleLength, 'Title')
-  pushMaxLengthIssue(issues, 'text', data.text, maxNoticeTextLength, 'Text')
+  pushMaxLengthIssue(
+    issues,
+    'title',
+    data.title,
+    maxNoticeTitleLength,
+    messages.fieldLabels.noticeTitle,
+    messages,
+  )
+  pushMaxLengthIssue(
+    issues,
+    'text',
+    data.text,
+    maxNoticeTextLength,
+    messages.fieldLabels.noticeText,
+    messages,
+  )
 
   return createValidationResult(issues)
 }
 
 export function validateSectionIntroBlockData(
   value: Partial<SectionIntroBlockData>,
+  messages: EditorValidationMessages = getCurrentEditorMessages().validation,
 ): ValidationResult {
   const data = normalizeSectionIntroBlockData(value)
   const issues: ValidationIssue[] = []
@@ -99,11 +119,11 @@ export function validateSectionIntroBlockData(
   if (!hasText(data.title) && !hasRichParagraphContent(data.description)) {
     issues.push({
       path: 'title',
-      message: 'Add a title or description.',
+      message: messages.sectionIntroContentRequired,
     })
     issues.push({
       path: 'description',
-      message: 'Add a title or description.',
+      message: messages.sectionIntroContentRequired,
     })
   }
 
@@ -112,7 +132,8 @@ export function validateSectionIntroBlockData(
     'title',
     data.title,
     maxSectionIntroTitleLength,
-    'Title',
+    messages.fieldLabels.sectionIntroTitle,
+    messages,
   )
 
   return createValidationResult(issues)
@@ -120,6 +141,7 @@ export function validateSectionIntroBlockData(
 
 export function validateTwoColumnsBlockData(
   value: Partial<TwoColumnsBlockData>,
+  messages: EditorValidationMessages = getCurrentEditorMessages().validation,
 ): ValidationResult {
   const data = normalizeTwoColumnsBlockData(value)
   const issues: ValidationIssue[] = []
@@ -127,11 +149,11 @@ export function validateTwoColumnsBlockData(
   if (!hasTwoColumnsContent(data.left) && !hasTwoColumnsContent(data.right)) {
     issues.push({
       path: 'left',
-      message: 'Add content to at least one column.',
+      message: messages.twoColumnsContentRequired,
     })
     issues.push({
       path: 'right',
-      message: 'Add content to at least one column.',
+      message: messages.twoColumnsContentRequired,
     })
   }
 
@@ -140,6 +162,7 @@ export function validateTwoColumnsBlockData(
 
 export function validateMediaGalleryBlockData(
   value: Partial<MediaGalleryBlockData>,
+  messages: EditorValidationMessages = getCurrentEditorMessages().validation,
 ): ValidationResult {
   const data = normalizeMediaGalleryBlockData(value)
   const issues: ValidationIssue[] = []
@@ -150,13 +173,14 @@ export function validateMediaGalleryBlockData(
       'galleryId',
       data.galleryId,
       maxGalleryIdLength,
-      'Gallery ID',
+      messages.fieldLabels.galleryId,
+      messages,
     )
 
     if (!galleryIdPattern.test(data.galleryId)) {
       issues.push({
         path: 'galleryId',
-        message: 'Use only letters, numbers, dashes, and underscores.',
+        message: messages.galleryIdPattern,
       })
     }
   }
@@ -164,12 +188,12 @@ export function validateMediaGalleryBlockData(
   if (data.items.length === 0) {
     issues.push({
       path: 'items',
-      message: 'Add at least one media card.',
+      message: messages.mediaCardsRequired,
     })
   }
 
   data.items.forEach((item, index) => {
-    issues.push(...validateMediaGalleryItem(item, index))
+    issues.push(...validateMediaGalleryItem(item, index, messages))
   })
 
   return createValidationResult(issues)
@@ -183,20 +207,23 @@ export function findValidationMessage(
 }
 
 export function getValidationSummary(result: ValidationResult): string | null {
+  const messages = getCurrentEditorMessages().validation
+
   if (result.valid) {
     return null
   }
 
   if (result.issues.length === 1) {
-    return result.issues[0]?.message ?? 'Content has validation errors.'
+    return result.issues[0]?.message ?? messages.contentValidationFallback
   }
 
-  return `Content has ${result.issues.length} validation errors.`
+  return messages.contentValidationSummary(result.issues.length)
 }
 
 function validateMediaGalleryItem(
   item: MediaGalleryItemData,
   index: number,
+  messages: EditorValidationMessages,
 ): ValidationIssue[] {
   const issues: ValidationIssue[] = []
   const basePath = `items.${index}`
@@ -204,19 +231,19 @@ function validateMediaGalleryItem(
   if (!hasText(item.url)) {
     issues.push({
       path: `${basePath}.url`,
-      message: 'Media URL is required.',
+      message: messages.mediaUrlRequired,
     })
   } else if (!isAllowedMediaUrl(item.url)) {
     issues.push({
       path: `${basePath}.url`,
-      message: 'Use a valid http, relative, blob, image data, or video data URL.',
+      message: messages.mediaUrlInvalid,
     })
   }
 
   if (item.type === 'image' && !hasText(item.alt)) {
     issues.push({
       path: `${basePath}.alt`,
-      message: 'Alt text is required for images.',
+      message: messages.mediaAltRequired,
     })
   }
 
@@ -225,14 +252,16 @@ function validateMediaGalleryItem(
     `${basePath}.alt`,
     item.alt,
     maxMediaAltLength,
-    'Alt text',
+    messages.fieldLabels.mediaAlt,
+    messages,
   )
   pushMaxLengthIssue(
     issues,
     `${basePath}.caption`,
     item.caption,
     maxMediaCaptionLength,
-    'Caption',
+    messages.fieldLabels.mediaCaption,
+    messages,
   )
 
   return issues
@@ -263,6 +292,7 @@ function pushMaxLengthIssue(
   value: string,
   maxLength: number,
   label: string,
+  messages: EditorValidationMessages,
 ): void {
   if (value.length <= maxLength) {
     return
@@ -270,7 +300,7 @@ function pushMaxLengthIssue(
 
   issues.push({
     path,
-    message: `${label} must be ${maxLength} characters or fewer.`,
+    message: messages.maxLength(label, maxLength),
   })
 }
 

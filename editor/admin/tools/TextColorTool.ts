@@ -6,6 +6,7 @@ import {
   textColorInlineOptions,
   type TextColorInlineOption,
 } from '~~/editor/shared'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 
 const textColorTag = 'SPAN'
 
@@ -23,7 +24,7 @@ export default class TextColorTool {
   }
 
   static get title(): string {
-    return 'Text color'
+    return getCurrentEditorMessages().inlineTools.textColor
   }
 
   static get sanitize(): SanitizerConfig {

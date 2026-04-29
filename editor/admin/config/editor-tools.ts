@@ -14,6 +14,11 @@ import { TwoColumnsToolConstructable } from '~~/editor/admin/tools/blocks/TwoCol
 import { MediaGalleryToolConstructable } from '~~/editor/admin/tools/blocks/MediaGalleryTool'
 import { MaskedFieldsDemoToolConstructable } from '~~/editor/admin/tools/blocks/MaskedFieldsDemoTool'
 import { editorBlockTuneNames } from '~~/editor/shared'
+import {
+  getCurrentEditorMessages,
+  setCurrentEditorMessages,
+  type EditorUiMessages,
+} from '~~/i18n/editor'
 
 export const editorInlineToolbar = [
   'bold',
@@ -28,7 +33,11 @@ export const editorInlineToolbar = [
 
 export const editorBlockTunes = [...editorBlockTuneNames]
 
-export async function createEditorTools(): Promise<EditorConfig['tools']> {
+export async function createEditorTools(
+  messages: EditorUiMessages,
+): Promise<EditorConfig['tools']> {
+  setCurrentEditorMessages(messages)
+
   const [
     { default: Header },
     { default: List },
@@ -71,8 +80,8 @@ export async function createEditorTools(): Promise<EditorConfig['tools']> {
       class: Quote as unknown as ToolConstructable,
       inlineToolbar: editorInlineToolbar,
       config: {
-        quotePlaceholder: 'Enter a quote',
-        captionPlaceholder: 'Quote caption',
+        quotePlaceholder: messages.tools.quote.quotePlaceholder,
+        captionPlaceholder: messages.tools.quote.captionPlaceholder,
       },
     },
     delimiter: Delimiter as unknown as ToolConstructable,
@@ -150,6 +159,7 @@ async function uploadLocalImageByUrl(url: string) {
 function readFileAsDataUrl(file: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
+    const messages = getCurrentEditorMessages()
 
     reader.addEventListener('load', () => {
       if (typeof reader.result === 'string') {
@@ -157,11 +167,11 @@ function readFileAsDataUrl(file: Blob): Promise<string> {
         return
       }
 
-      reject(new Error('Image file could not be read.'))
+      reject(new Error(messages.tools.embed.readError))
     })
 
     reader.addEventListener('error', () => {
-      reject(new Error('Image file could not be read.'))
+      reject(new Error(messages.tools.embed.readError))
     })
 
     reader.readAsDataURL(file)

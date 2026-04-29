@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import EditorContentRenderer from '~~/editor/renderer/components/EditorContentRenderer/EditorContentRenderer.vue'
 import EditorSidebarNavigation from '~~/editor/renderer/components/navigation/EditorSidebarNavigation/EditorSidebarNavigation.vue'
 import {
@@ -7,6 +8,10 @@ import {
   getValidationSummary,
   validateEditorContentData,
 } from '~~/editor/shared'
+import type { SupportedLocale } from '~~/i18n'
+
+const { t } = useI18n()
+const { currentLocale, setLocale, supportedLocales } = useAppLocale()
 
 const {
   importDraftJson,
@@ -14,7 +19,6 @@ const {
   loadContent,
   resetDraft,
   resolvedContent,
-  sourceLabel,
 } = useEditorContentSource()
 
 const exportFileName = 'editor-content.json'
@@ -26,6 +30,11 @@ const importFileInputRef = ref<HTMLInputElement | null>(null)
 const navigationItems = computed(() => {
   return buildFlatNavigationItems(resolvedContent.value.data)
 })
+const translatedSourceLabel = computed(() =>
+  resolvedContent.value.source === 'draft'
+    ? t('app.common.localDraft')
+    : t('app.common.defaultJson'),
+)
 
 function handleExportJson(): void {
   if (!import.meta.client) {
@@ -63,7 +72,11 @@ function handleResetDraft(): void {
 }
 
 function handleImportJson(serializedContent: string): boolean {
-  const error = importDraftJson(serializedContent)
+  const error = importDraftJson(serializedContent, {
+    browserOnlyError: t('app.common.importBrowserOnly'),
+    parseError: t('app.common.importParseError'),
+    schemaError: t('app.common.importSchemaError'),
+  })
 
   importMessage.value = null
   importError.value = error
@@ -74,7 +87,7 @@ function handleImportJson(serializedContent: string): boolean {
 
   importJsonText.value = ''
   exportError.value = null
-  importMessage.value = 'JSON imported to local draft.'
+  importMessage.value = t('app.common.importSuccess')
 
   return true
 }
@@ -99,10 +112,15 @@ async function handleImportFile(event: Event): Promise<void> {
     handleImportJson(await file.text())
   } catch {
     importMessage.value = null
-    importError.value = 'JSON file could not be read.'
+    importError.value = t('app.common.importReadError')
   } finally {
     input.value = ''
   }
+}
+
+function handleSetLocale(nextLocale: SupportedLocale): void {
+  setLocale(nextLocale)
+  exportError.value = null
 }
 
 onMounted(loadContent)
@@ -112,21 +130,42 @@ onMounted(loadContent)
   <main :class="$style.page">
     <section :class="$style.header">
       <div :class="$style.heading">
-        <p :class="$style.kicker">Preview shell</p>
-        <h1 :class="$style.title">Rendered content</h1>
+        <p :class="$style.kicker">{{ t('app.previewPage.kicker') }}</p>
+        <h1 :class="$style.title">{{ t('app.previewPage.title') }}</h1>
         <p :class="$style.meta">
-          {{ isReady ? sourceLabel : 'Loading' }}
+          {{
+            isReady ? translatedSourceLabel : t('app.common.loading')
+          }}
         </p>
       </div>
 
       <div :class="$style.actions">
+        <div
+          :class="$style.localeSwitcher"
+          :aria-label="t('app.locale.label')"
+        >
+          <button
+            v-for="item in supportedLocales"
+            :key="item.code"
+            :class="[
+              $style.secondaryButton,
+              currentLocale === item.code ? $style.activeLocaleButton : '',
+            ]"
+            type="button"
+            :aria-pressed="currentLocale === item.code"
+            @click="handleSetLocale(item.code)"
+          >
+            {{ item.label }}
+          </button>
+        </div>
+
         <button
           :class="$style.secondaryButton"
           type="button"
           :disabled="!isReady"
           @click="handleExportJson"
         >
-          Export JSON
+          {{ t('app.previewPage.exportJson') }}
         </button>
 
         <button
@@ -135,14 +174,14 @@ onMounted(loadContent)
           :disabled="!isReady || resolvedContent.source !== 'draft'"
           @click="handleResetDraft"
         >
-          Reset draft
+          {{ t('app.previewPage.resetDraft') }}
         </button>
 
         <NuxtLink
           :class="$style.editorLink"
           to="/"
         >
-          Back to editor
+          {{ t('app.previewPage.backToEditor') }}
         </NuxtLink>
 
         <p
@@ -177,7 +216,7 @@ onMounted(loadContent)
           id="import-json-title"
           :class="$style.importTitle"
         >
-          Import JSON
+          {{ t('app.common.importJson') }}
         </h2>
 
         <button
@@ -186,7 +225,7 @@ onMounted(loadContent)
           :disabled="!isReady"
           @click="handleChooseJsonFile"
         >
-          Choose file
+          {{ t('app.common.chooseFile') }}
         </button>
       </div>
 
@@ -195,7 +234,7 @@ onMounted(loadContent)
         :class="$style.importTextarea"
         rows="5"
         spellcheck="false"
-        placeholder="Paste EditorContentData JSON"
+        :placeholder="t('app.common.importPlaceholder')"
       />
 
       <input
@@ -213,7 +252,7 @@ onMounted(loadContent)
           :disabled="!isReady || importJsonText.trim().length === 0"
           @click="handleImportPastedJson"
         >
-          Import pasted JSON
+          {{ t('app.common.importPastedJson') }}
         </button>
 
         <p

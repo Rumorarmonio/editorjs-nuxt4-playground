@@ -70,8 +70,19 @@ export interface ParseEditorContentJsonResult {
   error: string | null
 }
 
+export interface ParseEditorContentJsonMessages {
+  schemaError: string
+  parseError: string
+}
+
+const defaultParseEditorContentJsonMessages: ParseEditorContentJsonMessages = {
+  schemaError: 'JSON must match the current EditorContentData schema.',
+  parseError: 'JSON could not be parsed.',
+}
+
 export function parseEditorContentJson(
   serializedContent: string,
+  messages: ParseEditorContentJsonMessages = defaultParseEditorContentJsonMessages,
 ): ParseEditorContentJsonResult {
   try {
     const parsedContent: unknown = JSON.parse(serializedContent)
@@ -79,7 +90,7 @@ export function parseEditorContentJson(
     if (!isKnownEditorContentData(parsedContent)) {
       return {
         content: null,
-        error: 'JSON must match the current EditorContentData schema.',
+        error: messages.schemaError,
       }
     }
 
@@ -90,7 +101,7 @@ export function parseEditorContentJson(
   } catch {
     return {
       content: null,
-      error: 'JSON could not be parsed.',
+      error: messages.parseError,
     }
   }
 }
