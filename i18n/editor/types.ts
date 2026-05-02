@@ -126,6 +126,10 @@ export interface EditorUiMessages {
       columnMenu: string
       rowMenu: string
     }
+    editorToolbar: {
+      addBlock: string
+      tuneBlock: string
+    }
   }
   inlineTools: {
     textColor: string

@@ -116,17 +116,35 @@
   }
 
   :global(.ce-toolbar__plus:hover),
+  :global(.ce-toolbar__plus:focus-visible),
   :global(.ce-toolbar__settings-btn:hover),
+  :global(.ce-toolbar__settings-btn:focus-visible),
   :global(.ce-popover__item:hover),
+  :global(.ce-popover__item:focus-visible),
   :global(.ce-popover__item--focused),
   :global(.ce-inline-toolbar__dropdown:hover),
+  :global(.ce-inline-toolbar__dropdown:focus-visible),
   :global(.ce-inline-tool:hover),
+  :global(.ce-inline-tool:focus-visible),
   :global(.ce-inline-tool--active),
   :global(.ce-conversion-tool:hover),
+  :global(.ce-conversion-tool:focus-visible),
   :global(.cdx-settings-button:hover),
+  :global(.cdx-settings-button:focus-visible),
   :global(.cdx-settings-button--active) {
     color: var(--color-text);
     background: var(--color-control-hover);
+  }
+
+  :global(.ce-toolbar__plus:focus-visible),
+  :global(.ce-toolbar__settings-btn:focus-visible),
+  :global(.ce-popover__item:focus-visible),
+  :global(.ce-inline-toolbar__dropdown:focus-visible),
+  :global(.ce-inline-tool:focus-visible),
+  :global(.ce-conversion-tool:focus-visible),
+  :global(.cdx-settings-button:focus-visible) {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
 
   :global(.ce-popover),

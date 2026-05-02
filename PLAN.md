@@ -22,44 +22,86 @@ deployment.
 - Masks завершён.
 - Локализация UI редактора завершена.
 - Light/Dark theme завершён.
-- Активный этап: Клавиатурная навигация и accessibility polish.
+- Клавиатурная навигация и accessibility polish завершён.
+- Активный этап: Некритичные улучшения.
 
 ## Активный этап
 
-### Клавиатурная навигация и accessibility polish
+### Некритичные улучшения
 
 Статус: активен.
 
-Цель этапа: улучшить keyboard usability и базовую доступность editor-related UI, custom tools и preview controls без изменения content JSON schema и без обещания полного
-keyboard-only покрытия всего внутреннего Editor.js UI.
+Цель этапа: довести проект до более аккуратной расширенной версии через небольшие optional improvements, не ломая уже стабильную архитектуру, content JSON schema и
+базовые editor/renderer сценарии.
 
 В scope входят:
 
-1. Аудит текущего tab-order и focus states в editor shell, preview shell, custom tools и field wrappers.
-2. Видимые focus-состояния для основных интерактивных элементов без скрытия outline без замены.
-3. Проверка и доработка keyboard-friendly поведения plain fields, toggle/select/button wrappers и editor action buttons.
-4. Улучшение keyboard-сценариев для списков карточек/слайдов в `MediaGallery` и для composite/nested field scenarios.
-5. Проверка отсутствия критичных focus traps между shell controls, Editor.js, nested editors и preview/sidebar UI.
-6. Минимальные accessibility-атрибуты там, где текущий кастомный UI не выражен нативными элементами достаточно понятно.
+1. Небольшие polished interactions, которые улучшают уже существующие сценарии без перепроектирования.
+2. Поздние tunes или точечные расширения существующих tunes, если они действительно полезны для демо.
+3. Late media/navigation improvements: мелкие доработки галереи/слайдера, preview/sidebar или viewer behavior.
+4. Optional enhancements, которые хорошо ложатся на текущую архитектуру и не требуют нового крупного этапа.
+5. Финальная проверка, что поздние улучшения не ломают save/load, Import JSON, validation, masks, localization, theme и keyboard scenarios.
 
 Вне scope этапа:
 
 - изменение content JSON schema;
-- полное переписывание внутреннего UI Editor.js;
-- гарантия идеального keyboard-only управления всеми toolbox/popover/tune scenarios Editor.js;
-- новые custom blocks, validation rules, media workflow или renderer features;
-- изменение дизайн-системы, i18n, theme layer или content model;
-- полноценный WCAG-аудит уровня production CMS.
+- крупное перепроектирование editor-layer, renderer-layer или field system;
+- полноценный backend/upload workflow;
+- page-management admin или SSR/fullstack-сценарии;
+- новые обязательные крупные custom blocks;
+- production-level audit или масштабная оптимизация.
 
 ## План этапа
 
-1. Пройти keyboard-аудит editor и preview страниц: shell controls, locale/theme controls, import/export/reset/save actions, sidebar navigation — начато; найдены проблемы с focus traversal в editor shell/custom tools.
-2. Проверить custom tools и fields: `Notice`, `SectionIntro`, `TwoColumns`, `MediaGallery`, `MaskedFieldsDemo`, validation errors и block tune controls — начато; найдены проблемы с select/toggle/card buttons внутри custom tools и с Table Tool controls.
-3. Исправить нативность/атрибуты интерактивных элементов там, где `button`, `input`, `select`, `textarea` или `aria-*` используются неполно — частично выполнено для plain field wrappers, toggle, select/input controls, media card buttons и Table Tool controls.
-4. Добавить или уточнить focus-visible styles для shell, field wrappers, custom controls, media card controls, sidebar links и validation states — частично выполнено для toggle track, media card buttons и Table Tool controls.
-5. Улучшить keyboard handling для reorder/delete/add controls в media/composite scenarios, если текущая реализация требует мышь — частично выполнено через корректную focusability enabled media buttons и остановку keyboard event bubbling в Editor.js.
-6. Проверить отсутствие критичных focus traps между основным Editor.js instance, nested editors, popovers и соседними shell controls.
-7. Запустить соразмерные проверки после изменений: минимум `npm run check`, а `npm run build` — выполнено после первого accessibility-fix.
+1. Составить короткий список optional improvements, которые реально повышают качество демо и не раздувают scope.
+2. Выбрать первый небольшой improvement и зафиксировать ожидаемое поведение.
+3. Реализовывать улучшения по одному, с узкими изменениями и проверкой связанных сценариев.
+4. После каждого значимого изменения запускать соразмерные проверки.
+5. Перед завершением этапа пройти smoke-check основных editor/preview сценариев.
+
+## Критерии готовности этапа
+
+- Все выбранные late improvements улучшают существующий UX без разрушения базовой архитектуры.
+- Save/load, Import JSON, validation, masks, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
+- `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
+
+Следующий крупный этап после завершения некритичных улучшений: финальная стабилизация / подготовка к следующему fullstack-проекту.
+
+## Последний завершённый этап
+
+### Клавиатурная навигация и accessibility polish
+
+Статус: завершён.
+
+Цель этапа: улучшить keyboard usability и базовую доступность editor-related UI, custom tools и preview controls без изменения content JSON schema и без обещания полного
+keyboard-only покрытия всего внутреннего Editor.js UI.
+
+В scope вошли:
+
+1. Аудит tab-order и focus states в editor shell, preview shell, custom tools и field wrappers.
+2. Видимые focus-состояния для основных интерактивных элементов без скрытия outline без замены.
+3. Keyboard-friendly поведение plain fields, toggle/select/button wrappers и editor action buttons.
+4. Улучшение keyboard-сценариев для списков карточек/слайдов в `MediaGallery`, Table Tool controls и floating Editor.js toolbar.
+5. Проверка отсутствия критичных focus traps между shell controls, Editor.js, nested editors и preview/sidebar UI.
+6. Минимальные accessibility-атрибуты для кастомного UI и динамических Editor.js controls там, где это можно сделать точечно.
+
+Вне scope этапа остались:
+
+- изменение content JSON schema;
+- полное переписывание внутреннего UI Editor.js;
+- гарантия идеального keyboard-only управления всеми toolbox/popover/tune scenarios Editor.js;
+- переопределение дефолтного `Tab` поведения list/checklist и table cells;
+- форсирование `/` и `Ctrl + /` из plain custom fields.
+
+## План этапа
+
+1. Пройти keyboard-аудит editor и preview страниц: shell controls, locale/theme controls, import/export/reset/save actions, sidebar navigation — выполнено.
+2. Проверить custom tools и fields: `Notice`, `SectionIntro`, `TwoColumns`, `MediaGallery`, `MaskedFieldsDemo`, validation errors и block tune controls — выполнено.
+3. Исправить нативность/атрибуты интерактивных элементов там, где `button`, `input`, `select`, `textarea` или `aria-*` используются неполно — выполнено для plain field wrappers, toggle, select/input controls, media card buttons, Table Tool controls и floating Editor.js toolbar.
+4. Добавить или уточнить focus-visible styles для shell, field wrappers, custom controls, media card controls, sidebar links и validation states — выполнено для затронутых controls.
+5. Улучшить keyboard handling для reorder/delete/add controls в media/composite scenarios, если текущая реализация требует мышь — выполнено через корректную focusability enabled media buttons и остановку keyboard event bubbling в Editor.js.
+6. Проверить отсутствие критичных focus traps между основным Editor.js instance, nested editors, popovers и соседними shell controls — выполнено ручной проверкой.
+7. Запустить соразмерные проверки после изменений: `npm run check` и `npm run build` — выполнено.
 
 ## Критерии готовности этапа
 
@@ -67,11 +109,16 @@ keyboard-only покрытия всего внутреннего Editor.js UI.
 - Plain fields, toggles, selects, action buttons, import/export/reset/save controls и sidebar navigation имеют понятные focus states.
 - Media gallery / slider card controls и composite/nested field scenarios не требуют мышь для базового управления там, где это реально достижимо.
 - Accessibility polish не ломает базовый Editor.js UX, save/load, Import JSON, validation, masks, preview, `Reset draft` и `Export JSON`.
-- `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
+- `npm run check` и `npm run build` проходят.
 
 Следующий крупный этап после завершения keyboard/accessibility polish: Некритичные улучшения.
 
-## Последний завершённый этап
+Итог: Клавиатурная навигация и accessibility polish завершён. Отключён autofocus Editor.js, улучшены focusability и keyboard handling для plain fields, toggles,
+select/input controls, media card buttons, Table Tool controls и floating Editor.js toolbar. Header Tab-boundary защищён от перехвата Editor.js после возврата фокуса из
+editor surface. Зафиксированы осознанные ограничения: `Tab` в list/checklist остаётся indent/outdent, table cells сохраняют дефолтную навигацию, а `/` и `Ctrl + /`
+не форсируются из plain custom fields. `npm run check` проходит с существующими предупреждениями `vue/no-v-html`; `npm run build` проходит.
+
+## Предыдущий завершённый этап
 
 ### Light/Dark theme
 

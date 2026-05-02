@@ -102,6 +102,10 @@ export const editorEn: EditorUiMessages = {
       columnMenu: 'Open table column menu',
       rowMenu: 'Open table row menu',
     },
+    editorToolbar: {
+      addBlock: 'Add block',
+      tuneBlock: 'Open block settings',
+    },
   },
   inlineTools: {
     textColor: 'Text color',

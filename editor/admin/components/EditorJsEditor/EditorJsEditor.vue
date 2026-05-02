@@ -2,6 +2,10 @@
 import type EditorJS from '@editorjs/editorjs'
 import { onBeforeUnmount, onMounted, shallowRef, ref } from 'vue'
 import {
+  enableEditorToolbarKeyboardAccess,
+  type EditorToolbarKeyboardPatch,
+} from '~~/editor/admin/accessibility/editor-toolbar-keyboard'
+import {
   enableTableToolKeyboardAccess,
   type TableToolKeyboardPatch,
 } from '~~/editor/admin/accessibility/table-tool-keyboard'
@@ -38,6 +42,7 @@ const editor = shallowRef<EditorJS | null>(null)
 const isReady = ref(false)
 const isSaving = ref(false)
 const errorMessage = ref<string | null>(null)
+let editorToolbarKeyboardPatch: EditorToolbarKeyboardPatch | null = null
 let tableKeyboardPatch: TableToolKeyboardPatch | null = null
 
 async function save(options: SaveOptions = {}): Promise<boolean> {
@@ -131,6 +136,10 @@ onMounted(async () => {
 
     editor.value = instance
     await instance.isReady
+    editorToolbarKeyboardPatch = enableEditorToolbarKeyboardAccess({
+      root: holder,
+      messages: props.editorMessages,
+    })
     tableKeyboardPatch = enableTableToolKeyboardAccess({
       root: holder,
       messages: props.editorMessages,
@@ -142,6 +151,8 @@ onMounted(async () => {
 })
 
 onBeforeUnmount(() => {
+  editorToolbarKeyboardPatch?.destroy()
+  editorToolbarKeyboardPatch = null
   tableKeyboardPatch?.destroy()
   tableKeyboardPatch = null
   editor.value?.destroy()

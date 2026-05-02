@@ -104,6 +104,10 @@ export const editorRu: EditorUiMessages = {
       columnMenu: 'Открыть меню колонки таблицы',
       rowMenu: 'Открыть меню строки таблицы',
     },
+    editorToolbar: {
+      addBlock: 'Добавить блок',
+      tuneBlock: 'Открыть настройки блока',
+    },
   },
   inlineTools: {
     textColor: 'Цвет текста',
