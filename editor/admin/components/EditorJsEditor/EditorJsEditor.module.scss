@@ -96,6 +96,13 @@
     color: var(--color-text);
   }
 
+  :global(.cdx-list) {
+    --checkbox-background: var(--color-background);
+    --color-bg-checked: var(--color-accent);
+    --color-bg-checked-hover: var(--color-accent);
+    --color-tick: var(--color-on-accent);
+  }
+
   :global(.ce-block__content),
   :global(.ce-toolbar__content) {
     max-width: 720px;
