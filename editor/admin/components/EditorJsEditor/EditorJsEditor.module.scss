@@ -82,6 +82,10 @@
     color: var(--color-text);
   }
 
+  :global(.codex-editor__redactor) {
+    padding-bottom: 28px !important;
+  }
+
   :global(.codex-editor ::selection) {
     color: var(--color-text);
     background: color-mix(in srgb, var(--color-accent) 28%, transparent);
@@ -346,7 +350,7 @@
   :global(.inline-code) {
     padding: 1px 4px;
     font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono',
-      monospace;
+    monospace;
     font-size: 0.9em;
     color: inherit;
     background: var(--color-code-background);
