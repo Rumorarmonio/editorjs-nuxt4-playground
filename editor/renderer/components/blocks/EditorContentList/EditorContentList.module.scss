@@ -15,8 +15,29 @@
   list-style: none;
 }
 
+.listOrdered {
+  padding-left: 30px;
+  list-style: none;
+  counter-reset: editor-list-item;
+}
+
 .item {
   min-width: 0;
+}
+
+.orderedItem {
+  position: relative;
+  counter-increment: editor-list-item;
+}
+
+.orderedItem::before {
+  position: absolute;
+  right: calc(100% + 8px);
+  width: 4ch;
+  text-align: right;
+  color: var(--color-muted);
+  content: counters(editor-list-item, '.') '.';
+  font-variant-numeric: tabular-nums;
 }
 
 .checklistItem {

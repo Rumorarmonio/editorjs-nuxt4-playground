@@ -23,7 +23,7 @@ deployment.
 - Локализация UI редактора завершена.
 - Light/Dark theme завершён.
 - Клавиатурная навигация и accessibility polish завершён.
-- Этап Некритичные улучшения временно отложен после серии optional improvements; к нему можно вернуться позже.
+- Активный этап: Некритичные улучшения.
 - Первое optional improvement этапа Некритичные улучшения реализовано: выбор языка переведён на dropdown по аналогии с темой, добавлены auto preference и испанский интерфейс.
 - Второе optional improvement этапа Некритичные улучшения реализовано: preview sidebar получил временный demo-переключатель между navigation по заголовкам и старой navigation по `AnchorTune` / `LabelTune`.
 - Третье optional improvement этапа Некритичные улучшения реализовано: добавлен `AnimationTune` для простых reveal-анимаций блоков в renderer.
@@ -32,16 +32,16 @@ deployment.
 - Style-architecture improvement этапа Некритичные улучшения реализован: глобальные Editor.js/custom tool стили вынесены из CSS Module в `editor/admin/styles/editor.scss`.
 - Этап расширения набора контентных блоков и plugins завершён: реализованы typed `CTA/Button`, `Code snippet` с подсветкой, CTA event action и `Raw HTML` на базе `@editorjs/raw`.
 - Review-fixes этапа расширения blocks/plugins внесены: уточнены Raw HTML sanitizer/baseURL behavior, CTA event validation, preview-level demo modal и link/event field UX в `CtaTool`.
-- Активный этап: Plugin info tooltips.
-- Кодовая часть Plugin info tooltips реализована: добавлен metadata registry, локализованные descriptions/previews для стандартных и custom block tools, label tooltips и toolbox DOM-enhancer на базе `tippy.js`.
+- Этап Plugin info tooltips завершён.
+- Plugin info tooltips реализованы: добавлен metadata registry, локализованные descriptions/previews для стандартных и custom block tools, label tooltips и toolbox DOM-enhancer на базе `tippy.js`.
 - Для preview images создан `public/plugin-previews` с временным локальным placeholder; общий `src` для каждого tool key задаётся в одном registry, locale-specific override остаётся через `previewImage`, а без обоих источников preview image не показывается.
 - Tooltip стал interactive; preview image открывается через Fancybox.
 
-## Отложенный этап
+## Активный этап
 
 ### Некритичные улучшения
 
-Статус: временно отложен; можно продолжить позже.
+Статус: активен после завершения `Plugin info tooltips`.
 
 Цель этапа: довести проект до более аккуратной расширенной версии через небольшие optional improvements, не ломая уже стабильную архитектуру, content JSON schema и
 базовые editor/renderer сценарии.
@@ -77,13 +77,13 @@ deployment.
 - Save/load, Import JSON, validation, masks, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
 - `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
 
-Этап временно отложен, чтобы сфокусироваться на `Plugin info tooltips`. После завершения tooltips к нему можно вернуться и продолжить список optional improvements.
+Этап снова активен после завершения `Plugin info tooltips`; следующий шаг — выбрать ближайшее небольшое optional improvement и реализовать его отдельным узким изменением.
 
-## Активный этап
+## Последний завершённый этап
 
 ### Plugin info tooltips
 
-Статус: кодовая часть реализована, требуется ручной browser smoke-check.
+Статус: завершён.
 
 Цель этапа: добавить локализованные краткие справки по кастомным plugins/block tools в editor UI, чтобы пользователь мог понять назначение блока до вставки и при
 работе с уже созданным блоком, без изменения content JSON schema и без переписывания внутреннего UI Editor.js.
@@ -117,8 +117,8 @@ deployment.
 3. Подключить tooltip helper на базе `tippy.js` или, если зависимость окажется избыточной после проверки прототипа, оставить минимальный custom helper только для label'ов — выполнено на базе `tippy.js`.
 4. Реализовать tooltip для label'ов внутри кастомных блоков как наиболее стабильный сценарий — выполнено через `data-editor-plugin-info-tool`.
 5. Реализовать отдельный toolbox enhancer для `.ce-popover-item`, аккуратно сопоставляя пункты меню с metadata и очищая instances при пересоздании popover/editor — выполнено через root-scoped `MutationObserver` и lifecycle cleanup для custom toolbox items.
-6. Добавить стили tooltip под light/dark theme и проверить viewport positioning рядом с Editor.js toolbox — стили добавлены; browser smoke-check остаётся ближайшим шагом.
-7. Проверить mouse, keyboard focus, locale switch, theme switch, save/load и отсутствие влияния tooltip на content data — требуется ручной smoke-check.
+6. Добавить стили tooltip под light/dark theme и проверить viewport positioning рядом с Editor.js toolbox — выполнено.
+7. Проверить mouse, keyboard focus, locale switch, theme switch, save/load и отсутствие влияния tooltip на content data — выполнено вручную в ходе этапа.
 
 ## Критерии готовности этапа
 
@@ -129,6 +129,10 @@ deployment.
 - Все tooltip instances очищаются при пересоздании/уничтожении Editor.js instance.
 - Save/load, Import JSON, validation, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
 - `npm run lint` и `npm run typecheck` проходят; `npm run check` запускается, если этап затронет SCSS достаточно широко или добавит новую зависимость.
+
+Итог: этап Plugin info tooltips завершён. Подсказки доступны для label'ов поддержанных blocks и toolbox items, описания локализованы, preview images задаются через общий registry с возможностью locale-specific override, отсутствие preview image не ломает tooltip, интерактивный tooltip не закрывается при наведении, а изображение открывается через Fancybox. Дополнительно renderer нумерованных списков получил вложенную нумерацию вида `2.1` / `2.1.1` и выровненные отступы.
+
+Следующий крупный этап: активный этап `Некритичные улучшения`.
 
 ## Завершённый этап
 

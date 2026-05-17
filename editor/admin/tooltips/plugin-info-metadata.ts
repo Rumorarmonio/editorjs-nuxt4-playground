@@ -54,30 +54,27 @@ export type EditorPluginInfoMetadataMap = Record<
   EditorPluginInfoMetadata
 >
 
-const placeholderPreviewImageSrc = '/plugin-previews/placeholder.svg'
-
 const editorPluginInfoPreviewImageSrcByKey: Partial<
   Record<EditorPluginInfoToolKey, string>
 > = {
-  paragraph: placeholderPreviewImageSrc,
-  header: placeholderPreviewImageSrc,
-  list: placeholderPreviewImageSrc,
-  unorderedList: placeholderPreviewImageSrc,
-  orderedList: placeholderPreviewImageSrc,
-  checklist: placeholderPreviewImageSrc,
-  quote: placeholderPreviewImageSrc,
-  delimiter: placeholderPreviewImageSrc,
-  table: placeholderPreviewImageSrc,
+  paragraph: '/plugin-previews/paragraph.jpg',
+  header: '/plugin-previews/header.jpg',
+  unorderedList: '/plugin-previews/unordered-list.jpg',
+  orderedList: '/plugin-previews/ordered-list.jpg',
+  checklist: '/plugin-previews/checklist.jpg',
+  quote: '/plugin-previews/quote.jpg',
+  delimiter: '/plugin-previews/delimiter.jpg',
+  table: '/plugin-previews/table.jpg',
   embed: '/plugin-previews/embed.jpg',
-  image: placeholderPreviewImageSrc,
+  image: '/plugin-previews/image.jpg',
   rawHtml: '/plugin-previews/raw-html.jpg',
   notice: '/plugin-previews/notice.jpg',
-  sectionIntro: placeholderPreviewImageSrc,
-  twoColumns: placeholderPreviewImageSrc,
-  mediaGallery: placeholderPreviewImageSrc,
-  maskedFieldsDemo: placeholderPreviewImageSrc,
-  cta: placeholderPreviewImageSrc,
-  codeSnippet: placeholderPreviewImageSrc,
+  sectionIntro: '/plugin-previews/section-intro.jpg',
+  twoColumns: '/plugin-previews/two-columns.jpg',
+  mediaGallery: '/plugin-previews/media-gallery.jpg',
+  maskedFieldsDemo: '/plugin-previews/masked-fields-demo.jpg',
+  cta: '/plugin-previews/cta.jpg',
+  codeSnippet: '/plugin-previews/code-snippet.jpg',
 }
 
 export function getEditorPluginInfoMetadataMap(

@@ -28,7 +28,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Базовая версия проекта завершена.
 - Базовый слой Block Tunes (`AnchorTune`, `SpacingTune`, `LabelTune`) завершён: реализация, renderer, guard, demo JSON, ручная browser-проверка и `npm run check` готовы.
 - Plain field system для будущих custom blocks завершена.
-- Активный scope по `SPEC.md`: Plugin info tooltips; этап Некритичные улучшения временно отложен с возможностью продолжить позже.
+- Активный scope по `SPEC.md`: этап Некритичные улучшения снова активен после закрытия Plugin info tooltips.
 - Первый custom block `Notice` подтвердил полный custom block lifecycle на простых plain fields без раннего перехода к media workflow, rich fields или nested Editor.js.
 - Reusable rich fields детализированы и завершены: `RichParagraphField` и `RichHeaderField` реализованы на базе nested Editor.js.
 - Для `SectionIntro` добавлен минимальный shared-контракт данных: `title` и `description` как вложенный Editor.js-compatible output только с paragraph-блоками.
@@ -61,6 +61,8 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Для tooltip preview images создан каталог `public/plugin-previews`: временно используется локальный `placeholder.svg`, реальные общие изображения задаются в `editorPluginInfoPreviewImageSrcByKey`, locale-specific override можно делать через `previewImage.src` в `i18n/editor/*`; если image не задан ни в registry, ни в локали, tooltip показывается без preview image.
 - Plugin info tooltip сделан interactive: при наведении на сам tooltip он не закрывается, а preview image открывается в Fancybox по клику.
 - Post-review fixes для Plugin info tooltips внесены: при destroy tooltip patch закрывает Fancybox overlay, а fallback `alt` для preview image теперь строится из локализованного title без английского хвоста.
+- Этап Plugin info tooltips завершён: tooltip metadata, локализация, toolbox/label подсказки, optional preview images, Fancybox preview и related renderer fixes для нумерованных списков доведены до рабочего состояния.
+- Этап Некритичные улучшения снова активен: ближайшая работа должна идти через небольшие optional improvements с узкими изменениями и отдельной проверкой.
 
 ## Ключевые решения
 
@@ -236,4 +238,4 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 
 ## Следующий шаг
 
-Следующий шаг: вручную проверить `Plugin info tooltips` в editor UI: hover и keyboard focus на label'ах custom blocks, hover/focus на пунктах toolbox, переключение языка `ru/en/es`, light/dark theme, закрытие toolbox, save/load и отсутствие изменений в content JSON. Отложенный smoke-check `Raw HTML`, CTA event action, nested CTA и syntax highlighting остаётся полезной дополнительной проверкой.
+Следующий шаг: выбрать ближайшее небольшое optional improvement в активном этапе `Некритичные улучшения` и реализовать его отдельным узким изменением. Отложенный smoke-check `Raw HTML`, CTA event action, nested CTA и syntax highlighting остаётся полезной дополнительной проверкой.

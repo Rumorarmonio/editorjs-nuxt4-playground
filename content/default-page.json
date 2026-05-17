@@ -129,6 +129,43 @@
       }
     },
     {
+      "id": "ordered-list-block",
+      "type": "list",
+      "data": {
+        "style": "ordered",
+        "meta": {
+          "start": 1,
+          "counterType": "numeric"
+        },
+        "items": [
+          {
+            "content": "First ordered item with <b>bold</b> text.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Second ordered item with <a href=\"https://editorjs.io/\">link</a>.",
+            "meta": {},
+            "items": [
+              {
+                "content": "Nested ordered item with <code class=\"inline-code\">inline code</code>.",
+                "meta": {},
+                "items": []
+              }
+            ]
+          }
+        ]
+      },
+      "tunes": {
+        "label": {
+          "label": "Ordered list example"
+        },
+        "animation": {
+          "type": "fade-up"
+        }
+      }
+    },
+    {
       "id": "checklist-block",
       "type": "list",
       "data": {

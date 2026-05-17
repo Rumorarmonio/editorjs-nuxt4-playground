@@ -19,6 +19,10 @@ function isChecklist(style: ListBlockData['style']): boolean {
   return style === 'checklist'
 }
 
+function isOrderedList(style: ListBlockData['style']): boolean {
+  return style === 'ordered'
+}
+
 function isChecklistItemChecked(item: ListBlockItem): boolean {
   return item.meta?.checked === true
 }
@@ -27,12 +31,20 @@ function isChecklistItemChecked(item: ListBlockItem): boolean {
 <template>
   <component
     :is="getListTag(style)"
-    :class="[$style.list, isChecklist(style) ? $style.listChecklist : '']"
+    :class="[
+      $style.list,
+      isChecklist(style) ? $style.listChecklist : '',
+      isOrderedList(style) ? $style.listOrdered : '',
+    ]"
   >
     <li
       v-for="(item, index) in items"
       :key="`${item.content}-${index}`"
-      :class="[$style.item, isChecklist(style) ? $style.checklistItem : '']"
+      :class="[
+        $style.item,
+        isChecklist(style) ? $style.checklistItem : '',
+        isOrderedList(style) ? $style.orderedItem : '',
+      ]"
     >
       <template v-if="isChecklist(style)">
         <input
