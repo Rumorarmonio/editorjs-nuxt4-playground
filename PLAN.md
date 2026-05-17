@@ -23,7 +23,7 @@ deployment.
 - Локализация UI редактора завершена.
 - Light/Dark theme завершён.
 - Клавиатурная навигация и accessibility polish завершён.
-- Этап Некритичные улучшения снова активен после завершения расширения набора контентных блоков и plugins.
+- Этап Некритичные улучшения временно отложен после серии optional improvements; к нему можно вернуться позже.
 - Первое optional improvement этапа Некритичные улучшения реализовано: выбор языка переведён на dropdown по аналогии с темой, добавлены auto preference и испанский интерфейс.
 - Второе optional improvement этапа Некритичные улучшения реализовано: preview sidebar получил временный demo-переключатель между navigation по заголовкам и старой navigation по `AnchorTune` / `LabelTune`.
 - Третье optional improvement этапа Некритичные улучшения реализовано: добавлен `AnimationTune` для простых reveal-анимаций блоков в renderer.
@@ -32,14 +32,13 @@ deployment.
 - Style-architecture improvement этапа Некритичные улучшения реализован: глобальные Editor.js/custom tool стили вынесены из CSS Module в `editor/admin/styles/editor.scss`.
 - Этап расширения набора контентных блоков и plugins завершён: реализованы typed `CTA/Button`, `Code snippet` с подсветкой, CTA event action и `Raw HTML` на базе `@editorjs/raw`.
 - Review-fixes этапа расширения blocks/plugins внесены: уточнены Raw HTML sanitizer/baseURL behavior, CTA event validation, preview-level demo modal и link/event field UX в `CtaTool`.
-- Запланирован отдельный этап Plugin info tooltips: локализованные описания и preview-подсказки для кастомных plugins в Editor.js toolbox и на label'ах самих блоков.
-- Активный этап: Некритичные улучшения.
+- Активный этап: Plugin info tooltips.
 
-## Активный этап
+## Отложенный этап
 
 ### Некритичные улучшения
 
-Статус: активен повторно.
+Статус: временно отложен; можно продолжить позже.
 
 Цель этапа: довести проект до более аккуратной расширенной версии через небольшие optional improvements, не ломая уже стабильную архитектуру, content JSON schema и
 базовые editor/renderer сценарии.
@@ -75,13 +74,13 @@ deployment.
 - Save/load, Import JSON, validation, masks, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
 - `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
 
-Этап снова активен после завершения `Raw HTML` в рамках расширения набора blocks/plugins.
+Этап временно отложен, чтобы сфокусироваться на `Plugin info tooltips`. После завершения tooltips к нему можно вернуться и продолжить список optional improvements.
 
-## Запланированный этап
+## Активный этап
 
 ### Plugin info tooltips
 
-Статус: запланирован.
+Статус: активен.
 
 Цель этапа: добавить локализованные краткие справки по кастомным plugins/block tools в editor UI, чтобы пользователь мог понять назначение блока до вставки и при
 работе с уже созданным блоком, без изменения content JSON schema и без переписывания внутреннего UI Editor.js.
