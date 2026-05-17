@@ -33,6 +33,9 @@ deployment.
 - Этап расширения набора контентных блоков и plugins завершён: реализованы typed `CTA/Button`, `Code snippet` с подсветкой, CTA event action и `Raw HTML` на базе `@editorjs/raw`.
 - Review-fixes этапа расширения blocks/plugins внесены: уточнены Raw HTML sanitizer/baseURL behavior, CTA event validation, preview-level demo modal и link/event field UX в `CtaTool`.
 - Активный этап: Plugin info tooltips.
+- Кодовая часть Plugin info tooltips реализована: добавлен metadata registry, локализованные descriptions/previews для стандартных и custom block tools, label tooltips и toolbox DOM-enhancer на базе `tippy.js`.
+- Для preview images создан `public/plugin-previews` с временным локальным placeholder; общий `src` для каждого tool key задаётся в одном registry, locale-specific override остаётся через `previewImage`, а без обоих источников preview image не показывается.
+- Tooltip стал interactive; preview image открывается через Fancybox.
 
 ## Отложенный этап
 
@@ -80,7 +83,7 @@ deployment.
 
 ### Plugin info tooltips
 
-Статус: активен.
+Статус: кодовая часть реализована, требуется ручной browser smoke-check.
 
 Цель этапа: добавить локализованные краткие справки по кастомным plugins/block tools в editor UI, чтобы пользователь мог понять назначение блока до вставки и при
 работе с уже созданным блоком, без изменения content JSON schema и без переписывания внутреннего UI Editor.js.
@@ -109,13 +112,13 @@ deployment.
 
 ## План этапа
 
-1. Зафиксировать metadata contract для custom tools и решить, какие tools получают description/preview в первой версии.
-2. Добавить локализованные описания в `i18n/editor` для `ru/en/es` и обновить типы сообщений.
-3. Подключить tooltip helper на базе `tippy.js` или, если зависимость окажется избыточной после проверки прототипа, оставить минимальный custom helper только для label'ов.
-4. Реализовать tooltip для label'ов внутри кастомных блоков как наиболее стабильный сценарий.
-5. Реализовать отдельный toolbox enhancer для `.ce-popover-item`, аккуратно сопоставляя пункты меню с metadata и очищая instances при пересоздании popover/editor.
-6. Добавить стили tooltip под light/dark theme и проверить viewport positioning рядом с Editor.js toolbox.
-7. Проверить mouse, keyboard focus, locale switch, theme switch, save/load и отсутствие влияния tooltip на content data.
+1. Зафиксировать metadata contract для custom tools и решить, какие tools получают description/preview в первой версии — выполнено: стандартные `paragraph`, `header`, `list`, `quote`, `delimiter`, `table`, `embed`, `image`, `rawHtml` и custom `notice`, `sectionIntro`, `twoColumns`, `mediaGallery`, `maskedFieldsDemo`, `cta`, `codeSnippet`; contract также поддерживает optional `previewImage`.
+2. Добавить локализованные описания в `i18n/editor` для `ru/en/es` и обновить типы сообщений — выполнено.
+3. Подключить tooltip helper на базе `tippy.js` или, если зависимость окажется избыточной после проверки прототипа, оставить минимальный custom helper только для label'ов — выполнено на базе `tippy.js`.
+4. Реализовать tooltip для label'ов внутри кастомных блоков как наиболее стабильный сценарий — выполнено через `data-editor-plugin-info-tool`.
+5. Реализовать отдельный toolbox enhancer для `.ce-popover-item`, аккуратно сопоставляя пункты меню с metadata и очищая instances при пересоздании popover/editor — выполнено через root-scoped `MutationObserver` и lifecycle cleanup для custom toolbox items.
+6. Добавить стили tooltip под light/dark theme и проверить viewport positioning рядом с Editor.js toolbox — стили добавлены; browser smoke-check остаётся ближайшим шагом.
+7. Проверить mouse, keyboard focus, locale switch, theme switch, save/load и отсутствие влияния tooltip на content data — требуется ручной smoke-check.
 
 ## Критерии готовности этапа
 

@@ -10,6 +10,10 @@ import {
   type TableToolKeyboardPatch,
 } from '~~/editor/admin/accessibility/table-tool-keyboard'
 import {
+  enableEditorPluginInfoTooltips,
+  type EditorPluginInfoTooltipsPatch,
+} from '~~/editor/admin/tooltips/plugin-info-tooltips'
+import {
   editorBlockTunes,
   createEditorTools,
   editorInlineToolbar,
@@ -44,6 +48,7 @@ const isSaving = ref(false)
 const errorMessage = ref<string | null>(null)
 let editorToolbarKeyboardPatch: EditorToolbarKeyboardPatch | null = null
 let tableKeyboardPatch: TableToolKeyboardPatch | null = null
+let pluginInfoTooltipsPatch: EditorPluginInfoTooltipsPatch | null = null
 
 async function save(options: SaveOptions = {}): Promise<boolean> {
   if (!editor.value || isSaving.value) {
@@ -145,6 +150,10 @@ onMounted(async () => {
       root: holder,
       messages: props.editorMessages,
     })
+    pluginInfoTooltipsPatch = enableEditorPluginInfoTooltips({
+      root: holder,
+      messages: props.editorMessages,
+    })
     isReady.value = true
   } catch {
     errorMessage.value = props.editorMessages.core.initError
@@ -156,6 +165,8 @@ onBeforeUnmount(() => {
   editorToolbarKeyboardPatch = null
   tableKeyboardPatch?.destroy()
   tableKeyboardPatch = null
+  pluginInfoTooltipsPatch?.destroy()
+  pluginInfoTooltipsPatch = null
   editor.value?.destroy()
   editor.value = null
 })

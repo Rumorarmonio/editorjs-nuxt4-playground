@@ -79,7 +79,10 @@ export default class SectionIntroTool implements BlockTool {
     })
 
     wrapper.append(
-      createBlockToolLabel(messages.tools.sectionIntro.toolboxTitle),
+      createBlockToolLabel(
+        'sectionIntro',
+        messages.tools.sectionIntro.toolboxTitle,
+      ),
       this.titleField.root,
       this.descriptionField.root,
     )

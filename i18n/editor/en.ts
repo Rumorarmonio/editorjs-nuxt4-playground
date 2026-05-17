@@ -165,6 +165,131 @@ export const editorEn: EditorUiMessages = {
   inlineTools: {
     textColor: 'Text color',
   },
+  pluginInfo: {
+    standardTools: {
+      paragraph: {
+        title: 'Text',
+        description: 'Basic rich text paragraph for regular body copy.',
+        preview:
+          'Renders as a paragraph with inline marks, links, and text color support.',
+      },
+      header: {
+        title: 'Heading',
+        description:
+          'Section heading block for structuring page content and navigation.',
+        preview:
+          'Renders as a semantic heading and can appear in heading-based sidebar navigation.',
+      },
+      list: {
+        title: 'List',
+        description:
+          'Ordered, unordered, or checklist-style list for grouped content.',
+        preview:
+          'Renders as a list with nested items according to the selected style.',
+      },
+      unorderedList: {
+        title: 'Unordered List',
+        description: 'Bulleted list for related items without a fixed order.',
+        preview:
+          'Renders as a nested bullet list with inline text formatting.',
+      },
+      orderedList: {
+        title: 'Ordered List',
+        description: 'Numbered list for steps, rankings, or ordered content.',
+        preview:
+          'Renders as a nested numbered list with the selected counter style.',
+      },
+      checklist: {
+        title: 'Checklist',
+        description:
+          'Task-style list with checkable items for progress or requirements.',
+        preview:
+          'Renders as a checklist preserving each item checked state.',
+      },
+      quote: {
+        title: 'Quote',
+        description: 'Quotation block with quote text and optional caption.',
+        preview:
+          'Renders as a styled quote with caption below the quoted text.',
+      },
+      delimiter: {
+        title: 'Delimiter',
+        description: 'Simple visual separator between content sections.',
+        preview: 'Renders as a horizontal divider in the preview layer.',
+      },
+      table: {
+        title: 'Table',
+        description: 'Simple table block for compact row and column data.',
+        preview:
+          'Renders as a responsive table using the saved Editor.js table data.',
+      },
+      embed: {
+        title: 'Embed',
+        description:
+          'Embedded media block for supported services such as YouTube, Vimeo, Rutube, VK Video, Twitch, and Coub.',
+        preview:
+          'Renders as an inline iframe or Fancybox opener depending on block tunes.',
+      },
+      image: {
+        title: 'Image',
+        description:
+          'Image block for URL or local draft images with caption support.',
+        preview:
+          'Renders as an image with optional caption and safe alt text fallback.',
+      },
+      rawHtml: {
+        title: 'Raw HTML',
+        description:
+          'Trusted admin-only escape hatch for custom HTML markup.',
+        preview:
+          'Renders raw markup through the configured safe or unsafe renderer mode.',
+      },
+    },
+    tools: {
+      notice: {
+        description:
+          'Short callout for info, success, or warning messages inside content.',
+        preview:
+          'Renders as an accented notice panel with optional title and text.',
+      },
+      sectionIntro: {
+        description:
+          'Introductory section block with a plain title and rich paragraph description.',
+        preview:
+          'Renders as a compact heading group before a larger content section.',
+      },
+      twoColumns: {
+        description:
+          'Composite block with two independent rich text columns and layout controls.',
+        preview:
+          'Renders as responsive equal, left-wide, or right-wide columns.',
+      },
+      mediaGallery: {
+        description:
+          'Media collection for image or video cards, displayed as a grid or slider.',
+        preview:
+          'Renders gallery cards with optional Fancybox viewer and URL sync.',
+      },
+      maskedFieldsDemo: {
+        description:
+          'Demo-only block that shows masked plain fields for common input formats.',
+        preview:
+          'Renders saved phone, date, time, price, card, and email values.',
+      },
+      cta: {
+        description:
+          'Standalone button block for safe links or typed custom events.',
+        preview:
+          'Renders as a primary, secondary, or ghost call-to-action button.',
+      },
+      codeSnippet: {
+        description:
+          'Typed code block with language selection and optional caption.',
+        preview:
+          'Renders as highlighted code in the preview layer when language is supported.',
+      },
+    },
+  },
   tunes: {
     anchor: {
       title: 'Anchor',

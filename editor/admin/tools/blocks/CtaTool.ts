@@ -191,7 +191,7 @@ export default class CtaTool implements BlockTool {
       this.eventPayloadJsonField.root,
     )
     wrapper.append(
-      createBlockToolLabel(messages.tools.cta.toolboxTitle),
+      createBlockToolLabel('cta', messages.tools.cta.toolboxTitle),
       this.labelField.root,
       settings,
     )

@@ -1,0 +1,14 @@
+<svg width="640" height="360" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plugin preview placeholder">
+  <rect width="640" height="360" rx="24" fill="#F5F7FA"/>
+  <rect x="48" y="48" width="544" height="264" rx="18" fill="#FFFFFF" stroke="#D7DEE8" stroke-width="2"/>
+  <rect x="88" y="88" width="220" height="18" rx="9" fill="#1F6FEB" opacity="0.9"/>
+  <rect x="88" y="128" width="464" height="14" rx="7" fill="#9AA8BA"/>
+  <rect x="88" y="158" width="398" height="14" rx="7" fill="#B7C1CF"/>
+  <rect x="88" y="188" width="438" height="14" rx="7" fill="#CED6E0"/>
+  <rect x="88" y="238" width="140" height="42" rx="10" fill="#1F6FEB"/>
+  <rect x="252" y="238" width="108" height="42" rx="10" fill="#E8EDF4"/>
+  <path d="M497 93L540 117.826V167.478L497 192.304L454 167.478V117.826L497 93Z" fill="#E8F0FE" stroke="#1F6FEB" stroke-width="2"/>
+  <path d="M497 124V162" stroke="#1F6FEB" stroke-width="10" stroke-linecap="round"/>
+  <path d="M478 143H516" stroke="#1F6FEB" stroke-width="10" stroke-linecap="round"/>
+  <text x="320" y="332" fill="#667085" font-family="Inter, Arial, sans-serif" font-size="18" text-anchor="middle">Replace with a real plugin preview</text>
+</svg>

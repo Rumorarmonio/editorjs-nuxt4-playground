@@ -168,6 +168,135 @@ export const editorEs: EditorUiMessages = {
   inlineTools: {
     textColor: 'Color de texto',
   },
+  pluginInfo: {
+    standardTools: {
+      paragraph: {
+        title: 'Texto',
+        description:
+          'Párrafo rich text básico para el cuerpo principal de la página.',
+        preview:
+          'En preview se muestra como párrafo con marcas inline, enlaces y color de texto.',
+      },
+      header: {
+        title: 'Título',
+        description:
+          'Bloque de encabezado para estructurar la página y la navegación del contenido.',
+        preview:
+          'En preview se muestra como heading semántico y puede aparecer en la navegación por títulos.',
+      },
+      list: {
+        title: 'Lista',
+        description:
+          'Lista numerada, con viñetas o checklist-style para contenido agrupado.',
+        preview:
+          'En preview se muestra como lista con elementos anidados según el estilo elegido.',
+      },
+      unorderedList: {
+        title: 'Lista con viñetas',
+        description:
+          'Lista con viñetas para elementos relacionados sin orden fijo.',
+        preview:
+          'En preview se muestra como lista de viñetas anidada con formato inline.',
+      },
+      orderedList: {
+        title: 'Lista numerada',
+        description:
+          'Lista numerada para pasos, rankings o contenido ordenado.',
+        preview:
+          'En preview se muestra como lista numerada anidada con el estilo de contador elegido.',
+      },
+      checklist: {
+        title: 'Checklist',
+        description:
+          'Lista tipo tarea con elementos marcables para progreso o requisitos.',
+        preview:
+          'En preview se muestra como checklist conservando el estado marcado de cada elemento.',
+      },
+      quote: {
+        title: 'Cita',
+        description: 'Bloque de cita con texto y leyenda opcional.',
+        preview:
+          'En preview se muestra como cita estilizada con leyenda bajo el texto.',
+      },
+      delimiter: {
+        title: 'Separador',
+        description: 'Separador visual simple entre secciones de contenido.',
+        preview: 'En preview se muestra como una línea divisoria horizontal.',
+      },
+      table: {
+        title: 'Tabla',
+        description:
+          'Tabla simple para datos compactos en filas y columnas.',
+        preview:
+          'En preview se muestra como tabla responsive con los datos guardados de Editor.js.',
+      },
+      embed: {
+        title: 'Insertar',
+        description:
+          'Bloque de medios embebidos para YouTube, Vimeo, Rutube, VK Video, Twitch y Coub.',
+        preview:
+          'En preview se muestra como iframe inline u opener de Fancybox según los tunes del bloque.',
+      },
+      image: {
+        title: 'Imagen',
+        description:
+          'Bloque de imagen para URL o imágenes locales de draft con leyenda.',
+        preview:
+          'En preview se muestra como imagen con caption opcional y fallback alt seguro.',
+      },
+      rawHtml: {
+        title: 'HTML sin procesar',
+        description:
+          'Escape hatch trusted admin-only para marcado HTML personalizado.',
+        preview:
+          'En preview renderiza HTML con el modo renderer safe o unsafe configurado.',
+      },
+    },
+    tools: {
+      notice: {
+        description:
+          'Bloque breve destacado para mensajes informativos, de éxito o de advertencia.',
+        preview:
+          'En preview se muestra como un aviso acentuado con título y texto opcionales.',
+      },
+      sectionIntro: {
+        description:
+          'Bloque introductorio de sección con título simple y descripción enriquecida.',
+        preview:
+          'En preview se muestra como un grupo compacto de título antes de una sección.',
+      },
+      twoColumns: {
+        description:
+          'Bloque compuesto con dos columnas rich independientes y controles de diseño.',
+        preview:
+          'En preview se muestra como columnas responsive iguales, izquierda ancha o derecha ancha.',
+      },
+      mediaGallery: {
+        description:
+          'Colección de medios para tarjetas de imagen o vídeo en cuadrícula o slider.',
+        preview:
+          'En preview muestra tarjetas de galería con visor Fancybox opcional y sincronización URL.',
+      },
+      maskedFieldsDemo: {
+        description:
+          'Bloque demo-only con máscaras para formatos comunes de campos simples.',
+        preview:
+          'En preview muestra teléfono, fecha, hora, precio, tarjeta y email guardados.',
+      },
+      cta: {
+        description:
+          'Botón independiente para enlaces seguros o eventos personalizados tipados.',
+        preview:
+          'En preview se muestra como botón CTA principal, secundario o discreto.',
+      },
+      codeSnippet: {
+        description:
+          'Bloque de código tipado con selección de lenguaje y leyenda opcional.',
+        preview:
+          'En preview se muestra como código resaltado si el lenguaje está soportado.',
+      },
+    },
+  },
   tunes: {
     anchor: {
       title: 'Ancla',

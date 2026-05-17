@@ -56,6 +56,11 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Для активного этапа Некритичные улучшения editor admin styles разделены по ответственности: `EditorJsEditor.module.scss` оставлен для локальной Vue-обвязки, а глобальный skin Editor.js/custom tools вынесен в `editor/admin/styles/editor.scss` и подключён через общий app SCSS entrypoint.
 - Этап расширения набора контентных блоков и plugins завершён: typed custom blocks `cta` и `codeSnippet` добавлены, а `rawHtml` переведён на готовый `@editorjs/raw` с project-level renderer contract; link preview и `Warning` не добавляются.
 - Этап Plugin info tooltips сделан активным: цель — добавить локализованные описания и preview-подсказки для кастомных plugins в Editor.js toolbox и на label'ах самих блоков без изменения content JSON schema.
+- Кодовая часть этапа Plugin info tooltips реализована: добавлена зависимость `tippy.js`, metadata registry для стандартных `paragraph`, `header`, `list`, `quote`, `delimiter`, `table`, `embed`, `image`, `rawHtml` и custom `notice`, `sectionIntro`, `twoColumns`, `mediaGallery`, `maskedFieldsDemo`, `cta`, `codeSnippet`, локализованные descriptions/previews в `ru/en/es`, tooltip enhancer для label'ов custom blocks и `.ce-popover-item` toolbox пунктов с cleanup через lifecycle `EditorJsEditor`.
+- Metadata contract поддерживает optional `previewImage { src, alt }`; сами preview images пока не добавлены.
+- Для tooltip preview images создан каталог `public/plugin-previews`: временно используется локальный `placeholder.svg`, реальные общие изображения задаются в `editorPluginInfoPreviewImageSrcByKey`, locale-specific override можно делать через `previewImage.src` в `i18n/editor/*`; если image не задан ни в registry, ни в локали, tooltip показывается без preview image.
+- Plugin info tooltip сделан interactive: при наведении на сам tooltip он не закрывается, а preview image открывается в Fancybox по клику.
+- Post-review fixes для Plugin info tooltips внесены: при destroy tooltip patch закрывает Fancybox overlay, а fallback `alt` для preview image теперь строится из локализованного title без английского хвоста.
 
 ## Ключевые решения
 
@@ -208,6 +213,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - CTA event action получил `eventPayloadJson`: editor показывает JSON-поле только для event action, валидирует пустое значение или JSON object, а renderer передаёт распарсенный `payload` в `CustomEvent.detail`. Link/event-specific поля теперь только скрываются при смене action type и не disabled, чтобы введённые значения сохранялись при возврате опции.
 - Post-review fixes для CTA validation: content-level validation теперь проверяет вложенные CTA в `SectionIntro`, `TwoColumns` и media card descriptions, а max-length проверки event-specific полей применяются только при активном `event` action.
 - Editor save при content validation error теперь скроллит и фокусирует первую видимую invalid field в editor DOM; это работает как для top-level custom fields, так и для полей внутри nested editors.
+- Plugin info tooltips реализованы без изменения content JSON schema: label helper помечает custom block labels через `data-editor-plugin-info-tool`, а отдельный `MutationObserver`-helper создаёт hover/focus tooltips на базе `tippy.js` для label'ов и toolbox items, сопоставляя toolbox item по локализованному title. Для preview images нужно положить статичные файлы в `public/plugin-previews`; общий `src` меняется в `editorPluginInfoPreviewImageSrcByKey`, для отдельной локали можно переопределить `previewImage.src` / `previewImage.alt` в локализованном metadata, а при отсутствии обоих источников картинка не рендерится. Tooltip остаётся открытым при hover/focus внутри себя, а preview image открывается через Fancybox.
 
 ## Текущие проблемы / открытые вопросы
 
@@ -230,4 +236,4 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 
 ## Следующий шаг
 
-Следующий шаг: начать активный этап `Plugin info tooltips` с metadata contract для custom tools и списка tools, которые получат description/preview в первой версии. Отложенный smoke-check `Raw HTML`, CTA event action, nested CTA и syntax highlighting остаётся полезной ручной проверкой перед или после первых tooltip-изменений.
+Следующий шаг: вручную проверить `Plugin info tooltips` в editor UI: hover и keyboard focus на label'ах custom blocks, hover/focus на пунктах toolbox, переключение языка `ru/en/es`, light/dark theme, закрытие toolbox, save/load и отсутствие изменений в content JSON. Отложенный smoke-check `Raw HTML`, CTA event action, nested CTA и syntax highlighting остаётся полезной дополнительной проверкой.

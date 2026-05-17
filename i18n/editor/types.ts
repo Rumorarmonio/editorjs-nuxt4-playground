@@ -198,6 +198,31 @@ export interface EditorUiMessages {
   inlineTools: {
     textColor: string
   }
+  pluginInfo: {
+    standardTools: {
+      paragraph: EditorPluginInfoMessagesWithTitle
+      header: EditorPluginInfoMessagesWithTitle
+      list: EditorPluginInfoMessagesWithTitle
+      unorderedList: EditorPluginInfoMessagesWithTitle
+      orderedList: EditorPluginInfoMessagesWithTitle
+      checklist: EditorPluginInfoMessagesWithTitle
+      quote: EditorPluginInfoMessagesWithTitle
+      delimiter: EditorPluginInfoMessagesWithTitle
+      table: EditorPluginInfoMessagesWithTitle
+      embed: EditorPluginInfoMessagesWithTitle
+      image: EditorPluginInfoMessagesWithTitle
+      rawHtml: EditorPluginInfoMessagesWithTitle
+    }
+    tools: {
+      notice: EditorPluginInfoMessages
+      sectionIntro: EditorPluginInfoMessages
+      twoColumns: EditorPluginInfoMessages
+      mediaGallery: EditorPluginInfoMessages
+      maskedFieldsDemo: EditorPluginInfoMessages
+      cta: EditorPluginInfoMessages
+      codeSnippet: EditorPluginInfoMessages
+    }
+  }
   tunes: {
     anchor: {
       title: string
@@ -231,4 +256,18 @@ export interface EditorUiMessages {
   editorJs: {
     messages: Record<string, unknown>
   }
+}
+
+export interface EditorPluginInfoMessages {
+  description: string
+  preview: string
+  previewImage?: {
+    src: string
+    alt: string
+  }
+}
+
+export interface EditorPluginInfoMessagesWithTitle
+  extends EditorPluginInfoMessages {
+  title: string
 }

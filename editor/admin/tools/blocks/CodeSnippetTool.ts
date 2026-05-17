@@ -107,7 +107,10 @@ export default class CodeSnippetTool implements BlockTool {
     })
 
     wrapper.append(
-      createBlockToolLabel(messages.tools.codeSnippet.toolboxTitle),
+      createBlockToolLabel(
+        'codeSnippet',
+        messages.tools.codeSnippet.toolboxTitle,
+      ),
       this.languageField.root,
       this.codeField.root,
       this.captionField.root,

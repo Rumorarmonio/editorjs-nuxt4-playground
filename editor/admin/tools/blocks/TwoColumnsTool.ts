@@ -132,7 +132,10 @@ export default class TwoColumnsTool implements BlockTool {
 
     columns.append(this.leftColumnField.root, this.rightColumnField.root)
     wrapper.append(
-      createBlockToolLabel(messages.tools.twoColumns.toolboxTitle),
+      createBlockToolLabel(
+        'twoColumns',
+        messages.tools.twoColumns.toolboxTitle,
+      ),
       controls,
       columns,
     )

@@ -109,7 +109,7 @@ export default class NoticeTool implements BlockTool {
     })
 
     wrapper.append(
-      createBlockToolLabel(messages.tools.notice.toolboxTitle),
+      createBlockToolLabel('notice', messages.tools.notice.toolboxTitle),
       this.titleField.root,
       this.textField.root,
       this.typeField.root,

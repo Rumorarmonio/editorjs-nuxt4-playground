@@ -174,7 +174,10 @@ export default class MediaGalleryTool implements BlockTool {
     )
     actions.append(addButton)
     wrapper.append(
-      createBlockToolLabel(messages.tools.mediaGallery.toolboxTitle),
+      createBlockToolLabel(
+        'mediaGallery',
+        messages.tools.mediaGallery.toolboxTitle,
+      ),
       settings,
       this.cardsRoot,
       this.cardsErrorElement,

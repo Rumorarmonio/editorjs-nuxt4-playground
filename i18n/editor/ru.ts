@@ -167,6 +167,134 @@ export const editorRu: EditorUiMessages = {
   inlineTools: {
     textColor: 'Цвет текста',
   },
+  pluginInfo: {
+    standardTools: {
+      paragraph: {
+        title: 'Текст',
+        description: 'Базовый rich text абзац для основного текста страницы.',
+        preview:
+          'В preview отображается как абзац с inline-выделениями, ссылками и цветом текста.',
+      },
+      header: {
+        title: 'Заголовок',
+        description:
+          'Блок заголовка для структуры страницы и навигации по контенту.',
+        preview:
+          'В preview отображается как семантический heading и может попадать в навигацию по заголовкам.',
+      },
+      list: {
+        title: 'Список',
+        description:
+          'Нумерованный, маркированный или checklist-style список для сгруппированного контента.',
+        preview:
+          'В preview отображается как список с вложенными пунктами согласно выбранному стилю.',
+      },
+      unorderedList: {
+        title: 'Маркированный список',
+        description:
+          'Список с маркерами для связанных пунктов без строгого порядка.',
+        preview:
+          'В preview отображается как вложенный bullet list с inline-форматированием текста.',
+      },
+      orderedList: {
+        title: 'Нумерованный список',
+        description:
+          'Нумерованный список для шагов, рейтингов или упорядоченного контента.',
+        preview:
+          'В preview отображается как вложенный numbered list с выбранным стилем счётчика.',
+      },
+      checklist: {
+        title: 'Чеклист',
+        description:
+          'Task-style список с отмечаемыми пунктами для прогресса или требований.',
+        preview:
+          'В preview отображается как checklist с сохранением checked-состояния пунктов.',
+      },
+      quote: {
+        title: 'Цитата',
+        description: 'Блок цитаты с текстом и необязательной подписью.',
+        preview:
+          'В preview отображается как оформленная цитата с подписью под текстом.',
+      },
+      delimiter: {
+        title: 'Разделитель',
+        description: 'Простой визуальный разделитель между секциями контента.',
+        preview: 'В preview отображается как горизонтальная линия-разделитель.',
+      },
+      table: {
+        title: 'Таблица',
+        description:
+          'Простая таблица для компактных данных в строках и колонках.',
+        preview:
+          'В preview отображается как responsive-таблица на основе сохранённых Editor.js данных.',
+      },
+      embed: {
+        title: 'Встраивание',
+        description:
+          'Блок встраиваемого media для YouTube, Vimeo, Rutube, VK Video, Twitch и Coub.',
+        preview:
+          'В preview отображается как inline iframe или Fancybox opener в зависимости от tunes блока.',
+      },
+      image: {
+        title: 'Изображение',
+        description:
+          'Блок изображения для URL или локальных draft-картинок с поддержкой подписи.',
+        preview:
+          'В preview отображается как изображение с optional caption и safe alt fallback.',
+      },
+      rawHtml: {
+        title: 'HTML-код',
+        description:
+          'Trusted admin-only escape hatch для произвольной HTML-разметки.',
+        preview:
+          'В preview рендерит HTML через настроенный safe или unsafe режим renderer.',
+      },
+    },
+    tools: {
+      notice: {
+        description:
+          'Короткий акцентный блок для информационных, успешных или предупреждающих сообщений.',
+        preview:
+          'В preview отображается как заметка с акцентом, необязательным заголовком и текстом.',
+      },
+      sectionIntro: {
+        description:
+          'Вводный блок секции с простым заголовком и rich-описанием.',
+        preview:
+          'В preview отображается как компактная группа заголовка перед большим разделом.',
+      },
+      twoColumns: {
+        description:
+          'Composite-блок с двумя независимыми rich-колонками и настройками макета.',
+        preview:
+          'В preview отображается как responsive-сетка с равными или широкими колонками.',
+      },
+      mediaGallery: {
+        description:
+          'Коллекция media-карточек для изображений или видео в режиме сетки или слайдера.',
+        preview:
+          'В preview отображает карточки галереи с optional Fancybox viewer и URL sync.',
+      },
+      maskedFieldsDemo: {
+        description:
+          'Demo-only блок с масками для распространённых форматов plain fields.',
+        preview:
+          'В preview отображает сохранённые телефон, дату, время, цену, карту и email.',
+      },
+      cta: {
+        description:
+          'Самостоятельная кнопка для безопасной ссылки или типизированного custom event.',
+        preview:
+          'В preview отображается как primary, secondary или ghost CTA-кнопка.',
+      },
+      codeSnippet: {
+        description:
+          'Типизированный блок кода с выбором языка и необязательной подписью.',
+        preview:
+          'В preview отображается как подсвеченный код, если выбранный язык поддерживается.',
+      },
+    },
+  },
   tunes: {
     anchor: {
       title: 'Якорь',

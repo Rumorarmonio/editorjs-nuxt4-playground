@@ -153,7 +153,10 @@ export default class MaskedFieldsDemoTool implements BlockTool {
     })
 
     wrapper.append(
-      createBlockToolLabel(messages.tools.maskedFieldsDemo.toolboxTitle),
+      createBlockToolLabel(
+        'maskedFieldsDemo',
+        messages.tools.maskedFieldsDemo.toolboxTitle,
+      ),
       fieldsRoot,
     )
 
