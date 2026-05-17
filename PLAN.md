@@ -32,6 +32,7 @@ deployment.
 - Style-architecture improvement этапа Некритичные улучшения реализован: глобальные Editor.js/custom tool стили вынесены из CSS Module в `editor/admin/styles/editor.scss`.
 - Этап расширения набора контентных блоков и plugins завершён: реализованы typed `CTA/Button`, `Code snippet` с подсветкой, CTA event action и `Raw HTML` на базе `@editorjs/raw`.
 - Review-fixes этапа расширения blocks/plugins внесены: уточнены Raw HTML sanitizer/baseURL behavior, CTA event validation, preview-level demo modal и link/event field UX в `CtaTool`.
+- Запланирован отдельный этап Plugin info tooltips: локализованные описания и preview-подсказки для кастомных plugins в Editor.js toolbox и на label'ах самих блоков.
 - Активный этап: Некритичные улучшения.
 
 ## Активный этап
@@ -75,6 +76,57 @@ deployment.
 - `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
 
 Этап снова активен после завершения `Raw HTML` в рамках расширения набора blocks/plugins.
+
+## Запланированный этап
+
+### Plugin info tooltips
+
+Статус: запланирован.
+
+Цель этапа: добавить локализованные краткие справки по кастомным plugins/block tools в editor UI, чтобы пользователь мог понять назначение блока до вставки и при
+работе с уже созданным блоком, без изменения content JSON schema и без переписывания внутреннего UI Editor.js.
+
+В scope входят:
+
+1. Shared metadata registry для кастомных block tools: ключ tool, локализованный title, description и optional preview image/alt.
+2. Расширение `i18n/editor` словарей и типов для описаний plugins без локализации самого content model.
+3. Tooltip/popover для label'ов кастомных блоков, которые уже выводятся внутри `Notice`, `SectionIntro`, `TwoColumns`, `MediaGallery`, `MaskedFieldsDemo`, `CTA/Button` и
+   `Code snippet`.
+4. DOM-enhancer для Editor.js toolbox/popover items через `MutationObserver`, потому что публичный Editor.js `toolbox` API поддерживает только `title`, `icon` и `data`.
+5. Поддержка mouse hover и keyboard focus; tooltip должен закрываться при уходе фокуса/hover, закрытии toolbox и уничтожении Editor.js instance.
+6. Использование `tippy.js` допустимо и предпочтительно для позиционирования, `appendTo: document.body`, viewport flipping и lifecycle cleanup; большой UI-kit на этом этапе не
+   добавляется.
+7. Optional static preview images для renderer-результата plugin'а, если они не требуют live-render renderer-компонентов и не раздувают scope.
+
+Вне scope этапа:
+
+- изменение content JSON schema;
+- live-render preview через реальные renderer-компоненты внутри tooltip;
+- замена Editor.js toolbox на полностью кастомное меню;
+- добавление большого UI-kit или миграция существующих controls на стороннюю component system;
+- замена native `select` на кастомные animated selects;
+- интерактивные tooltip-контролы внутри меню добавления на первом шаге;
+- расширение списка plugins/block tools.
+
+## План этапа
+
+1. Зафиксировать metadata contract для custom tools и решить, какие tools получают description/preview в первой версии.
+2. Добавить локализованные описания в `i18n/editor` для `ru/en/es` и обновить типы сообщений.
+3. Подключить tooltip helper на базе `tippy.js` или, если зависимость окажется избыточной после проверки прототипа, оставить минимальный custom helper только для label'ов.
+4. Реализовать tooltip для label'ов внутри кастомных блоков как наиболее стабильный сценарий.
+5. Реализовать отдельный toolbox enhancer для `.ce-popover-item`, аккуратно сопоставляя пункты меню с metadata и очищая instances при пересоздании popover/editor.
+6. Добавить стили tooltip под light/dark theme и проверить viewport positioning рядом с Editor.js toolbox.
+7. Проверить mouse, keyboard focus, locale switch, theme switch, save/load и отсутствие влияния tooltip на content data.
+
+## Критерии готовности этапа
+
+- У каждого поддержанного кастомного plugin есть локализованное описание, совпадающее по title с toolbox menu.
+- Tooltip открывается у label'а уже созданного блока и у соответствующего пункта меню добавления.
+- Tooltip корректно работает мышью и с клавиатурного focus, не ломает выбор tool в Editor.js toolbox и не создаёт focus traps.
+- Tooltip читаем в light/dark theme и не обрезается внутри Editor.js popover.
+- Все tooltip instances очищаются при пересоздании/уничтожении Editor.js instance.
+- Save/load, Import JSON, validation, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
+- `npm run lint` и `npm run typecheck` проходят; `npm run check` запускается, если этап затронет SCSS достаточно широко или добавит новую зависимость.
 
 ## Завершённый этап
 
