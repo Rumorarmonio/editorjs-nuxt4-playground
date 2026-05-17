@@ -15,6 +15,10 @@ To add one shared image for all locales:
 notice: '/plugin-previews/notice.png',
 ```
 
+Root-relative preview paths are resolved through Nuxt `app.baseURL`, so GitHub
+Pages deployments under a project path keep the repository segment in image
+URLs.
+
 To override the image for one locale only, add `previewImage` to the matching `pluginInfo` entry in `i18n/editor/en.ts`, `i18n/editor/ru.ts`, or `i18n/editor/es.ts`:
 
 ```ts

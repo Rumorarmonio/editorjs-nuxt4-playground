@@ -1,3 +1,4 @@
+import { withBase } from 'ufo'
 import type { EditorUiMessages } from '~~/i18n'
 
 export const editorPluginInfoStandardToolKeys = [
@@ -79,87 +80,91 @@ const editorPluginInfoPreviewImageSrcByKey: Partial<
 
 export function getEditorPluginInfoMetadataMap(
   messages: EditorUiMessages,
+  appBaseURL = '/',
 ): EditorPluginInfoMetadataMap {
+  const withPreviewImage = (metadata: EditorPluginInfoMetadata) =>
+    withResolvedPreviewImage(metadata, appBaseURL)
+
   return {
-    paragraph: withResolvedPreviewImage({
+    paragraph: withPreviewImage({
       key: 'paragraph',
       ...messages.pluginInfo.standardTools.paragraph,
     }),
-    header: withResolvedPreviewImage({
+    header: withPreviewImage({
       key: 'header',
       ...messages.pluginInfo.standardTools.header,
     }),
-    list: withResolvedPreviewImage({
+    list: withPreviewImage({
       key: 'list',
       ...messages.pluginInfo.standardTools.list,
     }),
-    unorderedList: withResolvedPreviewImage({
+    unorderedList: withPreviewImage({
       key: 'unorderedList',
       ...messages.pluginInfo.standardTools.unorderedList,
     }),
-    orderedList: withResolvedPreviewImage({
+    orderedList: withPreviewImage({
       key: 'orderedList',
       ...messages.pluginInfo.standardTools.orderedList,
     }),
-    checklist: withResolvedPreviewImage({
+    checklist: withPreviewImage({
       key: 'checklist',
       ...messages.pluginInfo.standardTools.checklist,
     }),
-    quote: withResolvedPreviewImage({
+    quote: withPreviewImage({
       key: 'quote',
       ...messages.pluginInfo.standardTools.quote,
     }),
-    delimiter: withResolvedPreviewImage({
+    delimiter: withPreviewImage({
       key: 'delimiter',
       ...messages.pluginInfo.standardTools.delimiter,
     }),
-    table: withResolvedPreviewImage({
+    table: withPreviewImage({
       key: 'table',
       ...messages.pluginInfo.standardTools.table,
     }),
-    embed: withResolvedPreviewImage({
+    embed: withPreviewImage({
       key: 'embed',
       ...messages.pluginInfo.standardTools.embed,
     }),
-    image: withResolvedPreviewImage({
+    image: withPreviewImage({
       key: 'image',
       ...messages.pluginInfo.standardTools.image,
     }),
-    rawHtml: withResolvedPreviewImage({
+    rawHtml: withPreviewImage({
       key: 'rawHtml',
       ...messages.pluginInfo.standardTools.rawHtml,
     }),
-    notice: withResolvedPreviewImage({
+    notice: withPreviewImage({
       key: 'notice',
       title: messages.tools.notice.toolboxTitle,
       ...messages.pluginInfo.tools.notice,
     }),
-    sectionIntro: withResolvedPreviewImage({
+    sectionIntro: withPreviewImage({
       key: 'sectionIntro',
       title: messages.tools.sectionIntro.toolboxTitle,
       ...messages.pluginInfo.tools.sectionIntro,
     }),
-    twoColumns: withResolvedPreviewImage({
+    twoColumns: withPreviewImage({
       key: 'twoColumns',
       title: messages.tools.twoColumns.toolboxTitle,
       ...messages.pluginInfo.tools.twoColumns,
     }),
-    mediaGallery: withResolvedPreviewImage({
+    mediaGallery: withPreviewImage({
       key: 'mediaGallery',
       title: messages.tools.mediaGallery.toolboxTitle,
       ...messages.pluginInfo.tools.mediaGallery,
     }),
-    maskedFieldsDemo: withResolvedPreviewImage({
+    maskedFieldsDemo: withPreviewImage({
       key: 'maskedFieldsDemo',
       title: messages.tools.maskedFieldsDemo.toolboxTitle,
       ...messages.pluginInfo.tools.maskedFieldsDemo,
     }),
-    cta: withResolvedPreviewImage({
+    cta: withPreviewImage({
       key: 'cta',
       title: messages.tools.cta.toolboxTitle,
       ...messages.pluginInfo.tools.cta,
     }),
-    codeSnippet: withResolvedPreviewImage({
+    codeSnippet: withPreviewImage({
       key: 'codeSnippet',
       title: messages.tools.codeSnippet.toolboxTitle,
       ...messages.pluginInfo.tools.codeSnippet,
@@ -177,6 +182,7 @@ export function isEditorPluginInfoCustomToolKey(
 
 function withResolvedPreviewImage(
   metadata: EditorPluginInfoMetadata,
+  appBaseURL: string,
 ): EditorPluginInfoMetadata {
   const sharedPreviewImageSrc = editorPluginInfoPreviewImageSrcByKey[metadata.key]
   const previewImageSrc = metadata.previewImage?.src ?? sharedPreviewImageSrc
@@ -188,8 +194,16 @@ function withResolvedPreviewImage(
   return {
     ...metadata,
     previewImage: {
-      src: previewImageSrc,
+      src: resolvePreviewImageSrc(previewImageSrc, appBaseURL),
       alt: metadata.previewImage?.alt ?? metadata.title,
     },
   }
+}
+
+function resolvePreviewImageSrc(src: string, appBaseURL: string): string {
+  if (src.startsWith('//')) {
+    return src
+  }
+
+  return withBase(src, appBaseURL)
 }

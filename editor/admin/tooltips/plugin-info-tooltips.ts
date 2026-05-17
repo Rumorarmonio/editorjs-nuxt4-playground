@@ -20,11 +20,13 @@ export interface EditorPluginInfoTooltipsPatch {
 export function enableEditorPluginInfoTooltips({
   root,
   messages,
+  appBaseURL = '/',
 }: {
   root: HTMLElement
   messages: EditorUiMessages
+  appBaseURL?: string
 }): EditorPluginInfoTooltipsPatch {
-  const metadataByKey = getEditorPluginInfoMetadataMap(messages)
+  const metadataByKey = getEditorPluginInfoMetadataMap(messages, appBaseURL)
   const metadataByTitle = new Map(
     Object.values(metadataByKey).map((metadata) => [
       normalizeToolboxTitle(metadata.title),

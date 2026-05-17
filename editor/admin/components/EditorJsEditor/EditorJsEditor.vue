@@ -32,6 +32,8 @@ const props = defineProps<{
   editorMessages: EditorUiMessages
 }>()
 
+const runtimeConfig = useRuntimeConfig()
+
 const emit = defineEmits<{
   changed: []
   saved: [content: EditorContentData]
@@ -153,6 +155,7 @@ onMounted(async () => {
     pluginInfoTooltipsPatch = enableEditorPluginInfoTooltips({
       root: holder,
       messages: props.editorMessages,
+      appBaseURL: runtimeConfig.app.baseURL,
     })
     isReady.value = true
   } catch {
