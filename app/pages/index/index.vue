@@ -2,7 +2,11 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import EditorJsEditor from '~~/editor/admin/components/EditorJsEditor/EditorJsEditor.vue'
-import type { EditorContentData } from '~~/editor/shared'
+import {
+  getValidationSummary,
+  validateEditorContentData,
+  type EditorContentData,
+} from '~~/editor/shared'
 import type { AppLocalePreference } from '~~/i18n'
 
 const { t } = useI18n()
@@ -24,6 +28,7 @@ const {
 } = useEditorContentSource()
 
 const saveMessage = ref<string | null>(null)
+const exportError = ref<string | null>(null)
 const importJsonText = ref('')
 const importMessage = ref<string | null>(null)
 const importError = ref<string | null>(null)
@@ -36,6 +41,7 @@ const translatedSourceLabel = computed(() =>
     ? t('app.common.localDraft')
     : t('app.common.defaultJson'),
 )
+const exportFileName = 'editor-content.json'
 
 async function handleSaveDraft(): Promise<void> {
   saveMessage.value = null
@@ -44,10 +50,51 @@ async function handleSaveDraft(): Promise<void> {
 
 async function handleOpenPreview(): Promise<void> {
   saveMessage.value = null
+  exportError.value = null
 
-  if (await editorRef.value?.save({ validateContent: false })) {
-    await navigateTo('/preview')
+  if (
+    hasUnsavedChanges.value &&
+    !window.confirm(t('app.editorPage.openPreviewConfirm'))
+  ) {
+    return
   }
+
+  await navigateTo('/preview')
+}
+
+async function handleExportJson(): Promise<void> {
+  if (!import.meta.client) {
+    return
+  }
+
+  saveMessage.value = null
+  const currentContent = await editorRef.value?.getCurrentContent()
+
+  if (!currentContent) {
+    return
+  }
+
+  const validationSummary = getValidationSummary(
+    validateEditorContentData(currentContent),
+  )
+
+  exportError.value = validationSummary
+
+  if (validationSummary) {
+    return
+  }
+
+  const serializedContent = JSON.stringify(currentContent, null, 2)
+  const blob = new Blob([serializedContent], {
+    type: 'application/json;charset=utf-8',
+  })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+
+  link.href = url
+  link.download = exportFileName
+  link.click()
+  URL.revokeObjectURL(url)
 }
 
 function handleResetDraft(): void {
@@ -60,6 +107,7 @@ function handleResetDraft(): void {
 
   resetDraft()
   saveMessage.value = null
+  exportError.value = null
   importMessage.value = null
   importError.value = null
   hasUnsavedChanges.value = false
@@ -69,12 +117,14 @@ function handleResetDraft(): void {
 function handleSaved(content: EditorContentData): void {
   saveDraft(content)
   hasUnsavedChanges.value = false
+  exportError.value = null
   saveMessage.value = t('app.editorPage.saveSuccess')
 }
 
 function handleChanged(): void {
   hasUnsavedChanges.value = true
   saveMessage.value = null
+  exportError.value = null
 }
 
 function stopHeaderTabPropagation(event: KeyboardEvent): void {
@@ -89,6 +139,15 @@ function stopHeaderTabPropagation(event: KeyboardEvent): void {
   }
 
   event.stopImmediatePropagation()
+}
+
+function handleSaveShortcut(event: KeyboardEvent): void {
+  if (event.key.toLowerCase() !== 's' || (!event.ctrlKey && !event.metaKey)) {
+    return
+  }
+
+  event.preventDefault()
+  void handleSaveDraft()
 }
 
 function handleImportJson(serializedContent: string): boolean {
@@ -114,6 +173,7 @@ function handleImportJson(serializedContent: string): boolean {
 
   importJsonText.value = ''
   saveMessage.value = null
+  exportError.value = null
   hasUnsavedChanges.value = false
   importMessage.value = t('app.common.importSuccess')
   editorRenderKey.value += 1
@@ -143,18 +203,16 @@ async function handleSetLocalePreference(
 
   const previousLocale = currentLocale.value
 
-  if (hasUnsavedChanges.value) {
-    const currentContent = await editorRef.value?.getCurrentContent()
-
-    if (!currentContent) {
-      return
-    }
-
-    saveDraft(currentContent)
-    hasUnsavedChanges.value = false
+  if (
+    hasUnsavedChanges.value &&
+    !window.confirm(t('app.editorPage.localeConfirm'))
+  ) {
+    return
   }
 
   saveMessage.value = null
+  exportError.value = null
+  hasUnsavedChanges.value = false
   setLocalePreference(nextPreference)
 
   if (currentLocale.value !== previousLocale) {
@@ -164,6 +222,7 @@ async function handleSetLocalePreference(
 
 if (import.meta.client) {
   document.addEventListener('keydown', stopHeaderTabPropagation, true)
+  document.addEventListener('keydown', handleSaveShortcut, true)
 }
 
 onMounted(loadContent)
@@ -174,6 +233,7 @@ onBeforeUnmount(() => {
   }
 
   document.removeEventListener('keydown', stopHeaderTabPropagation, true)
+  document.removeEventListener('keydown', handleSaveShortcut, true)
 })
 </script>
 
@@ -203,6 +263,13 @@ onBeforeUnmount(() => {
         />
 
         <AppButton
+          :disabled="!isReady"
+          @click="handleExportJson"
+        >
+          {{ t('app.editorPage.exportJson') }}
+        </AppButton>
+
+        <AppButton
           :disabled="!isReady || resolvedContent.source !== 'draft'"
           @click="handleResetDraft"
         >
@@ -215,6 +282,14 @@ onBeforeUnmount(() => {
         >
           {{ t('app.editorPage.openPreview') }}
         </AppButton>
+
+        <p
+          v-if="exportError"
+          :class="$style.error"
+          role="alert"
+        >
+          {{ exportError }}
+        </p>
       </div>
     </section>
 

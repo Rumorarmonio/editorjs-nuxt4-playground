@@ -40,11 +40,15 @@ export const en = {
     editorPage: {
       kicker: 'Editor shell',
       title: 'Content draft',
+      exportJson: 'Export JSON',
       openPreview: 'Open preview',
       resetDraft: 'Reset draft',
       saveDraft: 'Save draft',
       saveSuccess: 'Draft saved locally.',
+      openPreviewConfirm: 'Open preview without saving unsaved changes?',
       importConfirm: 'Import JSON and discard unsaved editor changes?',
+      localeConfirm:
+        'Change interface language and discard unsaved editor changes?',
       resetConfirm: 'Reset draft and discard unsaved editor changes?',
     },
     previewPage: {

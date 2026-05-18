@@ -41,12 +41,17 @@ export const es = {
     editorPage: {
       kicker: 'Contenedor del editor',
       title: 'Borrador de contenido',
+      exportJson: 'Exportar JSON',
       openPreview: 'Abrir preview',
       resetDraft: 'Restablecer borrador',
       saveDraft: 'Guardar borrador',
       saveSuccess: 'Borrador guardado localmente.',
+      openPreviewConfirm:
+        '¿Abrir preview sin guardar los cambios no guardados?',
       importConfirm:
         '¿Importar JSON y descartar los cambios no guardados del editor?',
+      localeConfirm:
+        '¿Cambiar el idioma de la interfaz y descartar los cambios no guardados del editor?',
       resetConfirm:
         '¿Restablecer el borrador y descartar los cambios no guardados del editor?',
     },

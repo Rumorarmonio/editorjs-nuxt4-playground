@@ -138,6 +138,10 @@ onMounted(async () => {
       i18n: props.editorMessages.editorJs,
       placeholder: props.editorMessages.core.placeholder,
       onChange: () => {
+        if (!isReady.value) {
+          return
+        }
+
         emit('changed')
       },
     })
