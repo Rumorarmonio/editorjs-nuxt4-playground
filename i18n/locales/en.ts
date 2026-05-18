@@ -41,9 +41,11 @@ export const en = {
       kicker: 'Editor shell',
       title: 'Content draft',
       openPreview: 'Open preview',
+      resetDraft: 'Reset draft',
       saveDraft: 'Save draft',
       saveSuccess: 'Draft saved locally.',
       importConfirm: 'Import JSON and discard unsaved editor changes?',
+      resetConfirm: 'Reset draft and discard unsaved editor changes?',
     },
     previewPage: {
       kicker: 'Preview shell',

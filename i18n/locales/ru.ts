@@ -42,10 +42,13 @@ export const ru = {
       kicker: 'Оболочка редактора',
       title: 'Черновик контента',
       openPreview: 'Открыть preview',
+      resetDraft: 'Сбросить черновик',
       saveDraft: 'Сохранить черновик',
       saveSuccess: 'Черновик сохранён локально.',
       importConfirm:
         'Импортировать JSON и сбросить несохранённые изменения редактора?',
+      resetConfirm:
+        'Сбросить черновик и удалить несохранённые изменения редактора?',
     },
     previewPage: {
       kicker: 'Оболочка preview',

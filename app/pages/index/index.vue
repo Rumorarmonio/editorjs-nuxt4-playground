@@ -18,6 +18,7 @@ const {
   importDraftJson,
   isReady,
   loadContent,
+  resetDraft,
   resolvedContent,
   saveDraft,
 } = useEditorContentSource()
@@ -47,6 +48,22 @@ async function handleOpenPreview(): Promise<void> {
   if (await editorRef.value?.save({ validateContent: false })) {
     await navigateTo('/preview')
   }
+}
+
+function handleResetDraft(): void {
+  if (
+    hasUnsavedChanges.value &&
+    !window.confirm(t('app.editorPage.resetConfirm'))
+  ) {
+    return
+  }
+
+  resetDraft()
+  saveMessage.value = null
+  importMessage.value = null
+  importError.value = null
+  hasUnsavedChanges.value = false
+  editorRenderKey.value += 1
 }
 
 function handleSaved(content: EditorContentData): void {
@@ -184,6 +201,13 @@ onBeforeUnmount(() => {
           :model-value="currentTheme"
           @update:model-value="setTheme"
         />
+
+        <AppButton
+          :disabled="!isReady || resolvedContent.source !== 'draft'"
+          @click="handleResetDraft"
+        >
+          {{ t('app.editorPage.resetDraft') }}
+        </AppButton>
 
         <AppButton
           variant="primary"
