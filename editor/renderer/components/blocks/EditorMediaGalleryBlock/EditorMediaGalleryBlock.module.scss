@@ -37,7 +37,36 @@
 }
 
 .mediaLink {
+  position: relative;
   cursor: zoom-in;
+}
+
+.videoIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  background: color-mix(in srgb, var(--color-background) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 10px 28px
+    color-mix(in srgb, var(--color-shadow, rgb(0 0 0)) 22%, transparent);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.videoIndicator::before {
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  content: '';
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 17px solid var(--color-text);
 }
 
 .mediaLink img,

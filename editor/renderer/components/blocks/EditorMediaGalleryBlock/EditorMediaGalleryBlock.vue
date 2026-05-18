@@ -102,6 +102,11 @@ function getItemAlt(item: MediaGalleryItemData): string {
             preload="metadata"
             :src="item.url"
           />
+          <span
+            v-if="item.type === 'video'"
+            :class="$style.videoIndicator"
+            aria-hidden="true"
+          />
         </a>
         <div
           v-else
@@ -169,6 +174,11 @@ function getItemAlt(item: MediaGalleryItemData): string {
               playsinline
               preload="metadata"
               :src="item.url"
+            />
+            <span
+              v-if="item.type === 'video'"
+              :class="$style.videoIndicator"
+              aria-hidden="true"
             />
           </a>
           <div
