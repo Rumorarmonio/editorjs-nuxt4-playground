@@ -365,6 +365,7 @@
 - composite blocks (`TwoColumns`, media gallery / slider)
 - sidebar navigation builder из JSON
 - UI для управления карточками/слайдами внутри media block
+- accordion group block как поздний рекурсивный composite block
 - поздний theme layer для custom tools и custom block UI
 - поздние keyboard navigation улучшения для custom field wrappers и composite blocks
 
@@ -424,6 +425,7 @@
 23. Клавиатурная навигация и accessibility polish.
 24. Некритичные улучшения.
 25. Расширение набора контентных блоков и plugins.
+26. Accordion group block как отдельный крупный recursive composite block.
 
 ### 8.3. Принцип кастомизации
 
@@ -1593,6 +1595,187 @@ Media gallery / slider block является обязательным каст�
 
 ---
 
+## 24.13. Accordion group block: поздний рекурсивный composite-блок
+
+### 24.13.1. Общий принцип
+
+`Accordion group` является отдельным крупным поздним composite block, а не мелким optional improvement.
+
+Блок должен позволять создавать группу из одного или нескольких аккордеонов. Каждый аккордеон должен иметь:
+
+- header — кликабельную область или связанную с ней область управления раскрытием;
+- body — область контента, которая раскрывается и скрывается;
+- stable item id для renderer state, aria-атрибутов, reorder и будущих расширений.
+
+Блок должен быть реализован только после стабилизации текущих nested editor scenarios, reusable rich fields, media-card management pattern и renderer recursion.
+
+### 24.13.2. Data contract
+
+Базовая модель данных должна быть typed и храниться как обычный Editor.js block data:
+
+- `closeOthersOnOpen: boolean` — по умолчанию `false`, и одновременно могут быть открыты несколько item'ов; если toggle активен и значение `true`, открытие одного item закрывает остальные в этой же группе;
+- `items: AccordionItemData[]`;
+- каждый item хранит `id`, `isInitiallyOpen`, `header` и `body`;
+- `header` и `body` являются nested Editor.js output data.
+
+`isInitiallyOpen: boolean` должен отвечать только за начальное состояние item'а при загрузке страницы. Дальнейшее раскрытие/закрытие после пользовательского взаимодействия остаётся renderer/editor UI state, а не записывается обратно в content JSON.
+
+Если `closeOthersOnOpen: false`, renderer должен открыть все item'ы с `isInitiallyOpen: true`.
+
+Если `closeOthersOnOpen: true` и несколько item'ов имеют `isInitiallyOpen: true`, renderer должен открыть только первый такой item по текущему порядку в `items`, а остальные считать закрытыми. Это правило должно быть предсказуемым fallback'ом для конфликтных данных и не должно ломать render/import.
+
+### 24.13.3. Header и body как nested editors
+
+Header и body должны редактироваться через вложенные Editor.js instances.
+
+Header editor должен поддерживать rich text и ограниченный набор структурных блоков, но не должен автоматически получать весь основной toolbox. Для первой версии допустимый набор header tools:
+
+- paragraph;
+- header ограниченных уровней;
+- list, если UX не становится перегруженным;
+- inline tools проекта.
+
+Body editor должен поддерживать стандартный контентный набор для nested content:
+
+- paragraph;
+- header;
+- list;
+- CTA, если он уже стабилен во вложенных сценариях;
+- accordion block после отдельного шага controlled recursion.
+
+Image/media, raw HTML, embed и другие тяжёлые или trusted/admin-only tools не должны попадать в body/header nested editor без отдельного решения по UX, renderer contract, validation и производительности.
+
+### 24.13.4. UI управления item'ами
+
+Admin UI должен использовать подход, близкий к `MediaGallery`:
+
+- кнопка `Добавить аккордеон`;
+- минимально один item в группе;
+- удаление item'а;
+- изменение порядка item'ов;
+- отдельные visual wrappers для каждого item'а;
+- field-level ошибки на уровне item/header/body;
+- сохранение текущих nested editor данных перед add/remove/reorder.
+
+Переиспользование подходов из `MediaGalleryTool` желательно, но общий абстрактный collection manager следует вводить только если он реально уменьшает сложность и не ломает читаемость.
+
+### 24.13.5. Controlled recursion и вложенные аккордеоны
+
+Accordion block является первым потенциально рекурсивным custom block:
+
+- body одного аккордеона может содержать вложенный accordion group;
+- другие nested editors могут получить accordion tool только после стабилизации основного accordion block;
+- рекурсивный renderer должен корректно отображать вложенные группы независимо друг от друга.
+
+Нельзя на первом шаге без ограничений добавить accordion tool во все nested editor toolsets. Это создаёт риск циклических зависимостей, тяжёлого lifecycle и резкого роста числа Editor.js instances.
+
+Рекомендуемая стратегия:
+
+1. Сначала реализовать accordion group как основной block с header/body nested editors без рекурсивного добавления самого себя.
+2. Затем разрешить accordion внутри body editor через отдельный lazy tools factory.
+3. Затем, если сценарий подтверждён, расширить другие nested editor contexts.
+
+На уровне editor UI желательно предусмотреть мягкий depth limit или context flag, чтобы предотвратить аварийно глубокую вложенность. Renderer должен быть устойчив к данным с большей вложенностью, но UI редактирования не обязан поощрять бесконечную рекурсию.
+
+### 24.13.6. Renderer behavior
+
+Renderer должен отображать группу аккордеонов как независимый Vue-компонент.
+
+Для управления состоянием группы допустимо и предпочтительно использовать локальный state родительского компонента. `provide/inject` следует использовать тогда, когда item-компоненты отделяются от group-компонента или когда это упрощает независимые вложенные группы.
+
+Каждая accordion group должна иметь собственный isolated context:
+
+- открытие item'а во вложенной группе не должно закрывать item'ы внешней группы;
+- `closeOthersOnOpen: true` должен действовать только внутри текущей группы;
+- при нескольких `isInitiallyOpen: true` и `closeOthersOnOpen: true` открытым должен стать только первый item текущей группы;
+- вложенные группы не должны разделять state по случайному глобальному ключу.
+
+### 24.13.7. Анимация раскрытия
+
+Открытие и закрытие body должно быть плавным, без рывков, с длительностью **0.3s**.
+
+Для произвольного и потенциально объёмного контента предпочтителен JS-подход с измерением `scrollHeight`:
+
+- closed: `height: 0`;
+- opening: `height: measured px`;
+- после завершения opening: `height: auto`;
+- closing: `height: current px -> 0`.
+
+Использование фиксированного большого `max-height` нежелательно как основная стратегия, потому что оно плохо масштабируется на объёмный контент и глубокую вложенность.
+
+Необходимо учитывать `prefers-reduced-motion`: при reduced motion раскрытие должно происходить без заметной анимации или с минимальным transition.
+
+### 24.13.8. Accessibility contract
+
+Accordion renderer должен соблюдать базовый accessibility contract:
+
+- управляющий элемент должен иметь корректный `aria-expanded`;
+- управляющий элемент должен быть связан с body через `aria-controls`;
+- body должен иметь стабильный `id`;
+- keyboard interaction должна поддерживать как минимум `Enter` и `Space` на управляющем элементе;
+- focus states должны быть видимыми в light/dark theme.
+
+Если header содержит rich content и потенциально ссылки, не следует бездумно помещать весь header внутрь `<button>`. Предпочтительно разделить rich header content и отдельный toggle control либо аккуратно реализовать container-button pattern с учётом интерактивных элементов внутри header.
+
+### 24.13.9. Performance и ограничения сложности
+
+Главный риск этапа — количество nested Editor.js instances.
+
+Один item может создавать два nested editor instances. Группа из нескольких item'ов плюс вложенные группы быстро увеличивает:
+
+- время инициализации editor UI;
+- стоимость save;
+- стоимость destroy;
+- размер JSON;
+- сложность validation и import guard;
+- риск потери несохранённых данных при reorder/remove.
+
+Поэтому первая версия должна быть ограниченной и проверяемой:
+
+- минимум один item;
+- несколько item'ов в группе;
+- стабильный save/load/render;
+- controlled recursion только после базовой версии;
+- без тяжёлых media/raw/embed tools внутри nested accordion editors на первом шаге.
+
+### 24.13.10. Проверка
+
+Необходимо проверить:
+
+- создание accordion group;
+- добавление, удаление и reorder item'ов;
+- toggle `isInitiallyOpen` у каждого item'а;
+- сохранение rich header и rich body;
+- save/load/reload editor state;
+- preview render;
+- `closeOthersOnOpen: false`;
+- `closeOthersOnOpen: true`;
+- несколько `isInitiallyOpen: true` при `closeOthersOnOpen: true` открывают только первый item;
+- плавную анимацию открытия/закрытия на коротком и длинном контенте;
+- nested accordion внутри body после включения controlled recursion;
+- независимость вложенной группы от внешней;
+- Import JSON и draft guard;
+- validation errors;
+- theme;
+- keyboard/focus сценарии;
+- destroy nested Editor.js instances при удалении блока, item'а и смене данных.
+
+### 24.13.11. Критерии готовности этапа
+
+Этап считается завершённым, если:
+
+- accordion group имеет typed shared contract, normalizers, guards и renderer;
+- admin tool поддерживает минимум один item и управление списком item'ов;
+- каждый item поддерживает `isInitiallyOpen`, а конфликт нескольких initially-open item'ов в close-others режиме разрешается открытием первого item'а;
+- header и body редактируются через nested Editor.js;
+- `closeOthersOnOpen` корректно управляет runtime state в renderer;
+- анимация открытия/закрытия работает без рывков и учитывает reduced motion;
+- controlled recursion для accordion inside accordion либо реализована и проверена, либо явно отложена отдельным follow-up;
+- save/load/render/import/export/reset проходят без потери данных;
+- производственные риски по глубокой вложенности и количеству nested instances зафиксированы.
+
+---
+
 ## 25. List tool и nested list: обязательный поэтапный сценарий
 
 ### 25.1. Общий принцип
@@ -2456,6 +2639,35 @@ Strikethrough следует сначала пробовать как готов
 - выбран минимальный набор реально полезных новых content blocks/plugins;
 - каждый реализованный блок проходит save/load/render/import/export/reset сценарии;
 - рискованные escape hatch инструменты вроде Raw HTML либо явно ограничены trusted/admin-only правилами, либо остаются вне проекта.
+
+---
+
+### Этап 26. Accordion group block
+
+Содержимое этапа:
+
+- typed `accordionGroup` data contract;
+- shared normalizers, guards и validation;
+- renderer-компонент группы и item'ов;
+- `closeOthersOnOpen` runtime behavior;
+- плавная 0.3s height-анимация раскрытия/закрытия;
+- admin tool с управлением item'ами по аналогии с media gallery cards;
+- nested editors для header и body;
+- controlled recursion для accordion внутри body после стабилизации базовой версии;
+- отдельное решение о расширении других nested editor contexts.
+
+Проверка:
+
+- group и item'ы создаются, редактируются, удаляются и переупорядочиваются;
+- header/body nested content сохраняется и рендерится;
+- multi-open и close-others-on-open режимы работают независимо для каждой группы;
+- вложенный accordion не ломает внешнюю группу;
+- save/load/render/import/export/reset проходят без потери данных;
+- destroy nested Editor.js instances не оставляет зависших editor instances.
+
+Критерий готовности:
+
+- реализован стабильный recursive composite block с ограниченным и проверенным scope первой версии.
 
 ---
 
