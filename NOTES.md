@@ -63,6 +63,10 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Post-review fixes для Plugin info tooltips внесены: при destroy tooltip patch закрывает Fancybox overlay, а fallback `alt` для preview image теперь строится из локализованного title без английского хвоста.
 - Этап Plugin info tooltips завершён: tooltip metadata, локализация, toolbox/label подсказки, optional preview images, Fancybox preview и related renderer fixes для нумерованных списков доведены до рабочего состояния.
 - Этап Некритичные улучшения снова активен: ближайшая работа должна идти через небольшие optional improvements с узкими изменениями и отдельной проверкой.
+- Добавлена типографика сохранения с неразрывными пробелами: зависимость `typograf`, shared-helper `typographEditorContentData` и подключение к `EditorJsEditor.save()` / `getCurrentContent()`. Сохранение использует текущую локаль контента `ru | en | es` как fallback, но перед прогоном строки пытается автоопределить язык по кириллице, испанским символам/частым словам или латинице; включена только группа правил `nbsp` и дополнительно `common/nbsp/afterNumber`, чтобы не менять кавычки, тире и прочую типографику вне scope.
+- Для ручной проверки типографики добавлены компактные JSON fixtures в `content/`: `nbsp-ru-page.json`, `nbsp-en-page.json`, `nbsp-es-page.json` и `nbsp-mixed-page.json`. Они покрывают standard rich blocks, list/table cells, captions, custom blocks, nested rich fields и контрольные поля code/rawHtml/JSON payload, где типографика не должна применяться.
+- Post-review fixes типографики: `default-page.json` не коммитится как runtime-saved output после ручной проверки, чтобы не тащить churn от Editor.js save; plain/rich text типографируется по sentence-like сегментам внутри строки, а HTML rich text возвращает реальный `U+00A0` вместо `&nbsp;` для единообразного JSON.
+- Для standard `embed` save-normalization декодирует URL entities в `source` / `embed` (`&amp;`, `&#38;`, `&#x26;` -> `&`), потому что JSON URL не должен хранить HTML-escaped query separators; это сохраняет работоспособность VK/Vimeo/Twitch whitelist после повторного сохранения через Editor.js.
 
 ## Ключевые решения
 
@@ -216,6 +220,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Post-review fixes для CTA validation: content-level validation теперь проверяет вложенные CTA в `SectionIntro`, `TwoColumns` и media card descriptions, а max-length проверки event-specific полей применяются только при активном `event` action.
 - Editor save при content validation error теперь скроллит и фокусирует первую видимую invalid field в editor DOM; это работает как для top-level custom fields, так и для полей внутри nested editors.
 - Plugin info tooltips реализованы без изменения content JSON schema: label helper помечает custom block labels через `data-editor-plugin-info-tool`, а отдельный `MutationObserver`-helper создаёт hover/focus tooltips на базе `tippy.js` для label'ов и toolbox items, сопоставляя toolbox item по локализованному title. Для preview images нужно положить статичные файлы в `public/plugin-previews`; общий `src` меняется в `editorPluginInfoPreviewImageSrcByKey`, для отдельной локали можно переопределить `previewImage.src` / `previewImage.alt` в локализованном metadata, а при отсутствии обоих источников картинка не рендерится. Tooltip остаётся открытым при hover/focus внутри себя, а preview image открывается через Fancybox.
+- Сохранение с `nbsp` выполняется после `editor.save()` и до validation/save emit, поэтому `Save draft` и editor-side `Export JSON` получают одинаково нормализованный JSON. Типографируются только человекочитаемые поля: standard rich text, list/table cells, captions, custom block labels/titles/text и nested rich content. Не типографируются `code`, `rawHtml`, URL, anchors/tunes, `eventPayloadJson`, media alt, masks/email/phone/card fields и служебные id.
 
 ## Текущие проблемы / открытые вопросы
 
@@ -238,4 +243,4 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 
 ## Следующий шаг
 
-Следующий шаг: выбрать ближайшее небольшое optional improvement в активном этапе `Некритичные улучшения` и реализовать его отдельным узким изменением. Отложенный smoke-check `Raw HTML`, CTA event action, nested CTA и syntax highlighting остаётся полезной дополнительной проверкой.
+Следующий шаг: вручную проверить сохранение с `nbsp` на русском, английском и испанском: выбрать язык, ввести контрольные фразы в обычный paragraph/header/list/table и в custom/nested поля, нажать `Save draft`, выполнить `Export JSON` на editor page и убедиться, что в текстовых полях появились `U+00A0` / `\u00a0`, а code/url/rawHtml/JSON payload/masked fields не изменились. Отложенный smoke-check `Raw HTML`, CTA event action, nested CTA и syntax highlighting остаётся полезной дополнительной проверкой.

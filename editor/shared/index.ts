@@ -77,6 +77,7 @@ export {
   textColorInlineClassNames,
   textColorInlineOptions,
 } from './inline/text-color'
+export { typographEditorContentData } from './typography/content-typography'
 export { isAllowedMediaUrl } from './entities/media'
 export {
   findValidationMessage,
@@ -161,6 +162,7 @@ export type {
   EditorOutputBlock,
   EditorOutputData,
 } from './types/editor-output'
+export type { ContentTypographyLocale } from './typography/content-typography'
 export type {
   AnchorTuneData,
   AnimationTuneData,

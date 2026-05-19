@@ -36,6 +36,7 @@ deployment.
 - Plugin info tooltips реализованы: добавлен metadata registry, локализованные descriptions/previews для стандартных и custom block tools, label tooltips и toolbox DOM-enhancer на базе `tippy.js`.
 - Для preview images создан `public/plugin-previews` с временным локальным placeholder; общий `src` для каждого tool key задаётся в одном registry, locale-specific override остаётся через `previewImage`, а без обоих источников preview image не показывается.
 - Tooltip стал interactive; preview image открывается через Fancybox.
+- Optional improvement с типографикой сохранения реализован: при `Save draft` и editor-side `Export JSON` контент проходит через `typograf` с автоопределением языка строки и fallback на текущую локаль `ru | en | es`, но только по `nbsp`-правилам и только в человекочитаемых текстовых полях.
 
 ## Активный этап
 
@@ -69,7 +70,8 @@ deployment.
 2. Выбрать первый небольшой improvement и зафиксировать ожидаемое поведение — выполнено: language preference `system | ru | en | es`, browser/OS detection, dropdown UI.
 3. Реализовывать улучшения по одному, с узкими изменениями и проверкой связанных сценариев — выполнены language switcher, heading-based sidebar navigation, block reveal animations, embed Fancybox display, редактирование URL существующего embed-блока и вынос admin editor skin в глобальный stylesheet.
 4. После каждого значимого изменения запускать соразмерные проверки — выполнено для language switcher, heading navigation и block reveal animations; для embed Fancybox display и style-architecture изменений проверки остаются частью ближайшего smoke-check.
-5. После возврата к этапу пройти smoke-check основных editor/preview сценариев и выбрать следующий небольшой improvement.
+5. Реализовать сохранение с неразрывными пробелами через `typograf` без изменения content JSON schema — выполнено: типографика применяется после `editor.save()` к основному и nested content, выбирает язык по строке с fallback на текущую locale preference и не затрагивает code/url/rawHtml/JSON payload/masked fields.
+6. После возврата к этапу пройти smoke-check основных editor/preview сценариев и выбрать следующий небольшой improvement.
 
 ## Критерии готовности этапа
 
@@ -77,7 +79,7 @@ deployment.
 - Save/load, Import JSON, validation, masks, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
 - `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
 
-Этап снова активен после завершения `Plugin info tooltips`; следующий шаг — выбрать ближайшее небольшое optional improvement и реализовать его отдельным узким изменением.
+Этап снова активен после завершения `Plugin info tooltips`; следующий шаг — вручную проверить `nbsp`-сохранение на русском, английском и испанском контенте через Save draft и Export JSON, затем выбрать следующий небольшой optional improvement.
 
 ## Последний завершённый этап
 

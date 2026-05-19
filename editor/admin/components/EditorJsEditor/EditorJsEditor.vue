@@ -22,7 +22,9 @@ import {
   getDuplicateAnchorValues,
   getValidationSummary,
   isKnownEditorContentData,
+  typographEditorContentData,
   validateEditorContentData,
+  type ContentTypographyLocale,
   type EditorContentData,
 } from '~~/editor/shared'
 import type { EditorUiMessages } from '~~/i18n'
@@ -30,6 +32,7 @@ import type { EditorUiMessages } from '~~/i18n'
 const props = defineProps<{
   initialData: EditorContentData
   editorMessages: EditorUiMessages
+  contentLocale: ContentTypographyLocale
 }>()
 
 const runtimeConfig = useRuntimeConfig()
@@ -66,7 +69,13 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
       return false
     }
 
-    const duplicateAnchorValues = getDuplicateAnchorValues(savedContent.blocks)
+    const typographedContent = typographEditorContentData(
+      savedContent,
+      props.contentLocale,
+    )
+    const duplicateAnchorValues = getDuplicateAnchorValues(
+      typographedContent.blocks,
+    )
 
     if (duplicateAnchorValues.length > 0) {
       errorMessage.value = props.editorMessages.core.duplicateAnchorsError(
@@ -77,7 +86,7 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
 
     const shouldValidateContent = options.validateContent ?? true
     const validationSummary = shouldValidateContent
-      ? getValidationSummary(validateEditorContentData(savedContent))
+      ? getValidationSummary(validateEditorContentData(typographedContent))
       : null
 
     if (validationSummary) {
@@ -87,7 +96,7 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
     }
 
     errorMessage.value = null
-    emit('saved', savedContent)
+    emit('saved', typographedContent)
     return true
   } catch (error) {
     errorMessage.value =
@@ -107,7 +116,9 @@ async function getCurrentContent(): Promise<EditorContentData | null> {
 
   const savedContent: unknown = await editor.value.save()
 
-  return isKnownEditorContentData(savedContent) ? savedContent : null
+  return isKnownEditorContentData(savedContent)
+    ? typographEditorContentData(savedContent, props.contentLocale)
+    : null
 }
 
 defineExpose({

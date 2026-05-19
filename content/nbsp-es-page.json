@@ -1,0 +1,276 @@
+{
+  "time": 1779203525829,
+  "blocks": [
+    {
+      "id": "nbsp-es-title",
+      "type": "header",
+      "data": {
+        "text": "Prueba de tipografía en Editor.js",
+        "level": 1
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-paragraph",
+      "type": "paragraph",
+      "data": {
+        "text": "Voy a casa y llevo 10 kg. En 2026 probamos 5 cm y 20 %."
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Un punto con 3 kg y 2 m de texto.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Ir a la sección 5 y al punto 12.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-quote",
+      "type": "quote",
+      "data": {
+        "text": "Una cita sobre la prueba y 15 kg de datos.",
+        "caption": "J. García",
+        "alignment": "left"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-table",
+      "type": "table",
+      "data": {
+        "withHeadings": true,
+        "stretched": false,
+        "content": [
+          [
+            "Parámetro",
+            "Valor"
+          ],
+          [
+            "Peso",
+            "10 kg"
+          ],
+          [
+            "Sección",
+            "punto 12"
+          ]
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-notice",
+      "type": "notice",
+      "data": {
+        "title": "Una nota para la prueba",
+        "text": "Pulsa un botón y revisa 10 kg.",
+        "type": "info"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-section-intro",
+      "type": "sectionIntro",
+      "data": {
+        "title": "Una sección sobre 5 cm",
+        "description": {
+          "time": 1779203525827,
+          "blocks": [
+            {
+              "id": "mq5k5TQgBT",
+              "type": "paragraph",
+              "data": {
+                "text": "Una descripción en nested editor con 10 kg de texto."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-two-columns",
+      "type": "twoColumns",
+      "data": {
+        "layout": "equal",
+        "isReversed": false,
+        "left": {
+          "time": 1779203525827,
+          "blocks": [
+            {
+              "id": "-Oj5fHyFNm",
+              "type": "paragraph",
+              "data": {
+                "text": "Una columna izquierda con 3 kg de datos."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        },
+        "right": {
+          "time": 1779203525828,
+          "blocks": [
+            {
+              "id": "XxSMrWvS0w",
+              "type": "list",
+              "data": {
+                "style": "unordered",
+                "meta": {},
+                "items": [
+                  {
+                    "content": "Una columna derecha con sección 7.",
+                    "meta": {},
+                    "items": []
+                  }
+                ]
+              }
+            }
+          ],
+          "version": "2.31.6"
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-media",
+      "type": "mediaGallery",
+      "data": {
+        "mode": "gallery",
+        "galleryId": "nbsp-es-gallery",
+        "enableFancybox": true,
+        "syncUrlWithFancybox": false,
+        "items": [
+          {
+            "id": "nbsp-es-media-1",
+            "type": "image",
+            "url": "/plugin-previews/placeholder.svg",
+            "alt": "Placeholder de prueba en español",
+            "caption": "Una leyenda de imagen con 10 kg",
+            "description": {
+              "time": 1779203525827,
+              "blocks": [
+                {
+                  "id": "CA0qqafaWQ",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "Una descripción de medio con 2 líneas y 5 cm."
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            }
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-cta",
+      "type": "cta",
+      "data": {
+        "label": "Ir a la sección 2",
+        "url": "#nbsp-es-title",
+        "variant": "primary",
+        "target": "sameTab",
+        "actionType": "link",
+        "eventName": "",
+        "eventPayloadJson": "{\"note\":\"raw 10 kg should stay unchanged\"}"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-code",
+      "type": "codeSnippet",
+      "data": {
+        "language": "javascript",
+        "code": "const value = \"10 kg should stay as plain code\";",
+        "caption": "Una leyenda de código con 10 kg"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-es-raw",
+      "type": "rawHtml",
+      "data": {
+        "html": "<p>Raw HTML con 10 kg debe quedar sin tipografía.</p>"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    }
+  ],
+  "version": "2.31.6"
+}

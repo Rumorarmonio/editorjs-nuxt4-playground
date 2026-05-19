@@ -1,0 +1,276 @@
+{
+  "time": 1779203489294,
+  "blocks": [
+    {
+      "id": "nbsp-en-title",
+      "type": "header",
+      "data": {
+        "text": "Typography test in Editor.js",
+        "level": 1
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-paragraph",
+      "type": "paragraph",
+      "data": {
+        "text": "A cat and I have 10 kg. In 2026 we test 5 cm and 20 %."
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "A list item with 3 kg and 2 m of text.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Go to section 5 and item No. 12.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-quote",
+      "type": "quote",
+      "data": {
+        "text": "A quote about a test and 15 kg of data.",
+        "caption": "J. Smith",
+        "alignment": "left"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-table",
+      "type": "table",
+      "data": {
+        "withHeadings": true,
+        "stretched": false,
+        "content": [
+          [
+            "Parameter",
+            "Value"
+          ],
+          [
+            "Weight",
+            "10 kg"
+          ],
+          [
+            "Section",
+            "No. 12"
+          ]
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-notice",
+      "type": "notice",
+      "data": {
+        "title": "A note for this test",
+        "text": "Click a button and check 10 kg.",
+        "type": "info"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-section-intro",
+      "type": "sectionIntro",
+      "data": {
+        "title": "A section about 5 cm",
+        "description": {
+          "time": 1779203489292,
+          "blocks": [
+            {
+              "id": "hQKhgWcHE4",
+              "type": "paragraph",
+              "data": {
+                "text": "A nested editor description with 10 kg of text."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-two-columns",
+      "type": "twoColumns",
+      "data": {
+        "layout": "equal",
+        "isReversed": false,
+        "left": {
+          "time": 1779203489292,
+          "blocks": [
+            {
+              "id": "67YwGsvJvC",
+              "type": "paragraph",
+              "data": {
+                "text": "A left column with 3 kg of data."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        },
+        "right": {
+          "time": 1779203489293,
+          "blocks": [
+            {
+              "id": "-iWCwuPEHC",
+              "type": "list",
+              "data": {
+                "style": "unordered",
+                "meta": {},
+                "items": [
+                  {
+                    "content": "A right column with section 7.",
+                    "meta": {},
+                    "items": []
+                  }
+                ]
+              }
+            }
+          ],
+          "version": "2.31.6"
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-media",
+      "type": "mediaGallery",
+      "data": {
+        "mode": "gallery",
+        "galleryId": "nbsp-en-gallery",
+        "enableFancybox": true,
+        "syncUrlWithFancybox": false,
+        "items": [
+          {
+            "id": "nbsp-en-media-1",
+            "type": "image",
+            "url": "/plugin-previews/placeholder.svg",
+            "alt": "English test placeholder",
+            "caption": "A caption for an image with 10 kg",
+            "description": {
+              "time": 1779203489292,
+              "blocks": [
+                {
+                  "id": "EFZTaXp8ua",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "A media description with 2 lines and 5 cm."
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            }
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-cta",
+      "type": "cta",
+      "data": {
+        "label": "Go to section 2",
+        "url": "#nbsp-en-title",
+        "variant": "primary",
+        "target": "sameTab",
+        "actionType": "link",
+        "eventName": "",
+        "eventPayloadJson": "{\"note\":\"raw 10 kg should stay unchanged\"}"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-code",
+      "type": "codeSnippet",
+      "data": {
+        "language": "javascript",
+        "code": "const value = \"10 kg should stay as plain code\";",
+        "caption": "A code caption with 10 kg"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-en-raw",
+      "type": "rawHtml",
+      "data": {
+        "html": "<p>Raw HTML with 10 kg should stay without typography.</p>"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    }
+  ],
+  "version": "2.31.6"
+}

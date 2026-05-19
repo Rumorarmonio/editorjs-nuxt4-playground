@@ -1,26 +1,25 @@
 {
-  "time": 1777075200000,
-  "version": "2.31.6",
+  "time": 1779203320645,
   "blocks": [
     {
       "id": "title-h1",
       "type": "header",
       "data": {
-        "text": "Editor.js Nuxt playground",
+        "text": "Editor.js Nuxt playground",
         "level": 1
       },
       "tunes": {
         "anchor": {
           "anchor": "top"
         },
+        "spacing": {
+          "bottom": "medium"
+        },
         "label": {
           "label": "Page title"
         },
         "animation": {
           "type": "fade-up"
-        },
-        "spacing": {
-          "bottom": "medium"
         }
       }
     },
@@ -28,9 +27,11 @@
       "id": "intro-inline",
       "type": "paragraph",
       "data": {
-        "text": "This default page demonstrates standard block tools and inline tools: <b>bold</b>, <i>italic</i>, <a href=\"https://editorjs.io/\">link</a>, <u class=\"cdx-underline\">underline</u>, <mark class=\"cdx-marker\">marker</mark>, <span class=\"editor-text-color editor-text-color--accent\">text color</span>, <s class=\"cdx-strikethrough\">strikethrough</s>, and <code class=\"inline-code\">inline code</code>."
+        "text": "This default page demonstrates standard block tools and inline tools: <b>bold</b>, <i>italic</i>, <a href=\"https://editorjs.io/\">link</a>, <u class=\"cdx-underline\">underline</u>, <mark class=\"cdx-marker\">marker</mark>, <span class=\"editor-text-color editor-text-color--accent\">text color</span>, <s class=\"cdx-strikethrough\">strikethrough</s>, and <code class=\"inline-code\">inline code</code>."
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
         "label": {
           "label": "Inline tools intro"
         },
@@ -50,6 +51,7 @@
         "anchor": {
           "anchor": "heading-level-2"
         },
+        "spacing": {},
         "label": {
           "label": "Heading level 2"
         },
@@ -66,6 +68,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -79,6 +84,9 @@
         "level": 4
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -88,10 +96,13 @@
       "id": "lists-header",
       "type": "header",
       "data": {
-        "text": "Lists and checklists",
+        "text": "Lists and checklists",
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -105,24 +116,27 @@
         "meta": {},
         "items": [
           {
-            "content": "List item with <b>bold</b> and <a href=\"https://editorjs.io/saving-data/\">link</a>.",
+            "content": "List item with <b>bold</b> and <a href=\"https://editorjs.io/saving-data/\">link</a>.",
             "meta": {},
             "items": [
               {
-                "content": "Nested item with <mark class=\"cdx-marker\">marker</mark> and <code class=\"inline-code\">inline code</code>.",
+                "content": "Nested item with <mark class=\"cdx-marker\">marker</mark> and <code class=\"inline-code\">inline code</code>.",
                 "meta": {},
                 "items": []
               }
             ]
           },
           {
-            "content": "List item with <u class=\"cdx-underline\">underline</u>, <span class=\"editor-text-color editor-text-color--danger\">text color</span>, and <s class=\"cdx-strikethrough\">strikethrough</s>.",
+            "content": "List item with <u class=\"cdx-underline\">underline</u>, <span class=\"editor-text-color editor-text-color--danger\">text color</span>, and <s class=\"cdx-strikethrough\">strikethrough</s>.",
             "meta": {},
             "items": []
           }
         ]
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -157,6 +171,8 @@
         ]
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
         "label": {
           "label": "Ordered list example"
         },
@@ -197,11 +213,12 @@
         ]
       },
       "tunes": {
-        "label": {
-          "label": "Checklist example"
-        },
+        "anchor": {},
         "spacing": {
           "top": "medium"
+        },
+        "label": {
+          "label": "Checklist example"
         },
         "animation": {
           "type": "fade-right"
@@ -216,6 +233,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -225,7 +245,7 @@
       "id": "quote-block",
       "type": "quote",
       "data": {
-        "text": "Renderer and editor layers should stay <b>separate</b>, while the saved JSON remains portable.",
+        "text": "Renderer and editor layers should stay <b>separate</b>, while the saved JSON remains portable.",
         "caption": "Project architecture note with <i>inline formatting</i>",
         "alignment": "left"
       },
@@ -233,12 +253,12 @@
         "anchor": {
           "anchor": "architecture-note"
         },
-        "label": {
-          "label": "Architecture note"
-        },
         "spacing": {
           "top": "medium",
           "bottom": "medium"
+        },
+        "label": {
+          "label": "Architecture note"
         },
         "animation": {
           "type": "fade-right"
@@ -250,6 +270,9 @@
       "type": "delimiter",
       "data": {},
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-up"
         }
@@ -263,6 +286,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -273,6 +299,7 @@
       "type": "table",
       "data": {
         "withHeadings": true,
+        "stretched": false,
         "content": [
           [
             "Tool",
@@ -297,15 +324,16 @@
         ]
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {
+          "top": "small",
+          "bottom": "large"
+        },
         "label": {
           "label": "Standard tools table"
         },
         "animation": {
           "type": "fade-up"
-        },
-        "spacing": {
-          "top": "small",
-          "bottom": "large"
         }
       }
     },
@@ -317,6 +345,9 @@
         "level": 2
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -330,6 +361,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -344,7 +378,7 @@
         "embed": "https://www.youtube.com/embed/EWQvbyhDhaA",
         "width": 580,
         "height": 320,
-        "caption": "Embed block caption with <b>bold</b>, <u class=\"cdx-underline\">underline</u>, and <code class=\"inline-code\">inline code</code>"
+        "caption": "Embed block caption with <b>bold</b>, <u class=\"cdx-underline\">underline</u>, and <code class=\"inline-code\">inline code</code>"
       },
       "tunes": {
         "anchor": {},
@@ -367,14 +401,17 @@
         "embed": "https://www.youtube.com/embed/7wMpOt-5X0Q",
         "width": 580,
         "height": 326,
-        "caption": "YouTube live stream opened in Fancybox"
+        "caption": "YouTube live stream opened in Fancybox"
       },
       "tunes": {
-        "embedDisplay": {
-          "mode": "fancybox"
-        },
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
+        },
+        "embedDisplay": {
+          "mode": "fancybox"
         }
       }
     },
@@ -386,6 +423,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -397,20 +437,22 @@
       "data": {
         "service": "vimeo",
         "source": "https://vimeo.com/834790671",
-        "embed": "https://player.vimeo.com/video/834790671?title=0&amp;byline=0",
+        "embed": "https://player.vimeo.com/video/834790671?title=0&byline=0",
         "width": 580,
         "height": 326,
         "caption": "Vimeo embed example"
       },
       "tunes": {
-        "embedDisplay": {
-          "mode": "fancybox"
-        },
+        "anchor": {},
         "spacing": {
           "top": "large"
         },
+        "label": {},
         "animation": {
           "type": "fade-left"
+        },
+        "embedDisplay": {
+          "mode": "fancybox"
         }
       }
     },
@@ -422,6 +464,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -439,14 +484,16 @@
         "caption": "Coub embed example"
       },
       "tunes": {
-        "embedDisplay": {
-          "mode": "fancybox"
-        },
+        "anchor": {},
         "spacing": {
           "top": "large"
         },
+        "label": {},
         "animation": {
           "type": "fade-left"
+        },
+        "embedDisplay": {
+          "mode": "fancybox"
         }
       }
     },
@@ -458,6 +505,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -475,14 +525,16 @@
         "caption": "Rutube Fancybox embed example"
       },
       "tunes": {
-        "embedDisplay": {
-          "mode": "fancybox"
-        },
+        "anchor": {},
         "spacing": {
           "top": "large"
         },
+        "label": {},
         "animation": {
           "type": "fade-left"
+        },
+        "embedDisplay": {
+          "mode": "fancybox"
         }
       }
     },
@@ -490,10 +542,13 @@
       "id": "embed-vk-header",
       "type": "header",
       "data": {
-        "text": "Embed VK Video in Fancybox",
+        "text": "Embed VK Video in Fancybox",
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -508,17 +563,19 @@
         "embed": "https://vk.com/video_ext.php?oid=-227436825&id=456252525&hd=4",
         "width": 853,
         "height": 480,
-        "caption": "VK Video Fancybox embed example"
+        "caption": "VK Video Fancybox embed example"
       },
       "tunes": {
-        "embedDisplay": {
-          "mode": "fancybox"
-        },
+        "anchor": {},
         "spacing": {
           "top": "large"
         },
+        "label": {},
         "animation": {
           "type": "fade-left"
+        },
+        "embedDisplay": {
+          "mode": "fancybox"
         }
       }
     },
@@ -526,10 +583,13 @@
       "id": "embed-twitch-header",
       "type": "header",
       "data": {
-        "text": "Embed Twitch video in Fancybox",
+        "text": "Embed Twitch video in Fancybox",
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -541,7 +601,7 @@
       "data": {
         "service": "twitch",
         "source": "https://www.twitch.tv/quzm1ch/clip/TenaciousWildOrangeTriHard-qbZVAVpOW9xa0Zr_",
-        "embed": "https://clips.twitch.tv/embed?clip=TenaciousWildOrangeTriHard-qbZVAVpOW9xa0Zr_&amp;parent=localhost",
+        "embed": "https://clips.twitch.tv/embed?clip=TenaciousWildOrangeTriHard-qbZVAVpOW9xa0Zr_&parent=localhost",
         "width": 640,
         "height": 360,
         "caption": "Twitch Fancybox embed example"
@@ -568,6 +628,9 @@
         "level": 2
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -577,24 +640,23 @@
       "id": "image-block",
       "type": "image",
       "data": {
-        "file": {
-          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='360' viewBox='0 0 960 360'%3E%3Crect width='960' height='360' fill='%23eef3ee'/%3E%3Ccircle cx='160' cy='180' r='92' fill='%230f766e' opacity='0.9'/%3E%3Crect x='300' y='96' width='520' height='54' rx='8' fill='%23202124'/%3E%3Crect x='300' y='178' width='420' height='34' rx='7' fill='%235e6268'/%3E%3Crect x='300' y='236' width='300' height='34' rx='7' fill='%235e6268'/%3E%3C/svg%3E"
-        },
-        "caption": "Image block stored as a local draft-friendly Data URL",
-        "alt": "Abstract Editor.js content illustration",
+        "caption": "Image block stored as a local draft-friendly Data URL",
         "withBorder": true,
         "withBackground": false,
-        "stretched": false
+        "stretched": false,
+        "file": {
+          "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='360' viewBox='0 0 960 360'%3E%3Crect width='960' height='360' fill='%23eef3ee'/%3E%3Ccircle cx='160' cy='180' r='92' fill='%230f766e' opacity='0.9'/%3E%3Crect x='300' y='96' width='520' height='54' rx='8' fill='%23202124'/%3E%3Crect x='300' y='178' width='420' height='34' rx='7' fill='%235e6268'/%3E%3Crect x='300' y='236' width='300' height='34' rx='7' fill='%235e6268'/%3E%3C/svg%3E"
+        }
       },
       "tunes": {
         "anchor": {
           "anchor": "image-example"
         },
-        "label": {
-          "label": "Image example"
-        },
         "spacing": {
           "top": "large"
+        },
+        "label": {
+          "label": "Image example"
         },
         "animation": {
           "type": "fade-right"
@@ -610,11 +672,11 @@
       },
       "tunes": {
         "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-up"
-        },
-        "spacing": {},
-        "label": {}
+        }
       }
     },
     {
@@ -625,6 +687,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -634,8 +699,8 @@
       "id": "notice-block",
       "type": "notice",
       "data": {
-        "title": "Draft source is active",
-        "text": "The editor loads saved local draft data first and falls back to this default JSON after reset.",
+        "title": "Draft source is active",
+        "text": "The editor loads saved local draft data first and falls back to this default JSON after reset.",
         "type": "info"
       },
       "tunes": {
@@ -654,7 +719,7 @@
       "type": "notice",
       "data": {
         "title": "Content saved successfully",
-        "text": "After saving, the same Notice data can be reopened in the editor and rendered on the preview page.",
+        "text": "After saving, the same Notice data can be reopened in the editor and rendered on the preview page.",
         "type": "success"
       },
       "tunes": {
@@ -673,7 +738,7 @@
       "type": "notice",
       "data": {
         "title": "Plain fields only",
-        "text": "Inline tools are intentionally unavailable here; rich fields and nested editors are planned as a later step.",
+        "text": "Inline tools are intentionally unavailable here; rich fields and nested editors are planned as a later step.",
         "type": "warning"
       },
       "tunes": {
@@ -695,6 +760,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -708,6 +776,8 @@
         "url": "/preview",
         "variant": "primary",
         "target": "sameTab",
+        "actionType": "link",
+        "eventName": "",
         "eventPayloadJson": ""
       },
       "tunes": {
@@ -729,13 +799,16 @@
       "id": "cta-block-secondary",
       "type": "cta",
       "data": {
-        "label": "Read Editor.js docs",
+        "label": "Read Editor.js docs",
         "url": "https://editorjs.io/",
         "variant": "secondary",
         "target": "newTab",
+        "actionType": "link",
+        "eventName": "",
         "eventPayloadJson": ""
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -751,13 +824,16 @@
       "id": "cta-block-ghost",
       "type": "cta",
       "data": {
-        "label": "Jump to media examples",
+        "label": "Jump to media examples",
         "url": "#media-blocks",
         "variant": "ghost",
         "target": "sameTab",
+        "actionType": "link",
+        "eventName": "",
         "eventPayloadJson": ""
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -782,6 +858,7 @@
         "eventPayloadJson": "{\n  \"modalText\": \"This modal text came from CTA payload JSON.\"\n}"
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -801,6 +878,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -812,7 +892,7 @@
       "data": {
         "language": "typescript",
         "code": "import type { EditorOutputBlock } from './types'\n\ntype CtaBlockTarget = 'sameTab' | 'newTab'\ntype CtaVariant = 'primary' | 'secondary' | 'ghost'\n\ninterface CtaBlockData<TMeta extends Record<string, unknown> = {}> {\n  label: string\n  url: `/${string}` | `https://${string}`\n  variant: CtaVariant\n  target: CtaBlockTarget\n  meta?: TMeta\n}\n\nconst ctaDefaults = {\n  variant: 'primary',\n  target: 'sameTab',\n} satisfies Pick<CtaBlockData, 'variant' | 'target'>\n\nexport function normalizeCtaBlock(\n  block: EditorOutputBlock<'cta', Partial<CtaBlockData>>,\n): CtaBlockData {\n  // Keep admin-entered labels readable in the renderer.\n  const label = block.data.label?.trim() || 'Open preview'\n  const url = /^https?:\\/\\//.test(block.data.url ?? '') ? block.data.url! : '/preview'\n\n  return { ...ctaDefaults, ...block.data, label, url }\n}",
-        "caption": "TypeScript example covers imports, generics, unions, template literal types, satisfies, comments, regex and object spreads."
+        "caption": "TypeScript example covers imports, generics, unions, template literal types, satisfies, comments, regex and object spreads."
       },
       "tunes": {
         "anchor": {
@@ -835,9 +915,10 @@
       "data": {
         "language": "json",
         "code": "{\n  \"time\": 1747324800000,\n  \"blocks\": [\n    {\n      \"id\": \"cta-block-event\",\n      \"type\": \"cta\",\n      \"data\": {\n        \"label\": \"Open preview workflow\",\n        \"url\": \"/preview\",\n        \"variant\": \"primary\",\n        \"target\": \"sameTab\",\n        \"enabled\": true,\n        \"analytics\": null,\n        \"priority\": 2\n      }\n    }\n  ],\n  \"version\": \"2.31.0\"\n}",
-        "caption": "JSON example covers nested arrays and objects, strings, numbers, booleans and null."
+        "caption": "JSON example covers nested arrays and objects, strings, numbers, booleans and null."
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "medium"
         },
@@ -855,9 +936,10 @@
       "data": {
         "language": "bash",
         "code": "# Run focused checks before publishing\nset -euo pipefail\n\nTARGET=\"content/default-page.json\"\nnode -e \"JSON.parse(require('fs').readFileSync(process.argv[1], 'utf8'))\" \"$TARGET\"\n\nif npm run build; then\n  printf 'Build finished for %s\\n' \"$TARGET\"\nelse\n  echo \"Build failed\" >&2\n  exit 1\nfi",
-        "caption": "Shell example covers comments, variables, strings, conditionals, commands and redirects."
+        "caption": "Shell example covers comments, variables, strings, conditionals, commands and redirects."
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -875,9 +957,10 @@
       "data": {
         "language": "javascript",
         "code": "const listeners = new Map()\nconst eventPattern = /^(open|close|toggle):[a-z-]+$/\n\nexport async function emitEditorEvent(name, payload = {}) {\n  if (!eventPattern.test(name)) {\n    throw new TypeError(`Unsupported event: ${name}`)\n  }\n\n  const handlers = listeners.get(name) ?? []\n  const context = { name, payload, timestamp: Date.now() }\n\n  try {\n    await Promise.all(handlers.map((handler) => handler(context)))\n  } catch (error) {\n    console.error('Editor event failed', { name, error })\n  }\n}",
-        "caption": "JavaScript example covers async functions, regex, template strings, errors, objects and Promise APIs."
+        "caption": "JavaScript example covers async functions, regex, template strings, errors, objects and Promise APIs."
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -895,9 +978,10 @@
       "data": {
         "language": "vue",
         "code": "<script setup lang=\"ts\">\nconst props = withDefaults(defineProps<{\n  title: string\n  items: Array<{ id: string; label: string; active?: boolean }>\n}>(), {\n  title: 'Renderer blocks',\n})\n\nconst emit = defineEmits<{\n  select: [id: string]\n}>()\n</script>\n\n<template>\n  <section class=\"feature-list\" :aria-label=\"props.title\">\n    <h2>{{ props.title }}</h2>\n    <button\n      v-for=\"item in props.items\"\n      :key=\"item.id\"\n      :class=\"['feature-list__item', { 'is-active': item.active }]\"\n      type=\"button\"\n      @click=\"emit('select', item.id)\"\n    >\n      <slot name=\"icon\" :item=\"item\" />\n      {{ item.label }}\n    </button>\n  </section>\n</template>\n\n<style scoped>\n.feature-list__item.is-active {\n  color: var(--color-accent);\n}\n</style>",
-        "caption": "Vue example covers script setup, typed props/emits, directives, events, slots, bindings and scoped styles."
+        "caption": "Vue example covers script setup, typed props/emits, directives, events, slots, bindings and scoped styles."
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -915,9 +999,10 @@
       "data": {
         "language": "html",
         "code": "<article class=\"notice\" aria-labelledby=\"notice-title\" data-variant=\"info\">\n  <!-- The renderer only receives trusted block data. -->\n  <header class=\"notice__header\">\n    <h3 id=\"notice-title\">Renderer contract</h3>\n    <time datetime=\"2026-05-15\">May 15, 2026</time>\n  </header>\n\n  <p>Only validated Editor.js data reaches the public preview.</p>\n  <a href=\"/preview\" rel=\"noopener\" data-track=\"preview-link\">Open preview</a>\n</article>",
-        "caption": "HTML example covers comments, semantic tags, attributes, data attributes, entities and nested structure."
+        "caption": "HTML example covers comments, semantic tags, attributes, data attributes, entities and nested structure."
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -935,9 +1020,10 @@
       "data": {
         "language": "css",
         "code": "@layer components {\n  .notice {\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) auto;\n    gap: clamp(8px, 2vw, 16px);\n    padding: 16px;\n    color: var(--color-text);\n    background: color-mix(in srgb, var(--color-accent) 12%, transparent);\n    border: 1px solid var(--color-border);\n  }\n\n  .notice:has(a:hover) {\n    border-color: var(--color-accent);\n  }\n\n  @media (max-width: 640px) {\n    .notice {\n      grid-template-columns: 1fr;\n    }\n  }\n}",
-        "caption": "CSS example covers at-rules, selectors, pseudo-classes, functions, custom properties and media queries."
+        "caption": "CSS example covers at-rules, selectors, pseudo-classes, functions, custom properties and media queries."
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -955,9 +1041,10 @@
       "data": {
         "language": "plain",
         "code": "Renderer smoke checklist\n\n[ ] Save the draft\n[ ] Reload the page\n[ ] Compare light and dark themes\n[ ] Check long lines and horizontal scroll\n[ ] Confirm that <script>alert('escaped')</script> is displayed as text\n\nExpected result: code remains readable even without syntax highlighting.",
-        "caption": "Plain text demonstrates escaped markup, checklists, punctuation and unhighlighted fallback content."
+        "caption": "Plain text demonstrates escaped markup, checklists, punctuation and unhighlighted fallback content."
       },
       "tunes": {
+        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -977,6 +1064,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -1011,6 +1101,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -1022,28 +1115,27 @@
       "data": {
         "title": "Nested editor field",
         "description": {
-          "time": 1777075200000,
-          "version": "2.31.6",
+          "time": 1779203320639,
           "blocks": [
             {
               "id": "section-intro-description",
               "type": "paragraph",
               "data": {
-                "text": "This SectionIntro block stores its description as nested paragraph-only Editor.js output with <b>bold text</b> and <i>italic text</i>."
+                "text": "This SectionIntro block stores its description as nested paragraph-only Editor.js output with <b>bold text</b> and <i>italic text</i>."
               }
             },
             {
               "id": "section-intro-description-link",
               "type": "paragraph",
               "data": {
-                "text": "The nested field also keeps <a href=\"https://editorjs.io/\">links</a>, <u class=\"cdx-underline\">underlined text</u>, and <mark class=\"cdx-marker\">marked text</mark>."
+                "text": "The nested field also keeps <a href=\"https://editorjs.io/\">links</a>, <u class=\"cdx-underline\">underlined text</u>, and <mark class=\"cdx-marker\">marked text</mark>."
               }
             },
             {
               "id": "section-intro-description-code",
               "type": "paragraph",
               "data": {
-                "text": "Inline code is stored as <code class=\"inline-code\">inline code</code>, <span class=\"editor-text-color editor-text-color--muted\">muted text color</span> stays renderable, and removed wording can be shown with <s class=\"cdx-strikethrough\">strikethrough</s>."
+                "text": "Inline code is stored as <code class=\"inline-code\">inline code</code>, <span class=\"editor-text-color editor-text-color--muted\">muted text color</span> stays renderable, and removed wording can be shown with <s class=\"cdx-strikethrough\">strikethrough</s>."
               }
             },
             {
@@ -1059,7 +1151,8 @@
                 "eventPayloadJson": ""
               }
             }
-          ]
+          ],
+          "version": "2.31.6"
         }
       },
       "tunes": {
@@ -1081,6 +1174,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -1093,8 +1189,7 @@
         "layout": "leftWide",
         "isReversed": false,
         "left": {
-          "time": 1777075200000,
-          "version": "2.31.6",
+          "time": 1779203320639,
           "blocks": [
             {
               "id": "two-columns-left-heading",
@@ -1108,14 +1203,14 @@
               "id": "two-columns-left-paragraph",
               "type": "paragraph",
               "data": {
-                "text": "The left column stores its own nested Editor.js output with <b>inline formatting</b> and <span class=\"editor-text-color editor-text-color--accent\">text color</span>."
+                "text": "The left column stores its own nested Editor.js output with <b>inline formatting</b> and <span class=\"editor-text-color editor-text-color--accent\">text color</span>."
               }
             },
             {
               "id": "two-columns-left-cta",
               "type": "cta",
               "data": {
-                "label": "Go to CTA example",
+                "label": "Go to CTA example",
                 "url": "#cta-button",
                 "variant": "ghost",
                 "target": "sameTab",
@@ -1124,11 +1219,11 @@
                 "eventPayloadJson": ""
               }
             }
-          ]
+          ],
+          "version": "2.31.6"
         },
         "right": {
-          "time": 1777075200000,
-          "version": "2.31.6",
+          "time": 1779203320642,
           "blocks": [
             {
               "id": "two-columns-right-list",
@@ -1138,12 +1233,12 @@
                 "meta": {},
                 "items": [
                   {
-                    "content": "Separate nested output for the right column",
+                    "content": "Separate nested output for the right column",
                     "meta": {},
                     "items": []
                   },
                   {
-                    "content": "Paragraph, header, and list tools are allowed",
+                    "content": "Paragraph, header, and list tools are allowed",
                     "meta": {},
                     "items": []
                   }
@@ -1163,7 +1258,8 @@
                 "eventPayloadJson": "{\n  \"modalText\": \"Nested CTA payload can carry its own modal text too.\"\n}"
               }
             }
-          ]
+          ],
+          "version": "2.31.6"
         }
       },
       "tunes": {
@@ -1187,6 +1283,9 @@
         "level": 2
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-up"
         }
@@ -1200,6 +1299,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -1221,8 +1323,7 @@
             "alt": "Abstract media gallery card illustration",
             "caption": "Gallery card with explicit image alt",
             "description": {
-              "time": 1777075200000,
-              "version": "2.31.6",
+              "time": 1779203320639,
               "blocks": [
                 {
                   "id": "media-gallery-image-description",
@@ -1231,7 +1332,8 @@
                     "text": "Each card stores media fields separately from nested rich text."
                   }
                 }
-              ]
+              ],
+              "version": "2.31.6"
             }
           },
           {
@@ -1239,19 +1341,19 @@
             "type": "video",
             "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
             "alt": "",
-            "caption": "Video card for Fancybox and slider checks",
+            "caption": "Video card for Fancybox and slider checks",
             "description": {
-              "time": 1777075200000,
-              "version": "2.31.6",
+              "time": 1779203320639,
               "blocks": [
                 {
                   "id": "media-gallery-video-description",
                   "type": "paragraph",
                   "data": {
-                    "text": "Video items do not require alt text, but can still keep caption and description."
+                    "text": "Video items do not require alt text, but can still keep caption and description."
                   }
                 }
-              ]
+              ],
+              "version": "2.31.6"
             }
           }
         ]
@@ -1260,14 +1362,14 @@
         "anchor": {
           "anchor": "media-gallery"
         },
-        "animation": {
-          "type": "fade-right"
-        },
         "spacing": {
           "top": "large"
         },
         "label": {
           "label": "Media gallery"
+        },
+        "animation": {
+          "type": "fade-right"
         }
       }
     },
@@ -1279,6 +1381,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -1300,17 +1405,17 @@
             "alt": "First media slider card illustration",
             "caption": "Slider image card with Fancybox enabled",
             "description": {
-              "time": 1777075200000,
-              "version": "2.31.6",
+              "time": 1779203320639,
               "blocks": [
                 {
                   "id": "media-slider-first-description",
                   "type": "paragraph",
                   "data": {
-                    "text": "This block uses <b>slider</b> mode and renders through Swiper on the preview page."
+                    "text": "This block uses <b>slider</b> mode and renders through Swiper on the preview page."
                   }
                 }
-              ]
+              ],
+              "version": "2.31.6"
             }
           },
           {
@@ -1320,17 +1425,17 @@
             "alt": "",
             "caption": "Slider video card",
             "description": {
-              "time": 1777075200000,
-              "version": "2.31.6",
+              "time": 1779203320639,
               "blocks": [
                 {
                   "id": "media-slider-video-description",
                   "type": "paragraph",
                   "data": {
-                    "text": "The same card contract supports video URLs without image alt text."
+                    "text": "The same card contract supports video URLs without image alt text."
                   }
                 }
-              ]
+              ],
+              "version": "2.31.6"
             }
           },
           {
@@ -1340,17 +1445,17 @@
             "alt": "Second media slider card illustration",
             "caption": "Second image slide",
             "description": {
-              "time": 1777075200000,
-              "version": "2.31.6",
+              "time": 1779203320639,
               "blocks": [
                 {
                   "id": "media-slider-second-description",
                   "type": "paragraph",
                   "data": {
-                    "text": "Multiple cards make the slider navigation and pagination visible."
+                    "text": "Multiple cards make the slider navigation and pagination visible."
                   }
                 }
-              ]
+              ],
+              "version": "2.31.6"
             }
           }
         ]
@@ -1359,14 +1464,14 @@
         "anchor": {
           "anchor": "media-slider"
         },
-        "animation": {
-          "type": "fade-right"
-        },
         "spacing": {
           "top": "large"
         },
         "label": {
           "label": "Media slider"
+        },
+        "animation": {
+          "type": "fade-right"
         }
       }
     },
@@ -1378,6 +1483,9 @@
         "level": 2
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-up"
         }
@@ -1391,6 +1499,9 @@
         "level": 3
       },
       "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -1422,5 +1533,6 @@
         }
       }
     }
-  ]
+  ],
+  "version": "2.31.6"
 }

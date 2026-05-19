@@ -1,0 +1,276 @@
+{
+  "time": 1779203588942,
+  "blocks": [
+    {
+      "id": "nbsp-ru-title",
+      "type": "header",
+      "data": {
+        "text": "Тест типографа в редакторе",
+        "level": 1
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-paragraph",
+      "type": "paragraph",
+      "data": {
+        "text": "Я иду в дом и несу 10 кг. В 2026 году проверяем 5 см и 20 %."
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "Пункт с 3 кг и 2 м текста.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "Ссылка на § 5 и № 12 в списке.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-quote",
+      "type": "quote",
+      "data": {
+        "text": "Это цитата о тесте и 15 кг данных.",
+        "caption": "И. Иванов",
+        "alignment": "left"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-table",
+      "type": "table",
+      "data": {
+        "withHeadings": true,
+        "stretched": false,
+        "content": [
+          [
+            "Параметр",
+            "Значение"
+          ],
+          [
+            "Вес",
+            "10 кг"
+          ],
+          [
+            "Раздел",
+            "№ 12"
+          ]
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-notice",
+      "type": "notice",
+      "data": {
+        "title": "Важно в тесте",
+        "text": "Нажмите на кнопку и проверьте 10 кг.",
+        "type": "info"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-section-intro",
+      "type": "sectionIntro",
+      "data": {
+        "title": "Раздел о 5 см",
+        "description": {
+          "time": 1779203588940,
+          "blocks": [
+            {
+              "id": "ESNQKXOYuu",
+              "type": "paragraph",
+              "data": {
+                "text": "Описание в nested editor и 10 кг текста."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-two-columns",
+      "type": "twoColumns",
+      "data": {
+        "layout": "equal",
+        "isReversed": false,
+        "left": {
+          "time": 1779203588940,
+          "blocks": [
+            {
+              "id": "Kx1JIS4MZj",
+              "type": "paragraph",
+              "data": {
+                "text": "Левая колонка и 3 кг данных."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        },
+        "right": {
+          "time": 1779203588941,
+          "blocks": [
+            {
+              "id": "C_O9NNbGvX",
+              "type": "list",
+              "data": {
+                "style": "unordered",
+                "meta": {},
+                "items": [
+                  {
+                    "content": "Правая колонка с § 7.",
+                    "meta": {},
+                    "items": []
+                  }
+                ]
+              }
+            }
+          ],
+          "version": "2.31.6"
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-media",
+      "type": "mediaGallery",
+      "data": {
+        "mode": "gallery",
+        "galleryId": "nbsp-ru-gallery",
+        "enableFancybox": true,
+        "syncUrlWithFancybox": false,
+        "items": [
+          {
+            "id": "nbsp-ru-media-1",
+            "type": "image",
+            "url": "/plugin-previews/placeholder.svg",
+            "alt": "Русский тестовый placeholder",
+            "caption": "Подпись к изображению на 10 кг",
+            "description": {
+              "time": 1779203588940,
+              "blocks": [
+                {
+                  "id": "NQxpTBwbNC",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "Описание медиа в 2 строки и 5 см."
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            }
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-cta",
+      "type": "cta",
+      "data": {
+        "label": "Перейти в раздел 2",
+        "url": "#nbsp-ru-title",
+        "variant": "primary",
+        "target": "sameTab",
+        "actionType": "link",
+        "eventName": "",
+        "eventPayloadJson": "{\"note\":\"raw 10 kg should stay unchanged\"}"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-code",
+      "type": "codeSnippet",
+      "data": {
+        "language": "javascript",
+        "code": "const value = \"10 kg should stay as plain code\";",
+        "caption": "Подпись к коду на 10 кг"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-ru-raw",
+      "type": "rawHtml",
+      "data": {
+        "html": "<p>Raw HTML с 10 кг должен остаться без типографики.</p>"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    }
+  ],
+  "version": "2.31.6"
+}

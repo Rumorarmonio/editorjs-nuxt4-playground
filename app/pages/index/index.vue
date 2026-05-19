@@ -320,6 +320,7 @@ onBeforeUnmount(() => {
           v-if="isReady"
           :key="editorRenderKey"
           ref="editorRef"
+          :content-locale="currentLocale"
           :initial-data="resolvedContent.data"
           :editor-messages="editorMessages"
           @changed="handleChanged"

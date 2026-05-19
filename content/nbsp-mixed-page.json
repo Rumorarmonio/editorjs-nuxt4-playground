@@ -1,0 +1,295 @@
+{
+  "time": 1779203556081,
+  "blocks": [
+    {
+      "id": "nbsp-mixed-title",
+      "type": "header",
+      "data": {
+        "text": "Mixed language typography test",
+        "level": 1
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-ru",
+      "type": "paragraph",
+      "data": {
+        "text": "Русский пример: я иду в дом и несу 10 кг."
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-en",
+      "type": "paragraph",
+      "data": {
+        "text": "English example: A cat and I have 10 kg."
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-es",
+      "type": "paragraph",
+      "data": {
+        "text": "Ejemplo español: voy a casa y llevo 10 kg."
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-list",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "meta": {},
+        "items": [
+          {
+            "content": "RU list: пункт с 3 кг и § 5.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "EN list: A list item with 3 kg.",
+            "meta": {},
+            "items": []
+          },
+          {
+            "content": "ES list: un punto con 3 kg y 2 m.",
+            "meta": {},
+            "items": []
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-table",
+      "type": "table",
+      "data": {
+        "withHeadings": true,
+        "stretched": false,
+        "content": [
+          [
+            "Language",
+            "Sample"
+          ],
+          [
+            "RU",
+            "В таблице 10 кг и № 12."
+          ],
+          [
+            "EN",
+            "A table cell with 10 kg."
+          ],
+          [
+            "ES",
+            "Una celda con 10 kg y 5 cm."
+          ]
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-notice",
+      "type": "notice",
+      "data": {
+        "title": "Mixed notice",
+        "text": "RU: нажмите на кнопку. EN: click a button. ES: pulsa un botón.",
+        "type": "warning"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-section-intro",
+      "type": "sectionIntro",
+      "data": {
+        "title": "Nested mixed section",
+        "description": {
+          "time": 1779203556079,
+          "blocks": [
+            {
+              "id": "HJ1hoK5l3J",
+              "type": "paragraph",
+              "data": {
+                "text": "EN nested: A nested text with 10 kg."
+              }
+            },
+            {
+              "id": "ZZRiB9a8_u",
+              "type": "paragraph",
+              "data": {
+                "text": "ES nested: una descripción con 10 kg."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-two-columns",
+      "type": "twoColumns",
+      "data": {
+        "layout": "equal",
+        "isReversed": false,
+        "left": {
+          "time": 1779203556079,
+          "blocks": [
+            {
+              "id": "D3iVj3toXS",
+              "type": "paragraph",
+              "data": {
+                "text": "RU column: левая колонка с 5 см."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        },
+        "right": {
+          "time": 1779203556080,
+          "blocks": [
+            {
+              "id": "X8sKdN1G20",
+              "type": "paragraph",
+              "data": {
+                "text": "EN column: A right column with 5 cm."
+              }
+            }
+          ],
+          "version": "2.31.6"
+        }
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-media",
+      "type": "mediaGallery",
+      "data": {
+        "mode": "gallery",
+        "galleryId": "nbsp-mixed-gallery",
+        "enableFancybox": true,
+        "syncUrlWithFancybox": false,
+        "items": [
+          {
+            "id": "nbsp-mixed-media-1",
+            "type": "image",
+            "url": "/plugin-previews/placeholder.svg",
+            "alt": "Mixed language placeholder",
+            "caption": "ES caption: una imagen con 10 kg",
+            "description": {
+              "time": 1779203556079,
+              "blocks": [
+                {
+                  "id": "_cHkvFibSI",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "RU media: описание с 10 кг."
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            }
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-cta",
+      "type": "cta",
+      "data": {
+        "label": "EN CTA: Go to section 2",
+        "url": "#nbsp-mixed-title",
+        "variant": "primary",
+        "target": "sameTab",
+        "actionType": "link",
+        "eventName": "",
+        "eventPayloadJson": "{\"note\":\"raw 10 kg should stay unchanged\"}"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-code",
+      "type": "codeSnippet",
+      "data": {
+        "language": "javascript",
+        "code": "const text = \"A code string with 10 kg must not change\";",
+        "caption": "RU caption: подпись к коду с 10 кг"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    },
+    {
+      "id": "nbsp-mixed-raw",
+      "type": "rawHtml",
+      "data": {
+        "html": "<p>Mixed raw HTML: русский 10 кг, English 10 kg, español 10 kg.</p>"
+      },
+      "tunes": {
+        "anchor": {},
+        "spacing": {},
+        "label": {},
+        "animation": {}
+      }
+    }
+  ],
+  "version": "2.31.6"
+}
