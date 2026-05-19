@@ -22,6 +22,7 @@ import {
   getDuplicateAnchorValues,
   getValidationSummary,
   isKnownEditorContentData,
+  omitEmptyBlockTuneData,
   typographEditorContentData,
   validateEditorContentData,
   type ContentTypographyLocale,
@@ -73,8 +74,9 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
       savedContent,
       props.contentLocale,
     )
+    const storageContent = omitEmptyBlockTuneData(typographedContent)
     const duplicateAnchorValues = getDuplicateAnchorValues(
-      typographedContent.blocks,
+      storageContent.blocks,
     )
 
     if (duplicateAnchorValues.length > 0) {
@@ -86,7 +88,7 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
 
     const shouldValidateContent = options.validateContent ?? true
     const validationSummary = shouldValidateContent
-      ? getValidationSummary(validateEditorContentData(typographedContent))
+      ? getValidationSummary(validateEditorContentData(storageContent))
       : null
 
     if (validationSummary) {
@@ -96,7 +98,7 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
     }
 
     errorMessage.value = null
-    emit('saved', typographedContent)
+    emit('saved', storageContent)
     return true
   } catch (error) {
     errorMessage.value =
@@ -117,7 +119,9 @@ async function getCurrentContent(): Promise<EditorContentData | null> {
   const savedContent: unknown = await editor.value.save()
 
   return isKnownEditorContentData(savedContent)
-    ? typographEditorContentData(savedContent, props.contentLocale)
+    ? omitEmptyBlockTuneData(
+        typographEditorContentData(savedContent, props.contentLocale),
+      )
     : null
 }
 

@@ -1,5 +1,5 @@
 {
-  "time": 1779203320645,
+  "time": 1779205726450,
   "blocks": [
     {
       "id": "title-h1",
@@ -30,8 +30,6 @@
         "text": "This default page demonstrates standard block tools and inline tools: <b>bold</b>, <i>italic</i>, <a href=\"https://editorjs.io/\">link</a>, <u class=\"cdx-underline\">underline</u>, <mark class=\"cdx-marker\">marker</mark>, <span class=\"editor-text-color editor-text-color--accent\">text color</span>, <s class=\"cdx-strikethrough\">strikethrough</s>, and <code class=\"inline-code\">inline code</code>."
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
         "label": {
           "label": "Inline tools intro"
         },
@@ -51,7 +49,6 @@
         "anchor": {
           "anchor": "heading-level-2"
         },
-        "spacing": {},
         "label": {
           "label": "Heading level 2"
         },
@@ -68,9 +65,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -84,9 +78,6 @@
         "level": 4
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -100,9 +91,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -134,9 +122,6 @@
         ]
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -171,8 +156,6 @@
         ]
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
         "label": {
           "label": "Ordered list example"
         },
@@ -213,7 +196,6 @@
         ]
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "medium"
         },
@@ -233,9 +215,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -270,9 +249,6 @@
       "type": "delimiter",
       "data": {},
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-up"
         }
@@ -286,9 +262,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -324,7 +297,6 @@
         ]
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small",
           "bottom": "large"
@@ -345,9 +317,6 @@
         "level": 2
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -361,9 +330,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -381,9 +347,6 @@
         "caption": "Embed block caption with <b>bold</b>, <u class=\"cdx-underline\">underline</u>, and <code class=\"inline-code\">inline code</code>"
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         },
@@ -404,9 +367,6 @@
         "caption": "YouTube live stream opened in Fancybox"
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         },
@@ -423,9 +383,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -443,11 +400,9 @@
         "caption": "Vimeo embed example"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "large"
         },
-        "label": {},
         "animation": {
           "type": "fade-left"
         },
@@ -464,9 +419,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -484,11 +436,9 @@
         "caption": "Coub embed example"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "large"
         },
-        "label": {},
         "animation": {
           "type": "fade-left"
         },
@@ -505,9 +455,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -525,11 +472,9 @@
         "caption": "Rutube Fancybox embed example"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "large"
         },
-        "label": {},
         "animation": {
           "type": "fade-left"
         },
@@ -546,9 +491,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -566,11 +508,9 @@
         "caption": "VK Video Fancybox embed example"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "large"
         },
-        "label": {},
         "animation": {
           "type": "fade-left"
         },
@@ -587,9 +527,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -607,11 +544,9 @@
         "caption": "Twitch Fancybox embed example"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "large"
         },
-        "label": {},
         "animation": {
           "type": "fade-left"
         },
@@ -628,9 +563,6 @@
         "level": 2
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -671,9 +603,6 @@
         "level": 2
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-up"
         }
@@ -687,9 +616,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -704,11 +630,9 @@
         "type": "info"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "medium"
         },
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -723,11 +647,9 @@
         "type": "success"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "medium"
         },
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -742,11 +664,9 @@
         "type": "warning"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "medium"
         },
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -760,9 +680,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -808,7 +725,6 @@
         "eventPayloadJson": ""
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -833,7 +749,6 @@
         "eventPayloadJson": ""
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -858,7 +773,6 @@
         "eventPayloadJson": "{\n  \"modalText\": \"This modal text came from CTA payload JSON.\"\n}"
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -878,9 +792,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -918,7 +829,6 @@
         "caption": "JSON example covers nested arrays and objects, strings, numbers, booleans and null."
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "medium"
         },
@@ -939,7 +849,6 @@
         "caption": "Shell example covers comments, variables, strings, conditionals, commands and redirects."
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -960,7 +869,6 @@
         "caption": "JavaScript example covers async functions, regex, template strings, errors, objects and Promise APIs."
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -981,7 +889,6 @@
         "caption": "Vue example covers script setup, typed props/emits, directives, events, slots, bindings and scoped styles."
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -1002,7 +909,6 @@
         "caption": "HTML example covers comments, semantic tags, attributes, data attributes, entities and nested structure."
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -1023,7 +929,6 @@
         "caption": "CSS example covers at-rules, selectors, pseudo-classes, functions, custom properties and media queries."
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -1044,7 +949,6 @@
         "caption": "Plain text demonstrates escaped markup, checklists, punctuation and unhighlighted fallback content."
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "small"
         },
@@ -1064,9 +968,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -1101,9 +1002,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -1115,7 +1013,7 @@
       "data": {
         "title": "Nested editor field",
         "description": {
-          "time": 1779203320639,
+          "time": 1779205726443,
           "blocks": [
             {
               "id": "section-intro-description",
@@ -1156,11 +1054,9 @@
         }
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "medium"
         },
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -1174,9 +1070,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-right"
         }
@@ -1189,7 +1082,7 @@
         "layout": "leftWide",
         "isReversed": false,
         "left": {
-          "time": 1779203320639,
+          "time": 1779205726443,
           "blocks": [
             {
               "id": "two-columns-left-heading",
@@ -1223,7 +1116,7 @@
           "version": "2.31.6"
         },
         "right": {
-          "time": 1779203320642,
+          "time": 1779205726448,
           "blocks": [
             {
               "id": "two-columns-right-list",
@@ -1263,7 +1156,6 @@
         }
       },
       "tunes": {
-        "anchor": {},
         "spacing": {
           "top": "large"
         },
@@ -1283,9 +1175,6 @@
         "level": 2
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-up"
         }
@@ -1299,9 +1188,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -1323,7 +1209,7 @@
             "alt": "Abstract media gallery card illustration",
             "caption": "Gallery card with explicit image alt",
             "description": {
-              "time": 1779203320639,
+              "time": 1779205726443,
               "blocks": [
                 {
                   "id": "media-gallery-image-description",
@@ -1343,7 +1229,7 @@
             "alt": "",
             "caption": "Video card for Fancybox and slider checks",
             "description": {
-              "time": 1779203320639,
+              "time": 1779205726443,
               "blocks": [
                 {
                   "id": "media-gallery-video-description",
@@ -1381,9 +1267,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }
@@ -1405,7 +1288,7 @@
             "alt": "First media slider card illustration",
             "caption": "Slider image card with Fancybox enabled",
             "description": {
-              "time": 1779203320639,
+              "time": 1779205726443,
               "blocks": [
                 {
                   "id": "media-slider-first-description",
@@ -1425,7 +1308,7 @@
             "alt": "",
             "caption": "Slider video card",
             "description": {
-              "time": 1779203320639,
+              "time": 1779205726443,
               "blocks": [
                 {
                   "id": "media-slider-video-description",
@@ -1445,7 +1328,7 @@
             "alt": "Second media slider card illustration",
             "caption": "Second image slide",
             "description": {
-              "time": 1779203320639,
+              "time": 1779205726443,
               "blocks": [
                 {
                   "id": "media-slider-second-description",
@@ -1483,9 +1366,6 @@
         "level": 2
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-up"
         }
@@ -1499,9 +1379,6 @@
         "level": 3
       },
       "tunes": {
-        "anchor": {},
-        "spacing": {},
-        "label": {},
         "animation": {
           "type": "fade-left"
         }

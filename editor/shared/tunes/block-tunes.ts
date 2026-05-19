@@ -157,6 +157,43 @@ export function getDuplicateAnchorValues(
     .map(([anchor]) => anchor)
 }
 
+export function omitEmptyBlockTuneData<
+  TContent extends {
+    blocks: { type: string; data: unknown; tunes?: Record<string, unknown> }[]
+  },
+>(content: TContent): TContent {
+  return omitEmptyTunesFromValue(content) as TContent
+}
+
+function omitEmptyTunesFromValue(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(omitEmptyTunesFromValue)
+  }
+
+  if (!isRecord(value)) {
+    return value
+  }
+
+  const result = Object.fromEntries(
+    Object.entries(value).map(([key, entryValue]) => [
+      key,
+      omitEmptyTunesFromValue(entryValue),
+    ]),
+  )
+
+  if (isBlockLikeRecord(result)) {
+    const tunes = omitEmptyTuneEntries(result.tunes)
+
+    if (tunes) {
+      result.tunes = tunes
+    } else {
+      delete result.tunes
+    }
+  }
+
+  return result
+}
+
 export function isKnownBlockTuneData(value: unknown): boolean {
   if (value === undefined) {
     return true
@@ -300,6 +337,62 @@ function isEmbedDisplayTuneMode(
   value: unknown,
 ): value is EmbedDisplayTuneMode {
   return embedDisplayTuneModes.includes(value as EmbedDisplayTuneMode)
+}
+
+function omitEmptyTuneEntries(
+  tunes: Record<string, unknown> | undefined,
+): Record<string, unknown> | undefined {
+  if (!tunes) {
+    return undefined
+  }
+
+  const entries = Object.entries(tunes).filter(([name, value]) => {
+    return !isEmptyTuneData(name, value)
+  })
+
+  return entries.length > 0 ? Object.fromEntries(entries) : undefined
+}
+
+function isEmptyTuneData(name: string, value: unknown): boolean {
+  if (value === undefined) {
+    return true
+  }
+
+  if (!isRecord(value)) {
+    return false
+  }
+
+  switch (name) {
+    case 'anchor':
+      return value.anchor === undefined
+    case 'spacing':
+      return isEmptySpacingTuneData(value)
+    case 'label':
+      return value.label === undefined
+    case 'animation':
+      return value.type === undefined || value.type === 'none'
+    case 'embedDisplay':
+      return value.mode === undefined || value.mode === 'inline'
+    default:
+      return false
+  }
+}
+
+function isEmptySpacingTuneData(value: Record<string, unknown>): boolean {
+  return (
+    (value.top === undefined || value.top === 'none') &&
+    (value.bottom === undefined || value.bottom === 'none')
+  )
+}
+
+function isBlockLikeRecord(
+  value: Record<string, unknown>,
+): value is Record<string, unknown> & { tunes?: Record<string, unknown> } {
+  return (
+    typeof value.type === 'string' &&
+    'data' in value &&
+    (value.tunes === undefined || isRecord(value.tunes))
+  )
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

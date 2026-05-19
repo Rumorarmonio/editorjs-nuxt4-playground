@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import defaultPageContent from '~~/content/default-page.json'
 import {
   clearEditorDraft,
+  omitEmptyBlockTuneData,
   parseEditorContentJson,
   resolveEditorContent,
   writeEditorDraft,
@@ -10,7 +11,9 @@ import {
   type ResolvedEditorContent,
 } from '~~/editor/shared'
 
-const defaultContent = defaultPageContent as EditorContentData
+const defaultContent = omitEmptyBlockTuneData(
+  defaultPageContent as EditorContentData,
+)
 
 function createDefaultResolvedContent(): ResolvedEditorContent {
   return {
@@ -30,7 +33,17 @@ export function useEditorContentSource() {
       return
     }
 
-    resolvedContent.value = resolveEditorContent(defaultContent, localStorage)
+    const content = resolveEditorContent(defaultContent, localStorage)
+    const normalizedContent = omitEmptyBlockTuneData(content.data)
+
+    if (content.source === 'draft') {
+      writeEditorDraft(localStorage, normalizedContent)
+    }
+
+    resolvedContent.value = {
+      source: content.source,
+      data: normalizedContent,
+    }
     isReady.value = true
   }
 
@@ -39,10 +52,12 @@ export function useEditorContentSource() {
       return
     }
 
-    writeEditorDraft(localStorage, content)
+    const storageContent = omitEmptyBlockTuneData(content)
+
+    writeEditorDraft(localStorage, storageContent)
     resolvedContent.value = {
       source: 'draft',
-      data: content,
+      data: storageContent,
     }
   }
 
