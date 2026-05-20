@@ -175,9 +175,16 @@ export interface EditorUiMessages {
     accordionGroup: {
       toolboxTitle: string
       closeOthersLabel: string
-      itemsJsonLabel: string
-      itemsJsonPlaceholder: string
-      itemsJsonInvalid: string
+      addItemButton: string
+      itemTitle: (index: number) => string
+      moveUpButton: string
+      moveDownButton: string
+      removeButton: string
+      initialOpenLabel: string
+      headerLabel: string
+      headerPlaceholder: string
+      bodyLabel: string
+      bodyPlaceholder: string
     }
     embed: {
       toolboxTitle: string

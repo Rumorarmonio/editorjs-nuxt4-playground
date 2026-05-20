@@ -641,6 +641,7 @@
     border-color: var(--color-danger);
   }
 
+  .editor-plain-field--invalid .editor-accordion-group-tool__body-editor,
   .editor-plain-field--invalid .editor-rich-field__editor,
   .editor-plain-field--invalid .editor-two-columns-tool__editor {
     border-color: var(--color-danger);
@@ -962,6 +963,7 @@
     max-width: none;
   }
 
+  .editor-accordion-group-tool,
   .editor-media-gallery-tool {
     display: grid;
     gap: 16px;
@@ -971,6 +973,7 @@
     border-radius: 6px;
   }
 
+  .editor-accordion-group-tool__controls,
   .editor-media-gallery-tool__settings {
     display: grid;
     align-items: end;
@@ -978,11 +981,13 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .editor-accordion-group-tool__items,
   .editor-media-gallery-tool__cards {
     display: grid;
     gap: 12px;
   }
 
+  .editor-accordion-group-tool__item,
   .editor-media-gallery-tool__card {
     display: grid;
     gap: 12px;
@@ -992,6 +997,7 @@
     border-radius: 6px;
   }
 
+  .editor-accordion-group-tool__item-header,
   .editor-media-gallery-tool__card-header {
     display: flex;
     align-items: center;
@@ -999,11 +1005,14 @@
     gap: 12px;
   }
 
+  .editor-accordion-group-tool__item-title,
   .editor-media-gallery-tool__card-title {
     margin: 0;
     font-weight: 700;
   }
 
+  .editor-accordion-group-tool__item-buttons,
+  .editor-accordion-group-tool__actions,
   .editor-media-gallery-tool__card-buttons,
   .editor-media-gallery-tool__actions {
     display: flex;
@@ -1011,16 +1020,36 @@
     gap: 8px;
   }
 
+  .editor-accordion-group-tool__item-fields,
   .editor-media-gallery-tool__card-fields {
     display: grid;
     gap: 12px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .editor-accordion-group-tool__item-fields .editor-plain-field:has(.editor-rich-field__editor, .editor-accordion-group-tool__body-editor),
   .editor-media-gallery-tool__card-fields .editor-plain-field:has(textarea, .editor-rich-field__editor) {
     grid-column: 1 / -1;
   }
 
+  .editor-accordion-group-tool__body-editor {
+    min-height: 160px;
+    padding: 10px 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+  }
+
+  .editor-accordion-group-tool__body-editor .codex-editor__redactor {
+    padding-bottom: 0 !important;
+  }
+
+  .editor-accordion-group-tool__body-editor .ce-block__content,
+  .editor-accordion-group-tool__body-editor .ce-toolbar__content {
+    max-width: none;
+  }
+
+  .editor-accordion-group-tool__button,
   .editor-media-gallery-tool__button {
     min-height: 34px;
     padding: 6px 10px;
@@ -1032,11 +1061,13 @@
     cursor: pointer;
   }
 
+  .editor-accordion-group-tool__button:focus-visible,
   .editor-media-gallery-tool__button:focus-visible {
     outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
   }
 
+  .editor-accordion-group-tool__button:disabled,
   .editor-media-gallery-tool__button:disabled {
     opacity: 0.5;
     cursor: default;
@@ -1069,6 +1100,8 @@
     .editor-two-columns-tool__columns,
     .editor-two-columns-tool__columns[data-layout='leftWide'],
     .editor-two-columns-tool__columns[data-layout='rightWide'],
+    .editor-accordion-group-tool__controls,
+    .editor-accordion-group-tool__item-fields,
     .editor-media-gallery-tool__settings,
     .editor-media-gallery-tool__card-fields,
     .editor-cta-tool__settings,

@@ -1,5 +1,5 @@
 {
-  "time": 1779205726450,
+  "time": 1779262669862,
   "blocks": [
     {
       "id": "title-h1",
@@ -1013,7 +1013,7 @@
       "data": {
         "title": "Nested editor field",
         "description": {
-          "time": 1779205726443,
+          "time": 1779262669844,
           "blocks": [
             {
               "id": "section-intro-description",
@@ -1082,7 +1082,7 @@
         "layout": "leftWide",
         "isReversed": false,
         "left": {
-          "time": 1779205726443,
+          "time": 1779262669844,
           "blocks": [
             {
               "id": "two-columns-left-heading",
@@ -1116,7 +1116,7 @@
           "version": "2.31.6"
         },
         "right": {
-          "time": 1779205726448,
+          "time": 1779262669848,
           "blocks": [
             {
               "id": "two-columns-right-list",
@@ -1209,7 +1209,7 @@
             "alt": "Abstract media gallery card illustration",
             "caption": "Gallery card with explicit image alt",
             "description": {
-              "time": 1779205726443,
+              "time": 1779262669844,
               "blocks": [
                 {
                   "id": "media-gallery-image-description",
@@ -1229,7 +1229,7 @@
             "alt": "",
             "caption": "Video card for Fancybox and slider checks",
             "description": {
-              "time": 1779205726443,
+              "time": 1779262669844,
               "blocks": [
                 {
                   "id": "media-gallery-video-description",
@@ -1288,7 +1288,7 @@
             "alt": "First media slider card illustration",
             "caption": "Slider image card with Fancybox enabled",
             "description": {
-              "time": 1779205726443,
+              "time": 1779262669844,
               "blocks": [
                 {
                   "id": "media-slider-first-description",
@@ -1308,7 +1308,7 @@
             "alt": "",
             "caption": "Slider video card",
             "description": {
-              "time": 1779205726443,
+              "time": 1779262669844,
               "blocks": [
                 {
                   "id": "media-slider-video-description",
@@ -1328,7 +1328,7 @@
             "alt": "Second media slider card illustration",
             "caption": "Second image slide",
             "description": {
-              "time": 1779205726443,
+              "time": 1779262669844,
               "blocks": [
                 {
                   "id": "media-slider-second-description",
@@ -1381,6 +1381,7 @@
             "id": "accordion-item-contract",
             "isInitiallyOpen": true,
             "header": {
+              "time": 1779262669844,
               "blocks": [
                 {
                   "id": "accordion-item-contract-header",
@@ -1394,12 +1395,13 @@
               "version": "2.31.6"
             },
             "body": {
+              "time": 1779262669849,
               "blocks": [
                 {
                   "id": "accordion-item-contract-text",
                   "type": "paragraph",
                   "data": {
-                    "text": "Each item stores a stable id, initial open state, rich header output, and nested body output."
+                    "text": "Each item stores a stable id, initial open state, rich header output, and nested body output."
                   }
                 },
                 {
@@ -1410,12 +1412,12 @@
                     "meta": {},
                     "items": [
                       {
-                        "content": "The renderer supports multi-open mode and close-others mode.",
+                        "content": "The renderer supports multi-open mode and close-others mode.",
                         "meta": {},
                         "items": []
                       },
                       {
-                        "content": "This demo starts in close-others mode, so only the first initial item stays open.",
+                        "content": "This demo starts in close-others mode, so only the first initial item stays open.",
                         "meta": {},
                         "items": []
                       }
@@ -1430,6 +1432,7 @@
             "id": "accordion-item-nested",
             "isInitiallyOpen": true,
             "header": {
+              "time": 1779262669844,
               "blocks": [
                 {
                   "id": "accordion-item-nested-header",
@@ -1443,12 +1446,13 @@
               "version": "2.31.6"
             },
             "body": {
+              "time": 1779262669858,
               "blocks": [
                 {
                   "id": "accordion-item-nested-text",
                   "type": "paragraph",
                   "data": {
-                    "text": "Accordion groups can render inside an accordion body while keeping open state local to each group."
+                    "text": "Accordion groups can render inside an accordion body while keeping open state local to each group."
                   }
                 },
                 {
@@ -1461,6 +1465,7 @@
                         "id": "accordion-nested-child-one",
                         "isInitiallyOpen": true,
                         "header": {
+                          "time": 1779262669849,
                           "blocks": [
                             {
                               "id": "accordion-nested-child-one-header",
@@ -1474,12 +1479,217 @@
                           "version": "2.31.6"
                         },
                         "body": {
+                          "time": 1779262669855,
                           "blocks": [
                             {
                               "id": "accordion-nested-child-one-text",
                               "type": "paragraph",
                               "data": {
-                                "text": "This child group uses multi-open mode."
+                                "text": "This child group uses multi-open mode and contains a second nested accordion level."
+                              }
+                            },
+                            {
+                              "id": "accordion-second-level-demo",
+                              "type": "accordionGroup",
+                              "data": {
+                                "closeOthersOnOpen": true,
+                                "items": [
+                                  {
+                                    "id": "accordion-second-level-a",
+                                    "isInitiallyOpen": true,
+                                    "header": {
+                                      "time": 1779262669850,
+                                      "blocks": [
+                                        {
+                                          "id": "accordion-second-level-a-header",
+                                          "type": "header",
+                                          "data": {
+                                            "text": "Second level item A",
+                                            "level": 4
+                                          }
+                                        }
+                                      ],
+                                      "version": "2.31.6"
+                                    },
+                                    "body": {
+                                      "time": 1779262669852,
+                                      "blocks": [
+                                        {
+                                          "id": "accordion-second-level-a-text",
+                                          "type": "paragraph",
+                                          "data": {
+                                            "text": "This is the second allowed nested accordion level."
+                                          }
+                                        }
+                                      ],
+                                      "version": "2.31.6"
+                                    }
+                                  },
+                                  {
+                                    "id": "accordion-second-level-b",
+                                    "isInitiallyOpen": false,
+                                    "header": {
+                                      "time": 1779262669850,
+                                      "blocks": [
+                                        {
+                                          "id": "accordion-second-level-b-header",
+                                          "type": "header",
+                                          "data": {
+                                            "text": "Second level item B",
+                                            "level": 4
+                                          }
+                                        }
+                                      ],
+                                      "version": "2.31.6"
+                                    },
+                                    "body": {
+                                      "time": 1779262669852,
+                                      "blocks": [
+                                        {
+                                          "id": "accordion-second-level-b-text",
+                                          "type": "paragraph",
+                                          "data": {
+                                            "text": "Close-others mode applies only inside this second-level group."
+                                          }
+                                        }
+                                      ],
+                                      "version": "2.31.6"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ],
+                          "version": "2.31.6"
+                        }
+                      },
+                      {
+                        "id": "accordion-nested-child-two",
+                        "isInitiallyOpen": false,
+                        "header": {
+                          "time": 1779262669849,
+                          "blocks": [
+                            {
+                              "id": "accordion-nested-child-two-header",
+                              "type": "header",
+                              "data": {
+                                "text": "Another nested child item",
+                                "level": 4
+                              }
+                            }
+                          ],
+                          "version": "2.31.6"
+                        },
+                        "body": {
+                          "time": 1779262669850,
+                          "blocks": [
+                            {
+                              "id": "accordion-nested-child-two-text",
+                              "type": "paragraph",
+                              "data": {
+                                "text": "This second child shows that a nested group can contain several items."
+                              }
+                            }
+                          ],
+                          "version": "2.31.6"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            }
+          },
+          {
+            "id": "accordion-item-multiple-nested",
+            "isInitiallyOpen": false,
+            "header": {
+              "time": 1779262669844,
+              "blocks": [
+                {
+                  "id": "accordion-item-multiple-nested-header",
+                  "type": "header",
+                  "data": {
+                    "text": "Multiple nested groups",
+                    "level": 3
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            },
+            "body": {
+              "time": 1779262669852,
+              "blocks": [
+                {
+                  "id": "accordion-item-multiple-nested-text",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "This item contains a separate nested accordion group to demonstrate independent state."
+                  }
+                },
+                {
+                  "id": "accordion-nested-demo-secondary",
+                  "type": "accordionGroup",
+                  "data": {
+                    "closeOthersOnOpen": true,
+                    "items": [
+                      {
+                        "id": "accordion-secondary-child-one",
+                        "isInitiallyOpen": true,
+                        "header": {
+                          "time": 1779262669849,
+                          "blocks": [
+                            {
+                              "id": "accordion-secondary-child-one-header",
+                              "type": "header",
+                              "data": {
+                                "text": "Independent nested group",
+                                "level": 4
+                              }
+                            }
+                          ],
+                          "version": "2.31.6"
+                        },
+                        "body": {
+                          "time": 1779262669850,
+                          "blocks": [
+                            {
+                              "id": "accordion-secondary-child-one-text",
+                              "type": "paragraph",
+                              "data": {
+                                "text": "Opening items here does not affect the nested group in the previous item."
+                              }
+                            }
+                          ],
+                          "version": "2.31.6"
+                        }
+                      },
+                      {
+                        "id": "accordion-secondary-child-two",
+                        "isInitiallyOpen": false,
+                        "header": {
+                          "time": 1779262669849,
+                          "blocks": [
+                            {
+                              "id": "accordion-secondary-child-two-header",
+                              "type": "header",
+                              "data": {
+                                "text": "Second independent item",
+                                "level": 4
+                              }
+                            }
+                          ],
+                          "version": "2.31.6"
+                        },
+                        "body": {
+                          "time": 1779262669850,
+                          "blocks": [
+                            {
+                              "id": "accordion-secondary-child-two-text",
+                              "type": "paragraph",
+                              "data": {
+                                "text": "This group uses close-others mode independently from the parent accordion."
                               }
                             }
                           ],
