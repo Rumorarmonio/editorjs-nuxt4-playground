@@ -142,7 +142,9 @@ function stopHeaderTabPropagation(event: KeyboardEvent): void {
 }
 
 function handleSaveShortcut(event: KeyboardEvent): void {
-  if (event.key.toLowerCase() !== 's' || (!event.ctrlKey && !event.metaKey)) {
+  const isSaveKey = event.code === 'KeyS' || event.key.toLowerCase() === 's'
+
+  if (!isSaveKey || (!event.ctrlKey && !event.metaKey)) {
     return
   }
 
