@@ -1423,6 +1423,19 @@
                       }
                     ]
                   }
+                },
+                {
+                  "id": "accordion-item-contract-cta",
+                  "type": "cta",
+                  "data": {
+                    "label": "Open preview",
+                    "url": "/preview",
+                    "variant": "secondary",
+                    "target": "sameTab",
+                    "actionType": "link",
+                    "eventName": "",
+                    "eventPayloadJson": ""
+                  }
                 }
               ],
               "version": "2.31.6"
@@ -1520,6 +1533,19 @@
                                           "data": {
                                             "text": "This is the second allowed nested accordion level."
                                           }
+                                        },
+                                        {
+                                          "id": "accordion-second-level-a-cta",
+                                          "type": "cta",
+                                          "data": {
+                                            "label": "Trigger demo action",
+                                            "url": "",
+                                            "variant": "ghost",
+                                            "target": "sameTab",
+                                            "actionType": "event",
+                                            "eventName": "open-demo-modal",
+                                            "eventPayloadJson": "{\n  \"modalText\": \"CTA from a second-level accordion item.\"\n}"
+                                          }
                                         }
                                       ],
                                       "version": "2.31.6"
@@ -1565,7 +1591,7 @@
                       },
                       {
                         "id": "accordion-nested-child-two",
-                        "isInitiallyOpen": false,
+                        "isInitiallyOpen": true,
                         "header": {
                           "time": 1779262669849,
                           "blocks": [
@@ -1588,6 +1614,19 @@
                               "type": "paragraph",
                               "data": {
                                 "text": "This second child shows that a nested group can contain several items."
+                              }
+                            },
+                            {
+                              "id": "accordion-nested-child-two-cta",
+                              "type": "cta",
+                              "data": {
+                                "label": "Learn about Editor.js",
+                                "url": "https://editorjs.io/",
+                                "variant": "primary",
+                                "target": "newTab",
+                                "actionType": "link",
+                                "eventName": "",
+                                "eventPayloadJson": ""
                               }
                             }
                           ],

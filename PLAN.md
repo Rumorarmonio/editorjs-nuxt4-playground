@@ -23,7 +23,7 @@ deployment.
 - Локализация UI редактора завершена.
 - Light/Dark theme завершён.
 - Клавиатурная навигация и accessibility polish завершён.
-- Активный этап: Accordion group block.
+- Этап Accordion group block завершён.
 - Первое optional improvement этапа Некритичные улучшения реализовано: выбор языка переведён на dropdown по аналогии с темой, добавлены auto preference и испанский интерфейс.
 - Второе optional improvement этапа Некритичные улучшения реализовано: preview sidebar получил временный demo-переключатель между navigation по заголовкам и старой navigation по `AnchorTune` / `LabelTune`.
 - Третье optional improvement этапа Некритичные улучшения реализовано: добавлен `AnimationTune` для простых reveal-анимаций блоков в renderer.
@@ -37,14 +37,14 @@ deployment.
 - Для preview images создан `public/plugin-previews` с временным локальным placeholder; общий `src` для каждого tool key задаётся в одном registry, locale-specific override остаётся через `previewImage`, а без обоих источников preview image не показывается.
 - Tooltip стал interactive; preview image открывается через Fancybox.
 - Optional improvement с типографикой сохранения реализован: при `Save draft` и editor-side `Export JSON` контент проходит через `typograf` с автоопределением языка строки и fallback на текущую локаль `ru | en | es`, но только по `nbsp`-правилам и только в человекочитаемых текстовых полях.
-- Этап Некритичные улучшения временно закрыт после серии optional improvements; к нему можно вернуться после завершения `Accordion group block`.
-- Текущий крупный этап: `Accordion group block` как отдельный recursive composite block с nested editors для header/body.
+- Активный этап: Некритичные улучшения.
+- Текущий крупный этап: Некритичные улучшения; ближайший шаг — вручную проверить `nbsp`-сохранение и затем выбрать следующий небольшой optional improvement.
 
-## Временно закрытый этап
+## Активный этап
 
 ### Некритичные улучшения
 
-Статус: временно закрыт после серии optional improvements; не является текущим активным этапом.
+Статус: активен после закрытия `Accordion group block`.
 
 Цель этапа: довести проект до более аккуратной расширенной версии через небольшие optional improvements, не ломая уже стабильную архитектуру, content JSON schema и
 базовые editor/renderer сценарии.
@@ -81,13 +81,13 @@ deployment.
 - Save/load, Import JSON, validation, masks, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
 - `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
 
-Этап временно закрыт. После завершения `Accordion group block` к нему можно вернуться: ближайший отложенный шаг — вручную проверить `nbsp`-сохранение на русском, английском и испанском контенте через Save draft и Export JSON, затем выбрать следующий небольшой optional improvement.
+Этап снова активен. Ближайший шаг — вручную проверить `nbsp`-сохранение на русском, английском и испанском контенте через Save draft и Export JSON, затем выбрать следующий небольшой optional improvement.
 
-## Активный этап
+## Последний завершённый этап
 
 ### Accordion group block
 
-Статус: активен.
+Статус: завершён.
 
 Цель этапа: добавить typed block для групп аккордеонов с одним или несколькими item'ами, rich/nested content в header и body, дефолтным multi-open поведением, toggle для авто-закрытия остальных item'ов и безопасной стратегией controlled recursion.
 
@@ -117,8 +117,8 @@ deployment.
 3. Реализовать renderer без админки или с demo JSON: атомарный slot-based `Accordion`, `AccordionGroup`, initial-open, multi-open/close-others-on-open, анимация, a11y — выполнено в первом срезе.
 4. Реализовать admin tool с item management и nested editors без рекурсивного accordion на первом шаге — выполнено: временный JSON editor заменён на item manager с add/remove/reorder, `isInitiallyOpen`, rich header field и body nested editor на whitelist `paragraph/header/list/cta`.
 5. Добавить controlled recursion для accordion внутри body editor и проверить независимость вложенных групп — кодовая часть выполнена: `accordionGroup` подключён только в body editor аккордеона с лимитом в два вложенных уровня.
-6. После стабилизации принять отдельное решение о включении accordion в другие nested editors.
-7. Добавить i18n strings, plugin metadata/preview, demo content и smoke-check.
+6. После стабилизации принять отдельное решение о включении accordion в другие nested editors — выполнено: в рамках текущего этапа `accordionGroup` остаётся только в body editor аккордеона.
+7. Добавить i18n strings, plugin metadata/preview, demo content и smoke-check — выполнено: demo content покрывает CTA внутри аккордеонов, несколько nested groups, multi-open и глубину `root -> nested -> nested`; preview image добавлен пользователем.
 
 ### Критерии готовности этапа
 
@@ -131,7 +131,9 @@ deployment.
 - Nested Editor.js instances корректно destroy'ятся при удалении item'ов и блока.
 - `npm run check` проходит; `npm run build` запускается после runtime/style изменений.
 
-## Последний завершённый этап
+Итог: этап Accordion group block завершён. Реализованы typed contract, validation/import/draft support, renderer с анимацией и a11y, admin item manager, nested header/body editors, controlled recursion до двух вложенных уровней, CTA внутри аккордеонов, multi-open demo и plugin metadata/preview.
+
+## Завершённый этап
 
 ### Plugin info tooltips
 
