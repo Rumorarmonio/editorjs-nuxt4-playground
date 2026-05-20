@@ -37,8 +37,9 @@ deployment.
 - Для preview images создан `public/plugin-previews` с временным локальным placeholder; общий `src` для каждого tool key задаётся в одном registry, locale-specific override остаётся через `previewImage`, а без обоих источников preview image не показывается.
 - Tooltip стал interactive; preview image открывается через Fancybox.
 - Optional improvement с типографикой сохранения реализован: при `Save draft` и editor-side `Export JSON` контент проходит через `typograf` с автоопределением языка строки и fallback на текущую локаль `ru | en | es`, но только по `nbsp`-правилам и только в человекочитаемых текстовых полях.
+- Optional improvement с drag-and-drop reorder блоков реализован: подключён `editorjs-drag-drop`, перетаскивание работает через стандартную settings-кнопку блока Editor.js без изменения content JSON schema; дополнительно добавлен auto-scroll страницы при drag у верхнего/нижнего края viewport.
 - Активный этап: Некритичные улучшения.
-- Текущий крупный этап: Некритичные улучшения; ближайший шаг — вручную проверить `nbsp`-сохранение и затем выбрать следующий небольшой optional improvement.
+- Текущий крупный этап: Некритичные улучшения; ближайший шаг — вручную проверить drag-and-drop reorder блоков в editor UI и сохранить/перезагрузить draft.
 
 ## Активный этап
 
@@ -70,7 +71,7 @@ deployment.
 
 1. Составить короткий список optional improvements, которые реально повышают качество демо и не раздувают scope — выполнено для language switcher improvement.
 2. Выбрать первый небольшой improvement и зафиксировать ожидаемое поведение — выполнено: language preference `system | ru | en | es`, browser/OS detection, dropdown UI.
-3. Реализовывать улучшения по одному, с узкими изменениями и проверкой связанных сценариев — выполнены language switcher, heading-based sidebar navigation, block reveal animations, embed Fancybox display, редактирование URL существующего embed-блока и вынос admin editor skin в глобальный stylesheet.
+3. Реализовывать улучшения по одному, с узкими изменениями и проверкой связанных сценариев — выполнены language switcher, heading-based sidebar navigation, block reveal animations, embed Fancybox display, редактирование URL существующего embed-блока, вынос admin editor skin в глобальный stylesheet и drag-and-drop reorder блоков с auto-scroll.
 4. После каждого значимого изменения запускать соразмерные проверки — выполнено для language switcher, heading navigation и block reveal animations; для embed Fancybox display и style-architecture изменений проверки остаются частью ближайшего smoke-check.
 5. Реализовать сохранение с неразрывными пробелами через `typograf` без изменения content JSON schema — выполнено: типографика применяется после `editor.save()` к основному и nested content, выбирает язык по строке с fallback на текущую locale preference и не затрагивает code/url/rawHtml/JSON payload/masked fields.
 6. После возврата к этапу пройти smoke-check основных editor/preview сценариев и выбрать следующий небольшой improvement.
@@ -81,7 +82,7 @@ deployment.
 - Save/load, Import JSON, validation, masks, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
 - `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
 
-Этап снова активен. Ближайший шаг — вручную проверить `nbsp`-сохранение на русском, английском и испанском контенте через Save draft и Export JSON, затем выбрать следующий небольшой optional improvement.
+Этап снова активен. Ближайший шаг — вручную проверить drag-and-drop reorder обычных и custom blocks через settings-кнопку блока, затем сохранить draft и убедиться, что порядок сохраняется после reload.
 
 ## Последний завершённый этап
 

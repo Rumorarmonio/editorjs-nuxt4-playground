@@ -10,6 +10,10 @@ import {
   type TableToolKeyboardPatch,
 } from '~~/editor/admin/accessibility/table-tool-keyboard'
 import {
+  enableEditorDragAutoScroll,
+  type EditorDragAutoScrollPatch,
+} from '~~/editor/admin/helpers/editor-drag-auto-scroll'
+import {
   enableEditorPluginInfoTooltips,
   type EditorPluginInfoTooltipsPatch,
 } from '~~/editor/admin/tooltips/plugin-info-tooltips'
@@ -55,6 +59,7 @@ const errorMessage = ref<string | null>(null)
 let editorToolbarKeyboardPatch: EditorToolbarKeyboardPatch | null = null
 let tableKeyboardPatch: TableToolKeyboardPatch | null = null
 let pluginInfoTooltipsPatch: EditorPluginInfoTooltipsPatch | null = null
+let editorDragAutoScrollPatch: EditorDragAutoScrollPatch | null = null
 
 async function save(options: SaveOptions = {}): Promise<boolean> {
   if (!editor.value || isSaving.value) {
@@ -138,10 +143,12 @@ onMounted(async () => {
   const holder = holderElement.value
 
   try {
-    const [{ default: EditorJS }, tools] = await Promise.all([
-      import('@editorjs/editorjs'),
-      createEditorTools(props.editorMessages),
-    ])
+    const [{ default: EditorJS }, { default: DragDrop }, tools] =
+      await Promise.all([
+        import('@editorjs/editorjs'),
+        import('editorjs-drag-drop'),
+        createEditorTools(props.editorMessages),
+      ])
 
     const instance = new EditorJS({
       holder,
@@ -163,6 +170,10 @@ onMounted(async () => {
 
     editor.value = instance
     await instance.isReady
+    new DragDrop(instance)
+    editorDragAutoScrollPatch = enableEditorDragAutoScroll({
+      root: holder,
+    })
     editorToolbarKeyboardPatch = enableEditorToolbarKeyboardAccess({
       root: holder,
       messages: props.editorMessages,
@@ -189,6 +200,8 @@ onBeforeUnmount(() => {
   tableKeyboardPatch = null
   pluginInfoTooltipsPatch?.destroy()
   pluginInfoTooltipsPatch = null
+  editorDragAutoScrollPatch?.destroy()
+  editorDragAutoScrollPatch = null
   editor.value?.destroy()
   editor.value = null
 })
