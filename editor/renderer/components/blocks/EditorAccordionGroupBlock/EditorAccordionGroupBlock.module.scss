@@ -1,0 +1,21 @@
+.group {
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  min-width: 0;
+}
+
+.headerText {
+  display: block;
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.bodyContent {
+  max-width: 100%;
+}

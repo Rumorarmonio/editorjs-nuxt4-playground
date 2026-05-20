@@ -136,6 +136,13 @@ export const editorEn: EditorUiMessages = {
       htmlPlaceholder:
         '<section><h3>Custom markup</h3><p>Trusted HTML.</p></section>',
     },
+    accordionGroup: {
+      toolboxTitle: 'Accordion group',
+      closeOthersLabel: 'Close other items on open',
+      itemsJsonLabel: 'Items JSON',
+      itemsJsonPlaceholder: '[{ "id": "item-1", "isInitiallyOpen": true, ... }]',
+      itemsJsonInvalid: 'Items JSON must be a valid array.',
+    },
     embed: {
       toolboxTitle: 'Embed',
       urlPlaceholder: (services) => `Paste a ${services} URL`,
@@ -288,6 +295,12 @@ export const editorEn: EditorUiMessages = {
         preview:
           'Renders as highlighted code in the preview layer when language is supported.',
       },
+      accordionGroup: {
+        description:
+          'Grouped disclosure block with nested rich headers and body content.',
+        preview:
+          'Renders as accessible accordions with local open state and height animation.',
+      },
     },
   },
   tunes: {
@@ -346,6 +359,7 @@ export const editorEn: EditorUiMessages = {
       codeSnippetCode: 'Code',
       codeSnippetCaption: 'Caption',
       rawHtml: 'HTML',
+      accordionHeader: 'Accordion header',
     },
     contentValidationFallback: 'Content has validation errors.',
     contentValidationSummary: (count) => `Content has ${count} validation errors.`,
@@ -370,6 +384,8 @@ export const editorEn: EditorUiMessages = {
       'The payload root value must be a JSON object.',
     codeSnippetCodeRequired: 'Code is required.',
     rawHtmlRequired: 'HTML is required.',
+    accordionItemsRequired: 'Add at least one accordion item.',
+    accordionItemContentRequired: 'Add a header or body content.',
     maxLength: (label, maxLength) =>
       `${label} must be ${maxLength} characters or fewer.`,
   },

@@ -30,6 +30,14 @@ export type RichHeaderBlockData = EditorOutputBlock<'header', HeaderBlockData>
 
 export type RichHeaderFieldData = EditorOutputData<RichHeaderBlockData>
 
+export type AccordionHeaderData = RichHeaderFieldData
+
+export type AccordionBodyBlock =
+  | TwoColumnsContentBlock
+  | EditorOutputBlock<'accordionGroup', AccordionGroupBlockData>
+
+export type AccordionBodyData = EditorOutputData<AccordionBodyBlock>
+
 export const twoColumnsLayoutVariants = [
   'equal',
   'leftWide',
@@ -144,6 +152,18 @@ export interface RawHtmlBlockData {
   html: string
 }
 
+export interface AccordionGroupItemData {
+  id: string
+  isInitiallyOpen: boolean
+  header: AccordionHeaderData
+  body: AccordionBodyData
+}
+
+export interface AccordionGroupBlockData {
+  closeOthersOnOpen: boolean
+  items: AccordionGroupItemData[]
+}
+
 export interface CustomBlockDataMap {
   notice: NoticeBlockData
   sectionIntro: SectionIntroBlockData
@@ -153,6 +173,7 @@ export interface CustomBlockDataMap {
   cta: CtaBlockData
   codeSnippet: CodeSnippetBlockData
   rawHtml: RawHtmlBlockData
+  accordionGroup: AccordionGroupBlockData
 }
 
 export function normalizeNoticeBlockData(value: unknown): NoticeBlockData {
@@ -346,6 +367,82 @@ export function normalizeRawHtmlBlockData(value: unknown): RawHtmlBlockData {
   }
 }
 
+export function normalizeAccordionGroupBlockData(
+  value: unknown,
+): AccordionGroupBlockData {
+  if (!isRecord(value)) {
+    return createDefaultAccordionGroupBlockData()
+  }
+
+  return {
+    closeOthersOnOpen:
+      typeof value.closeOthersOnOpen === 'boolean'
+        ? value.closeOthersOnOpen
+        : false,
+    items: normalizeAccordionGroupItemsData(value.items),
+  }
+}
+
+function normalizeAccordionGroupItemsData(
+  value: unknown,
+): AccordionGroupItemData[] {
+  if (!Array.isArray(value)) {
+    return []
+  }
+
+  const usedIds = new Set<string>()
+
+  return value.map((item) => {
+    const normalizedItem = normalizeAccordionGroupItemData(item)
+    let id = normalizedItem.id
+
+    while (usedIds.has(id)) {
+      id = createAccordionGroupItemId()
+    }
+
+    usedIds.add(id)
+
+    return {
+      ...normalizedItem,
+      id,
+    }
+  })
+}
+
+export function normalizeAccordionGroupItemData(
+  value: unknown,
+): AccordionGroupItemData {
+  if (!isRecord(value)) {
+    return createDefaultAccordionGroupItemData()
+  }
+
+  return {
+    id: normalizePlainValue(value.id) || createAccordionGroupItemId(),
+    isInitiallyOpen:
+      typeof value.isInitiallyOpen === 'boolean'
+        ? value.isInitiallyOpen
+        : false,
+    header: normalizeAccordionHeaderData(value.header),
+    body: normalizeAccordionBodyData(value.body),
+  }
+}
+
+export function normalizeAccordionHeaderData(
+  value: unknown,
+): AccordionHeaderData {
+  return normalizeRichHeaderFieldData(value)
+}
+
+export function normalizeAccordionBodyData(
+  value: unknown,
+): AccordionBodyData {
+  if (!isAccordionBodyData(value)) {
+    return createDefaultAccordionBodyData()
+  }
+
+  return value
+}
+
 export function isSectionIntroBlockData(
   value: unknown,
 ): value is SectionIntroBlockData {
@@ -494,6 +591,48 @@ export function isRawHtmlBlockData(value: unknown): value is RawHtmlBlockData {
   return isRecord(value) && typeof value.html === 'string'
 }
 
+export function isAccordionGroupBlockData(
+  value: unknown,
+): value is AccordionGroupBlockData {
+  return (
+    isRecord(value) &&
+    typeof value.closeOthersOnOpen === 'boolean' &&
+    Array.isArray(value.items) &&
+    hasUniqueAccordionGroupItemIds(value.items) &&
+    value.items.every(isAccordionGroupItemData)
+  )
+}
+
+export function isAccordionGroupItemData(
+  value: unknown,
+): value is AccordionGroupItemData {
+  return (
+    isRecord(value) &&
+    isNonEmptyPlainString(value.id) &&
+    typeof value.isInitiallyOpen === 'boolean' &&
+    isAccordionHeaderData(value.header) &&
+    isAccordionBodyData(value.body)
+  )
+}
+
+export function isAccordionHeaderData(
+  value: unknown,
+): value is AccordionHeaderData {
+  return isRichHeaderFieldData(value)
+}
+
+export function isAccordionBodyData(
+  value: unknown,
+): value is AccordionBodyData {
+  return (
+    isRecord(value) &&
+    (value.time === undefined || typeof value.time === 'number') &&
+    (value.version === undefined || typeof value.version === 'string') &&
+    Array.isArray(value.blocks) &&
+    value.blocks.every(isAccordionBodyBlock)
+  )
+}
+
 function createDefaultNoticeBlockData(): NoticeBlockData {
   return {
     title: '',
@@ -598,6 +737,32 @@ function createDefaultRawHtmlBlockData(): RawHtmlBlockData {
   }
 }
 
+function createDefaultAccordionGroupBlockData(): AccordionGroupBlockData {
+  return {
+    closeOthersOnOpen: false,
+    items: [createDefaultAccordionGroupItemData()],
+  }
+}
+
+function createDefaultAccordionGroupItemData(): AccordionGroupItemData {
+  return {
+    id: createAccordionGroupItemId(),
+    isInitiallyOpen: false,
+    header: createDefaultAccordionHeaderData(),
+    body: createDefaultAccordionBodyData(),
+  }
+}
+
+function createDefaultAccordionHeaderData(): AccordionHeaderData {
+  return createDefaultRichHeaderFieldData()
+}
+
+function createDefaultAccordionBodyData(): AccordionBodyData {
+  return {
+    blocks: [],
+  }
+}
+
 function isNoticeBlockType(value: unknown): value is NoticeBlockType {
   return noticeBlockTypes.includes(value as NoticeBlockType)
 }
@@ -689,6 +854,30 @@ function isTwoColumnsContentBlock(
   }
 }
 
+function isAccordionBodyBlock(value: unknown): value is AccordionBodyBlock {
+  if (!isRecord(value)) {
+    return false
+  }
+
+  if (value.type === 'accordionGroup') {
+    return isAccordionGroupBlock(value)
+  }
+
+  return isTwoColumnsContentBlock(value)
+}
+
+function isAccordionGroupBlock(
+  value: unknown,
+): value is EditorOutputBlock<'accordionGroup', AccordionGroupBlockData> {
+  return (
+    isRecord(value) &&
+    (value.id === undefined || typeof value.id === 'string') &&
+    value.type === 'accordionGroup' &&
+    isAccordionGroupBlockData(value.data) &&
+    (value.tunes === undefined || isRecord(value.tunes))
+  )
+}
+
 function isCtaBlock(
   value: unknown,
 ): value is EditorOutputBlock<'cta', CtaBlockData> {
@@ -744,6 +933,28 @@ function isListBlockItem(value: unknown): value is ListBlockItem {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function isNonEmptyPlainString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0
+}
+
+function hasUniqueAccordionGroupItemIds(items: unknown[]): boolean {
+  const ids = new Set<string>()
+
+  return items.every((item) => {
+    if (!isRecord(item) || !isNonEmptyPlainString(item.id)) {
+      return false
+    }
+
+    if (ids.has(item.id)) {
+      return false
+    }
+
+    ids.add(item.id)
+
+    return true
+  })
 }
 
 function normalizePlainValue(value: unknown): string {
@@ -812,4 +1023,8 @@ export function isAllowedCtaUrl(value: string): boolean {
 
 function createMediaGalleryItemId(): string {
   return `media-${Math.random().toString(36).slice(2, 10)}`
+}
+
+function createAccordionGroupItemId(): string {
+  return `accordion-${Math.random().toString(36).slice(2, 10)}`
 }

@@ -4,6 +4,7 @@ import {
   isCtaBlockData,
   isCodeSnippetBlockData,
   isRawHtmlBlockData,
+  isAccordionGroupBlockData,
   isMaskedFieldsDemoBlockData,
   isMediaGalleryBlockData,
   isSectionIntroBlockData,
@@ -167,6 +168,8 @@ function isKnownEditorContentBlock(
       return isCodeSnippetBlockData(block.data)
     case 'rawHtml':
       return isRawHtmlBlockData(block.data)
+    case 'accordionGroup':
+      return isAccordionGroupBlockData(block.data)
     default:
       return false
   }

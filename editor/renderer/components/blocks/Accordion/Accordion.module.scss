@@ -1,0 +1,79 @@
+.accordion {
+  overflow: hidden;
+  background: var(--color-panel-background);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.heading {
+  margin: 0;
+}
+
+.trigger {
+  display: grid;
+  align-items: center;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  width: 100%;
+  padding: 16px 18px;
+  text-align: left;
+  color: var(--color-text);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: -2px;
+  }
+
+  &:hover {
+    background: var(--color-control-hover);
+  }
+}
+
+.head {
+  min-width: 0;
+}
+
+.icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  justify-self: center;
+
+  &::before,
+  &::after {
+    position: absolute;
+    inset: 7px 0 auto;
+    height: 2px;
+    background: currentcolor;
+    border-radius: 999px;
+    content: '';
+  }
+
+  &::after {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+  }
+}
+
+.trigger[aria-expanded='true'] .icon::after {
+  transform: rotate(0deg);
+}
+
+.body {
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+
+.bodyInner {
+  padding: 0 18px 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body,
+  .icon::after {
+    transition: none;
+  }
+}

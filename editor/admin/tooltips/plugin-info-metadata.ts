@@ -24,6 +24,7 @@ export const editorPluginInfoCustomToolKeys = [
   'maskedFieldsDemo',
   'cta',
   'codeSnippet',
+  'accordionGroup',
 ] as const
 
 export const editorPluginInfoToolKeys = [
@@ -76,6 +77,7 @@ const editorPluginInfoPreviewImageSrcByKey: Partial<
   maskedFieldsDemo: '/plugin-previews/masked-fields-demo.jpg',
   cta: '/plugin-previews/cta.jpg',
   codeSnippet: '/plugin-previews/code-snippet.jpg',
+  accordionGroup: '/plugin-previews/accordion-group.jpg',
 }
 
 export function getEditorPluginInfoMetadataMap(
@@ -168,6 +170,11 @@ export function getEditorPluginInfoMetadataMap(
       key: 'codeSnippet',
       title: messages.tools.codeSnippet.toolboxTitle,
       ...messages.pluginInfo.tools.codeSnippet,
+    }),
+    accordionGroup: withPreviewImage({
+      key: 'accordionGroup',
+      title: messages.tools.accordionGroup.toolboxTitle,
+      ...messages.pluginInfo.tools.accordionGroup,
     }),
   }
 }

@@ -112,10 +112,10 @@ deployment.
 
 ### План этапа
 
-1. Зафиксировать финальный data contract и whitelist tools для header/body.
-2. Реализовать shared-типы, normalizers, guards, validation и registry entry.
-3. Реализовать renderer без админки или с demo JSON: атомарный slot-based `Accordion`, `AccordionGroup`, initial-open, multi-open/close-others-on-open, анимация, a11y.
-4. Реализовать admin tool с item management и nested editors без рекурсивного accordion на первом шаге.
+1. Зафиксировать финальный data contract и whitelist tools для header/body — выполнено для первого среза: header хранит `RichHeaderFieldData`, body поддерживает paragraph/header/list/cta и рекурсивный `accordionGroup`.
+2. Реализовать shared-типы, normalizers, guards, validation и registry entry — выполнено в первом срезе.
+3. Реализовать renderer без админки или с demo JSON: атомарный slot-based `Accordion`, `AccordionGroup`, initial-open, multi-open/close-others-on-open, анимация, a11y — выполнено в первом срезе.
+4. Реализовать admin tool с item management и nested editors без рекурсивного accordion на первом шаге — частично выполнено: добавлен минимальный tool с сохранением/редактированием JSON items, полноценный item manager и nested editors остаются следующим шагом.
 5. Добавить controlled recursion для accordion внутри body editor и проверить независимость вложенных групп.
 6. После стабилизации принять отдельное решение о включении accordion в другие nested editors.
 7. Добавить i18n strings, plugin metadata/preview, demo content и smoke-check.

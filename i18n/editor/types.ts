@@ -21,6 +21,7 @@ export interface EditorValidationMessages {
     codeSnippetCode: string
     codeSnippetCaption: string
     rawHtml: string
+    accordionHeader: string
   }
   contentValidationFallback: string
   contentValidationSummary: (count: number) => string
@@ -41,6 +42,8 @@ export interface EditorValidationMessages {
   ctaEventPayloadJsonObjectRequired: string
   codeSnippetCodeRequired: string
   rawHtmlRequired: string
+  accordionItemsRequired: string
+  accordionItemContentRequired: string
   maxLength: (label: string, maxLength: number) => string
 }
 
@@ -169,6 +172,13 @@ export interface EditorUiMessages {
       toolboxTitle: string
       htmlPlaceholder: string
     }
+    accordionGroup: {
+      toolboxTitle: string
+      closeOthersLabel: string
+      itemsJsonLabel: string
+      itemsJsonPlaceholder: string
+      itemsJsonInvalid: string
+    }
     embed: {
       toolboxTitle: string
       urlPlaceholder: (services: string) => string
@@ -221,6 +231,7 @@ export interface EditorUiMessages {
       maskedFieldsDemo: EditorPluginInfoMessages
       cta: EditorPluginInfoMessages
       codeSnippet: EditorPluginInfoMessages
+      accordionGroup: EditorPluginInfoMessages
     }
   }
   tunes: {

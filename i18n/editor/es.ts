@@ -139,6 +139,13 @@ export const editorEs: EditorUiMessages = {
       htmlPlaceholder:
         '<section><h3>Marcado propio</h3><p>HTML confiable.</p></section>',
     },
+    accordionGroup: {
+      toolboxTitle: 'Grupo de acordeones',
+      closeOthersLabel: 'Cerrar otros elementos al abrir',
+      itemsJsonLabel: 'JSON de elementos',
+      itemsJsonPlaceholder: '[{ "id": "item-1", "isInitiallyOpen": true, ... }]',
+      itemsJsonInvalid: 'El JSON de elementos debe ser un array válido.',
+    },
     embed: {
       toolboxTitle: 'Insertar',
       urlPlaceholder: (services) => `Pegue una URL de ${services}`,
@@ -295,6 +302,12 @@ export const editorEs: EditorUiMessages = {
         preview:
           'En preview se muestra como código resaltado si el lenguaje está soportado.',
       },
+      accordionGroup: {
+        description:
+          'Grupo desplegable con encabezados rich y contenido anidado.',
+        preview:
+          'En preview se muestra como acordeones accesibles con estado local y animación de altura.',
+      },
     },
   },
   tunes: {
@@ -353,6 +366,7 @@ export const editorEs: EditorUiMessages = {
       codeSnippetCode: 'Código',
       codeSnippetCaption: 'Leyenda',
       rawHtml: 'HTML',
+      accordionHeader: 'Encabezado del acordeón',
     },
     contentValidationFallback: 'El contenido tiene errores de validación.',
     contentValidationSummary: (count) =>
@@ -378,6 +392,8 @@ export const editorEs: EditorUiMessages = {
       'El valor raíz del payload debe ser un objeto JSON.',
     codeSnippetCodeRequired: 'El código es obligatorio.',
     rawHtmlRequired: 'El HTML es obligatorio.',
+    accordionItemsRequired: 'Añada al menos un elemento del acordeón.',
+    accordionItemContentRequired: 'Añada un encabezado o contenido.',
     maxLength: (label, maxLength) =>
       `${label} debe tener ${maxLength} caracteres o menos.`,
   },

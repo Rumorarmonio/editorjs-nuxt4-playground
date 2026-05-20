@@ -1359,6 +1359,158 @@
       }
     },
     {
+      "id": "accordion-header",
+      "type": "header",
+      "data": {
+        "text": "Accordion group",
+        "level": 2
+      },
+      "tunes": {
+        "animation": {
+          "type": "fade-up"
+        }
+      }
+    },
+    {
+      "id": "accordion-demo-block",
+      "type": "accordionGroup",
+      "data": {
+        "closeOthersOnOpen": true,
+        "items": [
+          {
+            "id": "accordion-item-contract",
+            "isInitiallyOpen": true,
+            "header": {
+              "blocks": [
+                {
+                  "id": "accordion-item-contract-header",
+                  "type": "header",
+                  "data": {
+                    "text": "Typed contract",
+                    "level": 3
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            },
+            "body": {
+              "blocks": [
+                {
+                  "id": "accordion-item-contract-text",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "Each item stores a stable id, initial open state, rich header output, and nested body output."
+                  }
+                },
+                {
+                  "id": "accordion-item-contract-list",
+                  "type": "list",
+                  "data": {
+                    "style": "unordered",
+                    "meta": {},
+                    "items": [
+                      {
+                        "content": "The renderer supports multi-open mode and close-others mode.",
+                        "meta": {},
+                        "items": []
+                      },
+                      {
+                        "content": "This demo starts in close-others mode, so only the first initial item stays open.",
+                        "meta": {},
+                        "items": []
+                      }
+                    ]
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            }
+          },
+          {
+            "id": "accordion-item-nested",
+            "isInitiallyOpen": true,
+            "header": {
+              "blocks": [
+                {
+                  "id": "accordion-item-nested-header",
+                  "type": "header",
+                  "data": {
+                    "text": "Nested accordion body",
+                    "level": 3
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            },
+            "body": {
+              "blocks": [
+                {
+                  "id": "accordion-item-nested-text",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "Accordion groups can render inside an accordion body while keeping open state local to each group."
+                  }
+                },
+                {
+                  "id": "accordion-nested-demo",
+                  "type": "accordionGroup",
+                  "data": {
+                    "closeOthersOnOpen": false,
+                    "items": [
+                      {
+                        "id": "accordion-nested-child-one",
+                        "isInitiallyOpen": true,
+                        "header": {
+                          "blocks": [
+                            {
+                              "id": "accordion-nested-child-one-header",
+                              "type": "header",
+                              "data": {
+                                "text": "Nested child item",
+                                "level": 4
+                              }
+                            }
+                          ],
+                          "version": "2.31.6"
+                        },
+                        "body": {
+                          "blocks": [
+                            {
+                              "id": "accordion-nested-child-one-text",
+                              "type": "paragraph",
+                              "data": {
+                                "text": "This child group uses multi-open mode."
+                              }
+                            }
+                          ],
+                          "version": "2.31.6"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "version": "2.31.6"
+            }
+          }
+        ]
+      },
+      "tunes": {
+        "anchor": {
+          "anchor": "accordion-group"
+        },
+        "spacing": {
+          "top": "large"
+        },
+        "label": {
+          "label": "Accordion group"
+        },
+        "animation": {
+          "type": "fade-left"
+        }
+      }
+    },
+    {
       "id": "utilities-header",
       "type": "header",
       "data": {

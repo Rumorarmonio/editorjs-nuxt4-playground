@@ -138,6 +138,13 @@ export const editorRu: EditorUiMessages = {
       htmlPlaceholder:
         '<section><h3>Своя разметка</h3><p>Доверенный HTML.</p></section>',
     },
+    accordionGroup: {
+      toolboxTitle: 'Группа аккордеонов',
+      closeOthersLabel: 'Закрывать остальные при открытии',
+      itemsJsonLabel: 'JSON элементов',
+      itemsJsonPlaceholder: '[{ "id": "item-1", "isInitiallyOpen": true, ... }]',
+      itemsJsonInvalid: 'JSON элементов должен быть валидным массивом.',
+    },
     embed: {
       toolboxTitle: 'Встраивание',
       urlPlaceholder: (services) => `Вставьте URL ${services}`,
@@ -293,6 +300,12 @@ export const editorRu: EditorUiMessages = {
         preview:
           'В preview отображается как подсвеченный код, если выбранный язык поддерживается.',
       },
+      accordionGroup: {
+        description:
+          'Группа раскрывающихся элементов с rich-заголовками и вложенным контентом.',
+        preview:
+          'В preview отображается как доступный аккордеон с локальным состоянием и анимацией высоты.',
+      },
     },
   },
   tunes: {
@@ -351,6 +364,7 @@ export const editorRu: EditorUiMessages = {
       codeSnippetCode: 'Код',
       codeSnippetCaption: 'Подпись',
       rawHtml: 'HTML',
+      accordionHeader: 'Заголовок аккордеона',
     },
     contentValidationFallback: 'В контенте есть ошибки валидации.',
     contentValidationSummary: (count) =>
@@ -377,6 +391,8 @@ export const editorRu: EditorUiMessages = {
       'Корневое значение payload должно быть JSON-объектом.',
     codeSnippetCodeRequired: 'Код обязателен.',
     rawHtmlRequired: 'HTML обязателен.',
+    accordionItemsRequired: 'Добавьте хотя бы один элемент аккордеона.',
+    accordionItemContentRequired: 'Добавьте заголовок или содержимое.',
     maxLength: (label, maxLength) =>
       `${label}: не больше ${maxLength} символов.`,
   },

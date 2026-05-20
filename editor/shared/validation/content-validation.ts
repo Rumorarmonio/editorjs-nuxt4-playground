@@ -4,9 +4,13 @@ import {
   normalizeCtaBlockData,
   normalizeCodeSnippetBlockData,
   normalizeRawHtmlBlockData,
+  normalizeAccordionGroupBlockData,
   isAllowedCtaUrl,
   normalizeSectionIntroBlockData,
   normalizeTwoColumnsBlockData,
+  type AccordionBodyData,
+  type AccordionGroupBlockData,
+  type AccordionGroupItemData,
   type CtaBlockData,
   type CodeSnippetBlockData,
   type RawHtmlBlockData,
@@ -48,6 +52,7 @@ const maxCodeCaptionLength = 160
 const maxCodeLength = 12000
 const maxRawHtmlLength = 12000
 const maxCtaEventNameLength = 80
+const maxAccordionHeaderTextLength = 120
 const galleryIdPattern = /^[a-z0-9_-]+$/i
 const ctaEventNamePattern = /^[a-z0-9:_-]+$/i
 
@@ -91,6 +96,11 @@ export function validateEditorContentData(
       case 'rawHtml':
         return prefixValidationIssues(
           validateRawHtmlBlockData(block.data).issues,
+          blockPath,
+        )
+      case 'accordionGroup':
+        return prefixValidationIssues(
+          validateAccordionGroupBlockData(block.data).issues,
           blockPath,
         )
       default:
@@ -385,6 +395,27 @@ export function validateCodeSnippetBlockData(
   return createValidationResult(issues)
 }
 
+export function validateAccordionGroupBlockData(
+  value: Partial<AccordionGroupBlockData>,
+  messages: EditorValidationMessages = getCurrentEditorMessages().validation,
+): ValidationResult {
+  const data = normalizeAccordionGroupBlockData(value)
+  const issues: ValidationIssue[] = []
+
+  if (data.items.length === 0) {
+    issues.push({
+      path: 'items',
+      message: messages.accordionItemsRequired,
+    })
+  }
+
+  data.items.forEach((item, index) => {
+    issues.push(...validateAccordionGroupItem(item, index, messages))
+  })
+
+  return createValidationResult(issues)
+}
+
 export function findValidationMessage(
   result: ValidationResult,
   path: string,
@@ -494,6 +525,70 @@ function validateTwoColumnsContentCtaData(
   })
 }
 
+function validateAccordionGroupItem(
+  item: AccordionGroupItemData,
+  index: number,
+  messages: EditorValidationMessages,
+): ValidationIssue[] {
+  const issues: ValidationIssue[] = []
+  const basePath = `items.${index}`
+
+  if (!hasAccordionHeaderContent(item) && !hasAccordionBodyContent(item.body)) {
+    issues.push({
+      path: `${basePath}.header`,
+      message: messages.accordionItemContentRequired,
+    })
+    issues.push({
+      path: `${basePath}.body`,
+      message: messages.accordionItemContentRequired,
+    })
+  }
+
+  item.header.blocks.forEach((block, blockIndex) => {
+    pushMaxLengthIssue(
+      issues,
+      `${basePath}.header.blocks.${blockIndex}.data.text`,
+      block.data.text,
+      maxAccordionHeaderTextLength,
+      messages.fieldLabels.accordionHeader,
+      messages,
+    )
+  })
+
+  issues.push(
+    ...validateAccordionBodyNestedBlocks(
+      item.body,
+      `${basePath}.body`,
+      messages,
+    ),
+  )
+
+  return issues
+}
+
+function validateAccordionBodyNestedBlocks(
+  data: AccordionBodyData,
+  basePath: string,
+  messages: EditorValidationMessages,
+): ValidationIssue[] {
+  return data.blocks.flatMap((block, index) => {
+    switch (block.type) {
+      case 'cta':
+        return prefixValidationIssues(
+          validateCtaBlockData(block.data, messages).issues,
+          `${basePath}.blocks.${index}`,
+        )
+      case 'accordionGroup':
+        return prefixValidationIssues(
+          validateAccordionGroupBlockData(block.data, messages).issues,
+          `${basePath}.blocks.${index}`,
+        )
+      default:
+        return []
+    }
+  })
+}
+
 function createValidationResult(issues: ValidationIssue[]): ValidationResult {
   return {
     valid: issues.length === 0,
@@ -572,6 +667,30 @@ function hasTwoColumnsContent(data: TwoColumnsContentData): boolean {
         return block.data.items.some(hasListItemContent)
       case 'cta':
         return hasText(block.data.label)
+      default:
+        return false
+    }
+  })
+}
+
+function hasAccordionHeaderContent(item: AccordionGroupItemData): boolean {
+  return item.header.blocks.some((block) => hasText(block.data.text))
+}
+
+function hasAccordionBodyContent(data: AccordionBodyData): boolean {
+  return data.blocks.some((block) => {
+    switch (block.type) {
+      case 'paragraph':
+      case 'header':
+        return hasText(block.data.text)
+      case 'list':
+        return block.data.items.some(hasListItemContent)
+      case 'cta':
+        return hasText(block.data.label)
+      case 'accordionGroup':
+        return block.data.items.some(
+          (item) => hasAccordionHeaderContent(item) || hasAccordionBodyContent(item.body),
+        )
       default:
         return false
     }

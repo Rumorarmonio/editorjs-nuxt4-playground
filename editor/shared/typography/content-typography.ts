@@ -1,6 +1,7 @@
 import Typograf from 'typograf'
 import type {
   CtaBlockData,
+  AccordionGroupBlockData,
   CodeSnippetBlockData,
   MediaGalleryBlockData,
   NoticeBlockData,
@@ -108,6 +109,11 @@ function typographContentBlock(
         ...block,
         data: typographCodeSnippetBlockData(block.data, locale),
       }
+    case 'accordionGroup':
+      return {
+        ...block,
+        data: typographAccordionGroupBlockData(block.data, locale),
+      }
     case 'delimiter':
     case 'maskedFieldsDemo':
     case 'rawHtml':
@@ -153,6 +159,14 @@ function typographNestedContentBlock(
       return {
         ...block,
         data: typographCtaBlockData(block.data as CtaBlockData, locale),
+      }
+    case 'accordionGroup':
+      return {
+        ...block,
+        data: typographAccordionGroupBlockData(
+          block.data as AccordionGroupBlockData,
+          locale,
+        ),
       }
     default:
       return block
@@ -320,6 +334,20 @@ function typographCodeSnippetBlockData(
   return {
     ...data,
     caption: typographPlainText(data.caption, locale),
+  }
+}
+
+function typographAccordionGroupBlockData(
+  data: AccordionGroupBlockData,
+  locale: ContentTypographyLocale,
+): AccordionGroupBlockData {
+  return {
+    ...data,
+    items: data.items.map((item) => ({
+      ...item,
+      header: typographNestedContentData(item.header, locale),
+      body: typographNestedContentData(item.body, locale),
+    })),
   }
 }
 

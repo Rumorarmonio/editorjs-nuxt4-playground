@@ -72,6 +72,10 @@ export const editorBlockRegistry = {
     type: 'rawHtml',
     title: 'Raw HTML',
   },
+  accordionGroup: {
+    type: 'accordionGroup',
+    title: 'Accordion group',
+  },
 } as const satisfies EditorBlockRegistry<keyof EditorBlockDataMap & string>
 
 export type EditorBlockType = keyof typeof editorBlockRegistry
