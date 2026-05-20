@@ -23,7 +23,7 @@ deployment.
 - Локализация UI редактора завершена.
 - Light/Dark theme завершён.
 - Клавиатурная навигация и accessibility polish завершён.
-- Активный этап: Некритичные улучшения.
+- Активный этап: Accordion group block.
 - Первое optional improvement этапа Некритичные улучшения реализовано: выбор языка переведён на dropdown по аналогии с темой, добавлены auto preference и испанский интерфейс.
 - Второе optional improvement этапа Некритичные улучшения реализовано: preview sidebar получил временный demo-переключатель между navigation по заголовкам и старой navigation по `AnchorTune` / `LabelTune`.
 - Третье optional improvement этапа Некритичные улучшения реализовано: добавлен `AnimationTune` для простых reveal-анимаций блоков в renderer.
@@ -37,13 +37,14 @@ deployment.
 - Для preview images создан `public/plugin-previews` с временным локальным placeholder; общий `src` для каждого tool key задаётся в одном registry, locale-specific override остаётся через `previewImage`, а без обоих источников preview image не показывается.
 - Tooltip стал interactive; preview image открывается через Fancybox.
 - Optional improvement с типографикой сохранения реализован: при `Save draft` и editor-side `Export JSON` контент проходит через `typograf` с автоопределением языка строки и fallback на текущую локаль `ru | en | es`, но только по `nbsp`-правилам и только в человекочитаемых текстовых полях.
-- Следующий крупный этап запланирован: `Accordion group block` как отдельный recursive composite block с nested editors для header/body.
+- Этап Некритичные улучшения временно закрыт после серии optional improvements; к нему можно вернуться после завершения `Accordion group block`.
+- Текущий крупный этап: `Accordion group block` как отдельный recursive composite block с nested editors для header/body.
 
-## Активный этап
+## Временно закрытый этап
 
 ### Некритичные улучшения
 
-Статус: активен после завершения `Plugin info tooltips`.
+Статус: временно закрыт после серии optional improvements; не является текущим активным этапом.
 
 Цель этапа: довести проект до более аккуратной расширенной версии через небольшие optional improvements, не ломая уже стабильную архитектуру, content JSON schema и
 базовые editor/renderer сценарии.
@@ -80,13 +81,13 @@ deployment.
 - Save/load, Import JSON, validation, masks, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
 - `npm run check` проходит; `npm run build` запускается при необходимости после runtime/style изменений.
 
-Этап снова активен после завершения `Plugin info tooltips`; следующий шаг — вручную проверить `nbsp`-сохранение на русском, английском и испанском контенте через Save draft и Export JSON, затем выбрать следующий небольшой optional improvement.
+Этап временно закрыт. После завершения `Accordion group block` к нему можно вернуться: ближайший отложенный шаг — вручную проверить `nbsp`-сохранение на русском, английском и испанском контенте через Save draft и Export JSON, затем выбрать следующий небольшой optional improvement.
 
-## Следующий крупный этап
+## Активный этап
 
 ### Accordion group block
 
-Статус: запланирован.
+Статус: активен.
 
 Цель этапа: добавить typed block для групп аккордеонов с одним или несколькими item'ами, rich/nested content в header и body, дефолтным multi-open поведением, toggle для авто-закрытия остальных item'ов и безопасной стратегией controlled recursion.
 
@@ -94,7 +95,7 @@ deployment.
 
 1. Shared data contract `accordionGroup`: `closeOthersOnOpen`, массив item'ов, stable item ids, `isInitiallyOpen`, nested output для `header` и `body`.
 2. Normalizers, guards, draft/import support, validation и registry entry.
-3. Renderer-компоненты accordion group/item с независимым state каждой группы и 0.3s height-анимацией через измерение содержимого.
+3. Renderer-компоненты: атомарный переиспользуемый `Accordion` с module styles и именованными слотами `head` / `body`, плюс `AccordionGroup`, который адаптирует block data, управляет state группы и использует 0.3s height-анимацию через измерение содержимого.
 4. Runtime control multi-open / close-others-on-open; по умолчанию можно открыть несколько item'ов, а при `closeOthersOnOpen: true` открытие item'а закрывает остальные только в текущей группе.
 5. Initial-open behavior: каждый item может быть открыт изначально; если при `closeOthersOnOpen: true` отмечено несколько item'ов, renderer открывает только первый по порядку.
 6. Admin tool с управлением item'ами по аналогии с `MediaGallery`: add/remove/reorder, минимум один item, toggle начального открытия, сохранение nested editor данных перед изменением списка.
@@ -113,7 +114,7 @@ deployment.
 
 1. Зафиксировать финальный data contract и whitelist tools для header/body.
 2. Реализовать shared-типы, normalizers, guards, validation и registry entry.
-3. Реализовать renderer без админки или с demo JSON: group/item, initial-open, multi-open/close-others-on-open, анимация, a11y.
+3. Реализовать renderer без админки или с demo JSON: атомарный slot-based `Accordion`, `AccordionGroup`, initial-open, multi-open/close-others-on-open, анимация, a11y.
 4. Реализовать admin tool с item management и nested editors без рекурсивного accordion на первом шаге.
 5. Добавить controlled recursion для accordion внутри body editor и проверить независимость вложенных групп.
 6. После стабилизации принять отдельное решение о включении accordion в другие nested editors.
@@ -125,6 +126,7 @@ deployment.
 - Header и body сохраняют rich/nested content без потери данных при add/remove/reorder.
 - `isInitiallyOpen` корректно задаёт начально открытые item'ы; в close-others режиме из нескольких отмеченных открывается только первый.
 - Multi-open и close-others-on-open режимы работают независимо в каждой группе, включая вложенные группы.
+- Атомарный renderer `Accordion` остаётся переиспользуемым компонентом со слотами `head` и `body`, без прямой зависимости от `accordionGroup` schema.
 - Анимация раскрытия/закрытия плавная, длится 0.3s и учитывает `prefers-reduced-motion`.
 - Nested Editor.js instances корректно destroy'ятся при удалении item'ов и блока.
 - `npm run check` проходит; `npm run build` запускается после runtime/style изменений.

@@ -28,7 +28,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Базовая версия проекта завершена.
 - Базовый слой Block Tunes (`AnchorTune`, `SpacingTune`, `LabelTune`) завершён: реализация, renderer, guard, demo JSON, ручная browser-проверка и `npm run check` готовы.
 - Plain field system для будущих custom blocks завершена.
-- Активный scope по `SPEC.md`: этап Некритичные улучшения снова активен после закрытия Plugin info tooltips.
+- Активный scope по `SPEC.md`: этап Accordion group block; этап Некритичные улучшения временно закрыт после серии optional improvements.
 - Первый custom block `Notice` подтвердил полный custom block lifecycle на простых plain fields без раннего перехода к media workflow, rich fields или nested Editor.js.
 - Reusable rich fields детализированы и завершены: `RichParagraphField` и `RichHeaderField` реализованы на базе nested Editor.js.
 - Для `SectionIntro` добавлен минимальный shared-контракт данных: `title` и `description` как вложенный Editor.js-compatible output только с paragraph-блоками.
@@ -62,7 +62,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Plugin info tooltip сделан interactive: при наведении на сам tooltip он не закрывается, а preview image открывается в Fancybox по клику.
 - Post-review fixes для Plugin info tooltips внесены: при destroy tooltip patch закрывает Fancybox overlay, а fallback `alt` для preview image теперь строится из локализованного title без английского хвоста.
 - Этап Plugin info tooltips завершён: tooltip metadata, локализация, toolbox/label подсказки, optional preview images, Fancybox preview и related renderer fixes для нумерованных списков доведены до рабочего состояния.
-- Этап Некритичные улучшения снова активен: ближайшая работа должна идти через небольшие optional improvements с узкими изменениями и отдельной проверкой.
+- Этап Accordion group block сделан текущим: ближайшая работа должна идти по typed `accordionGroup` contract, renderer-компонентам и controlled nested editor strategy. Этап Некритичные улучшения временно закрыт, к нему можно вернуться после аккордеонов.
 - Добавлена типографика сохранения с неразрывными пробелами: зависимость `typograf`, shared-helper `typographEditorContentData` и подключение к `EditorJsEditor.save()` / `getCurrentContent()`. Сохранение использует текущую локаль контента `ru | en | es` как fallback, но перед прогоном строки пытается автоопределить язык по кириллице, испанским символам/частым словам или латинице; включена только группа правил `nbsp` и дополнительно `common/nbsp/afterNumber`, чтобы не менять кавычки, тире и прочую типографику вне scope.
 - Для ручной проверки типографики добавлены компактные JSON fixtures в `content/`: `nbsp-ru-page.json`, `nbsp-en-page.json`, `nbsp-es-page.json` и `nbsp-mixed-page.json`. Они покрывают standard rich blocks, list/table cells, captions, custom blocks, nested rich fields и контрольные поля code/rawHtml/JSON payload, где типографика не должна применяться.
 - Post-review fixes типографики: `default-page.json` не коммитится как runtime-saved output после ручной проверки, чтобы не тащить churn от Editor.js save; plain/rich text типографируется по sentence-like сегментам внутри строки, а HTML rich text возвращает реальный `U+00A0` вместо `&nbsp;` для единообразного JSON.
