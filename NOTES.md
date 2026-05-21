@@ -28,7 +28,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Базовая версия проекта завершена.
 - Базовый слой Block Tunes (`AnchorTune`, `SpacingTune`, `LabelTune`) завершён: реализация, renderer, guard, demo JSON, ручная browser-проверка и `npm run check` готовы.
 - Plain field system для будущих custom blocks завершена.
-- Активный scope по `SPEC.md`: этап Некритичные улучшения снова активен после закрытия Accordion group block.
+- Активный scope по `SPEC.md`: этап `CTA icons via generated SVG sprite`; этап Некритичные улучшения временно закрыт/отложен.
 - Первый custom block `Notice` подтвердил полный custom block lifecycle на простых plain fields без раннего перехода к media workflow, rich fields или nested Editor.js.
 - Reusable rich fields детализированы и завершены: `RichParagraphField` и `RichHeaderField` реализованы на базе nested Editor.js.
 - Для `SectionIntro` добавлен минимальный shared-контракт данных: `title` и `description` как вложенный Editor.js-compatible output только с paragraph-блоками.
@@ -140,6 +140,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Внутри `@editorjs/list` для обычного списка и checklist `Tab` / `Shift+Tab` остаются зарезервированы под editor behavior nested list: indent/outdent пунктов. На текущем accessibility-этапе это фиксируется как ожидаемое ограничение Editor.js UI, а не как баг tab-order.
 - Внутри `@editorjs/table` row/column tune controls реализованы как один floating toolbox для строк и один floating toolbox для колонок, которые перемещаются относительно текущей позиции, а не как отдельные controls на каждую строку/колонку. Поэтому последовательный обход всех row/column tune controls через `Tab` не реализуется на текущем этапе; принято ограничиться доступностью текущих floating controls и popover items.
 - Дополнительные block tools/plugins должны добавляться только после явного решения по typed data contract, renderer, validation/guard, i18n, theme и accessibility. Backend-dependent link preview tools откладываются до появления backend/server route, `Warning` не должен дублировать текущий `NoticeTool`, а `Raw HTML` допустим только как осознанный trusted/admin-only escape hatch с code-level safe/unsafe режимом renderer.
+- Для CTA icons source SVG должны жить вне `public`; публичным runtime asset должен быть generated `sprite.svg`. Generated `IconName` и `iconNames` должны быть единым source of truth для TypeScript, validation и editor icon select. Vue-компонент иконки допустимо назвать `Icon.vue`, а Editor.js tool UI должен использовать DOM-based field/combobox helper, без прямого внедрения Vue UI-kit внутрь tool class.
 
 ## Что уже сделано
 
@@ -232,6 +233,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Plugin info tooltips реализованы без изменения content JSON schema: label helper помечает custom block labels через `data-editor-plugin-info-tool`, а отдельный `MutationObserver`-helper создаёт hover/focus tooltips на базе `tippy.js` для label'ов и toolbox items, сопоставляя toolbox item по локализованному title. Для preview images нужно положить статичные файлы в `public/plugin-previews`; общий `src` меняется в `editorPluginInfoPreviewImageSrcByKey`, для отдельной локали можно переопределить `previewImage.src` / `previewImage.alt` в локализованном metadata, а при отсутствии обоих источников картинка не рендерится. Tooltip остаётся открытым при hover/focus внутри себя, а preview image открывается через Fancybox.
 - Сохранение с `nbsp` выполняется после `editor.save()` и до validation/save emit, поэтому `Save draft` и editor-side `Export JSON` получают одинаково нормализованный JSON. Типографируются только человекочитаемые поля: standard rich text, list/table cells, captions, custom block labels/titles/text и nested rich content. Не типографируются `code`, `rawHtml`, URL, anchors/tunes, `eventPayloadJson`, media alt, masks/email/phone/card fields и служебные id.
 - Drag-and-drop reorder блоков реализован через `editorjs-drag-drop`, чтобы использовать стандартное `blocks.move()` поведение Editor.js и не менять сохранённый content contract. Перетаскивание привязано к `.ce-toolbar__settings-btn`, поэтому основной ручной риск — конфликты с tune-menu, nested editors и custom interactive fields. Auto-scroll helper слушает только drag, начатый с этой кнопки, и очищает listeners через lifecycle `EditorJsEditor`.
+- Этап `CTA icons via generated SVG sprite` сделан активным: нужно адаптировать скопированный `scripts/generate-svg-sprite.js` под пути проекта, перенести source SVG из `public` в непубличную source-директорию, оставить в `public` только generated `sprite.svg`, сгенерировать `IconName` / `iconNames` и расширить CTA под optional icon data.
 
 ## Текущие проблемы / открытые вопросы
 
@@ -254,6 +256,6 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 
 ## Следующий шаг
 
-Следующий шаг активного этапа Некритичные улучшения: вручную проверить сохранение с `nbsp` на русском, английском и испанском: выбрать язык, ввести контрольные фразы в обычный paragraph/header/list/table и в custom/nested поля, нажать `Save draft`, выполнить `Export JSON` на editor page и убедиться, что в текстовых полях появились `U+00A0` / `\u00a0`, а code/url/rawHtml/JSON payload/masked fields не изменились. Отложенный smoke-check `Raw HTML`, CTA event action, nested CTA и syntax highlighting остаётся полезной дополнительной проверкой.
+Следующий шаг активного этапа `CTA icons via generated SVG sprite`: проверить текущий `scripts/generate-svg-sprite.js`, команду в `package.json` и добавленную директорию SVG-иконок, выбрать финальные пути проекта, затем адаптировать генератор так, чтобы source SVG жили вне `public`, а в `public` оставался только generated `sprite.svg`.
 
-Дополнительно после подключения `editorjs-drag-drop` нужно вручную проверить reorder обычных и custom blocks через settings-кнопку блока, затем `Save draft`, reload и preview, чтобы подтвердить сохранение нового порядка и отсутствие потери nested editor данных.
+Отложенные проверки этапа Некритичные улучшения остаются полезными follow-up: `nbsp`-сохранение на русском/английском/испанском и drag-and-drop reorder обычных и custom blocks через settings-кнопку блока.

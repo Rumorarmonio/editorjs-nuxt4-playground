@@ -20,7 +20,8 @@
     "postinstall": "nuxt prepare",
     "stylelint": "stylelint \"{app,editor,server,shared}/**/*.{css,scss,vue}\"",
     "stylelint:fix": "stylelint \"{app,editor,server,shared}/**/*.{css,scss,vue}\" --fix",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "generate-svg-sprite": "node scripts/generate-svg-sprite.js"
   },
   "dependencies": {
     "@editorjs/delimiter": "^1.4.2",
@@ -55,6 +56,8 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-vue": "^10.9.0",
+    "fs-extra": "^11.3.5",
+    "glob": "^13.0.6",
     "globals": "^17.5.0",
     "husky": "^9.1.7",
     "postcss-html": "^1.8.1",
@@ -67,6 +70,7 @@
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-order": "^8.1.1",
     "stylelint-scss": "^7.0.0",
+    "svgstore": "^3.0.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.0",
     "vue-eslint-parser": "^10.4.0",

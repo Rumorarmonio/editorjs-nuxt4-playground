@@ -147,6 +147,7 @@
 - использования community CSS-решений для Editor.js dark theme как основы для собственной темы;
 - усиленной клавиатурной навигации и улучшений accessibility.
 - расширения набора контентных блоков и Editor.js plugins после отдельного research/decision этапа.
+- поддержки иконок CTA-кнопок через generated SVG sprite, generated `IconName` / `iconNames` и единый shared icon contract.
 
 ---
 
@@ -426,6 +427,7 @@
 24. Некритичные улучшения.
 25. Расширение набора контентных блоков и plugins.
 26. Accordion group block как отдельный крупный recursive composite block.
+27. CTA icons via generated SVG sprite как отдельный поздний этап, потому что он меняет CTA schema и asset pipeline.
 
 ### 8.3. Принцип кастомизации
 
@@ -1785,6 +1787,143 @@ Accordion renderer должен соблюдать базовый accessibility 
 
 ---
 
+## 24.14. CTA icons via generated SVG sprite: поздний этап расширения CTA
+
+### 24.14.1. Цель этапа
+
+Добавить поддержку иконок в `CTA/Button` без дублирования SVG-файлов и без хранения SVG-разметки в content JSON.
+
+Иконки должны использовать единый generated SVG sprite, доступный и editor-layer, и renderer-layer. Content JSON должен хранить только имя иконки и позицию.
+
+### 24.14.2. Source of truth для иконок
+
+Единым source of truth должны быть исходные SVG-файлы, экспортированные из Figma отдельными файлами.
+
+Скрипт `scripts/generate-svg-sprite.js`, скопированный в проект вручную, должен быть адаптирован под текущий проект:
+
+- актуальные source/output пути проекта;
+- генерацию итогового `sprite.svg`;
+- генерацию TypeScript-типа `IconName`;
+- генерацию явного массива `iconNames`;
+- сохранение совместимости с Nuxt base path / static deployment.
+
+Исходную директорию SVG-иконок не следует оставлять в `public`, потому что тогда отдельные SVG становятся публичными runtime assets. Предпочтительная структура:
+
+```text
+assets/icons/*.svg              # source SVG, не публичный runtime asset
+public/icons/sprite.svg         # generated sprite, публичный runtime asset
+editor/shared/icons/icons.ts    # generated IconName + iconNames
+```
+
+Если итоговые пути будут отличаться, это должно быть явно зафиксировано в `PLAN.md` и соответствующих helper-ах.
+
+### 24.14.3. Shared icon contract
+
+В shared-слое должен появиться общий contract для иконок:
+
+- generated `IconName`;
+- generated `iconNames`;
+- helper/guard для проверки неизвестных icon names;
+- helper для формирования `href` вида `spritePath#iconName` с учётом Nuxt `baseURL`.
+
+Имя Vue-компонента иконки допустимо сделать простым: `Icon.vue`. Тип данных должен называться `IconName`, чтобы не смешивать компонент и data contract.
+
+### 24.14.4. CTA data contract
+
+CTA должен поддерживать text mode с независимыми left/right icon slots и отдельный icon-only mode:
+
+```ts
+type CtaContentMode = 'text' | 'iconOnly'
+
+type CtaIconsData = {
+  left?: IconName
+  right?: IconName
+  only?: IconName
+}
+```
+
+Финальная форма может быть скорректирована при реализации, но требования остаются:
+
+- старые CTA без icon data остаются валидными;
+- в text mode кнопка может быть без иконок, только с левой иконкой, только с правой иконкой или с обеими иконками;
+- левая и правая иконки в text mode могут быть разными;
+- в icon-only mode используется одна иконка, потому что кнопка без текста должна оставаться визуально простой и квадратной;
+- в icon-only mode обычный `label` сохраняется как доступное имя / `aria-label`, даже если визуальный текст не выводится;
+- неизвестные icon names не должны ломать renderer;
+- JSON не хранит SVG markup.
+
+### 24.14.5. Editor UI
+
+В `CtaTool` должен появиться выбор иконки:
+
+- выбор icon name из generated `iconNames`;
+- preview самой иконки через generated sprite;
+- переключатель режима содержимого `text | iconOnly`;
+- в text mode — поле видимого текста кнопки, отдельный селект “левая иконка” и отдельный селект “правая иконка”, оба с вариантом “без иконки”;
+- в icon-only mode — один обязательный селект иконки и поле доступного имени вместо обычного поля видимого текста.
+
+Интерфейс должен реагировать на выбранный режим: при `iconOnly` обычный visible text input не должен выглядеть как поле видимого текста кнопки, а left/right icon selects не должны показываться как активные настройки.
+
+Так как Editor.js tools в текущей архитектуре создают UI через нативный DOM/TypeScript, Vue UI-kit не должен напрямую внедряться внутрь tool class. Для первого среза
+предпочтителен DOM-based `IconSelect` / `Combobox` helper в `editor/admin/fields`.
+
+Большой UI-kit и массовая замена существующих native/custom fields на новом этапе не входят в scope.
+
+### 24.14.6. Renderer UI
+
+Renderer должен использовать тот же generated sprite:
+
+- CTA без иконок;
+- CTA с иконкой слева;
+- CTA с иконкой справа;
+- CTA с двумя иконками одновременно;
+- icon-only CTA;
+- корректные spacing, размеры, theme tokens и focus states;
+- `aria-label` для icon-only варианта.
+
+Renderer не должен тянуть editor/admin UI dependencies.
+
+### 24.14.7. Что не входит в scope этапа
+
+Вне scope:
+
+- полноценный asset manager;
+- upload SVG через editor UI;
+- отдельный backend/CDN workflow;
+- внедрение UI-kit в renderer или editor;
+- перевод Editor.js tool UI на Vue sub-apps;
+- массовая миграция всех селектов редактора на новый combobox;
+- изменение CTA action contract вне icon-specific полей.
+
+### 24.14.8. Проверка
+
+Необходимо проверить:
+
+- генерация sprite и generated types;
+- create/edit/save/reload CTA без icon, с left icon, right icon, обеими icons и icon-only;
+- preview/render всех вариантов;
+- Import JSON и draft guard;
+- validation unknown icon name;
+- `Export JSON`;
+- `Reset draft`;
+- light/dark theme;
+- Nuxt `baseURL` / GitHub Pages path для sprite href;
+- старые content JSON без icon data.
+
+### 24.14.9. Критерии готовности этапа
+
+Этап считается завершённым, если:
+
+- source SVG живут вне `public`, а публичным runtime asset остаётся generated `sprite.svg`;
+- `IconName` и `iconNames` генерируются из того же source набора и используются в shared/editor/renderer слоях;
+- CTA schema расширена без поломки старого JSON;
+- editor UI позволяет выбрать иконку наглядно и сбросить выбор;
+- renderer корректно отображает CTA без иконок, с left/right/both icons и icon-only CTA;
+- icon-only CTA остаётся доступным;
+- save/load/render/import/export/reset проходят без потери данных.
+
+---
+
 ## 25. List tool и nested list: обязательный поэтапный сценарий
 
 ### 25.1. Общий принцип
@@ -2677,6 +2816,31 @@ Strikethrough следует сначала пробовать как готов
 Критерий готовности:
 
 - реализован стабильный recursive composite block с ограниченным и проверенным scope первой версии.
+
+---
+
+### Этап 27. CTA icons via generated SVG sprite
+
+Содержимое этапа:
+
+- адаптация `scripts/generate-svg-sprite.js` под актуальные пути проекта;
+- перенос source SVG-иконок из `public` в непубличную source-директорию;
+- сохранение в `public` только generated `sprite.svg`;
+- генерация `IconName` и `iconNames`;
+- shared icon contract и helper для sprite href с учётом Nuxt `baseURL`;
+- расширение CTA schema: text mode с независимыми left/right icon slots и icon-only mode с одной иконкой;
+- DOM-based icon select/combobox в `CtaTool` с preview иконки и id, двумя селектами для text mode и одним селектом для icon-only mode;
+- renderer support для CTA без иконок, с left/right/both icons и icon-only CTA.
+
+Проверка:
+
+- sprite и TypeScript contract генерируются из одного source набора;
+- CTA без иконки, с иконкой слева, справа, с обеими иконками и icon-only проходит save/load/render;
+- Import JSON, validation, `Export JSON`, `Reset draft`, theme и base path не ломаются.
+
+Критерий готовности:
+
+- CTA использует generated SVG sprite без дублирования SVG-файлов и без хранения SVG markup в content JSON.
 
 ---
 

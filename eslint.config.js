@@ -135,6 +135,7 @@ export default [
             '*.config.mjs',
             '*.config.cjs',
             'eslint.config.js',
+            'scripts/*.js',
           ],
         },
         tsconfigRootDir: process.cwd(),
