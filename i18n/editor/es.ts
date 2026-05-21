@@ -95,6 +95,14 @@ export const editorEs: EditorUiMessages = {
       urlLabel: 'URL',
       urlPlaceholder: 'https://example.com/contact',
       variantLabel: 'Variante',
+      contentModeLabel: 'Contenido',
+      leftIconLabel: 'Icono izquierdo',
+      rightIconLabel: 'Icono derecho',
+      iconLabel: 'Icono',
+      noIconOption: 'Sin icono',
+      iconSearchPlaceholder: 'Buscar icono',
+      iconNoResults: 'No se encontraron iconos',
+      iconNoChoices: 'No hay iconos disponibles',
       targetLabel: 'Destino',
       actionTypeLabel: 'Acción',
       eventNameLabel: 'Nombre del evento',
@@ -110,6 +118,10 @@ export const editorEs: EditorUiMessages = {
       actionTypeOptions: {
         link: 'Abrir enlace',
         event: 'Emitir evento',
+      },
+      contentModeOptions: {
+        text: 'Texto',
+        iconOnly: 'Solo icono',
       },
       targetOptions: {
         sameTab: 'Misma pestaña',
@@ -368,6 +380,7 @@ export const editorEs: EditorUiMessages = {
       mediaAlt: 'Texto alt',
       mediaCaption: 'Leyenda',
       ctaLabel: 'Texto del botón',
+      ctaIcon: 'Icono del botón',
       ctaEventName: 'Nombre del evento',
       ctaEventPayloadJson: 'Payload JSON',
       codeSnippetCode: 'Código',
@@ -391,6 +404,8 @@ export const editorEs: EditorUiMessages = {
     ctaUrlRequired: 'La URL es obligatoria.',
     ctaUrlInvalid:
       'Use una URL http, https, mailto, relativa a la raíz o de ancla.',
+    ctaIconRequired: 'Elija un icono para el modo de solo icono.',
+    ctaIconInvalid: 'Elija un icono del sprite generado.',
     ctaEventNameRequired: 'El nombre del evento es obligatorio.',
     ctaEventNameInvalid:
       'Use solo letras, números, guiones, guiones bajos y dos puntos.',

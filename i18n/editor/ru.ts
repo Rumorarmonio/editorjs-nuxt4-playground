@@ -94,6 +94,14 @@ export const editorRu: EditorUiMessages = {
       urlLabel: 'URL',
       urlPlaceholder: 'https://example.com/contact',
       variantLabel: 'Вариант',
+      contentModeLabel: 'Содержимое',
+      leftIconLabel: 'Иконка слева',
+      rightIconLabel: 'Иконка справа',
+      iconLabel: 'Иконка',
+      noIconOption: 'Без иконки',
+      iconSearchPlaceholder: 'Найти иконку',
+      iconNoResults: 'Иконки не найдены',
+      iconNoChoices: 'Иконки недоступны',
       targetLabel: 'Открывать',
       actionTypeLabel: 'Действие',
       eventNameLabel: 'Имя события',
@@ -109,6 +117,10 @@ export const editorRu: EditorUiMessages = {
       actionTypeOptions: {
         link: 'Открыть ссылку',
         event: 'Отправить событие',
+      },
+      contentModeOptions: {
+        text: 'Текст',
+        iconOnly: 'Только иконка',
       },
       targetOptions: {
         sameTab: 'В этой вкладке',
@@ -366,6 +378,7 @@ export const editorRu: EditorUiMessages = {
       mediaAlt: 'Alt-текст',
       mediaCaption: 'Подпись',
       ctaLabel: 'Текст кнопки',
+      ctaIcon: 'Иконка кнопки',
       ctaEventName: 'Имя события',
       ctaEventPayloadJson: 'Payload JSON',
       codeSnippetCode: 'Код',
@@ -390,6 +403,8 @@ export const editorRu: EditorUiMessages = {
     ctaUrlRequired: 'URL обязателен.',
     ctaUrlInvalid:
       'Используйте http, https, mailto, ссылку от корня или якорь.',
+    ctaIconRequired: 'Выберите иконку для режима только с иконкой.',
+    ctaIconInvalid: 'Выберите иконку из generated sprite.',
     ctaEventNameRequired: 'Имя события обязательно.',
     ctaEventNameInvalid:
       'Используйте только буквы, цифры, дефисы, подчёркивания и двоеточия.',

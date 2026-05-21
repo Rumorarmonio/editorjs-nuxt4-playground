@@ -2,6 +2,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   min-height: 42px;
   padding: 10px 16px;
   font: inherit;
@@ -11,6 +12,20 @@
   border: 1px solid transparent;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.ctaActionIconOnly {
+  width: 42px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.ctaActionIcon {
+  flex: 0 0 auto;
+}
+
+.ctaActionLabel {
+  min-width: 0;
 }
 
 .ctaActionPrimary {

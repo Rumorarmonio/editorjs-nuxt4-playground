@@ -38,77 +38,68 @@ deployment.
 - Tooltip стал interactive; preview image открывается через Fancybox.
 - Optional improvement с типографикой сохранения реализован: при `Save draft` и editor-side `Export JSON` контент проходит через `typograf` с автоопределением языка строки и fallback на текущую локаль `ru | en | es`, но только по `nbsp`-правилам и только в человекочитаемых текстовых полях.
 - Optional improvement с drag-and-drop reorder блоков реализован: подключён `editorjs-drag-drop`, перетаскивание работает через стандартную settings-кнопку блока Editor.js без изменения content JSON schema; дополнительно добавлен auto-scroll страницы при drag у верхнего/нижнего края viewport.
-- Этап Некритичные улучшения временно закрыт/отложен, потому что поддержка иконок CTA меняет content JSON schema и требует отдельного этапа.
-- Активный этап: CTA icons via generated SVG sprite.
-- Текущий крупный этап: CTA icons via generated SVG sprite; ближайший шаг — адаптировать генерацию sprite/types под структуру проекта и зафиксировать shared icon contract.
+- Активный этап: Некритичные улучшения.
+- Первый инфраструктурный срез этапа CTA icons via generated SVG sprite реализован: source SVG перенесены из `public` в `editor/assets/icons`, generated sprite создаётся в `public/icons/sprite.svg`, generated `IconName` / `iconNames` и shared icon helpers добавлены в `editor/shared/icons`.
+- Второй shared schema срез этапа CTA icons via generated SVG sprite реализован: CTA data contract расширен `contentMode`, `leftIcon`, `rightIcon` и `icon`, normalizer/guard/validation используют generated icon names, а текущий `CtaTool` сохраняет icon-поля без UI.
+- Code-срез оставшихся пунктов этапа CTA icons via generated SVG sprite реализован: добавлен `Icon.vue`, CTA renderer показывает left/right/both/icon-only icons, `CtaTool` получил searchable icon selects на базе `choices.js` с preview иконок, demo content покрывает основные icon-сценарии.
+- Этап CTA icons via generated SVG sprite завершён кодово и закрыт по решению пользователя; ручной browser smoke-check CTA icon scenarios остаётся полезной проверкой перед финальным коммитом.
+- Текущий крупный этап: Некритичные улучшения; ближайший шаг — выбрать следующий небольшой optional improvement или пройти отложенные smoke-check сценарии.
 
 ## Активный этап
 
-### CTA icons via generated SVG sprite
-
-Статус: активен.
-
-Цель этапа: добавить поддержку иконок в CTA-кнопках через единый generated SVG sprite, общий typed icon contract и editor UI для выбора иконки без дублирования
-ассетов между редактором и preview.
-
-В scope входят:
-
-1. Адаптация пользовательского `scripts/generate-svg-sprite.js` под текущий проект: актуальные source/output пути, генерация `sprite.svg`, `IconName` и массива `iconNames`.
-2. Перенос исходной директории SVG-иконок из `public` в непубличную source-директорию, оставив в `public` только generated `sprite.svg`.
-3. Shared icon contract: `IconName`, `iconNames`, helper для проверки icon name и helper для формирования `use href` с учётом Nuxt `baseURL`.
-4. Расширение CTA data schema: режим содержимого `text | iconOnly`, optional left/right icon slots для текстовой кнопки и отдельная single icon для icon-only, совместимость со старыми CTA без иконок.
-5. Renderer CTA: отображение текстовой кнопки без иконок, с левой, правой или обеими иконками, а также icon-only кнопки с корректным `aria-label` и без SVG-кода в JSON.
-6. Editor admin UI: DOM-based icon select/combobox для `CtaTool` с preview иконки из sprite, id иконки и вариантом “без иконки”; в text mode нужны отдельные селекты для левой и правой иконки, в icon-only mode — один обязательный селект иконки.
-7. Demo content и проверки save/load/render/import/export/reset для CTA без иконок, с левой иконкой, с правой иконкой, с обеими иконками и icon-only.
-
-Вне scope этапа:
-
-- полноценный менеджер ассетов и загрузка SVG через UI;
-- внедрение большого UI-kit в editor или renderer;
-- массовая замена всех существующих select/radio controls на кастомные combobox controls;
-- перевод Editor.js tool UI на Vue sub-apps;
-- изменение CTA action contract вне icon-specific полей;
-- backend/CDN workflow для иконок.
-
-## План этапа
-
-1. Проверить текущий `scripts/generate-svg-sprite.js`, `package.json` command и добавленную пользователем директорию иконок, затем адаптировать пути под проект.
-2. Выбрать финальные пути: source SVG вне `public`, generated `public/icons/sprite.svg`, generated TypeScript contract в shared-слое.
-3. Сгенерировать и подключить `IconName` / `iconNames`, добавить shared helper для проверки и sprite href с учётом `baseURL`.
-4. Расширить shared CTA types, normalizers, guards, validation и draft/import поддержку под optional icon slots и icon-only mode.
-5. Реализовать Vue `Icon.vue` для renderer/app-level UI и использовать sprite без дублирования SVG.
-6. Реализовать DOM-based icon select/combobox для `CtaTool`, не внедряя большой UI-kit и не переписывая остальные fields.
-7. Обновить CTA renderer styles и accessibility для left/right/both/icon-only вариантов.
-8. Обновить demo content и пройти проверки: create/edit/save/reload/render/import/export/reset, старые CTA без icon, неизвестный icon name, Nuxt `baseURL`.
-
-## Критерии готовности этапа
-
-- `sprite.svg` генерируется из source SVG-иконок и является единственным публичным runtime SVG sprite.
-- `IconName` и `iconNames` генерируются из тех же source SVG и используются как единый source of truth для кода, validation и editor UI.
-- CTA JSON хранит только icon names и content mode, а не SVG markup; старые CTA без icon остаются валидными.
-- В editor UI можно выбрать левую и правую иконки независимо, оставить CTA без иконок или переключить кнопку в icon-only mode с одной иконкой.
-- Preview/renderer корректно показывает CTA без иконок, с left/right/both icons и icon-only CTA, а icon-only вариант остаётся доступным через label/`aria-label`.
-- Save/load, Import JSON, validation, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
-- `npm run check` проходит; `npm run build` запускается после runtime/public asset изменений.
-
-Ближайший шаг — адаптировать генератор sprite/types под выбранные пути проекта и перенести source SVG из `public`, оставив в `public` только generated sprite.
-
-## Временно закрытый этап
-
 ### Некритичные улучшения
 
-Статус: временно закрыт/отложен из-за нового этапа `CTA icons via generated SVG sprite`.
+Статус: активен.
 
 Цель этапа: довести проект до более аккуратной расширенной версии через небольшие optional improvements, не ломая уже стабильную архитектуру, content JSON schema и
 базовые editor/renderer сценарии.
 
-Итог на момент временного закрытия: реализованы language switcher improvement, heading-based sidebar navigation, block reveal animations, embed Fancybox display,
-редактирование URL существующего embed-блока, вынос admin editor skin в глобальный stylesheet, типографика сохранения с `nbsp` и drag-and-drop reorder блоков с auto-scroll.
+В scope входят:
 
-Оставшийся полезный follow-up: вручную проверить drag-and-drop reorder обычных и custom blocks через settings-кнопку блока, затем сохранить draft и убедиться, что порядок
-сохраняется после reload.
+1. Небольшие polished interactions и UX-улучшения, которые не требуют нового крупного content contract.
+2. Поздние tunes и renderer/admin improvements, если они остаются точечными.
+3. Media/navigation improvements, которые не ломают текущие save/load/render/import/export/reset сценарии.
+4. Отложенные smoke-check проверки уже реализованных optional improvements.
+
+Вне scope этапа:
+
+- новые крупные schema-changing этапы без отдельного решения;
+- полноценная CMS/page-management админка;
+- backend/API/upload workflow;
+- широкий UI-kit rewrite вместо точечных улучшений.
+
+## План этапа
+
+1. Держать этап открытым для небольших optional improvements после закрытия schema-changing этапов.
+2. Сначала пройти оставшиеся полезные ручные проверки: `nbsp`-сохранение на русском/английском/испанском, drag-and-drop reorder обычных и custom blocks, CTA icon scenarios после закрытого этапа.
+3. После проверок выбрать следующий небольшой improvement с узким diff.
+
+## Критерии готовности этапа
+
+- Каждое improvement остаётся небольшим и проверяемым отдельно.
+- Базовые editor/renderer сценарии не ломаются.
+- Save/load, Import JSON, validation, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
+- `npm run check` запускается после значимых кодовых изменений; `npm run build` — после runtime/public asset изменений.
+
+Ближайший шаг — выбрать следующий небольшой optional improvement или пройти отложенные smoke-check проверки: `nbsp`, drag-and-drop reorder и CTA icon scenarios.
 
 ## Последний завершённый этап
+
+### CTA icons via generated SVG sprite
+
+Статус: завершён.
+
+Цель этапа: добавить поддержку иконок в CTA-кнопках через единый generated SVG sprite, общий typed icon contract и editor UI для выбора иконки без дублирования
+ассетов между редактором и preview.
+
+Итог: source SVG перенесены из `public` в `editor/assets/icons`, generated sprite создаётся в `public/icons/sprite.svg`, generated `IconName` / `iconNames` и shared
+helpers добавлены в `editor/shared/icons`, CTA schema расширена `contentMode`, `leftIcon`, `rightIcon` и `icon`, renderer показывает left/right/both/icon-only variants,
+а `CtaTool` получил searchable icon selects на базе `choices.js` с preview иконок.
+
+Проверки: `npm run generate-svg-sprite`, `npm run check` и `npm run build` выполнялись в ходе этапа; ручной browser smoke-check CTA icon scenarios остаётся полезной
+проверкой перед финальным коммитом.
+
+## Завершённый этап
 
 ### Accordion group block
 

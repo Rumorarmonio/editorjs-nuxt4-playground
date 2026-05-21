@@ -28,7 +28,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Базовая версия проекта завершена.
 - Базовый слой Block Tunes (`AnchorTune`, `SpacingTune`, `LabelTune`) завершён: реализация, renderer, guard, demo JSON, ручная browser-проверка и `npm run check` готовы.
 - Plain field system для будущих custom blocks завершена.
-- Активный scope по `SPEC.md`: этап `CTA icons via generated SVG sprite`; этап Некритичные улучшения временно закрыт/отложен.
+- Активный scope по `SPEC.md`: этап Некритичные улучшения; этап `CTA icons via generated SVG sprite` закрыт как завершённый поздний schema-changing этап.
 - Первый custom block `Notice` подтвердил полный custom block lifecycle на простых plain fields без раннего перехода к media workflow, rich fields или nested Editor.js.
 - Reusable rich fields детализированы и завершены: `RichParagraphField` и `RichHeaderField` реализованы на базе nested Editor.js.
 - Для `SectionIntro` добавлен минимальный shared-контракт данных: `title` и `description` как вложенный Editor.js-compatible output только с paragraph-блоками.
@@ -234,6 +234,10 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Сохранение с `nbsp` выполняется после `editor.save()` и до validation/save emit, поэтому `Save draft` и editor-side `Export JSON` получают одинаково нормализованный JSON. Типографируются только человекочитаемые поля: standard rich text, list/table cells, captions, custom block labels/titles/text и nested rich content. Не типографируются `code`, `rawHtml`, URL, anchors/tunes, `eventPayloadJson`, media alt, masks/email/phone/card fields и служебные id.
 - Drag-and-drop reorder блоков реализован через `editorjs-drag-drop`, чтобы использовать стандартное `blocks.move()` поведение Editor.js и не менять сохранённый content contract. Перетаскивание привязано к `.ce-toolbar__settings-btn`, поэтому основной ручной риск — конфликты с tune-menu, nested editors и custom interactive fields. Auto-scroll helper слушает только drag, начатый с этой кнопки, и очищает listeners через lifecycle `EditorJsEditor`.
 - Этап `CTA icons via generated SVG sprite` сделан активным: нужно адаптировать скопированный `scripts/generate-svg-sprite.js` под пути проекта, перенести source SVG из `public` в непубличную source-директорию, оставить в `public` только generated `sprite.svg`, сгенерировать `IconName` / `iconNames` и расширить CTA под optional icon data.
+- Первый инфраструктурный срез этапа `CTA icons via generated SVG sprite` реализован: `scripts/generate-svg-sprite.js` адаптирован под проект, source SVG перенесены в `editor/assets/icons`, публичный runtime asset теперь generated `public/icons/sprite.svg`, а generated contract `IconName` / `iconNames` и helpers `isIconName`, `createIconSymbolId`, `createIconSpriteHref` доступны через `editor/shared`.
+- Второй shared schema срез этапа `CTA icons via generated SVG sprite` реализован: `CtaBlockData` получил `contentMode: text | iconOnly`, `leftIcon`, `rightIcon` и `icon` на базе generated `IconName`; normalizer сохраняет обратную совместимость старых CTA без иконок, guard проверяет icon names, validation требует single icon для `iconOnly` и сообщает о неизвестных icon names. До появления нового editor UI текущий `CtaTool` сохраняет icon-поля из импортированного JSON без изменения.
+- Code-срез оставшихся пунктов этапа `CTA icons via generated SVG sprite` реализован: renderer получил `Icon.vue` и CTA rendering для text/icon-only variants, `CtaTool` получил content mode select и searchable icon selects на базе `choices.js` с preview иконок из sprite, demo content покрывает CTA без иконок, left/right/both icons и icon-only. `npm run check` и `npm run build` проходят; ручной browser smoke-check create/edit/save/reload/render/import/export/reset ещё нужно выполнить.
+- Этап `CTA icons via generated SVG sprite` закрыт как завершённый: source SVG живут в `editor/assets/icons`, runtime sprite генерируется в `public/icons/sprite.svg`, shared icon contract используется в validation/editor UI/renderer, CTA JSON хранит только icon names и content mode, а icon select построен на `choices.js`. Проект возвращён к активному этапу Некритичные улучшения; ручной CTA icon smoke-check остаётся полезной проверкой перед финальным коммитом.
 
 ## Текущие проблемы / открытые вопросы
 
@@ -256,6 +260,4 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 
 ## Следующий шаг
 
-Следующий шаг активного этапа `CTA icons via generated SVG sprite`: проверить текущий `scripts/generate-svg-sprite.js`, команду в `package.json` и добавленную директорию SVG-иконок, выбрать финальные пути проекта, затем адаптировать генератор так, чтобы source SVG жили вне `public`, а в `public` оставался только generated `sprite.svg`.
-
-Отложенные проверки этапа Некритичные улучшения остаются полезными follow-up: `nbsp`-сохранение на русском/английском/испанском и drag-and-drop reorder обычных и custom blocks через settings-кнопку блока.
+Следующий шаг активного этапа Некритичные улучшения: выбрать следующий небольшой optional improvement или пройти отложенные smoke-check проверки — `nbsp`-сохранение на русском/английском/испанском, drag-and-drop reorder обычных и custom blocks через settings-кнопку блока и CTA icon scenarios после закрытого этапа.

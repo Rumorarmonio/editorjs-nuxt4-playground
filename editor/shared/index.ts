@@ -23,6 +23,7 @@ export {
   mediaGalleryModes,
   noticeBlockTypes,
   ctaBlockActionTypes,
+  ctaBlockContentModes,
   ctaBlockTargets,
   ctaBlockVariants,
   codeSnippetLanguages,
@@ -57,6 +58,12 @@ export {
   buildFlatNavigationItems,
   buildHeadingNavigationItems,
 } from './navigation/build-flat-navigation'
+export {
+  createIconSpriteHref,
+  createIconSymbolId,
+  iconNames,
+  isIconName,
+} from './icons/icons'
 export {
   editorBlockTuneNames,
   animationTuneValues,
@@ -112,7 +119,9 @@ export type {
 export type {
   CustomBlockDataMap,
   CtaBlockActionType,
+  CtaBlockContentMode,
   CtaBlockData,
+  CtaBlockIconName,
   CtaBlockTarget,
   CtaBlockVariant,
   CodeSnippetBlockData,
@@ -174,6 +183,9 @@ export type {
   EditorOutputData,
 } from './types/editor-output'
 export type { ContentTypographyLocale } from './typography/content-typography'
+export type {
+  IconName,
+} from './icons/icons'
 export type {
   AnchorTuneData,
   AnimationTuneData,

@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { useCssModule } from 'vue'
-import type { CtaBlockData, CtaBlockVariant } from '~~/editor/shared'
+import EditorIcon from '~~/editor/renderer/components/Icon/Icon.vue'
+import {
+  isIconName,
+  type CtaBlockData,
+  type CtaBlockVariant,
+  type IconName,
+} from '~~/editor/shared'
 
 const props = defineProps<{
   data: CtaBlockData
@@ -27,6 +33,46 @@ const target = computed(() => {
 
 const rel = computed(() => {
   return props.data.target === 'newTab' ? 'noreferrer' : undefined
+})
+
+const isIconOnly = computed(() => {
+  return props.data.contentMode === 'iconOnly'
+})
+
+const leftIcon = computed<IconName | null>(() => {
+  if (props.data.contentMode !== 'text' || !isIconName(props.data.leftIcon)) {
+    return null
+  }
+
+  return props.data.leftIcon
+})
+
+const rightIcon = computed<IconName | null>(() => {
+  if (props.data.contentMode !== 'text' || !isIconName(props.data.rightIcon)) {
+    return null
+  }
+
+  return props.data.rightIcon
+})
+
+const iconOnlyIcon = computed<IconName | null>(() => {
+  if (!isIconOnly.value || !isIconName(props.data.icon)) {
+    return null
+  }
+
+  return props.data.icon
+})
+
+const ariaLabel = computed(() => {
+  return iconOnlyIcon.value ? props.data.label : undefined
+})
+
+const ctaClasses = computed(() => {
+  return [
+    style.ctaAction,
+    getCtaVariantClass(props.data.variant),
+    iconOnlyIcon.value ? style.ctaActionIconOnly : '',
+  ]
 })
 
 function handleEventAction(): void {
@@ -94,27 +140,99 @@ function parseEventPayload(value: string): Record<string, unknown> | undefined {
 <template>
   <NuxtLink
     v-if="isInternalAppLink"
-    :class="[$style.ctaAction, getCtaVariantClass(data.variant)]"
+    :class="ctaClasses"
     :to="data.url"
+    :aria-label="ariaLabel"
   >
-    {{ data.label }}
+    <EditorIcon
+      v-if="leftIcon"
+      :class="$style.ctaActionIcon"
+      :name="leftIcon"
+      :size="20"
+    />
+    <span
+      v-if="!isIconOnly || !iconOnlyIcon"
+      :class="$style.ctaActionLabel"
+    >
+      {{ data.label }}
+    </span>
+    <EditorIcon
+      v-if="rightIcon"
+      :class="$style.ctaActionIcon"
+      :name="rightIcon"
+      :size="20"
+    />
+    <EditorIcon
+      v-if="iconOnlyIcon"
+      :class="$style.ctaActionIcon"
+      :name="iconOnlyIcon"
+      :size="20"
+    />
   </NuxtLink>
   <a
     v-else-if="data.actionType === 'link'"
-    :class="[$style.ctaAction, getCtaVariantClass(data.variant)]"
+    :class="ctaClasses"
     :href="href"
     :target="target"
     :rel="rel"
+    :aria-label="ariaLabel"
   >
-    {{ data.label }}
+    <EditorIcon
+      v-if="leftIcon"
+      :class="$style.ctaActionIcon"
+      :name="leftIcon"
+      :size="20"
+    />
+    <span
+      v-if="!isIconOnly || !iconOnlyIcon"
+      :class="$style.ctaActionLabel"
+    >
+      {{ data.label }}
+    </span>
+    <EditorIcon
+      v-if="rightIcon"
+      :class="$style.ctaActionIcon"
+      :name="rightIcon"
+      :size="20"
+    />
+    <EditorIcon
+      v-if="iconOnlyIcon"
+      :class="$style.ctaActionIcon"
+      :name="iconOnlyIcon"
+      :size="20"
+    />
   </a>
   <button
     v-else
     type="button"
-    :class="[$style.ctaAction, getCtaVariantClass(data.variant)]"
+    :class="ctaClasses"
+    :aria-label="ariaLabel"
     @click="handleEventAction"
   >
-    {{ data.label }}
+    <EditorIcon
+      v-if="leftIcon"
+      :class="$style.ctaActionIcon"
+      :name="leftIcon"
+      :size="20"
+    />
+    <span
+      v-if="!isIconOnly || !iconOnlyIcon"
+      :class="$style.ctaActionLabel"
+    >
+      {{ data.label }}
+    </span>
+    <EditorIcon
+      v-if="rightIcon"
+      :class="$style.ctaActionIcon"
+      :name="rightIcon"
+      :size="20"
+    />
+    <EditorIcon
+      v-if="iconOnlyIcon"
+      :class="$style.ctaActionIcon"
+      :name="iconOnlyIcon"
+      :size="20"
+    />
   </button>
 </template>
 

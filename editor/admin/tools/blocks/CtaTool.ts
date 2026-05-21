@@ -6,6 +6,7 @@ import type {
   ToolboxConfig,
 } from '@editorjs/editorjs/types'
 import {
+  createIconSelectField,
   createPlainSelectField,
   createPlainTextareaField,
   createPlainTextField,
@@ -14,12 +15,17 @@ import {
 } from '~~/editor/admin/fields'
 import {
   ctaBlockActionTypes,
+  ctaBlockContentModes,
   ctaBlockTargets,
   ctaBlockVariants,
+  createIconSpriteHref,
+  iconNames,
   normalizeCtaBlockData,
   validateCtaBlockData,
   type CtaBlockActionType,
+  type CtaBlockContentMode,
   type CtaBlockData,
+  type CtaBlockIconName,
   type CtaBlockTarget,
   type CtaBlockVariant,
 } from '~~/editor/shared'
@@ -40,6 +46,22 @@ export default class CtaTool implements BlockTool {
   > | null = null
   private actionTypeField: PlainFieldControl<
     CtaBlockActionType,
+    HTMLSelectElement
+  > | null = null
+  private contentModeField: PlainFieldControl<
+    CtaBlockContentMode,
+    HTMLSelectElement
+  > | null = null
+  private leftIconField: PlainFieldControl<
+    CtaBlockIconName,
+    HTMLSelectElement
+  > | null = null
+  private rightIconField: PlainFieldControl<
+    CtaBlockIconName,
+    HTMLSelectElement
+  > | null = null
+  private iconField: PlainFieldControl<
+    CtaBlockIconName,
     HTMLSelectElement
   > | null = null
   private targetField: PlainFieldControl<
@@ -134,6 +156,76 @@ export default class CtaTool implements BlockTool {
       },
     })
 
+    const iconOptions = createCtaIconOptions(messages.tools.cta.noIconOption)
+
+    this.contentModeField = createPlainSelectField<CtaBlockContentMode>({
+      name: 'cta-content-mode',
+      label: messages.tools.cta.contentModeLabel,
+      value: this.data.contentMode,
+      options: ctaBlockContentModes.map((contentMode) => ({
+        value: contentMode,
+        label: messages.tools.cta.contentModeOptions[contentMode],
+      })),
+      readOnly: this.readOnly,
+      onChange: (value) => {
+        this.data.contentMode = value
+        this.iconField?.setError(undefined)
+        this.updateContentModeFields()
+        this.dispatchChange()
+      },
+    })
+
+    this.leftIconField = createIconSelectField({
+      name: 'cta-left-icon',
+      label: messages.tools.cta.leftIconLabel,
+      value: this.data.leftIcon,
+      options: iconOptions,
+      searchPlaceholder: messages.tools.cta.iconSearchPlaceholder,
+      noResultsText: messages.tools.cta.iconNoResults,
+      noChoicesText: messages.tools.cta.iconNoChoices,
+      readOnly: this.readOnly,
+      getIconHref: createEditorIconSpriteHref,
+      onChange: (value) => {
+        this.data.leftIcon = value
+        this.leftIconField?.setError(undefined)
+        this.dispatchChange()
+      },
+    })
+
+    this.rightIconField = createIconSelectField({
+      name: 'cta-right-icon',
+      label: messages.tools.cta.rightIconLabel,
+      value: this.data.rightIcon,
+      options: iconOptions,
+      searchPlaceholder: messages.tools.cta.iconSearchPlaceholder,
+      noResultsText: messages.tools.cta.iconNoResults,
+      noChoicesText: messages.tools.cta.iconNoChoices,
+      readOnly: this.readOnly,
+      getIconHref: createEditorIconSpriteHref,
+      onChange: (value) => {
+        this.data.rightIcon = value
+        this.rightIconField?.setError(undefined)
+        this.dispatchChange()
+      },
+    })
+
+    this.iconField = createIconSelectField({
+      name: 'cta-icon',
+      label: messages.tools.cta.iconLabel,
+      value: this.data.icon,
+      options: iconOptions,
+      searchPlaceholder: messages.tools.cta.iconSearchPlaceholder,
+      noResultsText: messages.tools.cta.iconNoResults,
+      noChoicesText: messages.tools.cta.iconNoChoices,
+      readOnly: this.readOnly,
+      getIconHref: createEditorIconSpriteHref,
+      onChange: (value) => {
+        this.data.icon = value
+        this.iconField?.setError(undefined)
+        this.dispatchChange()
+      },
+    })
+
     this.targetField = createPlainSelectField<CtaBlockTarget>({
       name: 'cta-target',
       label: messages.tools.cta.targetLabel,
@@ -184,6 +276,10 @@ export default class CtaTool implements BlockTool {
     settings.className = 'editor-cta-tool__settings'
     settings.append(
       this.variantField.root,
+      this.contentModeField.root,
+      this.leftIconField.root,
+      this.rightIconField.root,
+      this.iconField.root,
       this.actionTypeField.root,
       this.urlField.root,
       this.targetField.root,
@@ -196,6 +292,7 @@ export default class CtaTool implements BlockTool {
       settings,
     )
     this.updateActionFields()
+    this.updateContentModeFields()
 
     return wrapper
   }
@@ -214,6 +311,12 @@ export default class CtaTool implements BlockTool {
     return true
   }
 
+  destroy(): void {
+    this.leftIconField?.destroy?.()
+    this.rightIconField?.destroy?.()
+    this.iconField?.destroy?.()
+  }
+
   private getCurrentData(): CtaBlockData {
     return normalizeCtaBlockData({
       label: this.labelField?.getValue() ?? this.data.label,
@@ -222,6 +325,10 @@ export default class CtaTool implements BlockTool {
       actionType:
         this.actionTypeField?.getValue() ?? this.data.actionType,
       target: this.targetField?.getValue() ?? this.data.target,
+      contentMode: this.contentModeField?.getValue() ?? this.data.contentMode,
+      leftIcon: this.leftIconField?.getValue() ?? this.data.leftIcon,
+      rightIcon: this.rightIconField?.getValue() ?? this.data.rightIcon,
+      icon: this.iconField?.getValue() ?? this.data.icon,
       eventName: this.eventNameField?.getValue() ?? this.data.eventName,
       eventPayloadJson:
         this.eventPayloadJsonField?.getValue() ?? this.data.eventPayloadJson,
@@ -242,6 +349,15 @@ export default class CtaTool implements BlockTool {
     )
     this.eventPayloadJsonField?.setError(
       result.issues.find((issue) => issue.path === 'eventPayloadJson')?.message,
+    )
+    this.leftIconField?.setError(
+      result.issues.find((issue) => issue.path === 'leftIcon')?.message,
+    )
+    this.rightIconField?.setError(
+      result.issues.find((issue) => issue.path === 'rightIcon')?.message,
+    )
+    this.iconField?.setError(
+      result.issues.find((issue) => issue.path === 'icon')?.message,
     )
 
     return result.valid
@@ -268,9 +384,49 @@ export default class CtaTool implements BlockTool {
     }
   }
 
+  private updateContentModeFields(): void {
+    const contentMode =
+      this.contentModeField?.getValue() ?? this.data.contentMode
+    const isIconOnly = contentMode === 'iconOnly'
+
+    if (this.leftIconField) {
+      this.leftIconField.root.hidden = isIconOnly
+    }
+
+    if (this.rightIconField) {
+      this.rightIconField.root.hidden = isIconOnly
+    }
+
+    if (this.iconField) {
+      this.iconField.root.hidden = !isIconOnly
+    }
+  }
+
   private dispatchChange(): void {
     this.block.dispatchChange()
   }
+}
+
+function createCtaIconOptions(
+  noneLabel: string,
+): readonly { label: string; value: CtaBlockIconName }[] {
+  return [
+    { value: '', label: noneLabel },
+    ...iconNames.map((iconName) => ({
+      value: iconName,
+      label: iconName,
+    })),
+  ]
+}
+
+function createEditorIconSpriteHref(iconName: CtaBlockIconName): string {
+  if (!iconName) {
+    return ''
+  }
+
+  const basePath = new URL('.', document.baseURI).pathname
+
+  return createIconSpriteHref(iconName, basePath)
 }
 
 export const CtaToolConstructable = CtaTool as unknown as ToolConstructable

@@ -694,6 +694,10 @@
         "variant": "primary",
         "target": "sameTab",
         "actionType": "link",
+        "contentMode": "text",
+        "leftIcon": "",
+        "rightIcon": "",
+        "icon": "",
         "eventName": "",
         "eventPayloadJson": ""
       },
@@ -721,6 +725,10 @@
         "variant": "secondary",
         "target": "newTab",
         "actionType": "link",
+        "contentMode": "text",
+        "leftIcon": "social-vk",
+        "rightIcon": "",
+        "icon": "",
         "eventName": "",
         "eventPayloadJson": ""
       },
@@ -745,6 +753,10 @@
         "variant": "ghost",
         "target": "sameTab",
         "actionType": "link",
+        "contentMode": "text",
+        "leftIcon": "",
+        "rightIcon": "arrow-down",
+        "icon": "",
         "eventName": "",
         "eventPayloadJson": ""
       },
@@ -769,6 +781,10 @@
         "variant": "primary",
         "target": "sameTab",
         "actionType": "event",
+        "contentMode": "text",
+        "leftIcon": "fire",
+        "rightIcon": "check",
+        "icon": "",
         "eventName": "open-demo-modal",
         "eventPayloadJson": "{\n  \"modalText\": \"This modal text came from CTA payload JSON.\"\n}"
       },
@@ -778,6 +794,34 @@
         },
         "label": {
           "label": "Event CTA"
+        },
+        "animation": {
+          "type": "fade-up"
+        }
+      }
+    },
+    {
+      "id": "cta-block-icon-only",
+      "type": "cta",
+      "data": {
+        "label": "Open icon-only demo modal",
+        "url": "",
+        "variant": "secondary",
+        "target": "sameTab",
+        "actionType": "event",
+        "contentMode": "iconOnly",
+        "leftIcon": "",
+        "rightIcon": "",
+        "icon": "tooltip",
+        "eventName": "open-demo-modal",
+        "eventPayloadJson": "{\n  \"modalText\": \"This icon-only CTA keeps its accessible label in JSON.\"\n}"
+      },
+      "tunes": {
+        "spacing": {
+          "top": "small"
+        },
+        "label": {
+          "label": "Icon-only CTA"
         },
         "animation": {
           "type": "fade-up"
@@ -802,7 +846,7 @@
       "type": "codeSnippet",
       "data": {
         "language": "typescript",
-        "code": "import type { EditorOutputBlock } from './types'\n\ntype CtaBlockTarget = 'sameTab' | 'newTab'\ntype CtaVariant = 'primary' | 'secondary' | 'ghost'\n\ninterface CtaBlockData<TMeta extends Record<string, unknown> = {}> {\n  label: string\n  url: `/${string}` | `https://${string}`\n  variant: CtaVariant\n  target: CtaBlockTarget\n  meta?: TMeta\n}\n\nconst ctaDefaults = {\n  variant: 'primary',\n  target: 'sameTab',\n} satisfies Pick<CtaBlockData, 'variant' | 'target'>\n\nexport function normalizeCtaBlock(\n  block: EditorOutputBlock<'cta', Partial<CtaBlockData>>,\n): CtaBlockData {\n  // Keep admin-entered labels readable in the renderer.\n  const label = block.data.label?.trim() || 'Open preview'\n  const url = /^https?:\\/\\//.test(block.data.url ?? '') ? block.data.url! : '/preview'\n\n  return { ...ctaDefaults, ...block.data, label, url }\n}",
+        "code": "import type { EditorOutputBlock, IconName } from './types'\n\ntype CtaBlockTarget = 'sameTab' | 'newTab'\ntype CtaVariant = 'primary' | 'secondary' | 'ghost'\ntype CtaContentMode = 'text' | 'iconOnly'\ntype CtaIconName = IconName | ''\n\ninterface CtaBlockData {\n  label: string\n  url: `/${string}` | `https://${string}` | ''\n  variant: CtaVariant\n  target: CtaBlockTarget\n  contentMode: CtaContentMode\n  leftIcon: CtaIconName\n  rightIcon: CtaIconName\n  icon: CtaIconName\n}\n\nconst ctaDefaults = {\n  variant: 'primary',\n  target: 'sameTab',\n  contentMode: 'text',\n  leftIcon: '',\n  rightIcon: '',\n  icon: '',\n} satisfies Pick<CtaBlockData, 'variant' | 'target' | 'contentMode' | 'leftIcon' | 'rightIcon' | 'icon'>\n\nexport function normalizeCtaBlock(\n  block: EditorOutputBlock<'cta', Partial<CtaBlockData>>,\n): CtaBlockData {\n  // Keep old CTA blocks valid while icon fields roll out.\n  const label = block.data.label?.trim() || 'Open preview'\n  const url = /^https?:\\/\\//.test(block.data.url ?? '') ? block.data.url! : '/preview'\n\n  return { ...ctaDefaults, ...block.data, label, url }\n}",
         "caption": "TypeScript example covers imports, generics, unions, template literal types, satisfies, comments, regex and object spreads."
       },
       "tunes": {

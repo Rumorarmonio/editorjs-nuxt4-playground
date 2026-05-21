@@ -40,9 +40,12 @@ function ensureSvgNamespace(spriteMarkup) {
 }
 
 async function generateSprite() {
-  const iconsDir = path.resolve(__dirname, '../resources/assets/icons')
-  const spriteOutputPath = path.resolve(__dirname, '../public/sprite.svg')
-  const typesOutputPath = path.resolve(__dirname, '../resources/js/types/IconName.d.ts')
+  const iconsDir = path.resolve(__dirname, '../editor/assets/icons')
+  const spriteOutputPath = path.resolve(__dirname, '../public/icons/sprite.svg')
+  const contractOutputPath = path.resolve(
+    __dirname,
+    '../editor/shared/icons/icon-names.generated.ts',
+  )
 
   const svgFiles = (await glob('**/*.svg', { cwd: iconsDir })).sort()
 
@@ -71,14 +74,22 @@ async function generateSprite() {
   const spriteMarkup = ensureSvgNamespace(rawSpriteMarkup)
 
   await fs.outputFile(spriteOutputPath, spriteMarkup)
-  console.log(`✅ Спрайт сгенерирован: ${svgFiles.length} иконок -> public/sprite.svg`)
+  console.log(
+    `✅ Спрайт сгенерирован: ${svgFiles.length} иконок -> public/icons/sprite.svg`,
+  )
 
-  const typeFileContent =
+  const contractFileContent =
     `// Этот файл генерируется автоматически в scripts/generate-svg-sprite.js\n` +
-    `export type IconName =\n  ${iconNames.map((name) => `'${name}'`).join(' |\n  ')};\n`
+    `// Не редактируйте его вручную.\n\n` +
+    `export const iconNames = [\n` +
+    iconNames.map((name) => `  ${JSON.stringify(name)},`).join('\n') +
+    `\n] as const\n\n` +
+    `export type IconName = (typeof iconNames)[number]\n`
 
-  await fs.outputFile(typesOutputPath, typeFileContent)
-  console.log(`✅ Тип IconName сгенерирован (${iconNames.length}) -> src/types/IconName.d.ts`)
+  await fs.outputFile(contractOutputPath, contractFileContent)
+  console.log(
+    `✅ Контракт иконок сгенерирован (${iconNames.length}) -> editor/shared/icons/icon-names.generated.ts`,
+  )
 }
 
 generateSprite().catch((error) => {

@@ -9,6 +9,7 @@ import type {
   EditorOutputData,
 } from '~~/editor/shared/types/editor-output'
 import { isAllowedMediaUrl } from '~~/editor/shared/entities/media'
+import { isIconName, type IconName } from '~~/editor/shared/icons/icons'
 
 export const noticeBlockTypes = ['info', 'success', 'warning'] as const
 
@@ -54,6 +55,8 @@ export const ctaBlockTargets = ['sameTab', 'newTab'] as const
 
 export const ctaBlockActionTypes = ['link', 'event'] as const
 
+export const ctaBlockContentModes = ['text', 'iconOnly'] as const
+
 export const codeSnippetLanguages = [
   'plain',
   'typescript',
@@ -77,6 +80,10 @@ export type CtaBlockVariant = (typeof ctaBlockVariants)[number]
 export type CtaBlockTarget = (typeof ctaBlockTargets)[number]
 
 export type CtaBlockActionType = (typeof ctaBlockActionTypes)[number]
+
+export type CtaBlockContentMode = (typeof ctaBlockContentModes)[number]
+
+export type CtaBlockIconName = IconName | ''
 
 export type CodeSnippetLanguage = (typeof codeSnippetLanguages)[number]
 
@@ -138,6 +145,10 @@ export interface CtaBlockData {
   variant: CtaBlockVariant
   target: CtaBlockTarget
   actionType: CtaBlockActionType
+  contentMode: CtaBlockContentMode
+  leftIcon: CtaBlockIconName
+  rightIcon: CtaBlockIconName
+  icon: CtaBlockIconName
   eventName: string
   eventPayloadJson: string
 }
@@ -338,6 +349,12 @@ export function normalizeCtaBlockData(value: unknown): CtaBlockData {
     actionType: isCtaBlockActionType(value.actionType)
       ? value.actionType
       : 'link',
+    contentMode: isCtaBlockContentMode(value.contentMode)
+      ? value.contentMode
+      : 'text',
+    leftIcon: normalizeIconNameValue(value.leftIcon),
+    rightIcon: normalizeIconNameValue(value.rightIcon),
+    icon: normalizeIconNameValue(value.icon),
     eventName: normalizeEventNameValue(value.eventName),
     eventPayloadJson: normalizeJsonValue(value.eventPayloadJson),
   }
@@ -570,6 +587,11 @@ export function isCtaBlockData(value: unknown): value is CtaBlockData {
     isCtaBlockTarget(value.target) &&
     (value.actionType === undefined ||
       isCtaBlockActionType(value.actionType)) &&
+    (value.contentMode === undefined ||
+      isCtaBlockContentMode(value.contentMode)) &&
+    isOptionalCtaIconName(value.leftIcon) &&
+    isOptionalCtaIconName(value.rightIcon) &&
+    isOptionalCtaIconName(value.icon) &&
     (value.eventName === undefined || typeof value.eventName === 'string') &&
     (value.eventPayloadJson === undefined ||
       typeof value.eventPayloadJson === 'string')
@@ -718,6 +740,10 @@ function createDefaultCtaBlockData(): CtaBlockData {
     variant: 'primary',
     target: 'sameTab',
     actionType: 'link',
+    contentMode: 'text',
+    leftIcon: '',
+    rightIcon: '',
+    icon: '',
     eventName: '',
     eventPayloadJson: '',
   }
@@ -793,6 +819,10 @@ function isCtaBlockTarget(value: unknown): value is CtaBlockTarget {
 
 function isCtaBlockActionType(value: unknown): value is CtaBlockActionType {
   return ctaBlockActionTypes.includes(value as CtaBlockActionType)
+}
+
+function isCtaBlockContentMode(value: unknown): value is CtaBlockContentMode {
+  return ctaBlockContentModes.includes(value as CtaBlockContentMode)
 }
 
 function isCodeSnippetLanguage(
@@ -1009,6 +1039,30 @@ function normalizeJsonValue(value: unknown): string {
   return typeof value === 'string'
     ? value.replaceAll('\r\n', '\n').replaceAll('\r', '\n').trim()
     : ''
+}
+
+function normalizeIconNameValue(value: unknown): CtaBlockIconName {
+  if (typeof value !== 'string') {
+    return ''
+  }
+
+  const iconName = value.trim()
+
+  return isIconName(iconName) ? iconName : ''
+}
+
+function isOptionalCtaIconName(value: unknown): boolean {
+  if (value === undefined) {
+    return true
+  }
+
+  if (typeof value !== 'string') {
+    return false
+  }
+
+  const iconName = value.trim()
+
+  return iconName === '' || isIconName(iconName)
 }
 
 export function isAllowedCtaUrl(value: string): boolean {

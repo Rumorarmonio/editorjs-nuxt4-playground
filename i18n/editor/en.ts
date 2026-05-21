@@ -92,6 +92,14 @@ export const editorEn: EditorUiMessages = {
       urlLabel: 'URL',
       urlPlaceholder: 'https://example.com/contact',
       variantLabel: 'Variant',
+      contentModeLabel: 'Content',
+      leftIconLabel: 'Left icon',
+      rightIconLabel: 'Right icon',
+      iconLabel: 'Icon',
+      noIconOption: 'No icon',
+      iconSearchPlaceholder: 'Search icon',
+      iconNoResults: 'No icons found',
+      iconNoChoices: 'No icons available',
       targetLabel: 'Target',
       actionTypeLabel: 'Action',
       eventNameLabel: 'Event name',
@@ -107,6 +115,10 @@ export const editorEn: EditorUiMessages = {
       actionTypeOptions: {
         link: 'Open link',
         event: 'Emit event',
+      },
+      contentModeOptions: {
+        text: 'Text',
+        iconOnly: 'Icon only',
       },
       targetOptions: {
         sameTab: 'Same tab',
@@ -361,6 +373,7 @@ export const editorEn: EditorUiMessages = {
       mediaAlt: 'Alt text',
       mediaCaption: 'Caption',
       ctaLabel: 'Button label',
+      ctaIcon: 'Button icon',
       ctaEventName: 'Event name',
       ctaEventPayloadJson: 'Payload JSON',
       codeSnippetCode: 'Code',
@@ -383,6 +396,8 @@ export const editorEn: EditorUiMessages = {
     ctaUrlRequired: 'URL is required.',
     ctaUrlInvalid:
       'Use an http, https, mailto, root-relative, or anchor URL.',
+    ctaIconRequired: 'Choose an icon for icon-only mode.',
+    ctaIconInvalid: 'Choose an icon from the generated sprite.',
     ctaEventNameRequired: 'Event name is required.',
     ctaEventNameInvalid:
       'Use only letters, numbers, dashes, underscores, and colons.',

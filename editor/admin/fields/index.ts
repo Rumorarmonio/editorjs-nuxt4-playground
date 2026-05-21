@@ -10,6 +10,10 @@ export {
   type PlainFileFieldOptions,
   type PlainImageFieldOptions,
 } from './media-field-contracts'
+export {
+  createIconSelectField,
+  type IconSelectFieldOptions,
+} from './icon-select-field'
 export { createPlainRadioGroupField } from './radio-group-field'
 export {
   createRichHeaderField,

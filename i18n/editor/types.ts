@@ -16,6 +16,7 @@ export interface EditorValidationMessages {
     mediaAlt: string
     mediaCaption: string
     ctaLabel: string
+    ctaIcon: string
     ctaEventName: string
     ctaEventPayloadJson: string
     codeSnippetCode: string
@@ -36,6 +37,8 @@ export interface EditorValidationMessages {
   ctaLabelRequired: string
   ctaUrlRequired: string
   ctaUrlInvalid: string
+  ctaIconRequired: string
+  ctaIconInvalid: string
   ctaEventNameRequired: string
   ctaEventNameInvalid: string
   ctaEventPayloadJsonInvalid: string
@@ -139,6 +142,14 @@ export interface EditorUiMessages {
       urlLabel: string
       urlPlaceholder: string
       variantLabel: string
+      contentModeLabel: string
+      leftIconLabel: string
+      rightIconLabel: string
+      iconLabel: string
+      noIconOption: string
+      iconSearchPlaceholder: string
+      iconNoResults: string
+      iconNoChoices: string
       targetLabel: string
       actionTypeLabel: string
       eventNameLabel: string
@@ -153,6 +164,10 @@ export interface EditorUiMessages {
       actionTypeOptions: {
         link: string
         event: string
+      }
+      contentModeOptions: {
+        text: string
+        iconOnly: string
       }
       targetOptions: {
         sameTab: string

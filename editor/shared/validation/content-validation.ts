@@ -24,6 +24,7 @@ import {
 } from '~~/editor/shared/blocks/custom-block-data'
 import type { ListBlockItem } from '~~/editor/shared/blocks/standard-block-data'
 import { isAllowedMediaUrl } from '~~/editor/shared/entities/media'
+import { isIconName } from '~~/editor/shared/icons/icons'
 import type { EditorContentData } from '~~/editor/shared/types/content'
 import {
   getCurrentEditorMessages,
@@ -262,6 +263,8 @@ export function validateCtaBlockData(
     })
   }
 
+  issues.push(...validateCtaIconData(value, data, messages))
+
   if (data.actionType === 'link' && !hasText(data.url)) {
     issues.push({
       path: 'url',
@@ -334,6 +337,45 @@ export function validateCtaBlockData(
   }
 
   return createValidationResult(issues)
+}
+
+function validateCtaIconData(
+  value: Partial<CtaBlockData>,
+  data: CtaBlockData,
+  messages: EditorValidationMessages,
+): ValidationIssue[] {
+  const issues: ValidationIssue[] = []
+  const rawValue = isPlainJsonObject(value) ? value : {}
+
+  for (const path of ['leftIcon', 'rightIcon', 'icon'] as const) {
+    const rawIconName = rawValue[path]
+
+    if (
+      typeof rawIconName === 'string' &&
+      rawIconName.trim().length > 0 &&
+      !isIconName(rawIconName.trim())
+    ) {
+      issues.push({
+        path,
+        message: messages.ctaIconInvalid,
+      })
+    }
+  }
+
+  const hasInvalidIconOnlyIcon = issues.some((issue) => issue.path === 'icon')
+
+  if (
+    data.contentMode === 'iconOnly' &&
+    !hasText(data.icon) &&
+    !hasInvalidIconOnlyIcon
+  ) {
+    issues.push({
+      path: 'icon',
+      message: messages.ctaIconRequired,
+    })
+  }
+
+  return issues
 }
 
 export function validateRawHtmlBlockData(
