@@ -12,13 +12,34 @@ import { CtaToolConstructable } from '~~/editor/admin/tools/blocks/CtaTool'
 
 export const nestedRichFieldInlineToolbar = editorInlineToolbar
 
-export async function createNestedParagraphTools(): Promise<
-  EditorConfig['tools']
-> {
-  return {
-    cta: CtaToolConstructable,
-    ...(await createNestedInlineTools()),
+export interface NestedParagraphToolsOptions {
+  allowCta?: boolean
+}
+
+export async function createNestedParagraphTools(
+  options: NestedParagraphToolsOptions = {},
+): Promise<EditorConfig['tools']> {
+  const [{ default: List }, inlineTools] = await Promise.all([
+    import('@editorjs/list'),
+    createNestedInlineTools(),
+  ])
+
+  const tools: EditorConfig['tools'] = {
+    list: {
+      class: List as unknown as ToolConstructable,
+      inlineToolbar: nestedRichFieldInlineToolbar,
+      config: {
+        defaultStyle: 'unordered',
+      },
+    },
+    ...inlineTools,
   }
+
+  if (options.allowCta ?? true) {
+    tools.cta = CtaToolConstructable
+  }
+
+  return tools
 }
 
 export async function createNestedHeaderTools(): Promise<EditorConfig['tools']> {

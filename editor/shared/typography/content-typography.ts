@@ -276,8 +276,8 @@ function typographNoticeBlockData(
 ): NoticeBlockData {
   return {
     ...data,
-    title: typographPlainText(data.title, locale),
-    text: typographPlainText(data.text, locale),
+    title: typographInlineHtml(data.title, locale),
+    text: typographNestedContentData(data.text, locale),
   }
 }
 
@@ -311,7 +311,7 @@ function typographMediaGalleryBlockData(
     ...data,
     items: data.items.map((item) => ({
       ...item,
-      caption: typographPlainText(item.caption, locale),
+      caption: typographInlineHtml(item.caption, locale),
       description: typographNestedContentData(item.description, locale),
     })),
   }
@@ -333,7 +333,7 @@ function typographCodeSnippetBlockData(
 ): CodeSnippetBlockData {
   return {
     ...data,
-    caption: typographPlainText(data.caption, locale),
+    caption: typographInlineHtml(data.caption, locale),
   }
 }
 

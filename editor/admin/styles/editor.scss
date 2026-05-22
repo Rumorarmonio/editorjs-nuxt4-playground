@@ -1261,6 +1261,16 @@
     min-height: 64px;
   }
 
+  .editor-rich-field__editor--inline {
+    min-height: 48px;
+  }
+
+  .editor-rich-field__editor--inline:empty::before {
+    color: var(--color-muted);
+    content: attr(data-placeholder);
+    pointer-events: none;
+  }
+
   .editor-rich-field__editor .codex-editor__redactor {
     padding-bottom: 0 !important;
   }

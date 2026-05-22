@@ -16,8 +16,10 @@ export {
 } from './icon-select-field'
 export { createPlainRadioGroupField } from './radio-group-field'
 export {
+  createInlineHtmlField,
   createRichHeaderField,
   createRichParagraphField,
+  type InlineHtmlFieldOptions,
   type RichFieldControl,
   type RichHeaderFieldOptions,
   type RichParagraphFieldOptions,

@@ -2,12 +2,13 @@ import type {
   BlockAPI,
   BlockTool,
   BlockToolConstructorOptions,
+  SanitizerConfig,
   ToolConstructable,
   ToolboxConfig,
 } from '@editorjs/editorjs/types'
 import {
+  createInlineHtmlField,
   createPlainSelectField,
-  createPlainTextareaField,
   createPlainTextField,
   createPlainToggleField,
   createPlainUrlField,
@@ -35,7 +36,7 @@ interface MediaCardControls {
   type: PlainFieldControl<MediaGalleryItemType, HTMLSelectElement>
   url: PlainFieldControl<string, HTMLInputElement>
   alt: PlainFieldControl<string, HTMLInputElement>
-  caption: PlainFieldControl<string, HTMLTextAreaElement>
+  caption: RichFieldControl<string>
   description: RichFieldControl<RichParagraphFieldData>
 }
 
@@ -53,6 +54,16 @@ const itemTypeOptions = mediaGalleryItemTypes.map((type) => {
 
 export default class MediaGalleryTool implements BlockTool {
   static isReadOnlySupported = true
+
+  static get sanitize(): SanitizerConfig {
+    return {
+      mode: true,
+      galleryId: true,
+      enableFancybox: true,
+      syncUrlWithFancybox: true,
+      items: true,
+    }
+  }
 
   private readonly block: BlockAPI
   private readonly readOnly: boolean
@@ -230,6 +241,7 @@ export default class MediaGalleryTool implements BlockTool {
 
       this.cardControls.push(controls)
       this.cardsRoot?.append(controls.root)
+      void controls.caption.initialize()
       void controls.description.initialize()
     })
   }
@@ -322,15 +334,14 @@ export default class MediaGalleryTool implements BlockTool {
       },
     })
 
-    const caption = createPlainTextareaField({
+    const caption = createInlineHtmlField({
       name: `media-gallery-${item.id}-caption`,
       label: messages.tools.mediaGallery.captionLabel,
       value: item.caption,
       readOnly: this.readOnly,
-      rows: 2,
       placeholder: messages.tools.mediaGallery.captionPlaceholder,
-      onChange: (value) => {
-        item.caption = value
+      allowLineBreaks: false,
+      onChange: () => {
         caption.setError(undefined)
         this.dispatchChange()
       },
@@ -340,6 +351,7 @@ export default class MediaGalleryTool implements BlockTool {
       name: `media-gallery-${item.id}-description`,
       label: messages.tools.mediaGallery.descriptionLabel,
       value: item.description,
+      allowCta: false,
       readOnly: this.readOnly,
       placeholder: messages.tools.mediaGallery.descriptionPlaceholder,
       onChange: () => {
@@ -424,7 +436,7 @@ export default class MediaGalleryTool implements BlockTool {
           type: controls.type.getValue(),
           url: controls.url.getValue(),
           alt: controls.type.getValue() === 'image' ? controls.alt.getValue() : '',
-          caption: controls.caption.getValue(),
+          caption: await controls.caption.save(),
           description: await controls.description.save(),
         })
       }),
@@ -438,6 +450,7 @@ export default class MediaGalleryTool implements BlockTool {
   private destroyCardControls(): void {
     this.cardControls.forEach((controls) => {
       controls.type.destroy?.()
+      controls.caption.destroy()
       controls.description.destroy()
     })
     this.cardControls = []

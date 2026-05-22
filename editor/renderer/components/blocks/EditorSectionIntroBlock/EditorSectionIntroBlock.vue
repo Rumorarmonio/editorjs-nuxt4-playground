@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import EditorContentRenderer from '~~/editor/renderer/components/EditorContentRenderer/EditorContentRenderer.vue'
 import { normalizeRichParagraphContent } from '~~/editor/renderer/helpers/rich-field-content'
+import { sanitizeInlineHtml } from '~~/editor/renderer/helpers/sanitize-inline-html'
 import type { SectionIntroBlockData } from '~~/editor/shared'
 
 defineProps<{
@@ -13,9 +14,8 @@ defineProps<{
     <h2
       v-if="data.title"
       :class="$style.sectionIntroTitle"
-    >
-      {{ data.title }}
-    </h2>
+      v-html="sanitizeInlineHtml(data.title)"
+    />
     <EditorContentRenderer
       v-if="normalizeRichParagraphContent(data.description).blocks.length"
       :class="$style.sectionIntroContent"

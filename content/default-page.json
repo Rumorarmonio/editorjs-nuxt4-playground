@@ -625,8 +625,25 @@
       "id": "notice-block",
       "type": "notice",
       "data": {
-        "title": "Draft source is active",
-        "text": "The editor loads saved local draft data first and falls back to this default JSON after reset.",
+        "title": "Draft source is <b>active</b>",
+        "text": {
+          "blocks": [
+            {
+              "id": "notice-info-text",
+              "type": "paragraph",
+              "data": {
+                "text": "The editor loads saved local draft data first and falls back to this default JSON after <code class=\"inline-code\">reset</code>."
+              }
+            },
+            {
+              "id": "notice-info-text-followup",
+              "type": "paragraph",
+              "data": {
+                "text": "Notice text is a nested editor field, so it can keep several paragraphs."
+              }
+            }
+          ]
+        },
         "type": "info"
       },
       "tunes": {
@@ -643,7 +660,17 @@
       "type": "notice",
       "data": {
         "title": "Content saved successfully",
-        "text": "After saving, the same Notice data can be reopened in the editor and rendered on the preview page.",
+        "text": {
+          "blocks": [
+            {
+              "id": "notice-success-text",
+              "type": "paragraph",
+              "data": {
+                "text": "After saving, the same Notice data can be <i>reopened</i> in the editor and rendered on the preview page."
+              }
+            }
+          ]
+        },
         "type": "success"
       },
       "tunes": {
@@ -659,8 +686,38 @@
       "id": "notice-block-warning",
       "type": "notice",
       "data": {
-        "title": "Plain fields only",
-        "text": "Inline tools are intentionally unavailable here; rich fields and nested editors are planned as a later step.",
+        "title": "Inline tools in custom fields",
+        "text": {
+          "blocks": [
+            {
+              "id": "notice-warning-text",
+              "type": "paragraph",
+              "data": {
+                "text": "Notice title keeps <mark class=\"cdx-marker\">inline formatting</mark>, while notice text can use nested rich content."
+              }
+            },
+            {
+              "id": "notice-warning-list",
+              "type": "list",
+              "data": {
+                "style": "unordered",
+                "meta": {},
+                "items": [
+                  {
+                    "content": "Technical fields stay plain.",
+                    "meta": {},
+                    "items": []
+                  },
+                  {
+                    "content": "Short captions keep lightweight inline HTML.",
+                    "meta": {},
+                    "items": []
+                  }
+                ]
+              }
+            }
+          ]
+        },
         "type": "warning"
       },
       "tunes": {
@@ -847,7 +904,7 @@
       "data": {
         "language": "typescript",
         "code": "import type { EditorOutputBlock, IconName } from './types'\n\ntype CtaBlockTarget = 'sameTab' | 'newTab'\ntype CtaVariant = 'primary' | 'secondary' | 'ghost'\ntype CtaContentMode = 'text' | 'iconOnly'\ntype CtaIconName = IconName | ''\n\ninterface CtaBlockData {\n  label: string\n  url: `/${string}` | `https://${string}` | ''\n  variant: CtaVariant\n  target: CtaBlockTarget\n  contentMode: CtaContentMode\n  leftIcon: CtaIconName\n  rightIcon: CtaIconName\n  icon: CtaIconName\n}\n\nconst ctaDefaults = {\n  variant: 'primary',\n  target: 'sameTab',\n  contentMode: 'text',\n  leftIcon: '',\n  rightIcon: '',\n  icon: '',\n} satisfies Pick<CtaBlockData, 'variant' | 'target' | 'contentMode' | 'leftIcon' | 'rightIcon' | 'icon'>\n\nexport function normalizeCtaBlock(\n  block: EditorOutputBlock<'cta', Partial<CtaBlockData>>,\n): CtaBlockData {\n  // Keep old CTA blocks valid while icon fields roll out.\n  const label = block.data.label?.trim() || 'Open preview'\n  const url = /^https?:\\/\\//.test(block.data.url ?? '') ? block.data.url! : '/preview'\n\n  return { ...ctaDefaults, ...block.data, label, url }\n}",
-        "caption": "TypeScript example covers imports, generics, unions, template literal types, satisfies, comments, regex and object spreads."
+        "caption": "TypeScript example covers <b>imports</b>, generics, unions, template literal types, satisfies, comments, regex and object spreads."
       },
       "tunes": {
         "anchor": {
@@ -870,7 +927,7 @@
       "data": {
         "language": "json",
         "code": "{\n  \"time\": 1747324800000,\n  \"blocks\": [\n    {\n      \"id\": \"cta-block-event\",\n      \"type\": \"cta\",\n      \"data\": {\n        \"label\": \"Open preview workflow\",\n        \"url\": \"/preview\",\n        \"variant\": \"primary\",\n        \"target\": \"sameTab\",\n        \"enabled\": true,\n        \"analytics\": null,\n        \"priority\": 2\n      }\n    }\n  ],\n  \"version\": \"2.31.0\"\n}",
-        "caption": "JSON example covers nested arrays and objects, strings, numbers, booleans and null."
+        "caption": "JSON example covers nested arrays and objects, strings, numbers, booleans and <code class=\"inline-code\">null</code>."
       },
       "tunes": {
         "spacing": {
@@ -1055,7 +1112,7 @@
       "id": "section-intro-block",
       "type": "sectionIntro",
       "data": {
-        "title": "Nested editor field",
+        "title": "Nested <span class=\"editor-text-color editor-text-color--accent\">editor</span> field",
         "description": {
           "time": 1779262669844,
           "blocks": [
@@ -1251,7 +1308,7 @@
             "type": "image",
             "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='540' viewBox='0 0 960 540'%3E%3Crect width='960' height='540' fill='%23eef3ee'/%3E%3Crect x='96' y='90' width='768' height='360' rx='18' fill='%23ffffff'/%3E%3Ccircle cx='258' cy='270' r='96' fill='%230f766e'/%3E%3Cpath d='M420 360 540 225l84 96 54-60 114 99H420Z' fill='%235e6268'/%3E%3C/svg%3E",
             "alt": "Abstract media gallery card illustration",
-            "caption": "Gallery card with explicit image alt",
+            "caption": "Gallery card with <b>explicit image alt</b>",
             "description": {
               "time": 1779262669844,
               "blocks": [
@@ -1260,6 +1317,26 @@
                   "type": "paragraph",
                   "data": {
                     "text": "Each card stores media fields separately from nested rich text."
+                  }
+                },
+                {
+                  "id": "media-gallery-image-description-list",
+                  "type": "list",
+                  "data": {
+                    "style": "unordered",
+                    "meta": {},
+                    "items": [
+                      {
+                        "content": "Caption stays short and inline.",
+                        "meta": {},
+                        "items": []
+                      },
+                      {
+                        "content": "Description can hold paragraphs and lists.",
+                        "meta": {},
+                        "items": []
+                      }
+                    ]
                   }
                 }
               ],
@@ -1271,7 +1348,7 @@
             "type": "video",
             "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
             "alt": "",
-            "caption": "Video card for Fancybox and slider checks",
+            "caption": "Video card for <mark class=\"cdx-marker\">Fancybox</mark> and slider checks",
             "description": {
               "time": 1779262669844,
               "blocks": [
@@ -1330,7 +1407,7 @@
             "type": "image",
             "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='540' viewBox='0 0 960 540'%3E%3Crect width='960' height='540' fill='%23f6f8f6'/%3E%3Crect x='110' y='92' width='740' height='356' rx='18' fill='%23ffffff' stroke='%23d9e0db' stroke-width='4'/%3E%3Crect x='170' y='150' width='280' height='240' rx='12' fill='%230f766e'/%3E%3Crect x='500' y='170' width='250' height='38' rx='8' fill='%23202124'/%3E%3Crect x='500' y='240' width='300' height='28' rx='7' fill='%235e6268'/%3E%3Crect x='500' y='292' width='230' height='28' rx='7' fill='%235e6268'/%3E%3C/svg%3E",
             "alt": "First media slider card illustration",
-            "caption": "Slider image card with Fancybox enabled",
+            "caption": "Slider image card with <i>Fancybox enabled</i>",
             "description": {
               "time": 1779262669844,
               "blocks": [
@@ -1370,7 +1447,7 @@
             "type": "image",
             "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='540' viewBox='0 0 960 540'%3E%3Crect width='960' height='540' fill='%23eef3ee'/%3E%3Crect x='128' y='118' width='704' height='304' rx='20' fill='%23ffffff'/%3E%3Cpath d='M190 360 340 210l112 116 76-82 242 116H190Z' fill='%230f766e'/%3E%3Ccircle cx='704' cy='184' r='54' fill='%23b7791f'/%3E%3C/svg%3E",
             "alt": "Second media slider card illustration",
-            "caption": "Second image slide",
+            "caption": "Second image slide with <code class=\"inline-code\">inline code</code>",
             "description": {
               "time": 1779262669844,
               "blocks": [

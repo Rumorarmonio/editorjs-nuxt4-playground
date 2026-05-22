@@ -39,6 +39,7 @@ deployment.
 - Optional improvement с типографикой сохранения реализован: при `Save draft` и editor-side `Export JSON` контент проходит через `typograf` с автоопределением языка строки и fallback на текущую локаль `ru | en | es`, но только по `nbsp`-правилам и только в человекочитаемых текстовых полях.
 - Optional improvement с drag-and-drop reorder блоков реализован: подключён `editorjs-drag-drop`, перетаскивание работает через стандартную settings-кнопку блока Editor.js без изменения content JSON schema; дополнительно добавлен auto-scroll страницы при drag у верхнего/нижнего края viewport.
 - Optional improvement editor-селектов реализован: plain field selects и block tune selects переведены на единый кастомный dropdown без поиска на базе `choices.js`; Vue-селекты demo shell для языка и темы оставлены вне scope.
+- Optional improvement inline tools для custom fields реализован: короткие rich-поля (`Notice` title, `SectionIntro` title, `Code snippet` caption, `Media gallery` captions) используют lightweight `contenteditable` inline HTML field, а `Notice` text и media descriptions остаются nested rich fields для paragraph/list content без CTA.
 - Активный этап: Некритичные улучшения.
 - Первый инфраструктурный срез этапа CTA icons via generated SVG sprite реализован: source SVG перенесены из `public` в `editor/assets/icons`, generated sprite создаётся в `public/icons/sprite.svg`, generated `IconName` / `iconNames` и shared icon helpers добавлены в `editor/shared/icons`.
 - Второй shared schema срез этапа CTA icons via generated SVG sprite реализован: CTA data contract расширен `contentMode`, `leftIcon`, `rightIcon` и `icon`, normalizer/guard/validation используют generated icon names, а текущий `CtaTool` сохраняет icon-поля без UI.
@@ -74,7 +75,8 @@ deployment.
 1. Держать этап открытым для небольших optional improvements после закрытия schema-changing этапов.
 2. Сначала пройти оставшиеся полезные ручные проверки: `nbsp`-сохранение на русском/английском/испанском, drag-and-drop reorder обычных и custom blocks, CTA icon scenarios после закрытого этапа.
 3. Перевести editor-side native selects на консистентный кастомный dropdown без поиска, не затрагивая Vue demo shell controls — выполнено для `createPlainSelectField` и `createTuneSelectField`.
-4. После проверок выбрать следующий небольшой improvement с узким diff.
+4. Включить inline tools в контентных custom fields, не затрагивая технические поля и code body — выполнено через lightweight inline HTML fields для коротких title/caption полей и nested rich fields для `Notice` text / media descriptions без CTA.
+5. После проверок выбрать следующий небольшой improvement с узким diff.
 
 ## Критерии готовности этапа
 

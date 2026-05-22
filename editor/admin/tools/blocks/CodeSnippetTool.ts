@@ -2,13 +2,16 @@ import type {
   BlockAPI,
   BlockTool,
   BlockToolConstructorOptions,
+  SanitizerConfig,
   ToolConstructable,
   ToolboxConfig,
 } from '@editorjs/editorjs/types'
 import {
+  createInlineHtmlField,
   createPlainSelectField,
   createPlainTextareaField,
   type PlainFieldControl,
+  type RichFieldControl,
 } from '~~/editor/admin/fields'
 import {
   codeSnippetLanguages,
@@ -23,6 +26,14 @@ import { createBlockToolLabel } from './tool-label'
 export default class CodeSnippetTool implements BlockTool {
   static isReadOnlySupported = true
 
+  static get sanitize(): SanitizerConfig {
+    return {
+      language: true,
+      code: true,
+      caption: true,
+    }
+  }
+
   private readonly block: BlockAPI
   private readonly readOnly: boolean
   private data: CodeSnippetBlockData
@@ -31,10 +42,7 @@ export default class CodeSnippetTool implements BlockTool {
     HTMLSelectElement
   > | null = null
   private codeField: PlainFieldControl<string, HTMLTextAreaElement> | null = null
-  private captionField: PlainFieldControl<
-    string,
-    HTMLTextAreaElement
-  > | null = null
+  private captionField: RichFieldControl<string> | null = null
 
   static get toolbox(): ToolboxConfig {
     const messages = getCurrentEditorMessages()
@@ -92,15 +100,14 @@ export default class CodeSnippetTool implements BlockTool {
     )
     this.codeField.control.spellcheck = false
 
-    this.captionField = createPlainTextareaField({
+    this.captionField = createInlineHtmlField({
       name: 'code-snippet-caption',
       label: messages.tools.codeSnippet.captionLabel,
       value: this.data.caption,
       placeholder: messages.tools.codeSnippet.captionPlaceholder,
-      rows: 2,
+      allowLineBreaks: false,
       readOnly: this.readOnly,
-      onChange: (value) => {
-        this.data.caption = value
+      onChange: () => {
         this.captionField?.setError(undefined)
         this.dispatchChange()
       },
@@ -116,11 +123,13 @@ export default class CodeSnippetTool implements BlockTool {
       this.captionField.root,
     )
 
+    void this.captionField.initialize()
+
     return wrapper
   }
 
-  save(): CodeSnippetBlockData {
-    const data = this.getCurrentData()
+  async save(): Promise<CodeSnippetBlockData> {
+    const data = await this.getCurrentData()
 
     this.syncValidationErrors(data)
 
@@ -135,13 +144,14 @@ export default class CodeSnippetTool implements BlockTool {
 
   destroy(): void {
     this.languageField?.destroy?.()
+    this.captionField?.destroy()
   }
 
-  private getCurrentData(): CodeSnippetBlockData {
+  private async getCurrentData(): Promise<CodeSnippetBlockData> {
     return normalizeCodeSnippetBlockData({
       language: this.languageField?.getValue() ?? this.data.language,
       code: this.codeField?.getValue() ?? this.data.code,
-      caption: this.captionField?.getValue() ?? this.data.caption,
+      caption: (await this.captionField?.save()) ?? this.data.caption,
     })
   }
 

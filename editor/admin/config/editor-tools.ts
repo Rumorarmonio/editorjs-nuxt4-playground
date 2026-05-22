@@ -121,13 +121,25 @@ export async function createEditorTools(
         },
       },
     },
-    notice: NoticeToolConstructable,
-    sectionIntro: SectionIntroToolConstructable,
+    notice: {
+      class: NoticeToolConstructable,
+      inlineToolbar: editorInlineToolbar,
+    },
+    sectionIntro: {
+      class: SectionIntroToolConstructable,
+      inlineToolbar: editorInlineToolbar,
+    },
     twoColumns: TwoColumnsToolConstructable,
-    mediaGallery: MediaGalleryToolConstructable,
+    mediaGallery: {
+      class: MediaGalleryToolConstructable,
+      inlineToolbar: editorInlineToolbar,
+    },
     maskedFieldsDemo: MaskedFieldsDemoToolConstructable,
     cta: CtaToolConstructable,
-    codeSnippet: CodeSnippetToolConstructable,
+    codeSnippet: {
+      class: CodeSnippetToolConstructable,
+      inlineToolbar: editorInlineToolbar,
+    },
     accordionGroup: AccordionGroupToolConstructable,
     rawHtml: {
       class: RawTool as unknown as ToolConstructable,

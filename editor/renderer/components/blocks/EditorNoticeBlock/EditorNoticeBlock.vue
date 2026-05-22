@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import EditorContentRenderer from '~~/editor/renderer/components/EditorContentRenderer/EditorContentRenderer.vue'
+import { normalizeRichParagraphContent } from '~~/editor/renderer/helpers/rich-field-content'
+import { sanitizeInlineHtml } from '~~/editor/renderer/helpers/sanitize-inline-html'
 import type { NoticeBlockData } from '~~/editor/shared'
 
 defineProps<{
@@ -11,15 +14,13 @@ defineProps<{
     <p
       v-if="data.title"
       :class="$style.noticeTitle"
-    >
-      {{ data.title }}
-    </p>
-    <p
-      v-if="data.text"
+      v-html="sanitizeInlineHtml(data.title)"
+    />
+    <EditorContentRenderer
+      v-if="normalizeRichParagraphContent(data.text).blocks.length"
       :class="$style.noticeText"
-    >
-      {{ data.text }}
-    </p>
+      :content="normalizeRichParagraphContent(data.text)"
+    />
   </aside>
 </template>
 

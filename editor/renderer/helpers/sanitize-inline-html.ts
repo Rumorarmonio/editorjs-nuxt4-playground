@@ -4,7 +4,17 @@ import {
   textColorInlineClassNames,
 } from '~~/editor/shared'
 
-const allowedTags = new Set(['A', 'B', 'I', 'U', 'MARK', 'SPAN', 'S', 'CODE'])
+const allowedTags = new Set([
+  'A',
+  'B',
+  'BR',
+  'I',
+  'U',
+  'MARK',
+  'SPAN',
+  'S',
+  'CODE',
+])
 const allowedClasses = new Set([
   'cdx-marker',
   'cdx-underline',

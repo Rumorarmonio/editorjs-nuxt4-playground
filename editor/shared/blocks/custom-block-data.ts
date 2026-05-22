@@ -18,7 +18,8 @@ export type NoticeBlockType = (typeof noticeBlockTypes)[number]
 export type SectionIntroDescriptionBlock = EditorOutputBlock<
   'paragraph',
   ParagraphBlockData
-> | EditorOutputBlock<'cta', CtaBlockData>
+> | EditorOutputBlock<'list', ListBlockData>
+  | EditorOutputBlock<'cta', CtaBlockData>
 
 export type SectionIntroDescriptionData =
   EditorOutputData<SectionIntroDescriptionBlock>
@@ -97,7 +98,7 @@ export type TwoColumnsContentData = EditorOutputData<TwoColumnsContentBlock>
 
 export interface NoticeBlockData {
   title: string
-  text: string
+  text: RichParagraphFieldData
   type: NoticeBlockType
 }
 
@@ -194,7 +195,7 @@ export function normalizeNoticeBlockData(value: unknown): NoticeBlockData {
 
   return {
     title: typeof value.title === 'string' ? value.title : '',
-    text: typeof value.text === 'string' ? value.text : '',
+    text: normalizeNoticeTextData(value.text),
     type: isNoticeBlockType(value.type) ? value.type : 'info',
   }
 }
@@ -206,9 +207,42 @@ export function isNoticeBlockData(value: unknown): value is NoticeBlockData {
 
   return (
     typeof value.title === 'string' &&
+    isRichParagraphFieldData(value.text) &&
+    isNoticeBlockType(value.type)
+  )
+}
+
+export function isLegacyNoticeBlockData(value: unknown): boolean {
+  if (!isRecord(value)) {
+    return false
+  }
+
+  return (
+    typeof value.title === 'string' &&
     typeof value.text === 'string' &&
     isNoticeBlockType(value.type)
   )
+}
+
+function normalizeNoticeTextData(value: unknown): RichParagraphFieldData {
+  if (typeof value === 'string') {
+    const text = normalizeMultilineValue(value)
+
+    return text
+      ? {
+          blocks: [
+            {
+              type: 'paragraph',
+              data: {
+                text,
+              },
+            },
+          ],
+        }
+      : createDefaultRichParagraphFieldData()
+  }
+
+  return normalizeRichParagraphFieldData(value)
 }
 
 export function normalizeSectionIntroBlockData(
@@ -658,7 +692,7 @@ export function isAccordionBodyData(
 function createDefaultNoticeBlockData(): NoticeBlockData {
   return {
     title: '',
-    text: '',
+    text: createDefaultRichParagraphFieldData(),
     type: 'info',
   }
 }
@@ -840,6 +874,10 @@ function isRichParagraphFieldBlock(
 
   if (value.type === 'cta') {
     return isCtaBlock(value)
+  }
+
+  if (value.type === 'list') {
+    return isListBlock(value)
   }
 
   return (

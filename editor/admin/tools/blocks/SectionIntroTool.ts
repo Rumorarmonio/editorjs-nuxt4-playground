@@ -2,12 +2,12 @@ import type {
   BlockAPI,
   BlockTool,
   BlockToolConstructorOptions,
+  SanitizerConfig,
   ToolConstructable,
   ToolboxConfig,
 } from '@editorjs/editorjs/types'
 import {
-  createPlainTextField,
-  type PlainFieldControl,
+  createInlineHtmlField,
   createRichParagraphField,
   type RichFieldControl,
 } from '~~/editor/admin/fields'
@@ -23,10 +23,17 @@ import { createBlockToolLabel } from './tool-label'
 export default class SectionIntroTool implements BlockTool {
   static isReadOnlySupported = true
 
+  static get sanitize(): SanitizerConfig {
+    return {
+      title: true,
+      description: true,
+    }
+  }
+
   private readonly block: BlockAPI
   private readonly readOnly: boolean
   private data: SectionIntroBlockData
-  private titleField: PlainFieldControl<string, HTMLInputElement> | null = null
+  private titleField: RichFieldControl<string> | null = null
   private descriptionField: RichFieldControl<SectionIntroDescriptionData> | null =
     null
 
@@ -53,14 +60,14 @@ export default class SectionIntroTool implements BlockTool {
 
     wrapper.className = 'editor-section-intro-tool'
 
-    this.titleField = createPlainTextField({
+    this.titleField = createInlineHtmlField({
       name: 'section-intro-title',
       label: messages.tools.sectionIntro.titleLabel,
       value: this.data.title,
       placeholder: messages.tools.sectionIntro.titlePlaceholder,
+      allowLineBreaks: false,
       readOnly: this.readOnly,
-      onChange: (value) => {
-        this.data.title = value
+      onChange: () => {
         this.titleField?.setError(undefined)
         this.dispatchChange()
       },
@@ -94,7 +101,7 @@ export default class SectionIntroTool implements BlockTool {
 
   async save(): Promise<SectionIntroBlockData> {
     const data = normalizeSectionIntroBlockData({
-      title: this.titleField?.getValue() ?? this.data.title,
+      title: (await this.titleField?.save()) ?? this.data.title,
       description:
         (await this.descriptionField?.save()) ?? this.data.description,
     })
@@ -124,6 +131,7 @@ export default class SectionIntroTool implements BlockTool {
   }
 
   destroy(): void {
+    this.titleField?.destroy()
     this.descriptionField?.destroy()
     this.descriptionField = null
   }

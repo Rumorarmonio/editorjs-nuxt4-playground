@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import './EditorCodeSnippetBlock.highlight.scss'
 import { highlightCode } from '~~/editor/renderer/helpers/highlight-code'
+import { sanitizeInlineHtml } from '~~/editor/renderer/helpers/sanitize-inline-html'
 import type { CodeSnippetBlockData } from '~~/editor/shared'
 
 const props = defineProps<{
@@ -17,9 +18,8 @@ const highlightedCode = computed(() => {
     <figcaption
       v-if="data.caption"
       :class="$style.codeSnippetCaption"
-    >
-      {{ data.caption }}
-    </figcaption>
+      v-html="sanitizeInlineHtml(data.caption)"
+    />
     <div :class="$style.codeSnippetFrame">
       <pre :class="$style.codeSnippetPre"><code
         :class="[$style.codeSnippetCode, 'hljs', `language-${data.language}`]"

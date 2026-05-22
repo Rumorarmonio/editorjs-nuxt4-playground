@@ -119,7 +119,7 @@ export function validateNoticeBlockData(
   const data = normalizeNoticeBlockData(value)
   const issues: ValidationIssue[] = []
 
-  if (!hasText(data.title) && !hasText(data.text)) {
+  if (!hasInlineText(data.title) && !hasRichParagraphContent(data.text)) {
     issues.push({
       path: 'title',
       message: messages.noticeContentRequired,
@@ -133,7 +133,7 @@ export function validateNoticeBlockData(
   pushMaxLengthIssue(
     issues,
     'title',
-    data.title,
+    getInlineText(data.title),
     maxNoticeTitleLength,
     messages.fieldLabels.noticeTitle,
     messages,
@@ -141,7 +141,7 @@ export function validateNoticeBlockData(
   pushMaxLengthIssue(
     issues,
     'text',
-    data.text,
+    getRichParagraphText(data.text),
     maxNoticeTextLength,
     messages.fieldLabels.noticeText,
     messages,
@@ -157,7 +157,7 @@ export function validateSectionIntroBlockData(
   const data = normalizeSectionIntroBlockData(value)
   const issues: ValidationIssue[] = []
 
-  if (!hasText(data.title) && !hasRichParagraphContent(data.description)) {
+  if (!hasInlineText(data.title) && !hasRichParagraphContent(data.description)) {
     issues.push({
       path: 'title',
       message: messages.sectionIntroContentRequired,
@@ -171,7 +171,7 @@ export function validateSectionIntroBlockData(
   pushMaxLengthIssue(
     issues,
     'title',
-    data.title,
+    getInlineText(data.title),
     maxSectionIntroTitleLength,
     messages.fieldLabels.sectionIntroTitle,
     messages,
@@ -428,7 +428,7 @@ export function validateCodeSnippetBlockData(
   pushMaxLengthIssue(
     issues,
     'caption',
-    data.caption,
+    getInlineText(data.caption),
     maxCodeCaptionLength,
     messages.fieldLabels.codeSnippetCaption,
     messages,
@@ -517,7 +517,7 @@ function validateMediaGalleryItem(
   pushMaxLengthIssue(
     issues,
     `${basePath}.caption`,
-    item.caption,
+    getInlineText(item.caption),
     maxMediaCaptionLength,
     messages.fieldLabels.mediaCaption,
     messages,
@@ -672,6 +672,49 @@ function hasText(value: string): boolean {
   return value.trim().length > 0
 }
 
+function hasInlineText(value: string): boolean {
+  return hasText(getInlineText(value))
+}
+
+function getInlineText(value: string): string {
+  return decodeHtmlEntities(
+    value
+      .replaceAll(/<br\s*\/?>/gi, '\n')
+      .replaceAll(/<[^>]*>/g, ''),
+  ).trim()
+}
+
+function decodeHtmlEntities(value: string): string {
+  if (typeof document !== 'undefined') {
+    const textarea = document.createElement('textarea')
+
+    textarea.innerHTML = value
+
+    return textarea.value
+  }
+
+  return value
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('&amp;', '&')
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll('&#039;', "'")
+    .replaceAll(/&#(\d+);/g, (_, code: string) => decodeCodePoint(Number(code)))
+    .replaceAll(/&#x([\da-f]+);/gi, (_, code: string) =>
+      decodeCodePoint(Number.parseInt(code, 16)),
+    )
+}
+
+function decodeCodePoint(codePoint: number): string {
+  if (!Number.isInteger(codePoint) || codePoint < 0 || codePoint > 0x10ffff) {
+    return ''
+  }
+
+  return String.fromCodePoint(codePoint)
+}
+
 function validateJsonObject(value: string): 'valid' | 'invalid' | 'notObject' {
   try {
     const parsed: unknown = JSON.parse(value)
@@ -691,12 +734,41 @@ function hasRichParagraphContent(data: RichParagraphFieldData): boolean {
     switch (block.type) {
       case 'paragraph':
         return hasText(block.data.text)
+      case 'list':
+        return block.data.items.some(hasListItemContent)
       case 'cta':
         return hasText(block.data.label)
       default:
         return false
     }
   })
+}
+
+function getRichParagraphText(data: RichParagraphFieldData): string {
+  return data.blocks
+    .map((block) => {
+      switch (block.type) {
+        case 'paragraph':
+          return getInlineText(block.data.text)
+        case 'list':
+          return block.data.items.map(getListItemText).join(' ')
+        case 'cta':
+          return block.data.label
+        default:
+          return ''
+      }
+    })
+    .join(' ')
+    .trim()
+}
+
+function getListItemText(item: ListBlockItem): string {
+  return [
+    getInlineText(item.content),
+    ...item.items.map(getListItemText),
+  ]
+    .join(' ')
+    .trim()
 }
 
 function hasTwoColumnsContent(data: TwoColumnsContentData): boolean {

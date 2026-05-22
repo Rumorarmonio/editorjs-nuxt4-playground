@@ -2,20 +2,23 @@ import type {
   BlockAPI,
   BlockTool,
   BlockToolConstructorOptions,
+  SanitizerConfig,
   ToolConstructable,
   ToolboxConfig,
 } from '@editorjs/editorjs/types'
 import {
+  createInlineHtmlField,
   createPlainSelectField,
-  createPlainTextareaField,
-  createPlainTextField,
+  createRichParagraphField,
   type PlainFieldControl,
+  type RichFieldControl,
 } from '~~/editor/admin/fields'
 import {
   normalizeNoticeBlockData,
   validateNoticeBlockData,
   type NoticeBlockData,
   type NoticeBlockType,
+  type RichParagraphFieldData,
 } from '~~/editor/shared'
 import { getCurrentEditorMessages } from '~~/i18n/editor'
 import { createBlockToolLabel } from './tool-label'
@@ -35,11 +38,19 @@ const noticeTypeOptions = [
 export default class NoticeTool implements BlockTool {
   static isReadOnlySupported = true
 
+  static get sanitize(): SanitizerConfig {
+    return {
+      title: true,
+      text: true,
+      type: true,
+    }
+  }
+
   private readonly block: BlockAPI
   private readonly readOnly: boolean
   private data: NoticeBlockData
-  private titleField: PlainFieldControl<string, HTMLInputElement> | null = null
-  private textField: PlainFieldControl<string, HTMLTextAreaElement> | null = null
+  private titleField: RichFieldControl<string> | null = null
+  private textField: RichFieldControl<RichParagraphFieldData> | null = null
   private typeField: PlainFieldControl<NoticeBlockType, HTMLSelectElement> | null =
     null
 
@@ -65,28 +76,27 @@ export default class NoticeTool implements BlockTool {
     wrapper.className = 'editor-notice-tool'
     wrapper.dataset.noticeType = this.data.type
 
-    this.titleField = createPlainTextField({
+    this.titleField = createInlineHtmlField({
       name: 'notice-title',
       label: messages.tools.notice.titleLabel,
       value: this.data.title,
       placeholder: messages.tools.notice.titlePlaceholder,
+      allowLineBreaks: false,
       readOnly: this.readOnly,
-      onChange: (value) => {
-        this.data.title = value
+      onChange: () => {
         this.titleField?.setError(undefined)
         this.dispatchChange()
       },
     })
 
-    this.textField = createPlainTextareaField({
+    this.textField = createRichParagraphField({
       name: 'notice-text',
       label: messages.tools.notice.textLabel,
       value: this.data.text,
       placeholder: messages.tools.notice.textPlaceholder,
-      rows: 4,
+      allowCta: false,
       readOnly: this.readOnly,
-      onChange: (value) => {
-        this.data.text = value
+      onChange: () => {
         this.textField?.setError(undefined)
         this.dispatchChange()
       },
@@ -115,11 +125,14 @@ export default class NoticeTool implements BlockTool {
       this.typeField.root,
     )
 
+    void this.titleField.initialize()
+    void this.textField.initialize()
+
     return wrapper
   }
 
-  save(): NoticeBlockData {
-    const data = this.getCurrentData()
+  async save(): Promise<NoticeBlockData> {
+    const data = await this.getCurrentData()
 
     this.syncValidationErrors(data)
 
@@ -133,13 +146,15 @@ export default class NoticeTool implements BlockTool {
   }
 
   destroy(): void {
+    this.titleField?.destroy()
+    this.textField?.destroy()
     this.typeField?.destroy?.()
   }
 
-  private getCurrentData(): NoticeBlockData {
+  private async getCurrentData(): Promise<NoticeBlockData> {
     return normalizeNoticeBlockData({
-      title: this.titleField?.getValue() ?? this.data.title,
-      text: this.textField?.getValue() ?? this.data.text,
+      title: (await this.titleField?.save()) ?? this.data.title,
+      text: (await this.textField?.save()) ?? this.data.text,
       type: this.typeField?.getValue() ?? this.data.type,
     })
   }

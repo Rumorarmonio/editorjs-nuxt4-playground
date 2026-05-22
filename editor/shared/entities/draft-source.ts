@@ -1,5 +1,6 @@
 import { EDITOR_DRAFT_STORAGE_KEY } from '~~/editor/shared/constants/draft-storage'
 import {
+  isLegacyNoticeBlockData,
   isNoticeBlockData,
   isCtaBlockData,
   isCodeSnippetBlockData,
@@ -153,7 +154,7 @@ function isKnownEditorContentBlock(
     case 'image':
       return isImageBlockData(block.data)
     case 'notice':
-      return isNoticeBlockData(block.data)
+      return isNoticeBlockData(block.data) || isLegacyNoticeBlockData(block.data)
     case 'sectionIntro':
       return isSectionIntroBlockData(block.data)
     case 'twoColumns':
