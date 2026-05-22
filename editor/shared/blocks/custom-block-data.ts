@@ -212,36 +212,7 @@ export function isNoticeBlockData(value: unknown): value is NoticeBlockData {
   )
 }
 
-export function isLegacyNoticeBlockData(value: unknown): boolean {
-  if (!isRecord(value)) {
-    return false
-  }
-
-  return (
-    typeof value.title === 'string' &&
-    typeof value.text === 'string' &&
-    isNoticeBlockType(value.type)
-  )
-}
-
 function normalizeNoticeTextData(value: unknown): RichParagraphFieldData {
-  if (typeof value === 'string') {
-    const text = normalizeMultilineValue(value)
-
-    return text
-      ? {
-          blocks: [
-            {
-              type: 'paragraph',
-              data: {
-                text,
-              },
-            },
-          ],
-        }
-      : createDefaultRichParagraphFieldData()
-  }
-
   return normalizeRichParagraphFieldData(value)
 }
 
