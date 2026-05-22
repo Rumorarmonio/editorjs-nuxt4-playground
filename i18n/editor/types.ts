@@ -229,6 +229,13 @@ export interface EditorUiMessages {
   }
   inlineTools: {
     textColor: string
+    textColorOptions: {
+      blue: string
+      green: string
+      danger: string
+      warning: string
+      muted: string
+    }
   }
   pluginInfo: {
     standardTools: {

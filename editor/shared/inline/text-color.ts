@@ -2,22 +2,34 @@ export const textColorInlineClassName = 'editor-text-color'
 
 export const textColorInlineOptions = [
   {
-    name: 'accent',
-    label: 'Accent',
+    name: 'blue',
+    label: 'Blue',
     className: 'editor-text-color--accent',
-    value: '#0f766e',
+    value: 'var(--color-accent)',
+  },
+  {
+    name: 'green',
+    label: 'Green',
+    className: 'editor-text-color--success',
+    value: 'var(--color-success)',
   },
   {
     name: 'danger',
-    label: 'Danger',
+    label: 'Red',
     className: 'editor-text-color--danger',
-    value: '#b42318',
+    value: 'var(--color-danger)',
+  },
+  {
+    name: 'warning',
+    label: 'Warning',
+    className: 'editor-text-color--warning',
+    value: 'var(--color-warning)',
   },
   {
     name: 'muted',
     label: 'Muted',
     className: 'editor-text-color--muted',
-    value: '#5e6268',
+    value: 'var(--color-muted)',
   },
 ] as const
 

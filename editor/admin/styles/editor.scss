@@ -230,6 +230,21 @@
     color: var(--color-muted);
   }
 
+  .ce-inline-tool-input {
+    color: var(--color-text);
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
+  }
+
+  .ce-inline-tool-input::placeholder {
+    color: var(--color-muted);
+  }
+
+  .ce-inline-tool-input:focus {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 1px;
+  }
+
   .cdx-search-field,
   .ce-popover__search {
     color: var(--color-text);
@@ -762,8 +777,16 @@
     color: var(--color-accent);
   }
 
+  .editor-text-color--success {
+    color: var(--color-success);
+  }
+
   .editor-text-color--danger {
     color: var(--color-danger);
+  }
+
+  .editor-text-color--warning {
+    color: var(--color-warning);
   }
 
   .editor-text-color--muted {

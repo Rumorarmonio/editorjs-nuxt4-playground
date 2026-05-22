@@ -2,20 +2,15 @@ import type {
   EditorConfig,
   ToolConstructable,
 } from '@editorjs/editorjs/types'
+import {
+  editorInlineToolbar,
+  inlineToolShortcuts,
+} from '~~/editor/admin/config/editor-inline-tools'
 import InlineCodeTool from '~~/editor/admin/tools/InlineCodeTool'
 import { TextColorToolConstructable } from '~~/editor/admin/tools/TextColorTool'
 import { CtaToolConstructable } from '~~/editor/admin/tools/blocks/CtaTool'
 
-export const nestedRichFieldInlineToolbar = [
-  'bold',
-  'italic',
-  'link',
-  'underline',
-  'marker',
-  'textColor',
-  'strikethrough',
-  'inlineCode',
-] satisfies NonNullable<EditorConfig['inlineToolbar']>
+export const nestedRichFieldInlineToolbar = editorInlineToolbar
 
 export async function createNestedParagraphTools(): Promise<
   EditorConfig['tools']
@@ -88,14 +83,23 @@ async function createNestedInlineTools(): Promise<EditorConfig['tools']> {
   return {
     marker: {
       class: Marker as unknown as ToolConstructable,
-      shortcut: 'CMD+SHIFT+M',
+      shortcut: inlineToolShortcuts.marker,
     },
-    textColor: TextColorToolConstructable as unknown as ToolConstructable,
-    underline: Underline as unknown as ToolConstructable,
+    textColor: {
+      class: TextColorToolConstructable as unknown as ToolConstructable,
+      shortcut: inlineToolShortcuts.textColor,
+    },
+    underline: {
+      class: Underline as unknown as ToolConstructable,
+      shortcut: inlineToolShortcuts.underline,
+    },
     inlineCode: {
       class: InlineCodeTool as unknown as ToolConstructable,
-      shortcut: 'CMD+SHIFT+C',
+      shortcut: inlineToolShortcuts.inlineCode,
     },
-    strikethrough: Strikethrough as unknown as ToolConstructable,
+    strikethrough: {
+      class: Strikethrough as unknown as ToolConstructable,
+      shortcut: inlineToolShortcuts.strikethrough,
+    },
   }
 }

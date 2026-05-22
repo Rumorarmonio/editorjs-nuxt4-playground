@@ -34,8 +34,16 @@
     color: var(--color-accent);
   }
 
+  :global(.editor-text-color--success) {
+    color: var(--color-success);
+  }
+
   :global(.editor-text-color--danger) {
     color: var(--color-danger);
+  }
+
+  :global(.editor-text-color--warning) {
+    color: var(--color-warning);
   }
 
   :global(.editor-text-color--muted) {

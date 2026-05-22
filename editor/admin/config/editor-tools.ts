@@ -24,17 +24,12 @@ import {
   setCurrentEditorMessages,
   type EditorUiMessages,
 } from '~~/i18n/editor'
+import {
+  editorInlineToolbar,
+  inlineToolShortcuts,
+} from './editor-inline-tools'
 
-export const editorInlineToolbar = [
-  'bold',
-  'italic',
-  'link',
-  'underline',
-  'marker',
-  'textColor',
-  'strikethrough',
-  'inlineCode',
-] satisfies NonNullable<EditorConfig['inlineToolbar']>
+export { editorInlineToolbar } from './editor-inline-tools'
 
 export const editorBlockTunes = [...editorBlockTuneNames]
 const editorEmbedBlockTunes = [...editorBlockTunes, embedDisplayTuneName]
@@ -142,15 +137,24 @@ export async function createEditorTools(
     },
     marker: {
       class: Marker as unknown as ToolConstructable,
-      shortcut: 'CMD+SHIFT+M',
+      shortcut: inlineToolShortcuts.marker,
     },
-    textColor: TextColorToolConstructable as unknown as ToolConstructable,
-    underline: Underline as unknown as ToolConstructable,
+    textColor: {
+      class: TextColorToolConstructable as unknown as ToolConstructable,
+      shortcut: inlineToolShortcuts.textColor,
+    },
+    underline: {
+      class: Underline as unknown as ToolConstructable,
+      shortcut: inlineToolShortcuts.underline,
+    },
     inlineCode: {
       class: InlineCodeTool as unknown as ToolConstructable,
-      shortcut: 'CMD+SHIFT+C',
+      shortcut: inlineToolShortcuts.inlineCode,
     },
-    strikethrough: Strikethrough as unknown as ToolConstructable,
+    strikethrough: {
+      class: Strikethrough as unknown as ToolConstructable,
+      shortcut: inlineToolShortcuts.strikethrough,
+    },
     anchor: AnchorTuneConstructable,
     spacing: SpacingTuneConstructable,
     label: LabelTuneConstructable,

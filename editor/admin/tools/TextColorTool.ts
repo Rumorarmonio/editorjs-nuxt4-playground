@@ -57,11 +57,15 @@ export default class TextColorTool {
 
     textColorInlineOptions.forEach((option) => {
       const button = document.createElement('button')
+      const messages = getCurrentEditorMessages()
 
       button.type = 'button'
       button.classList.add('editor-text-color-tool__swatch')
       button.style.setProperty('--editor-text-color-tool-swatch', option.value)
-      button.setAttribute('aria-label', option.label)
+      button.setAttribute(
+        'aria-label',
+        messages.inlineTools.textColorOptions[option.name],
+      )
       button.dataset.color = option.name
 
       button.addEventListener('mousedown', (event) => {

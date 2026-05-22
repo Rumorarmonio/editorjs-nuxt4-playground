@@ -193,6 +193,13 @@ export const editorEs: EditorUiMessages = {
   },
   inlineTools: {
     textColor: 'Color de texto',
+    textColorOptions: {
+      blue: 'Azul',
+      green: 'Verde',
+      danger: 'Rojo',
+      warning: 'Advertencia',
+      muted: 'Atenuado',
+    },
   },
   pluginInfo: {
     standardTools: {
@@ -438,6 +445,11 @@ export const editorEs: EditorUiMessages = {
             Add: 'Añadir',
           },
         },
+        popover: {
+          Filter: 'Filtrar',
+          'Nothing found': 'No se encontró nada',
+          'Convert to': 'Convertir a',
+        },
       },
       toolNames: {
         Text: 'Texto',
@@ -452,6 +464,14 @@ export const editorEs: EditorUiMessages = {
         Image: 'Imagen',
         Embed: 'Insertar',
         'Raw HTML': 'HTML sin procesar',
+        Bold: 'Negrita',
+        Italic: 'Cursiva',
+        Link: 'Enlace',
+        Underline: 'Subrayado',
+        Marker: 'Marcador',
+        Strikethrough: 'Tachado',
+        'Inline Code': 'Código inline',
+        'Text Color': 'Color de texto',
       },
       tools: {
         warning: {
@@ -460,6 +480,17 @@ export const editorEs: EditorUiMessages = {
         },
         link: {
           'Add a link': 'Añadir un enlace',
+        },
+        convertTo: {
+          'Convert to': 'Convertir a',
+        },
+        header: {
+          'Heading 1': 'Título 1',
+          'Heading 2': 'Título 2',
+          'Heading 3': 'Título 3',
+          'Heading 4': 'Título 4',
+          'Heading 5': 'Título 5',
+          'Heading 6': 'Título 6',
         },
         List: {
           Unordered: 'Viñetas',

@@ -190,6 +190,13 @@ export const editorEn: EditorUiMessages = {
   },
   inlineTools: {
     textColor: 'Text color',
+    textColorOptions: {
+      blue: 'Blue',
+      green: 'Green',
+      danger: 'Red',
+      warning: 'Warning',
+      muted: 'Muted',
+    },
   },
   pluginInfo: {
     standardTools: {
@@ -430,6 +437,11 @@ export const editorEn: EditorUiMessages = {
             Add: 'Add',
           },
         },
+        popover: {
+          Filter: 'Filter',
+          'Nothing found': 'Nothing found',
+          'Convert to': 'Convert to',
+        },
       },
       toolNames: {
         Text: 'Text',
@@ -444,6 +456,14 @@ export const editorEn: EditorUiMessages = {
         Image: 'Image',
         Embed: 'Embed',
         'Raw HTML': 'Raw HTML',
+        Bold: 'Bold',
+        Italic: 'Italic',
+        Link: 'Link',
+        Underline: 'Underline',
+        Marker: 'Marker',
+        Strikethrough: 'Strikethrough',
+        'Inline Code': 'Inline code',
+        'Text Color': 'Text color',
       },
       tools: {
         warning: {
@@ -452,6 +472,17 @@ export const editorEn: EditorUiMessages = {
         },
         link: {
           'Add a link': 'Add a link',
+        },
+        convertTo: {
+          'Convert to': 'Convert to',
+        },
+        header: {
+          'Heading 1': 'Heading 1',
+          'Heading 2': 'Heading 2',
+          'Heading 3': 'Heading 3',
+          'Heading 4': 'Heading 4',
+          'Heading 5': 'Heading 5',
+          'Heading 6': 'Heading 6',
         },
         List: {
           Unordered: 'Unordered',

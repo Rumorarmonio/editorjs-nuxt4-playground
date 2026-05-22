@@ -192,6 +192,13 @@ export const editorRu: EditorUiMessages = {
   },
   inlineTools: {
     textColor: 'Цвет текста',
+    textColorOptions: {
+      blue: 'Синий',
+      green: 'Зелёный',
+      danger: 'Красный',
+      warning: 'Предупреждение',
+      muted: 'Приглушённый',
+    },
   },
   pluginInfo: {
     standardTools: {
@@ -437,6 +444,11 @@ export const editorRu: EditorUiMessages = {
             Add: 'Добавить',
           },
         },
+        popover: {
+          Filter: 'Поиск',
+          'Nothing found': 'Ничего не найдено',
+          'Convert to': 'Преобразовать в',
+        },
       },
       toolNames: {
         Text: 'Текст',
@@ -451,6 +463,14 @@ export const editorRu: EditorUiMessages = {
         Image: 'Изображение',
         Embed: 'Встраивание',
         'Raw HTML': 'HTML-код',
+        Bold: 'Жирный',
+        Italic: 'Курсив',
+        Link: 'Ссылка',
+        Underline: 'Подчёркивание',
+        Marker: 'Маркер',
+        Strikethrough: 'Зачёркивание',
+        'Inline Code': 'Инлайн-код',
+        'Text Color': 'Цвет текста',
       },
       tools: {
         warning: {
@@ -459,6 +479,17 @@ export const editorRu: EditorUiMessages = {
         },
         link: {
           'Add a link': 'Добавьте ссылку',
+        },
+        convertTo: {
+          'Convert to': 'Преобразовать в',
+        },
+        header: {
+          'Heading 1': 'Заголовок 1',
+          'Heading 2': 'Заголовок 2',
+          'Heading 3': 'Заголовок 3',
+          'Heading 4': 'Заголовок 4',
+          'Heading 5': 'Заголовок 5',
+          'Heading 6': 'Заголовок 6',
         },
         List: {
           Unordered: 'Маркированный',
