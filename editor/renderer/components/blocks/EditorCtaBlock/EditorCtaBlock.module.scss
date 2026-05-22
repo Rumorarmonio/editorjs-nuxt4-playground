@@ -11,8 +11,8 @@
   text-decoration: none;
   border: 1px solid transparent;
   border-radius: 6px;
-  cursor: pointer;
   transition: background var(--transition-base), color var(--transition-base), filter var(--transition-base);
+  cursor: pointer;
 }
 
 .ctaActionIconOnly {
