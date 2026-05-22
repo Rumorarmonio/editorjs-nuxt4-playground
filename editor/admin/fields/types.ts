@@ -52,6 +52,7 @@ export interface PlainTextareaFieldOptions
 export interface PlainSelectFieldOptions<TValue extends string = string>
   extends PlainFieldBaseOptions<TValue> {
   options: readonly PlainFieldOption<TValue>[]
+  noChoicesText?: string
 }
 
 export interface PlainRadioGroupFieldOptions<TValue extends string = string>

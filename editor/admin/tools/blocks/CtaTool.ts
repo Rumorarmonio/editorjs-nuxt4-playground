@@ -312,9 +312,13 @@ export default class CtaTool implements BlockTool {
   }
 
   destroy(): void {
+    this.variantField?.destroy?.()
+    this.actionTypeField?.destroy?.()
+    this.contentModeField?.destroy?.()
     this.leftIconField?.destroy?.()
     this.rightIconField?.destroy?.()
     this.iconField?.destroy?.()
+    this.targetField?.destroy?.()
   }
 
   private getCurrentData(): CtaBlockData {

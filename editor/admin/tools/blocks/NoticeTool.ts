@@ -132,6 +132,10 @@ export default class NoticeTool implements BlockTool {
     return true
   }
 
+  destroy(): void {
+    this.typeField?.destroy?.()
+  }
+
   private getCurrentData(): NoticeBlockData {
     return normalizeNoticeBlockData({
       title: this.titleField?.getValue() ?? this.data.title,

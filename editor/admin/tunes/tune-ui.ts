@@ -1,3 +1,6 @@
+import Choices from 'choices.js'
+import { createCustomSelectChoiceMarkup } from '../fields/custom-select-markup'
+
 export interface TuneFieldOptions {
   label: string
   value: string
@@ -13,6 +16,10 @@ export interface TuneSelectOptions {
     value: string
   }[]
   onChange: (value: string) => void
+}
+
+export interface TuneSelectControl extends HTMLDivElement {
+  destroy: () => void
 }
 
 export interface TuneToggleOptions {
@@ -67,16 +74,24 @@ export function createTuneSelectField({
   value,
   options,
   onChange,
-}: TuneSelectOptions): HTMLLabelElement {
-  const field = document.createElement('label')
-  field.className = 'editor-block-tune-field'
+}: TuneSelectOptions): TuneSelectControl {
+  const field = document.createElement('div') as TuneSelectControl
+  const select = document.createElement('select')
+  const summary = document.createElement('button')
+  const summaryLabel = document.createElement('span')
+  const dropdownHost = document.createElement('div')
+  let currentValue = value
+  let choices: Choices | null = null
+
+  field.className = 'editor-block-tune-field editor-custom-select editor-custom-select--compact'
 
   const labelElement = document.createElement('span')
   labelElement.className = 'editor-block-tune-field__label'
   labelElement.textContent = label
 
-  const select = document.createElement('select')
-  select.className = 'editor-block-tune-field__control'
+  select.className =
+    'editor-block-tune-field__control editor-custom-select__control'
+  select.hidden = true
 
   options.forEach((option) => {
     const optionElement = document.createElement('option')
@@ -85,15 +100,149 @@ export function createTuneSelectField({
     select.append(optionElement)
   })
 
-  select.value = value
+  select.value = currentValue
+  summary.type = 'button'
+  summary.className = 'editor-custom-select__summary'
+  summary.setAttribute('aria-label', label)
+  summary.setAttribute('aria-haspopup', 'listbox')
+  summary.setAttribute('aria-expanded', 'false')
+  summaryLabel.className = 'editor-custom-select__summary-label'
+  dropdownHost.className = 'editor-custom-select__dropdown-host'
+  summary.append(summaryLabel)
+  updateSummary()
 
   select.addEventListener('change', () => {
-    onChange(select.value)
+    currentValue = select.value
+    updateSummary()
+    onChange(currentValue)
+  })
+  summary.addEventListener('click', openChoices)
+  summary.addEventListener('keydown', (event) => {
+    if (
+      event.key !== 'Enter' &&
+      event.key !== ' ' &&
+      event.key !== 'ArrowDown'
+    ) {
+      return
+    }
+
+    event.preventDefault()
+    openChoices()
   })
 
-  field.append(labelElement, select)
+  stopTuneBubbleEvents(field)
+  field.append(labelElement, select, summary, dropdownHost)
+  field.destroy = () => closeChoices()
 
   return field
+
+  function openChoices(): void {
+    if (choices) {
+      return
+    }
+
+    select.hidden = false
+    choices = new Choices(select, {
+      allowHTML: true,
+      duplicateItemsAllowed: false,
+      itemSelectText: '',
+      noChoicesText: '',
+      placeholder: false,
+      position: 'bottom',
+      renderSelectedChoices: 'always',
+      searchEnabled: false,
+      shouldSort: false,
+      callbackOnCreateTemplates: (strToEl, escapeForTemplate, getClassNames) => {
+        return {
+          item: (templateOptions, choice) => {
+            return strToEl(
+              createCustomSelectChoiceMarkup({
+                choice,
+                className: [
+                  getClassNames(templateOptions.classNames.item),
+                  getClassNames(
+                    choice.highlighted
+                      ? templateOptions.classNames.highlightedState
+                      : templateOptions.classNames.itemSelectable,
+                  ),
+                  choice.placeholder
+                    ? getClassNames(templateOptions.classNames.placeholder)
+                    : '',
+                  choice.selected
+                    ? getClassNames(templateOptions.classNames.selectedState)
+                    : '',
+                ]
+                  .filter(Boolean)
+                  .join(' '),
+                label: escapeForTemplate(true, choice.label),
+                mode: 'item',
+              }),
+            ) as HTMLDivElement
+          },
+          choice: (templateOptions, choice, selectText) => {
+            return strToEl(
+              createCustomSelectChoiceMarkup({
+                choice,
+                className: [
+                  getClassNames(templateOptions.classNames.item),
+                  getClassNames(templateOptions.classNames.itemChoice),
+                  getClassNames(
+                    choice.disabled
+                      ? templateOptions.classNames.itemDisabled
+                      : templateOptions.classNames.itemSelectable,
+                  ),
+                  choice.selected
+                    ? getClassNames(templateOptions.classNames.selectedState)
+                    : '',
+                ]
+                  .filter(Boolean)
+                  .join(' '),
+                label: escapeForTemplate(true, choice.label),
+                mode: 'choice',
+                selectText: escapeForTemplate(true, selectText),
+              }),
+            ) as HTMLDivElement
+          },
+        }
+      },
+    })
+
+    dropdownHost.append(choices.containerOuter.element)
+    field.classList.add('editor-custom-select--open')
+    summary.setAttribute('aria-expanded', 'true')
+    choices.setChoiceByValue(currentValue)
+    select.addEventListener('hideDropdown', handleChoicesHide)
+    window.requestAnimationFrame(() => {
+      choices?.showDropdown()
+    })
+  }
+
+  function closeChoices(restoreFocus = false): void {
+    if (!choices) {
+      return
+    }
+
+    select.removeEventListener('hideDropdown', handleChoicesHide)
+    choices.destroy()
+    choices = null
+    field.classList.remove('editor-custom-select--open')
+    summary.setAttribute('aria-expanded', 'false')
+    select.hidden = true
+    if (restoreFocus) {
+      summary.focus()
+    }
+    updateSummary()
+  }
+
+  function handleChoicesHide(): void {
+    window.setTimeout(() => closeChoices(true), 0)
+  }
+
+  function updateSummary(): void {
+    const selectedOption = options.find((option) => option.value === currentValue)
+
+    summaryLabel.textContent = selectedOption?.label ?? currentValue
+  }
 }
 
 export function createTuneToggleField({
@@ -159,6 +308,19 @@ function stopTuneEvents(element: HTMLElement): void {
     'keyup',
   ].forEach((eventName) => {
     element.addEventListener(eventName, stopTuneEventPropagation, true)
+  })
+}
+
+function stopTuneBubbleEvents(element: HTMLElement): void {
+  ;[
+    'pointerdown',
+    'pointerup',
+    'mousedown',
+    'mouseup',
+    'keydown',
+    'keyup',
+  ].forEach((eventName) => {
+    element.addEventListener(eventName, stopTuneEventPropagation)
   })
 }
 

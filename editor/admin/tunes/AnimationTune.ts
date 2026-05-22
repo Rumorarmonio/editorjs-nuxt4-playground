@@ -6,7 +6,11 @@ import {
   type AnimationTuneValue,
 } from '~~/editor/shared'
 import { getCurrentEditorMessages } from '~~/i18n/editor'
-import { createTunePanel, createTuneSelectField } from './tune-ui'
+import {
+  createTunePanel,
+  createTuneSelectField,
+  type TuneSelectControl,
+} from './tune-ui'
 
 interface AnimationTuneConstructorOptions {
   data: unknown
@@ -17,6 +21,7 @@ class AnimationTune implements BlockTune {
 
   private data: AnimationTuneData
   private wrapper: HTMLElement | null = null
+  private selectField: TuneSelectControl | null = null
 
   constructor({ data }: AnimationTuneConstructorOptions) {
     this.data = normalizeAnimationTuneData(data)
@@ -30,17 +35,16 @@ class AnimationTune implements BlockTune {
     }))
     const panel = createTunePanel(messages.tunes.animation.title)
 
-    panel.append(
-      createTuneSelectField({
-        label: messages.tunes.animation.label,
-        value: this.data.type ?? 'none',
-        options: animationOptions,
-        onChange: (value) => {
-          this.data.type = value as AnimationTuneValue
-          this.syncWrapper()
-        },
-      }),
-    )
+    this.selectField = createTuneSelectField({
+      label: messages.tunes.animation.label,
+      value: this.data.type ?? 'none',
+      options: animationOptions,
+      onChange: (value) => {
+        this.data.type = value as AnimationTuneValue
+        this.syncWrapper()
+      },
+    })
+    panel.append(this.selectField)
 
     return panel
   }
@@ -55,6 +59,11 @@ class AnimationTune implements BlockTune {
 
   save(): AnimationTuneData {
     return this.data
+  }
+
+  destroy(): void {
+    this.selectField?.destroy()
+    this.selectField = null
   }
 
   private syncWrapper(): void {

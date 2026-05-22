@@ -69,10 +69,19 @@ export function createIconSelectField<TValue extends string = string>(
     ...options,
     control: select,
   })
+  const labelElement = wrapper.root.querySelector<HTMLLabelElement>(
+    '.editor-plain-field__label',
+  )
+
+  summary.id = `${select.id}-summary`
+  if (labelElement) {
+    labelElement.htmlFor = summary.id
+  }
   wrapper.root.classList.add('editor-icon-select')
   wrapper.root.addEventListener('keydown', stopKeyboardEventPropagation)
   select.after(summary)
   summary.after(dropdownHost)
+  syncSummaryAccessibility()
   updateSummary()
 
   const openChoices = () => {
@@ -89,7 +98,7 @@ export function createIconSelectField<TValue extends string = string>(
       noResultsText: options.noResultsText,
       placeholder: false,
       position: 'bottom',
-      renderSelectedChoices: false,
+      renderSelectedChoices: 'always',
       searchEnabled: true,
       searchFields: ['label', 'value'],
       searchPlaceholderValue: options.searchPlaceholder,
@@ -109,6 +118,9 @@ export function createIconSelectField<TValue extends string = string>(
                   ),
                   choice.placeholder
                     ? getClassNames(templateOptions.classNames.placeholder)
+                    : '',
+                  choice.selected
+                    ? getClassNames(templateOptions.classNames.selectedState)
                     : '',
                 ]
                   .filter(Boolean)
@@ -131,7 +143,12 @@ export function createIconSelectField<TValue extends string = string>(
                       ? templateOptions.classNames.itemDisabled
                       : templateOptions.classNames.itemSelectable,
                   ),
-                ].join(' '),
+                  choice.selected
+                    ? getClassNames(templateOptions.classNames.selectedState)
+                    : '',
+                ]
+                  .filter(Boolean)
+                  .join(' '),
                 iconHref: options.getIconHref(choice.value as TValue),
                 label: escapeForTemplate(true, choice.label),
                 mode: 'choice',
@@ -206,7 +223,10 @@ export function createIconSelectField<TValue extends string = string>(
       choices?.setChoiceByValue(value)
       updateSummary()
     },
-    setError: wrapper.setError,
+    setError(error) {
+      wrapper.setError(error)
+      syncSummaryAccessibility()
+    },
     setDisabled(disabled) {
       isDisabled = disabled
       wrapper.setDisabled(disabled)
@@ -245,6 +265,24 @@ export function createIconSelectField<TValue extends string = string>(
     summaryUse.setAttribute('href', iconHref)
     summaryIcon.toggleAttribute('hidden', false)
   }
+
+  function syncSummaryAccessibility(): void {
+    const describedBy = select.getAttribute('aria-describedby')
+    const invalid = select.getAttribute('aria-invalid')
+
+    if (describedBy) {
+      summary.setAttribute('aria-describedby', describedBy)
+    } else {
+      summary.removeAttribute('aria-describedby')
+    }
+
+    if (invalid) {
+      summary.setAttribute('aria-invalid', invalid)
+      select.removeAttribute('aria-invalid')
+    } else {
+      summary.removeAttribute('aria-invalid')
+    }
+  }
 }
 
 interface CreateIconSelectChoiceMarkupOptions {
@@ -262,6 +300,7 @@ interface IconSelectChoice {
   highlighted: boolean
   id: number
   placeholder: boolean
+  selected: boolean
   value: string
 }
 
@@ -283,7 +322,7 @@ function createIconSelectChoiceMarkup({
       : '',
     `data-id="${choice.id}"`,
     `data-value="${escapeHtmlAttribute(choice.value)}"`,
-    choice.active ? 'aria-selected="true"' : '',
+    choice.selected ? 'aria-selected="true"' : '',
     !isChoice && choice.disabled ? 'aria-disabled="true"' : '',
     isChoice ? `data-select-text="${escapeHtmlAttribute(selectText ?? '')}"` : '',
     isChoice ? 'role="option"' : 'role="option"',

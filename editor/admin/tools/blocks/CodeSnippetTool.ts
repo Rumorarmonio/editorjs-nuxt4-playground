@@ -133,6 +133,10 @@ export default class CodeSnippetTool implements BlockTool {
     return true
   }
 
+  destroy(): void {
+    this.languageField?.destroy?.()
+  }
+
   private getCurrentData(): CodeSnippetBlockData {
     return normalizeCodeSnippetBlockData({
       language: this.languageField?.getValue() ?? this.data.language,

@@ -38,6 +38,7 @@ deployment.
 - Tooltip стал interactive; preview image открывается через Fancybox.
 - Optional improvement с типографикой сохранения реализован: при `Save draft` и editor-side `Export JSON` контент проходит через `typograf` с автоопределением языка строки и fallback на текущую локаль `ru | en | es`, но только по `nbsp`-правилам и только в человекочитаемых текстовых полях.
 - Optional improvement с drag-and-drop reorder блоков реализован: подключён `editorjs-drag-drop`, перетаскивание работает через стандартную settings-кнопку блока Editor.js без изменения content JSON schema; дополнительно добавлен auto-scroll страницы при drag у верхнего/нижнего края viewport.
+- Optional improvement editor-селектов реализован: plain field selects и block tune selects переведены на единый кастомный dropdown без поиска на базе `choices.js`; Vue-селекты demo shell для языка и темы оставлены вне scope.
 - Активный этап: Некритичные улучшения.
 - Первый инфраструктурный срез этапа CTA icons via generated SVG sprite реализован: source SVG перенесены из `public` в `editor/assets/icons`, generated sprite создаётся в `public/icons/sprite.svg`, generated `IconName` / `iconNames` и shared icon helpers добавлены в `editor/shared/icons`.
 - Второй shared schema срез этапа CTA icons via generated SVG sprite реализован: CTA data contract расширен `contentMode`, `leftIcon`, `rightIcon` и `icon`, normalizer/guard/validation используют generated icon names, а текущий `CtaTool` сохраняет icon-поля без UI.
@@ -72,7 +73,8 @@ deployment.
 
 1. Держать этап открытым для небольших optional improvements после закрытия schema-changing этапов.
 2. Сначала пройти оставшиеся полезные ручные проверки: `nbsp`-сохранение на русском/английском/испанском, drag-and-drop reorder обычных и custom blocks, CTA icon scenarios после закрытого этапа.
-3. После проверок выбрать следующий небольшой improvement с узким diff.
+3. Перевести editor-side native selects на консистентный кастомный dropdown без поиска, не затрагивая Vue demo shell controls — выполнено для `createPlainSelectField` и `createTuneSelectField`.
+4. После проверок выбрать следующий небольшой improvement с узким diff.
 
 ## Критерии готовности этапа
 
@@ -80,8 +82,9 @@ deployment.
 - Базовые editor/renderer сценарии не ломаются.
 - Save/load, Import JSON, validation, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
 - `npm run check` запускается после значимых кодовых изменений; `npm run build` — после runtime/public asset изменений.
+- Editor-side selects в custom block tools и block tunes выглядят и открываются консистентно, сохраняют keyboard/focus states и не включают поиск для малых option sets.
 
-Ближайший шаг — выбрать следующий небольшой optional improvement или пройти отложенные smoke-check проверки: `nbsp`, drag-and-drop reorder и CTA icon scenarios.
+Ближайший шаг — вручную проверить новые editor-селекты в custom block tools и block tunes, затем выбрать следующий небольшой optional improvement или пройти отложенные smoke-check проверки: `nbsp`, drag-and-drop reorder и CTA icon scenarios.
 
 ## Последний завершённый этап
 

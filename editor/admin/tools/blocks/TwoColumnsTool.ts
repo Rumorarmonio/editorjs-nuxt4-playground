@@ -170,6 +170,7 @@ export default class TwoColumnsTool implements BlockTool {
   }
 
   destroy(): void {
+    this.layoutField?.destroy?.()
     this.leftEditor?.destroy()
     this.rightEditor?.destroy()
     this.leftEditor = null

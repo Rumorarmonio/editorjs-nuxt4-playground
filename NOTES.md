@@ -77,6 +77,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Для ручной проверки типографики добавлены компактные JSON fixtures в `content/`: `nbsp-ru-page.json`, `nbsp-en-page.json`, `nbsp-es-page.json` и `nbsp-mixed-page.json`. Они покрывают standard rich blocks, list/table cells, captions, custom blocks, nested rich fields и контрольные поля code/rawHtml/JSON payload, где типографика не должна применяться.
 - Post-review fixes типографики: `default-page.json` не коммитится как runtime-saved output после ручной проверки, чтобы не тащить churn от Editor.js save; plain/rich text типографируется по sentence-like сегментам внутри строки, а HTML rich text возвращает реальный `U+00A0` вместо `&nbsp;` для единообразного JSON.
 - Для standard `embed` save-normalization декодирует URL entities в `source` / `embed` (`&amp;`, `&#38;`, `&#x26;` -> `&`), потому что JSON URL не должен хранить HTML-escaped query separators; это сохраняет работоспособность VK/Vimeo/Twitch whitelist после повторного сохранения через Editor.js.
+- Optional improvement editor-селектов реализован: `createPlainSelectField` и `createTuneSelectField` переведены с native `select` на ленивые кастомные dropdowns на базе уже подключённого `choices.js`, без поиска и без новой зависимости. Общий option markup вынесен в `editor/admin/fields/custom-select-markup.ts`, styles живут в `editor/admin/styles/editor.scss` через `editor-custom-select*` классы. Vue-селекты языка и темы намеренно оставлены native, потому что они относятся к demo shell, а не к будущей editor admin UI.
 
 ## Ключевые решения
 
@@ -97,6 +98,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - `SPEC.md` исключён из `Prettier`, чтобы не создавать большой нерелевантный diff в исходном документе требований.
 - Корневой `tsconfig.json` явно включает `editor/**/*`, чтобы ESLint project service и `nuxt typecheck` проверяли доменный editor-слой вне `app/`.
 - Plain field system должна жить в `editor/admin/fields`, быть reusable для будущих custom block tools и не должна тянуть Vue runtime внутрь Editor.js tool classes.
+- Кастомные plain/tune selects в editor admin UI используют ленивый `choices.js` instance, создаваемый только при открытии dropdown; поиск отключён для обычных малых option sets. CTA icon select остаётся отдельным searchable helper из-за preview иконок и большого списка.
 - Plain fields не должны поддерживать inline tools; если полю нужен rich text, это будущий rich field/nested editor scenario.
 - Toggle в custom editor UI должен сохраняться как boolean, даже если визуально отображается как переключатель.
 - Image-oriented fields для будущих custom blocks должны предусматривать явный `alt`, но полноценный media workflow остаётся отдельным поздним этапом.

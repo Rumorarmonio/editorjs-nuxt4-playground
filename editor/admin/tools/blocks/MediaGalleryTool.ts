@@ -213,6 +213,7 @@ export default class MediaGalleryTool implements BlockTool {
   }
 
   destroy(): void {
+    this.modeField?.destroy?.()
     this.destroyCardControls()
   }
 
@@ -436,6 +437,7 @@ export default class MediaGalleryTool implements BlockTool {
 
   private destroyCardControls(): void {
     this.cardControls.forEach((controls) => {
+      controls.type.destroy?.()
       controls.description.destroy()
     })
     this.cardControls = []

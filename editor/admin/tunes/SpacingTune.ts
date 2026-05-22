@@ -6,7 +6,11 @@ import {
   type SpacingTuneValue,
 } from '~~/editor/shared'
 import { getCurrentEditorMessages } from '~~/i18n/editor'
-import { createTunePanel, createTuneSelectField } from './tune-ui'
+import {
+  createTunePanel,
+  createTuneSelectField,
+  type TuneSelectControl,
+} from './tune-ui'
 
 interface SpacingTuneConstructorOptions {
   data: unknown
@@ -24,6 +28,7 @@ class SpacingTune implements BlockTune {
 
   private data: SpacingTuneData
   private wrapper: HTMLElement | null = null
+  private selectFields: TuneSelectControl[] = []
 
   constructor({ data }: SpacingTuneConstructorOptions) {
     this.data = normalizeSpacingTuneData(data)
@@ -36,27 +41,27 @@ class SpacingTune implements BlockTune {
       label: messages.tunes.spacing.options[value],
     }))
     const panel = createTunePanel(messages.tunes.spacing.title)
+    const topField = createTuneSelectField({
+      label: messages.tunes.spacing.topLabel,
+      value: this.data.top ?? 'none',
+      options: spacingOptions,
+      onChange: (value) => {
+        this.data.top = value as SpacingTuneValue
+        this.syncWrapper()
+      },
+    })
+    const bottomField = createTuneSelectField({
+      label: messages.tunes.spacing.bottomLabel,
+      value: this.data.bottom ?? 'none',
+      options: spacingOptions,
+      onChange: (value) => {
+        this.data.bottom = value as SpacingTuneValue
+        this.syncWrapper()
+      },
+    })
 
-    panel.append(
-      createTuneSelectField({
-        label: messages.tunes.spacing.topLabel,
-        value: this.data.top ?? 'none',
-        options: spacingOptions,
-        onChange: (value) => {
-          this.data.top = value as SpacingTuneValue
-          this.syncWrapper()
-        },
-      }),
-      createTuneSelectField({
-        label: messages.tunes.spacing.bottomLabel,
-        value: this.data.bottom ?? 'none',
-        options: spacingOptions,
-        onChange: (value) => {
-          this.data.bottom = value as SpacingTuneValue
-          this.syncWrapper()
-        },
-      }),
-    )
+    this.selectFields = [topField, bottomField]
+    panel.append(topField, bottomField)
 
     return panel
   }
@@ -71,6 +76,11 @@ class SpacingTune implements BlockTune {
 
   save(): SpacingTuneData {
     return this.data
+  }
+
+  destroy(): void {
+    this.selectFields.forEach((field) => field.destroy())
+    this.selectFields = []
   }
 
   private syncWrapper(): void {
