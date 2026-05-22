@@ -14,7 +14,7 @@ export const editorInlineToolbar = [
 export const inlineToolShortcuts = {
   marker: 'CMD+SHIFT+M',
   textColor: 'CMD+SHIFT+Y',
-  underline: 'CMD+SHIFT+L',
+  underline: 'CMD+U',
   strikethrough: 'CMD+SHIFT+X',
   inlineCode: 'CMD+SHIFT+6',
 } as const
