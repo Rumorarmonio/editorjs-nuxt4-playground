@@ -61,7 +61,9 @@ export interface PlainRadioGroupFieldOptions<TValue extends string = string>
 }
 
 export interface PlainToggleFieldOptions
-  extends PlainFieldBaseOptions<boolean> {}
+  extends PlainFieldBaseOptions<boolean> {
+  inlineLabel?: boolean
+}
 
 export interface PlainUrlFieldOptions extends PlainTextFieldOptions {}
 

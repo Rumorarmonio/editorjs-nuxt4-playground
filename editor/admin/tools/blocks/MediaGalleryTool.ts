@@ -146,6 +146,7 @@ export default class MediaGalleryTool implements BlockTool {
       name: 'media-gallery-fancybox',
       label: messages.tools.mediaGallery.enableViewerLabel,
       value: this.data.enableFancybox,
+      inlineLabel: true,
       readOnly: this.readOnly,
       onChange: (value) => {
         this.data.enableFancybox = value
@@ -157,6 +158,7 @@ export default class MediaGalleryTool implements BlockTool {
       name: 'media-gallery-url-sync',
       label: messages.tools.mediaGallery.syncUrlLabel,
       value: this.data.syncUrlWithFancybox,
+      inlineLabel: true,
       readOnly: this.readOnly,
       onChange: (value) => {
         this.data.syncUrlWithFancybox = value

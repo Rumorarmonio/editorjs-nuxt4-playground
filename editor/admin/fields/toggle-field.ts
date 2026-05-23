@@ -6,6 +6,7 @@ export function createPlainToggleField(
 ): PlainFieldControl<boolean, HTMLInputElement> {
   const input = document.createElement('input')
   const toggle = document.createElement('label')
+  const isInlineLabel = Boolean(options.inlineLabel)
   let currentValue = options.value
   let isReadOnly = Boolean(options.readOnly)
 
@@ -54,6 +55,14 @@ export function createPlainToggleField(
 
   input.id = controlId
   toggle.removeAttribute('id')
+  wrapper.root.classList.toggle(
+    'editor-plain-field--toggle-inline',
+    isInlineLabel,
+  )
+
+  if (isInlineLabel) {
+    wrapper.root.insertBefore(toggle, wrapper.root.firstChild)
+  }
 
   syncToggleState(toggle, input)
 

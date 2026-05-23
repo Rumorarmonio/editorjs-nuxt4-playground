@@ -107,6 +107,7 @@ export default class TwoColumnsTool implements BlockTool {
       name: 'two-columns-reversed',
       label: messages.tools.twoColumns.reverseLabel,
       value: this.data.isReversed,
+      inlineLabel: true,
       readOnly: this.readOnly,
       onChange: (value) => {
         this.data.isReversed = value

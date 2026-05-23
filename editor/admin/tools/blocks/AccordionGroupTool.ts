@@ -104,6 +104,7 @@ export default class AccordionGroupTool implements BlockTool {
       name: 'accordion-close-others',
       label: messages.tools.accordionGroup.closeOthersLabel,
       value: this.data.closeOthersOnOpen,
+      inlineLabel: true,
       readOnly: this.readOnly,
       onChange: (value) => {
         this.data.closeOthersOnOpen = value
@@ -219,6 +220,7 @@ export default class AccordionGroupTool implements BlockTool {
       name: `accordion-${item.id}-initial-open`,
       label: messages.tools.accordionGroup.initialOpenLabel,
       value: item.isInitiallyOpen,
+      inlineLabel: true,
       readOnly: this.readOnly,
       onChange: (value) => {
         item.isInitiallyOpen = value
