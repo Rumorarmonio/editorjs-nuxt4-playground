@@ -428,6 +428,7 @@
 25. Расширение набора контентных блоков и plugins.
 26. Accordion group block как отдельный крупный recursive composite block.
 27. CTA icons via generated SVG sprite как отдельный поздний этап, потому что он меняет CTA schema и asset pipeline.
+28. Data-driven cards block на основе mock API для карточных секций с сущностями вроде products, posts и recipes, preset-based sorting/filtering и load more / view all сценариями без полноценного backend.
 
 ### 8.3. Принцип кастомизации
 
@@ -2843,6 +2844,35 @@ Strikethrough следует сначала пробовать как готов
 - CTA использует generated SVG sprite без дублирования SVG-файлов и без хранения SVG markup в content JSON.
 
 ---
+
+### Этап 28. Data-driven cards block
+
+Содержимое этапа:
+
+- typed block для карточных секций, которые получают данные из mock API и рендерятся как полноценные секции внутри editor/preview, не превращая проект в CMS и не добавляя собственный backend;
+- в качестве первого сервиса используется **DummyJSON**, потому что он предоставляет `products`, `posts` и `recipes`, а также серверную сортировку, пагинацию и ограниченные фильтры на уровне этих сущностей;
+- для первого среза этапа используются `products` как товарные карточки, `posts` как статейные карточки и `recipes` как третий демонстрационный набор, показывающий, что блок не завязан только на e-commerce-модель;
+- block contract хранит только декларативную конфигурацию секции, а не сами карточки;
+- поддерживаемые view modes: `grid`, `slider`, `list`;
+- поддерживаемые универсальные параметры выборки: `limit`, `skip`, `sortBy`, `order`;
+- поддерживаемые preset-based фильтры привязаны к конкретной сущности и не превращаются в свободный query builder;
+- `showLoadMore` и `loadMoreStep` используются только для grid/list-сценариев;
+- `showViewAllButton` остаётся декларативным навигационным сценарием с возможностью прокинуть текущие query-параметры сортировки и фильтрации;
+- visitor controls показываются только для заранее разрешённых сортировок и фильтров;
+- блок не должен превращаться в generic CMS-like data management tool и не должен требовать полноценного backend API в рамках текущего проекта.
+
+Проверка:
+
+- блок умеет отображать карточные секции из внешнего data source;
+- renderer работает с backend-like выборкой без превращения editor в CMS;
+- `showLoadMore` не активируется для slider-сценария;
+- `showViewAllButton` не требует отдельного CMS workflow;
+- save/load/render/import/export/reset проходят без потери данных;
+- data contract остаётся узким и стабильным для будущего перехода на настоящий backend.
+
+Критерий готовности:
+
+- реализован стабильный data-driven cards block с DummyJSON как базовым mock API и без нарушения общей архитектуры проекта.
 
 ## 34. Финальная позиция по реализации
 

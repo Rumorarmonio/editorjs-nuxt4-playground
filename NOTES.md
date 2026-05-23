@@ -29,6 +29,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Базовый слой Block Tunes (`AnchorTune`, `SpacingTune`, `LabelTune`) завершён: реализация, renderer, guard, demo JSON, ручная browser-проверка и `npm run check` готовы.
 - Plain field system для будущих custom blocks завершена.
 - Активный scope по `SPEC.md`: этап Некритичные улучшения; этап `CTA icons via generated SVG sprite` закрыт как завершённый поздний schema-changing этап.
+- Запланирован следующий этап: `Data-driven cards block` на основе mock API, конкретно `DummyJSON`, для карточных секций с `products`, `posts` и `recipes`.
 - Первый custom block `Notice` подтвердил полный custom block lifecycle на простых plain fields без раннего перехода к media workflow, rich fields или nested Editor.js.
 - Reusable rich fields детализированы и завершены: `RichParagraphField` и `RichHeaderField` реализованы на базе nested Editor.js.
 - Для `SectionIntro` добавлен минимальный shared-контракт данных: `title` и `description` как вложенный Editor.js-compatible output только с paragraph-блоками.
