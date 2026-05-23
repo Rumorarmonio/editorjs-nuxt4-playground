@@ -28,6 +28,8 @@ deployment.
 - Второе optional improvement этапа Некритичные улучшения реализовано: preview sidebar получил временный demo-переключатель между navigation по заголовкам и старой navigation по `AnchorTune` / `LabelTune`.
 - Третье optional improvement этапа Некритичные улучшения реализовано: добавлен `AnimationTune` для простых reveal-анимаций блоков в renderer.
 - Четвёртое optional improvement этапа Некритичные улучшения реализовано: добавлен scoped `EmbedDisplayTune` для режима embed video `inline | fancybox`, а embed whitelist расширен Rutube, VK Video и Twitch.
+- Пятое optional improvement этапа Некритичные улучшения реализовано: custom background inline tool добавлен по аналогии с text color, а стандартный `@editorjs/marker` удалён после переноса логики.
+- Совместное применение цвета текста и фона окончательно закреплено на разных inline-тегах `span` + `mark`; общий `span`-контракт оказался неудобен для ручного применения и был убран, а demo content переведён на вложенную структуру.
 - Точечное UX-улучшение embed-блока реализовано: существующий `ManualEmbedTool` позволяет редактировать URL уже созданного embed без удаления блока.
 - Style-architecture improvement этапа Некритичные улучшения реализован: глобальные Editor.js/custom tool стили вынесены из CSS Module в `editor/admin/styles/editor.scss`.
 - Этап расширения набора контентных блоков и plugins завершён: реализованы typed `CTA/Button`, `Code snippet` с подсветкой, CTA event action и `Raw HTML` на базе `@editorjs/raw`.

@@ -416,8 +416,47 @@
     outline-offset: 1px;
   }
 
+  .editor-background-color {
+    padding: 0 2px;
+    color: inherit;
+    border-radius: 2px;
+  }
+
+  .editor-background-color--accent {
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+
+  .editor-background-color--success {
+    background: color-mix(in srgb, var(--color-success) 22%, transparent);
+  }
+
+  .editor-background-color--danger {
+    background: color-mix(in srgb, var(--color-danger) 22%, transparent);
+  }
+
+  .editor-background-color--warning {
+    background: color-mix(in srgb, var(--color-warning) 22%, transparent);
+  }
+
   .cdx-marker {
-    background: var(--color-marker);
+    background: color-mix(in srgb, var(--color-warning) 22%, transparent);
+  }
+
+  .editor-background-color--muted {
+    background: color-mix(in srgb, var(--color-muted) 22%, transparent);
+  }
+
+  .cdx-underline {
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+    text-decoration-color: currentColor;
+  }
+
+  .cdx-strikethrough,
+  .cdx-strikethroughs {
+    text-decoration: line-through;
+    text-decoration-color: currentColor;
   }
 
   .inline-code {
@@ -734,23 +773,24 @@
   }
 
   .editor-text-color-tool__icon {
-    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-width: 16px;
     font-weight: 700;
-    color: var(--editor-text-color-tool-current, var(--color-text));
+    color: var(--color-text);
   }
 
   .editor-text-color-tool__icon::after {
-    position: absolute;
-    right: 1px;
-    bottom: 0;
-    left: 1px;
-    height: 2px;
-    background: var(--editor-text-color-tool-current, var(--color-text));
-    content: '';
+    content: none;
+  }
+
+  .ce-inline-tool--active .editor-text-color-tool__icon {
+    color: var(--editor-text-color-tool-current, var(--color-text));
+  }
+
+  .ce-inline-tool--active .editor-text-color-tool__icon::after {
+    content: none;
   }
 
   .editor-text-color-tool__actions {
@@ -770,6 +810,46 @@
   }
 
   .editor-text-color-tool__swatch--active {
+    border-color: var(--color-text);
+  }
+
+  .editor-background-color-tool__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    padding: 0 3px;
+    font-weight: 700;
+    color: var(--color-text);
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--color-muted) 24%, transparent);
+  }
+
+  .ce-inline-tool--active .editor-background-color-tool__icon {
+    background: color-mix(
+      in srgb,
+      var(--editor-background-color-tool-current, var(--color-text)) 22%,
+      transparent
+    );
+  }
+
+  .editor-background-color-tool__actions {
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .editor-background-color-tool__swatch {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: var(--editor-background-color-tool-swatch);
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .editor-background-color-tool__swatch--active {
     border-color: var(--color-text);
   }
 

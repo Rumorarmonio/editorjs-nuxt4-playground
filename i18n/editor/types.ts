@@ -236,6 +236,14 @@ export interface EditorUiMessages {
       warning: string
       muted: string
     }
+    textBackground: string
+    textBackgroundOptions: {
+      blue: string
+      green: string
+      danger: string
+      warning: string
+      muted: string
+    }
   }
   pluginInfo: {
     standardTools: {

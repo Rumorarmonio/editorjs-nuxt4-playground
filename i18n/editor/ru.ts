@@ -199,6 +199,14 @@ export const editorRu: EditorUiMessages = {
       warning: 'Предупреждение',
       muted: 'Приглушённый',
     },
+    textBackground: 'Фон текста',
+    textBackgroundOptions: {
+      blue: 'Синий',
+      green: 'Зелёный',
+      danger: 'Красный',
+      warning: 'Предупреждение',
+      muted: 'Приглушённый',
+    },
   },
   pluginInfo: {
     standardTools: {

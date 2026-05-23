@@ -1,4 +1,7 @@
 import {
+  getTextBackgroundInlineOptionByClassName,
+  textBackgroundInlineClassName,
+  textBackgroundInlineClassNames,
   getTextColorInlineOptionByClassName,
   textColorInlineClassName,
   textColorInlineClassNames,
@@ -22,6 +25,7 @@ const allowedClasses = new Set([
   'cdx-strikethroughs',
   'inline-code',
   ...textColorInlineClassNames,
+  ...textBackgroundInlineClassNames,
 ])
 
 export function sanitizeInlineHtml(html: string): string {
@@ -33,6 +37,7 @@ export function sanitizeInlineHtml(html: string): string {
 
   template.innerHTML = html
   sanitizeNode(template.content)
+  normalizeTextDecorationOrder(template.content)
 
   return template.innerHTML
 }
@@ -92,11 +97,45 @@ function sanitizeElement(element: HTMLElement): void {
 
   if (element.tagName === 'SPAN') {
     const colorOption = getTextColorInlineOptionByClassName(classes)
+    const backgroundOption = getTextBackgroundInlineOptionByClassName(classes)
+    const nextClasses: string[] = []
 
     if (classes.includes(textColorInlineClassName) && colorOption) {
-      element.className = [textColorInlineClassName, colorOption.className].join(
-        ' ',
+      nextClasses.push(textColorInlineClassName, colorOption.className)
+    }
+
+    if (classes.includes(textBackgroundInlineClassName) && backgroundOption) {
+      nextClasses.push(
+        textBackgroundInlineClassName,
+        backgroundOption.className,
       )
+    }
+
+    if (nextClasses.length > 0) {
+      element.className = nextClasses.join(' ')
+      return
+    }
+  }
+
+  if (element.tagName === 'MARK') {
+    const backgroundOption = getTextBackgroundInlineOptionByClassName(classes)
+
+    if (
+      classes.includes(textBackgroundInlineClassName) &&
+      backgroundOption
+    ) {
+      element.className = [
+        textBackgroundInlineClassName,
+        backgroundOption.className,
+      ].join(' ')
+      return
+    }
+
+    if (classes.includes('cdx-marker')) {
+      element.className = [
+        textBackgroundInlineClassName,
+        'editor-background-color--warning',
+      ].join(' ')
       return
     }
   }
@@ -104,6 +143,44 @@ function sanitizeElement(element: HTMLElement): void {
   if (classes.length > 0) {
     element.className = classes.join(' ')
   }
+}
+
+function normalizeTextDecorationOrder(node: ParentNode): void {
+  Array.from(node.querySelectorAll<HTMLElement>(`.${textColorInlineClassName}`)).forEach(
+    (colorWrapper) => {
+      const decorationAncestor = findOutermostTextDecorationAncestor(colorWrapper)
+
+      if (!decorationAncestor) {
+        return
+      }
+
+      const parent = decorationAncestor.parentNode
+
+      if (!parent) {
+        return
+      }
+
+      parent.insertBefore(colorWrapper, decorationAncestor)
+      colorWrapper.append(decorationAncestor)
+    },
+  )
+}
+
+function findOutermostTextDecorationAncestor(
+  element: HTMLElement,
+): HTMLElement | null {
+  let current = element.parentElement
+  let decorationAncestor: HTMLElement | null = null
+
+  while (current) {
+    if (current.tagName === 'U' || current.tagName === 'S') {
+      decorationAncestor = current
+    }
+
+    current = current.parentElement
+  }
+
+  return decorationAncestor
 }
 
 function isAllowedHref(href: string): boolean {

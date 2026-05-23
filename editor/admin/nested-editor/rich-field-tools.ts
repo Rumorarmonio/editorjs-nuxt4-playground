@@ -7,6 +7,7 @@ import {
   inlineToolShortcuts,
 } from '~~/editor/admin/config/editor-inline-tools'
 import InlineCodeTool from '~~/editor/admin/tools/InlineCodeTool'
+import { TextBackgroundToolConstructable } from '~~/editor/admin/tools/TextBackgroundTool'
 import { TextColorToolConstructable } from '~~/editor/admin/tools/TextColorTool'
 import { CtaToolConstructable } from '~~/editor/admin/tools/blocks/CtaTool'
 
@@ -92,19 +93,17 @@ export async function createNestedColumnTools(): Promise<EditorConfig['tools']> 
 
 async function createNestedInlineTools(): Promise<EditorConfig['tools']> {
   const [
-    { default: Marker },
     { default: Underline },
     { default: Strikethrough },
   ] = await Promise.all([
-    import('@editorjs/marker'),
     import('@editorjs/underline'),
     import('@sotaproject/strikethrough'),
   ])
 
   return {
-    marker: {
-      class: Marker as unknown as ToolConstructable,
-      shortcut: inlineToolShortcuts.marker,
+    textBackground: {
+      class: TextBackgroundToolConstructable as unknown as ToolConstructable,
+      shortcut: inlineToolShortcuts.textBackground,
     },
     textColor: {
       class: TextColorToolConstructable as unknown as ToolConstructable,

@@ -4,6 +4,7 @@ import type {
 } from '@editorjs/editorjs/types'
 import { ManualEmbedToolConstructable } from '~~/editor/admin/tools/ManualEmbedTool'
 import InlineCodeTool from '~~/editor/admin/tools/InlineCodeTool'
+import { TextBackgroundToolConstructable } from '~~/editor/admin/tools/TextBackgroundTool'
 import { TextColorToolConstructable } from '~~/editor/admin/tools/TextColorTool'
 import { AnchorTuneConstructable } from '~~/editor/admin/tunes/AnchorTune'
 import { AnimationTuneConstructable } from '~~/editor/admin/tunes/AnimationTune'
@@ -46,7 +47,6 @@ export async function createEditorTools(
     { default: Delimiter },
     { default: Table },
     { default: ImageTool },
-    { default: Marker },
     { default: Underline },
     { default: Strikethrough },
     { default: RawTool },
@@ -57,7 +57,6 @@ export async function createEditorTools(
     import('@editorjs/delimiter'),
     import('@editorjs/table'),
     import('@editorjs/image'),
-    import('@editorjs/marker'),
     import('@editorjs/underline'),
     import('@sotaproject/strikethrough'),
     import('@editorjs/raw'),
@@ -147,9 +146,9 @@ export async function createEditorTools(
         placeholder: messages.tools.rawHtml.htmlPlaceholder,
       },
     },
-    marker: {
-      class: Marker as unknown as ToolConstructable,
-      shortcut: inlineToolShortcuts.marker,
+    textBackground: {
+      class: TextBackgroundToolConstructable as unknown as ToolConstructable,
+      shortcut: inlineToolShortcuts.textBackground,
     },
     textColor: {
       class: TextColorToolConstructable as unknown as ToolConstructable,

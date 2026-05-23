@@ -5,19 +5,47 @@
   max-width: 760px;
   color: var(--color-text);
 
-  :global(.cdx-marker) {
+  :global(.editor-background-color) {
     padding: 0 2px;
-    background: var(--color-marker);
+    color: inherit;
+    border-radius: 2px;
+  }
+
+  :global(.editor-background-color--accent) {
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+
+  :global(.editor-background-color--success) {
+    background: color-mix(in srgb, var(--color-success) 22%, transparent);
+  }
+
+  :global(.editor-background-color--danger) {
+    background: color-mix(in srgb, var(--color-danger) 22%, transparent);
+  }
+
+  :global(.editor-background-color--warning) {
+    background: color-mix(in srgb, var(--color-warning) 22%, transparent);
+  }
+
+  :global(.cdx-marker) {
+    background: color-mix(in srgb, var(--color-warning) 22%, transparent);
+  }
+
+  :global(.editor-background-color--muted) {
+    background: color-mix(in srgb, var(--color-muted) 22%, transparent);
   }
 
   :global(.cdx-underline) {
     text-decoration: underline;
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.16em;
+    text-decoration-color: currentColor;
   }
 
-  :global(.cdx-strikethrough) {
+  :global(.cdx-strikethrough),
+  :global(.cdx-strikethroughs) {
     text-decoration: line-through;
+    text-decoration-color: currentColor;
   }
 
   :global(.inline-code) {

@@ -5,14 +5,14 @@ export const editorInlineToolbar = [
   'italic',
   'link',
   'underline',
-  'marker',
+  'textBackground',
   'textColor',
   'strikethrough',
   'inlineCode',
 ] satisfies NonNullable<EditorConfig['inlineToolbar']>
 
 export const inlineToolShortcuts = {
-  marker: 'CMD+SHIFT+M',
+  textBackground: 'CMD+SHIFT+M',
   textColor: 'CMD+SHIFT+Y',
   underline: 'CMD+U',
   strikethrough: 'CMD+SHIFT+X',

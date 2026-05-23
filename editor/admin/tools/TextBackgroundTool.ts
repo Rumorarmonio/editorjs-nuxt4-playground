@@ -1,23 +1,24 @@
 import type { API, InlineToolConstructorOptions } from '@editorjs/editorjs'
 import type { SanitizerConfig } from '@editorjs/editorjs/types'
 import {
-  getTextColorInlineOptionByClassName,
-  textColorInlineClassName,
-  textColorInlineOptions,
-  type TextColorInlineOption,
+  getTextBackgroundInlineOptionByClassName,
+  textBackgroundInlineClassName,
+  textBackgroundInlineOptions,
+  type TextBackgroundInlineOption,
 } from '~~/editor/shared'
 import { getCurrentEditorMessages } from '~~/i18n/editor'
 
-const textColorTag = 'SPAN'
+const textBackgroundTag = 'MARK'
 
-export default class TextColorTool {
+export default class TextBackgroundTool {
   private readonly api: API
 
   private button: HTMLButtonElement | null = null
 
   private actions: HTMLDivElement | null = null
 
-  private selectedColor: TextColorInlineOption = textColorInlineOptions[0]
+  private selectedBackground: TextBackgroundInlineOption =
+    textBackgroundInlineOptions[0]
 
   private savedRange: Range | null = null
 
@@ -26,12 +27,15 @@ export default class TextColorTool {
   }
 
   static get title(): string {
-    return getCurrentEditorMessages().inlineTools.textColor
+    return getCurrentEditorMessages().inlineTools.textBackground
   }
 
   static get sanitize(): SanitizerConfig {
     return {
       span: {
+        class: true,
+      },
+      mark: {
         class: true,
       },
     }
@@ -45,8 +49,9 @@ export default class TextColorTool {
     this.button = document.createElement('button')
     this.button.type = 'button'
     this.button.classList.add('ce-inline-tool')
-    this.button.setAttribute('aria-label', TextColorTool.title)
-    this.button.innerHTML = '<span class="editor-text-color-tool__icon">A</span>'
+    this.button.setAttribute('aria-label', TextBackgroundTool.title)
+    this.button.innerHTML =
+      '<span class="editor-background-color-tool__icon">A</span>'
 
     this.updateButtonState(false)
 
@@ -55,26 +60,29 @@ export default class TextColorTool {
 
   renderActions(): HTMLDivElement {
     this.actions = document.createElement('div')
-    this.actions.classList.add('editor-text-color-tool__actions')
+    this.actions.classList.add('editor-background-color-tool__actions')
 
-    textColorInlineOptions.forEach((option) => {
+    textBackgroundInlineOptions.forEach((option) => {
       const button = document.createElement('button')
       const messages = getCurrentEditorMessages()
 
       button.type = 'button'
-      button.classList.add('editor-text-color-tool__swatch')
-      button.style.setProperty('--editor-text-color-tool-swatch', option.value)
+      button.classList.add('editor-background-color-tool__swatch')
+      button.style.setProperty(
+        '--editor-background-color-tool-swatch',
+        option.value,
+      )
       button.setAttribute(
         'aria-label',
-        messages.inlineTools.textColorOptions[option.name],
+        messages.inlineTools.textBackgroundOptions[option.name],
       )
       button.dataset.color = option.name
 
       button.addEventListener('mousedown', (event) => {
         event.preventDefault()
         event.stopPropagation()
-        this.selectedColor = option
-        this.applySelectedColor(this.getSavedRange())
+        this.selectedBackground = option
+        this.applySelectedBackground(this.getSavedRange())
       })
 
       this.actions?.append(button)
@@ -86,9 +94,9 @@ export default class TextColorTool {
   }
 
   surround(range: Range | null): void {
-    this.selectedColor = textColorInlineOptions[0]
+    this.selectedBackground = textBackgroundInlineOptions[0]
     this.saveRange(range)
-    this.applySelectedColor(range)
+    this.applySelectedBackground(range)
   }
 
   checkState(selection?: Selection): boolean {
@@ -96,15 +104,15 @@ export default class TextColorTool {
 
     this.saveRange(range)
 
-    const wrapper = this.findColorWrapper(range)
+    const wrapper = this.findBackgroundWrapper(range)
     const isActive = Boolean(wrapper)
 
     if (wrapper) {
-      this.selectedColor =
-        getTextColorInlineOptionByClassName(wrapper.classList) ??
-        this.selectedColor
+      this.selectedBackground =
+        getTextBackgroundInlineOptionByClassName(wrapper.classList) ??
+        this.selectedBackground
     } else {
-      this.selectedColor = textColorInlineOptions[0]
+      this.selectedBackground = textBackgroundInlineOptions[0]
     }
 
     this.updateButtonState(isActive)
@@ -113,21 +121,23 @@ export default class TextColorTool {
     return isActive
   }
 
-  private applySelectedColor(range = this.getSavedRange()): void {
+  private applySelectedBackground(
+    range = this.getSavedRange(),
+  ): void {
     if (!range) {
       return
     }
 
     try {
-      const wrapper = this.findColorWrapper(range)
+      const wrapper = this.findBackgroundWrapper(range)
 
       if (wrapper) {
-        if (wrapper.classList.contains(this.selectedColor.className)) {
+        if (wrapper.classList.contains(this.selectedBackground.className)) {
           this.unwrap(wrapper)
           return
         }
 
-        this.updateWrapperColor(wrapper)
+        this.updateWrapperBackground(wrapper)
         this.api.selection.expandToTag(wrapper)
         return
       }
@@ -143,13 +153,16 @@ export default class TextColorTool {
   }
 
   private wrap(range: Range): void {
-    const wrapper = document.createElement(textColorTag)
+    const wrapper = document.createElement(textBackgroundTag)
 
-    wrapper.classList.add(textColorInlineClassName, this.selectedColor.className)
+    wrapper.classList.add(
+      textBackgroundInlineClassName,
+      this.selectedBackground.className,
+    )
 
     const content = range.extractContents()
 
-    unwrapNestedColorWrappers(content)
+    unwrapNestedBackgroundWrappers(content)
     wrapper.append(content)
     range.insertNode(wrapper)
     this.api.selection.expandToTag(wrapper)
@@ -173,15 +186,22 @@ export default class TextColorTool {
     selection.addRange(range)
   }
 
-  private updateWrapperColor(wrapper: HTMLElement): void {
-    textColorInlineOptions.forEach((option) => {
+  private updateWrapperBackground(wrapper: HTMLElement): void {
+    textBackgroundInlineOptions.forEach((option) => {
       wrapper.classList.remove(option.className)
     })
-    wrapper.classList.add(textColorInlineClassName, this.selectedColor.className)
+    wrapper.classList.add(
+      textBackgroundInlineClassName,
+      this.selectedBackground.className,
+    )
   }
 
-  private findColorWrapper(range: Range | null = null): HTMLElement | null {
-    return findInlineWrapper(textColorTag, textColorInlineClassName, range)
+  private findBackgroundWrapper(range: Range | null = null): HTMLElement | null {
+    return findInlineWrapper(
+      textBackgroundTag,
+      textBackgroundInlineClassName,
+      range,
+    )
   }
 
   private saveRange(range: Range | null): void {
@@ -225,13 +245,13 @@ export default class TextColorTool {
 
     if (isActive) {
       this.button.style.setProperty(
-        '--editor-text-color-tool-current',
-        this.selectedColor.value,
+        '--editor-background-color-tool-current',
+        this.selectedBackground.value,
       )
       return
     }
 
-    this.button.style.removeProperty('--editor-text-color-tool-current')
+    this.button.style.removeProperty('--editor-background-color-tool-current')
   }
 
   private updateActionsState(): void {
@@ -242,16 +262,16 @@ export default class TextColorTool {
     Array.from(this.actions.querySelectorAll<HTMLButtonElement>('button')).forEach(
       (button) => {
         button.classList.toggle(
-          'editor-text-color-tool__swatch--active',
-          button.dataset.color === this.selectedColor.name,
+          'editor-background-color-tool__swatch--active',
+          button.dataset.color === this.selectedBackground.name,
         )
       },
     )
   }
 }
 
-function unwrapNestedColorWrappers(fragment: DocumentFragment): void {
-  Array.from(fragment.querySelectorAll(`.${textColorInlineClassName}`)).forEach(
+function unwrapNestedBackgroundWrappers(fragment: DocumentFragment): void {
+  Array.from(fragment.querySelectorAll(`.${textBackgroundInlineClassName}`)).forEach(
     (wrapper) => {
       wrapper.replaceWith(...Array.from(wrapper.childNodes))
     },
@@ -263,6 +283,7 @@ function findInlineWrapper(
   className: string,
   range: Range | null = null,
 ): HTMLElement | null {
+  const selection = window.getSelection()
   const nodes: Array<Node | null> = range
     ? [
         range.startContainer,
@@ -270,7 +291,6 @@ function findInlineWrapper(
         range.commonAncestorContainer,
       ]
     : []
-  const selection = window.getSelection()
 
   if (nodes.length === 0 && !selection?.rangeCount) {
     return null
@@ -321,4 +341,4 @@ function findAncestorByTagAndClass(
   return null
 }
 
-export const TextColorToolConstructable = TextColorTool
+export const TextBackgroundToolConstructable = TextBackgroundTool

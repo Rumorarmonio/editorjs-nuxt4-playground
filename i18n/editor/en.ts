@@ -197,6 +197,14 @@ export const editorEn: EditorUiMessages = {
       warning: 'Warning',
       muted: 'Muted',
     },
+    textBackground: 'Text background',
+    textBackgroundOptions: {
+      blue: 'Blue',
+      green: 'Green',
+      danger: 'Red',
+      warning: 'Warning',
+      muted: 'Muted',
+    },
   },
   pluginInfo: {
     standardTools: {

@@ -89,6 +89,13 @@ export {
   textColorInlineClassNames,
   textColorInlineOptions,
 } from './inline/text-color'
+export {
+  getTextBackgroundInlineOption,
+  getTextBackgroundInlineOptionByClassName,
+  textBackgroundInlineClassName,
+  textBackgroundInlineClassNames,
+  textBackgroundInlineOptions,
+} from './inline/text-background'
 export { typographEditorContentData } from './typography/content-typography'
 export { isAllowedMediaUrl } from './entities/media'
 export {
@@ -206,6 +213,10 @@ export type {
   TextColorInlineName,
   TextColorInlineOption,
 } from './inline/text-color'
+export type {
+  TextBackgroundInlineName,
+  TextBackgroundInlineOption,
+} from './inline/text-background'
 export type {
   ValidationIssue,
   ValidationResult,

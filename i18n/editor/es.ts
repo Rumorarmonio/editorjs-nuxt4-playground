@@ -200,6 +200,14 @@ export const editorEs: EditorUiMessages = {
       warning: 'Advertencia',
       muted: 'Atenuado',
     },
+    textBackground: 'Fondo de texto',
+    textBackgroundOptions: {
+      blue: 'Azul',
+      green: 'Verde',
+      danger: 'Rojo',
+      warning: 'Advertencia',
+      muted: 'Atenuado',
+    },
   },
   pluginInfo: {
     standardTools: {

@@ -27,7 +27,7 @@
       "id": "intro-inline",
       "type": "paragraph",
       "data": {
-        "text": "This default page demonstrates standard block tools and inline tools: <b>bold</b>, <i>italic</i>, <a href=\"https://editorjs.io/\">link</a>, <u class=\"cdx-underline\">underline</u>, <mark class=\"cdx-marker\">marker</mark>, <span class=\"editor-text-color editor-text-color--accent\">text color</span>, <s class=\"cdx-strikethrough\">strikethrough</s>, and <code class=\"inline-code\">inline code</code>."
+        "text": "This default page demonstrates standard block tools and inline tools: <b>bold</b>, <i>italic</i>, <a href=\"https://editorjs.io/\">link</a>, <u class=\"cdx-underline\">underline</u>, <mark class=\"editor-background-color editor-background-color--warning\">marker</mark>, <span class=\"editor-text-color editor-text-color--accent\">text color</span>, <mark class=\"editor-background-color editor-background-color--danger\"><span class=\"editor-text-color editor-text-color--success\">text color with background</span></mark>, <s class=\"cdx-strikethrough\">strikethrough</s>, and <code class=\"inline-code\">inline code</code>."
       },
       "tunes": {
         "label": {
@@ -108,7 +108,7 @@
             "meta": {},
             "items": [
               {
-                "content": "Nested item with <mark class=\"cdx-marker\">marker</mark> and <code class=\"inline-code\">inline code</code>.",
+                "content": "Nested item with <mark class=\"editor-background-color editor-background-color--success\">marker</mark> and <code class=\"inline-code\">inline code</code>.",
                 "meta": {},
                 "items": []
               }
@@ -282,7 +282,7 @@
           [
             "Header",
             "Page structure",
-            "<mark class=\"cdx-marker\">Marked heading</mark>"
+            "<mark class=\"editor-background-color editor-background-color--muted\">Marked heading</mark>"
           ],
           [
             "List",
@@ -693,7 +693,7 @@
               "id": "notice-warning-text",
               "type": "paragraph",
               "data": {
-                "text": "Notice title keeps <mark class=\"cdx-marker\">inline formatting</mark>, while notice text can use nested rich content."
+                "text": "Notice title keeps <mark class=\"editor-background-color editor-background-color--accent\">inline formatting</mark>, while notice text can use nested rich content."
               }
             },
             {
@@ -1127,7 +1127,7 @@
               "id": "section-intro-description-link",
               "type": "paragraph",
               "data": {
-                "text": "The nested field also keeps <a href=\"https://editorjs.io/\">links</a>, <u class=\"cdx-underline\">underlined text</u>, and <mark class=\"cdx-marker\">marked text</mark>."
+                "text": "The nested field also keeps <a href=\"https://editorjs.io/\">links</a>, <u class=\"cdx-underline\">underlined text</u>, and <mark class=\"editor-background-color editor-background-color--warning\">marked text</mark>."
               }
             },
             {
@@ -1348,7 +1348,7 @@
             "type": "video",
             "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
             "alt": "",
-            "caption": "Video card for <mark class=\"cdx-marker\">Fancybox</mark> and slider checks",
+            "caption": "Video card for <mark class=\"editor-background-color editor-background-color--danger\">Fancybox</mark> and slider checks",
             "description": {
               "time": 1779262669844,
               "blocks": [
