@@ -31,7 +31,7 @@ const defaultOptions: INotyfOptions = {
 }
 
 let notyfInstance: NotyfInstance | null = null
-let notyfPromise: Promise<NotyfInstance> | null = null
+let notyfPromise: Promise<NotyfInstance | null> | null = null
 
 export function notifySuccess(
   message: string,
@@ -106,9 +106,11 @@ async function getNotyf(): Promise<NotyfInstance | null> {
   return notyfInstance
 }
 
-async function loadNotyf(): Promise<NotyfInstance> {
+async function loadNotyf(): Promise<NotyfInstance | null> {
   if (!notyfPromise) {
-    notyfPromise = import('notyf').then(({ Notyf }) => new Notyf(defaultOptions))
+    notyfPromise = import('notyf')
+      .then(({ Notyf }) => new Notyf(defaultOptions))
+      .catch(() => null)
   }
 
   return notyfPromise

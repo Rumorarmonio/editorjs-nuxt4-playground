@@ -82,7 +82,6 @@ async function handleExportJson(): Promise<void> {
   exportError.value = validationSummary
 
   if (validationSummary) {
-    notifyError(validationSummary)
     return
   }
 

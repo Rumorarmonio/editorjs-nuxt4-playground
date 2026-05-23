@@ -169,7 +169,6 @@ function handleExportJson(): void {
   exportError.value = validationSummary
 
   if (validationSummary) {
-    notifyError(validationSummary)
     return
   }
 
