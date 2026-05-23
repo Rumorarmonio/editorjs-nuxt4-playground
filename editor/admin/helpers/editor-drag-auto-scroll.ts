@@ -1,4 +1,5 @@
 const dragHandleSelector = '.ce-toolbar__settings-btn'
+const nestedEditorRootSelector = '[data-editorjs-nested-editor]'
 const edgeThresholdPx = 96
 const maxScrollSpeedPx = 24
 
@@ -21,6 +22,7 @@ export function enableEditorDragAutoScroll({
     if (
       !(target instanceof Element) ||
       !root.contains(target) ||
+      target.closest(nestedEditorRootSelector) !== null ||
       !target.closest(dragHandleSelector)
     ) {
       return

@@ -5,6 +5,10 @@ import type {
   EditorOutputData,
 } from '~~/editor/shared'
 import { getCurrentEditorMessages } from '~~/i18n/editor'
+import {
+  enableNestedEditorDragDrop,
+  type NestedEditorDragDropPatch,
+} from './nested-drag-drop'
 
 export interface NestedRichEditorOptions<
   TData extends EditorOutputData<EditorOutputBlock>,
@@ -38,8 +42,10 @@ export function createNestedRichEditor<
   let editor: EditorJS | null = null
   let initializePromise: Promise<void> | null = null
   let isDestroyed = false
+  let dragDropPatch: NestedEditorDragDropPatch | null = null
 
   holder.className = options.className
+  holder.dataset.editorjsNestedEditor = 'true'
   holder.addEventListener('keydown', stopNestedKeyboardEvent)
   holder.addEventListener('keyup', stopNestedKeyboardEvent)
 
@@ -87,7 +93,14 @@ export function createNestedRichEditor<
       if (editor === instance) {
         editor = null
       }
+
+      return
     }
+
+    dragDropPatch = enableNestedEditorDragDrop({
+      editor: instance,
+      root: holder,
+    })
   }
 
   async function save(): Promise<TData> {
@@ -108,6 +121,9 @@ export function createNestedRichEditor<
     isDestroyed = true
     holder.removeEventListener('keydown', stopNestedKeyboardEvent)
     holder.removeEventListener('keyup', stopNestedKeyboardEvent)
+    dragDropPatch?.destroy()
+    dragDropPatch = null
+    holder.removeAttribute('data-editorjs-nested-editor')
 
     if (!editor) {
       holder.replaceChildren()
