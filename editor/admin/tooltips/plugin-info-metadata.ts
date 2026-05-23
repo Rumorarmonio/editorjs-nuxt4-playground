@@ -79,6 +79,7 @@ const editorPluginInfoPreviewImageSrcByKey: Partial<
   cta: '/plugin-previews/cta.jpg',
   codeSnippet: '/plugin-previews/code-snippet.jpg',
   accordionGroup: '/plugin-previews/accordion-group.jpg',
+  dataCards: '/plugin-previews/data-cards.jpg',
 }
 
 export function getEditorPluginInfoMetadataMap(
