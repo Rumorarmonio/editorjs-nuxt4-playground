@@ -659,10 +659,10 @@
 
   .editor-plain-field--toggle-inline {
     display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    column-gap: 10px;
-    row-gap: 6px;
     align-items: center;
+    row-gap: 6px;
+    column-gap: 10px;
+    grid-template-columns: max-content minmax(0, 1fr);
   }
 
   .editor-plain-field--toggle-inline > .editor-plain-field__label {
