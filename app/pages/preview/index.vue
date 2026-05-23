@@ -10,6 +10,7 @@ import {
   getValidationSummary,
   validateEditorContentData,
 } from '~~/editor/shared'
+import { notifyError, notifySuccess } from '~~/shared/notifications'
 
 const { t } = useI18n()
 const { currentLocalePreference, setLocalePreference } = useAppLocale()
@@ -168,6 +169,7 @@ function handleExportJson(): void {
   exportError.value = validationSummary
 
   if (validationSummary) {
+    notifyError(validationSummary)
     return
   }
 
@@ -207,7 +209,9 @@ function handleImportJson(serializedContent: string): boolean {
 
   importJsonText.value = ''
   exportError.value = null
-  importMessage.value = t('app.common.importSuccess')
+  const successMessage = t('app.common.importSuccess')
+  importMessage.value = successMessage
+  notifySuccess(successMessage)
 
   return true
 }
@@ -220,8 +224,10 @@ async function handleImportFile(file: File): Promise<void> {
   try {
     handleImportJson(await file.text())
   } catch {
+    const errorMessage = t('app.common.importReadError')
     importMessage.value = null
-    importError.value = t('app.common.importReadError')
+    importError.value = errorMessage
+    notifyError(errorMessage)
   }
 }
 

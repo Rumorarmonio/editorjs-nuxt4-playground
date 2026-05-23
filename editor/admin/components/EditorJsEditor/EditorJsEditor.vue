@@ -32,6 +32,7 @@ import {
   type ContentTypographyLocale,
   type EditorContentData,
 } from '~~/editor/shared'
+import { notifyError } from '~~/shared/notifications'
 import type { EditorUiMessages } from '~~/i18n'
 
 const props = defineProps<{
@@ -85,9 +86,11 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
     )
 
     if (duplicateAnchorValues.length > 0) {
-      errorMessage.value = props.editorMessages.core.duplicateAnchorsError(
+      const duplicateAnchorsError = props.editorMessages.core.duplicateAnchorsError(
         duplicateAnchorValues.join(', '),
       )
+      errorMessage.value = duplicateAnchorsError
+      notifyError(duplicateAnchorsError)
       return false
     }
 
@@ -98,6 +101,7 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
 
     if (validationSummary) {
       errorMessage.value = validationSummary
+      notifyError(props.editorMessages.core.validationSaveError)
       scheduleScrollToFirstValidationError()
       return false
     }
@@ -106,10 +110,12 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
     emit('saved', storageContent)
     return true
   } catch (error) {
-    errorMessage.value =
+    const saveErrorMessage =
       error instanceof Error && error.message.includes('validation errors')
         ? props.editorMessages.core.validationSaveError
         : props.editorMessages.core.saveError
+    errorMessage.value = saveErrorMessage
+    notifyError(saveErrorMessage)
     return false
   } finally {
     isSaving.value = false

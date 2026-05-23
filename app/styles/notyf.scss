@@ -1,0 +1,52 @@
+@import 'notyf/notyf.min.css';
+
+.notyf {
+  z-index: 1200;
+  padding: 20px;
+}
+
+.notyf__toast {
+  min-width: 260px;
+  max-width: min(360px, calc(100vw - 32px));
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgb(24 28 36 / 0.18);
+}
+
+.notyf__toast--success,
+.notyf__toast--error {
+  color: var(--color-on-solid);
+}
+
+.notyf__toast--success {
+  background: var(--color-success);
+}
+
+.notyf__toast--error {
+  background: var(--color-danger);
+}
+
+.notyf__wrapper {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.notyf__message {
+  font-weight: 500;
+  line-height: 1.45;
+  color: inherit;
+}
+
+.notyf__dismiss-btn {
+  background-color: transparent;
+  opacity: 0.8;
+}
+
+.notyf__dismiss-btn:hover {
+  background-color: rgb(255 255 255 / 0.12);
+  opacity: 1;
+}
+
+.notyf__dismiss-btn::before,
+.notyf__dismiss-btn::after {
+  background: var(--color-on-solid);
+}

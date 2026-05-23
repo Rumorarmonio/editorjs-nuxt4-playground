@@ -7,6 +7,7 @@ import {
   validateEditorContentData,
   type EditorContentData,
 } from '~~/editor/shared'
+import { notifyError, notifySuccess } from '~~/shared/notifications'
 import type { AppLocalePreference } from '~~/i18n'
 
 const { t } = useI18n()
@@ -81,6 +82,7 @@ async function handleExportJson(): Promise<void> {
   exportError.value = validationSummary
 
   if (validationSummary) {
+    notifyError(validationSummary)
     return
   }
 
@@ -118,7 +120,9 @@ function handleSaved(content: EditorContentData): void {
   saveDraft(content)
   hasUnsavedChanges.value = false
   exportError.value = null
-  saveMessage.value = t('app.editorPage.saveSuccess')
+  const savedMessage = t('app.editorPage.saveSuccess')
+  saveMessage.value = savedMessage
+  notifySuccess(savedMessage)
 }
 
 function handleChanged(): void {
@@ -170,6 +174,7 @@ function handleImportJson(serializedContent: string): boolean {
   importError.value = error
 
   if (error) {
+    notifyError(error)
     return false
   }
 
@@ -177,7 +182,9 @@ function handleImportJson(serializedContent: string): boolean {
   saveMessage.value = null
   exportError.value = null
   hasUnsavedChanges.value = false
-  importMessage.value = t('app.common.importSuccess')
+  const successMessage = t('app.common.importSuccess')
+  importMessage.value = successMessage
+  notifySuccess(successMessage)
   editorRenderKey.value += 1
 
   return true
@@ -191,8 +198,10 @@ async function handleImportFile(file: File): Promise<void> {
   try {
     handleImportJson(await file.text())
   } catch {
+    const errorMessage = t('app.common.importReadError')
     importMessage.value = null
-    importError.value = t('app.common.importReadError')
+    importError.value = errorMessage
+    notifyError(errorMessage)
   }
 }
 
