@@ -55,6 +55,7 @@ export interface EditorUiMessages {
     placeholder: string
     loading: string
     initError: string
+    dataLoadError: string
     unknownBlocksError: string
     duplicateAnchorsError: (anchors: string) => string
     validationSaveError: string
@@ -122,6 +123,35 @@ export interface EditorUiMessages {
       itemTypeOptions: {
         image: string
         video: string
+      }
+    }
+    dataCards: {
+      toolboxTitle: string
+      sourceLabel: string
+      viewModeLabel: string
+      limitLabel: string
+      skipLabel: string
+      orderLabel: string
+      showLoadMoreLabel: string
+      loadMoreStepLabel: string
+      showViewAllButtonLabel: string
+      viewAllHrefLabel: string
+      showVisitorControlsLabel: string
+      loadMoreButtonLabel: string
+      viewAllButtonLabel: string
+      sourceOptions: {
+        products: string
+        posts: string
+        recipes: string
+      }
+      viewModeOptions: {
+        grid: string
+        slider: string
+        list: string
+      }
+      orderOptions: {
+        asc: string
+        desc: string
       }
     }
     maskedFieldsDemo: {
@@ -265,6 +295,7 @@ export interface EditorUiMessages {
       sectionIntro: EditorPluginInfoMessages
       twoColumns: EditorPluginInfoMessages
       mediaGallery: EditorPluginInfoMessages
+      dataCards: EditorPluginInfoMessages
       maskedFieldsDemo: EditorPluginInfoMessages
       cta: EditorPluginInfoMessages
       codeSnippet: EditorPluginInfoMessages

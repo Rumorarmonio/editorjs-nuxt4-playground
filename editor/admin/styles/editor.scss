@@ -1414,6 +1414,35 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .editor-data-cards-tool {
+    display: grid;
+    gap: 16px;
+    padding: 16px;
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+  }
+
+  .editor-data-cards-tool__settings {
+    display: grid;
+    align-items: end;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .editor-data-cards-tool__inline-row {
+    display: grid;
+    align-items: end;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .editor-data-cards-tool__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
   .editor-accordion-group-tool__items,
   .editor-media-gallery-tool__cards {
     display: grid;
@@ -1534,6 +1563,8 @@
     .editor-two-columns-tool__columns[data-layout='leftWide'],
     .editor-two-columns-tool__columns[data-layout='rightWide'],
     .editor-accordion-group-tool__controls,
+    .editor-data-cards-tool__settings,
+    .editor-data-cards-tool__inline-row,
     .editor-accordion-group-tool__item-fields,
     .editor-media-gallery-tool__settings,
     .editor-media-gallery-tool__card-fields,

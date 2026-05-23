@@ -28,8 +28,8 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Базовая версия проекта завершена.
 - Базовый слой Block Tunes (`AnchorTune`, `SpacingTune`, `LabelTune`) завершён: реализация, renderer, guard, demo JSON, ручная browser-проверка и `npm run check` готовы.
 - Plain field system для будущих custom blocks завершена.
-- Активный scope по `SPEC.md`: этап Некритичные улучшения; этап `CTA icons via generated SVG sprite` закрыт как завершённый поздний schema-changing этап.
-- Запланирован следующий этап: `Data-driven cards block` на основе mock API, конкретно `DummyJSON`, для карточных секций с `products`, `posts` и `recipes`.
+- Активный scope по `SPEC.md`: этап `Некритичные улучшения`; этап `Data-driven cards block` завершён, а этап `CTA icons via generated SVG sprite` уже закрыт как завершённый поздний schema-changing этап.
+- Текущий фокус: вернуть в работу ранее отложенные optional improvements и продолжить точечные UX/runtime polish-улучшения без расширения content contract.
 - Первый custom block `Notice` подтвердил полный custom block lifecycle на простых plain fields без раннего перехода к media workflow, rich fields или nested Editor.js.
 - Reusable rich fields детализированы и завершены: `RichParagraphField` и `RichHeaderField` реализованы на базе nested Editor.js.
 - Для `SectionIntro` добавлен минимальный shared-контракт данных: `title` и `description` как вложенный Editor.js-compatible output только с paragraph-блоками.
@@ -75,7 +75,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Controlled recursion для Accordion group block расширен до двух вложенных уровней через config `nestedAccordionDepth`; body editor корневого accordion может создать nested accordion, а тот — ещё один nested accordion, после чего `accordionGroup` больше не предлагается. `content/default-page.json` расширен несколькими nested accordion groups, включая demo с глубиной `root -> nested -> nested`. `npm run check` проходит.
 - Demo content для Accordion group block дополнен CTA-кнопками внутри accordion body на разных уровнях вложенности: link CTA и event CTA. Одна вложенная группа оставлена в multi-open режиме с несколькими initial-open items для проверки независимого открытия нескольких accordion items. Принято решение не включать `accordionGroup` в другие nested editor contexts (`SectionIntro`, `TwoColumns`, media descriptions) в рамках текущего этапа.
 - Этап Accordion group block завершён: реализованы shared contract, guards/import/draft support, validation, typograf traversal, renderer с синхронной анимацией вложенных групп, admin item manager, rich header/body nested editors, controlled recursion до двух вложенных уровней, CTA и multi-open demo. Последние проверки этапа: `npm run check` и `npm run build` проходят.
-- Этап Некритичные улучшения снова активен: ближайший шаг — вручную проверить `nbsp`-сохранение на русском, английском и испанском, затем выбрать следующий небольшой optional improvement.
+- Этап `Data-driven cards block` завершён: карточные секции прошли реализацию как тонкий mock API-based block, а следующий шаг — продолжить активный этап `Некритичные улучшения` и, если понадобится, позже вернуться к новым data-driven сценариям отдельным решением.
 - Добавлена типографика сохранения с неразрывными пробелами: зависимость `typograf`, shared-helper `typographEditorContentData` и подключение к `EditorJsEditor.save()` / `getCurrentContent()`. Сохранение использует текущую локаль контента `ru | en | es` как fallback, но перед прогоном строки пытается автоопределить язык по кириллице, испанским символам/частым словам или латинице; включена только группа правил `nbsp` и дополнительно `common/nbsp/afterNumber`, чтобы не менять кавычки, тире и прочую типографику вне scope.
 - Для ручной проверки типографики добавлены компактные JSON fixtures в `content/`: `nbsp-ru-page.json`, `nbsp-en-page.json`, `nbsp-es-page.json` и `nbsp-mixed-page.json`. Они покрывают standard rich blocks, list/table cells, captions, custom blocks, nested rich fields и контрольные поля code/rawHtml/JSON payload, где типографика не должна применяться.
 - Post-review fixes типографики: `default-page.json` не коммитится как runtime-saved output после ручной проверки, чтобы не тащить churn от Editor.js save; plain/rich text типографируется по sentence-like сегментам внутри строки, а HTML rich text возвращает реальный `U+00A0` вместо `&nbsp;` для единообразного JSON.
@@ -267,4 +267,4 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 
 ## Следующий шаг
 
-Следующий шаг активного этапа Некритичные улучшения: выбрать следующий небольшой optional improvement или пройти отложенные smoke-check проверки — `nbsp`-сохранение на русском/английском/испанском, drag-and-drop reorder обычных и custom blocks через settings-кнопку блока и CTA icon scenarios после закрытого этапа.
+Следующий шаг активного этапа `Некритичные улучшения`: пройти smoke-check выбранных optional improvements в editor/preview и затем при необходимости зафиксировать следующий точечный UX/runtime polish.

@@ -5,6 +5,9 @@ import type {
   ParagraphBlockData,
 } from '~~/editor/shared/blocks/standard-block-data'
 import type {
+  DataCardsBlockData,
+} from '~~/editor/shared/blocks/data-cards-block'
+import type {
   EditorOutputBlock,
   EditorOutputData,
 } from '~~/editor/shared/types/editor-output'
@@ -181,6 +184,7 @@ export interface CustomBlockDataMap {
   sectionIntro: SectionIntroBlockData
   twoColumns: TwoColumnsBlockData
   mediaGallery: MediaGalleryBlockData
+  dataCards: DataCardsBlockData
   maskedFieldsDemo: MaskedFieldsDemoBlockData
   cta: CtaBlockData
   codeSnippet: CodeSnippetBlockData

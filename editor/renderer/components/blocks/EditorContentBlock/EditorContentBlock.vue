@@ -9,6 +9,7 @@ import EditorCtaBlock from '~~/editor/renderer/components/blocks/EditorCtaBlock/
 import EditorAccordionGroupBlock from '~~/editor/renderer/components/blocks/EditorAccordionGroupBlock/EditorAccordionGroupBlock.vue'
 import EditorMaskedFieldsDemoBlock from '~~/editor/renderer/components/blocks/EditorMaskedFieldsDemoBlock/EditorMaskedFieldsDemoBlock.vue'
 import EditorMediaGalleryBlock from '~~/editor/renderer/components/blocks/EditorMediaGalleryBlock/EditorMediaGalleryBlock.vue'
+import EditorDataCardsBlock from '~~/editor/renderer/components/blocks/EditorDataCardsBlock/EditorDataCardsBlock.vue'
 import EditorNoticeBlock from '~~/editor/renderer/components/blocks/EditorNoticeBlock/EditorNoticeBlock.vue'
 import EditorParagraphBlock from '~~/editor/renderer/components/blocks/EditorParagraphBlock/EditorParagraphBlock.vue'
 import EditorQuoteBlock from '~~/editor/renderer/components/blocks/EditorQuoteBlock/EditorQuoteBlock.vue'
@@ -21,6 +22,7 @@ import type { EditorContentBlock } from '~~/editor/shared'
 import {
   normalizeMaskedFieldsDemoBlockData,
   normalizeMediaGalleryBlockData,
+  normalizeDataCardsBlockData,
   normalizeNoticeBlockData,
   normalizeCtaBlockData,
   normalizeCodeSnippetBlockData,
@@ -85,6 +87,10 @@ defineProps<{
     v-else-if="block.type === 'mediaGallery'"
     :data="normalizeMediaGalleryBlockData(block.data)"
     :fallback-gallery-id="`media-gallery-${fallbackBlockId}`"
+  />
+  <EditorDataCardsBlock
+    v-else-if="block.type === 'dataCards'"
+    :data="normalizeDataCardsBlockData(block.data)"
   />
   <EditorMaskedFieldsDemoBlock
     v-else-if="block.type === 'maskedFieldsDemo'"

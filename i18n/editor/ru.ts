@@ -5,6 +5,7 @@ export const editorRu: EditorUiMessages = {
     placeholder: 'Введите контент или нажмите Tab, чтобы открыть меню блоков',
     loading: 'Редактор загружается',
     initError: 'Не удалось инициализировать Editor.js.',
+    dataLoadError: 'Не удалось загрузить карточки.',
     unknownBlocksError:
       'Сохранённые данные содержат типы блоков, которые не зарегистрированы.',
     duplicateAnchorsError: (anchors) =>
@@ -74,6 +75,35 @@ export const editorRu: EditorUiMessages = {
       itemTypeOptions: {
         image: 'Изображение',
         video: 'Видео',
+      },
+    },
+    dataCards: {
+      toolboxTitle: 'Карточки из данных',
+      sourceLabel: 'Источник',
+      viewModeLabel: 'Режим просмотра',
+      limitLabel: 'Лимит',
+      skipLabel: 'Пропуск',
+      orderLabel: 'Порядок',
+      showLoadMoreLabel: 'Показывать "ещё"',
+      loadMoreStepLabel: 'Шаг подгрузки',
+      showViewAllButtonLabel: 'Показывать ссылку "Смотреть все"',
+      viewAllHrefLabel: 'URL для просмотра всех',
+      showVisitorControlsLabel: 'Показывать controls для посетителя',
+      loadMoreButtonLabel: 'Показать ещё',
+      viewAllButtonLabel: 'Смотреть все',
+      sourceOptions: {
+        products: 'Товары',
+        posts: 'Посты',
+        recipes: 'Рецепты',
+      },
+      viewModeOptions: {
+        grid: 'Сетка',
+        slider: 'Слайдер',
+        list: 'Список',
+      },
+      orderOptions: {
+        asc: 'По возрастанию',
+        desc: 'По убыванию',
       },
     },
     maskedFieldsDemo: {
@@ -315,6 +345,12 @@ export const editorRu: EditorUiMessages = {
           'Коллекция media-карточек для изображений или видео в режиме сетки или слайдера.',
         preview:
           'В preview отображает карточки галереи с optional Fancybox viewer и URL sync.',
+      },
+      dataCards: {
+        description:
+          'Блок карточек на базе mock API для товаров, постов и рецептов с контролируемой сортировкой, фильтрацией и навигацией.',
+        preview:
+          'В preview отображает интерактивную секцию карточек, которая получает данные из DummyJSON и поддерживает grid, slider или list.',
       },
       maskedFieldsDemo: {
         description:

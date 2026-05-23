@@ -5,6 +5,7 @@ export const editorEn: EditorUiMessages = {
     placeholder: 'Write content or press Tab to open the block toolbar',
     loading: 'Loading editor',
     initError: 'Editor.js could not be initialized.',
+    dataLoadError: 'Cards could not be loaded.',
     unknownBlocksError: 'Saved data contains block types that are not registered.',
     duplicateAnchorsError: (anchors) => `Anchor values must be unique: ${anchors}.`,
     validationSaveError: 'Editor content has validation errors.',
@@ -72,6 +73,35 @@ export const editorEn: EditorUiMessages = {
       itemTypeOptions: {
         image: 'Image',
         video: 'Video',
+      },
+    },
+    dataCards: {
+      toolboxTitle: 'Data-driven cards',
+      sourceLabel: 'Source',
+      viewModeLabel: 'View mode',
+      limitLabel: 'Limit',
+      skipLabel: 'Skip',
+      orderLabel: 'Order',
+      showLoadMoreLabel: 'Show load more',
+      loadMoreStepLabel: 'Load more step',
+      showViewAllButtonLabel: 'Show "View all" link',
+      viewAllHrefLabel: 'View all URL',
+      showVisitorControlsLabel: 'Show visitor controls',
+      loadMoreButtonLabel: 'Load more',
+      viewAllButtonLabel: 'View all',
+      sourceOptions: {
+        products: 'Products',
+        posts: 'Posts',
+        recipes: 'Recipes',
+      },
+      viewModeOptions: {
+        grid: 'Grid',
+        slider: 'Slider',
+        list: 'List',
+      },
+      orderOptions: {
+        asc: 'Ascending',
+        desc: 'Descending',
       },
     },
     maskedFieldsDemo: {
@@ -310,6 +340,12 @@ export const editorEn: EditorUiMessages = {
           'Media collection for image or video cards, displayed as a grid or slider.',
         preview:
           'Renders gallery cards with optional Fancybox viewer and URL sync.',
+      },
+      dataCards: {
+        description:
+          'Mock API-powered card section for products, posts, and recipes with controlled sorting, filtering, and navigation.',
+        preview:
+          'Renders an interactive card section that fetches data from DummyJSON and supports grid, slider, or list layouts.',
       },
       maskedFieldsDemo: {
         description:

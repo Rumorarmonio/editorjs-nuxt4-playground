@@ -30,6 +30,19 @@ export {
   twoColumnsLayoutVariants,
 } from './blocks/custom-block-data'
 export {
+  buildDataCardsCollectionUrl,
+  buildDataCardsViewAllHref,
+  createDefaultDataCardsBlockData,
+  createDefaultDataCardsViewAllHref,
+  dataCardsOrders,
+  dataCardsSourceConfigMap,
+  dataCardsSources,
+  dataCardsViewModes,
+  getDataCardsSourceConfig,
+  isDataCardsBlockData,
+  normalizeDataCardsBlockData,
+} from './blocks/data-cards-block'
+export {
   createEmbedDataFromSource,
   getAllowedEmbedIframeUrl,
   getEmbedServiceLabel,
@@ -158,6 +171,14 @@ export type {
   TwoColumnsContentData,
   TwoColumnsLayoutVariant,
 } from './blocks/custom-block-data'
+export type {
+  DataCardsBlockData,
+  DataCardsFetchState,
+  DataCardsOrder,
+  DataCardsSource,
+  DataCardsSourceConfig,
+  DataCardsViewMode,
+} from './blocks/data-cards-block'
 export type {
   EditorImageUploader,
   EditorImageUploadResult,

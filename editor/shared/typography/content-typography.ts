@@ -79,6 +79,8 @@ function typographContentBlock(
         ...block,
         data: typographImageBlockData(block.data, locale),
       }
+    case 'dataCards':
+      return block
     case 'notice':
       return {
         ...block,

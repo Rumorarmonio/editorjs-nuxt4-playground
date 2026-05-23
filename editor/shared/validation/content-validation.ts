@@ -84,6 +84,8 @@ export function validateEditorContentData(
           validateMediaGalleryBlockData(block.data).issues,
           blockPath,
         )
+      case 'dataCards':
+        return []
       case 'cta':
         return prefixValidationIssues(
           validateCtaBlockData(block.data).issues,

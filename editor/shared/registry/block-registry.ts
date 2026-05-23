@@ -56,6 +56,10 @@ export const editorBlockRegistry = {
     type: 'mediaGallery',
     title: 'Media gallery',
   },
+  dataCards: {
+    type: 'dataCards',
+    title: 'Data-driven cards',
+  },
   maskedFieldsDemo: {
     type: 'maskedFieldsDemo',
     title: 'Masked fields demo',

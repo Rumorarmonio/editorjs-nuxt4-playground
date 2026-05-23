@@ -21,6 +21,7 @@ export const editorPluginInfoCustomToolKeys = [
   'sectionIntro',
   'twoColumns',
   'mediaGallery',
+  'dataCards',
   'maskedFieldsDemo',
   'cta',
   'codeSnippet',
@@ -155,6 +156,11 @@ export function getEditorPluginInfoMetadataMap(
       key: 'mediaGallery',
       title: messages.tools.mediaGallery.toolboxTitle,
       ...messages.pluginInfo.tools.mediaGallery,
+    }),
+    dataCards: withPreviewImage({
+      key: 'dataCards',
+      title: messages.tools.dataCards.toolboxTitle,
+      ...messages.pluginInfo.tools.dataCards,
     }),
     maskedFieldsDemo: withPreviewImage({
       key: 'maskedFieldsDemo',

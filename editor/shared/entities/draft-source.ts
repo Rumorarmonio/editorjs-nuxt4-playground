@@ -10,6 +10,7 @@ import {
   isSectionIntroBlockData,
   isTwoColumnsBlockData,
 } from '~~/editor/shared/blocks/custom-block-data'
+import { isDataCardsBlockData } from '~~/editor/shared/blocks/data-cards-block'
 import { editorBlockRegistry } from '~~/editor/shared/registry/block-registry'
 import { isKnownBlockTuneData } from '~~/editor/shared/tunes/block-tunes'
 import { isEditorOutputData } from '~~/editor/shared/types/editor-output'
@@ -160,6 +161,8 @@ function isKnownEditorContentBlock(
       return isTwoColumnsBlockData(block.data)
     case 'mediaGallery':
       return isMediaGalleryBlockData(block.data)
+    case 'dataCards':
+      return isDataCardsBlockData(block.data)
     case 'maskedFieldsDemo':
       return isMaskedFieldsDemoBlockData(block.data)
     case 'cta':

@@ -15,6 +15,7 @@ import { NoticeToolConstructable } from '~~/editor/admin/tools/blocks/NoticeTool
 import { SectionIntroToolConstructable } from '~~/editor/admin/tools/blocks/SectionIntroTool'
 import { TwoColumnsToolConstructable } from '~~/editor/admin/tools/blocks/TwoColumnsTool'
 import { MediaGalleryToolConstructable } from '~~/editor/admin/tools/blocks/MediaGalleryTool'
+import { DataCardsToolConstructable } from '~~/editor/admin/tools/blocks/DataCardsTool'
 import { MaskedFieldsDemoToolConstructable } from '~~/editor/admin/tools/blocks/MaskedFieldsDemoTool'
 import { CtaToolConstructable } from '~~/editor/admin/tools/blocks/CtaTool'
 import { CodeSnippetToolConstructable } from '~~/editor/admin/tools/blocks/CodeSnippetTool'
@@ -131,6 +132,10 @@ export async function createEditorTools(
     twoColumns: TwoColumnsToolConstructable,
     mediaGallery: {
       class: MediaGalleryToolConstructable,
+      inlineToolbar: editorInlineToolbar,
+    },
+    dataCards: {
+      class: DataCardsToolConstructable,
       inlineToolbar: editorInlineToolbar,
     },
     maskedFieldsDemo: MaskedFieldsDemoToolConstructable,

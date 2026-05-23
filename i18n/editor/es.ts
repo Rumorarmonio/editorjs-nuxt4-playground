@@ -6,6 +6,7 @@ export const editorEs: EditorUiMessages = {
       'Escriba contenido o pulse Tab para abrir la barra de bloques',
     loading: 'Cargando editor',
     initError: 'No se pudo inicializar Editor.js.',
+    dataLoadError: 'No se pudieron cargar las tarjetas.',
     unknownBlocksError:
       'Los datos guardados contienen tipos de bloque no registrados.',
     duplicateAnchorsError: (anchors) =>
@@ -75,6 +76,35 @@ export const editorEs: EditorUiMessages = {
       itemTypeOptions: {
         image: 'Imagen',
         video: 'Vídeo',
+      },
+    },
+    dataCards: {
+      toolboxTitle: 'Tarjetas basadas en datos',
+      sourceLabel: 'Origen',
+      viewModeLabel: 'Modo de vista',
+      limitLabel: 'Límite',
+      skipLabel: 'Omitir',
+      orderLabel: 'Orden',
+      showLoadMoreLabel: 'Mostrar cargar más',
+      loadMoreStepLabel: 'Paso de carga',
+      showViewAllButtonLabel: 'Mostrar enlace "Ver todo"',
+      viewAllHrefLabel: 'URL de ver todo',
+      showVisitorControlsLabel: 'Mostrar controles del visitante',
+      loadMoreButtonLabel: 'Cargar más',
+      viewAllButtonLabel: 'Ver todo',
+      sourceOptions: {
+        products: 'Productos',
+        posts: 'Publicaciones',
+        recipes: 'Recetas',
+      },
+      viewModeOptions: {
+        grid: 'Cuadrícula',
+        slider: 'Slider',
+        list: 'Lista',
+      },
+      orderOptions: {
+        asc: 'Ascendente',
+        desc: 'Descendente',
       },
     },
     maskedFieldsDemo: {
@@ -317,6 +347,12 @@ export const editorEs: EditorUiMessages = {
           'Colección de medios para tarjetas de imagen o vídeo en cuadrícula o slider.',
         preview:
           'En preview muestra tarjetas de galería con visor Fancybox opcional y sincronización URL.',
+      },
+      dataCards: {
+        description:
+          'Sección de tarjetas basada en mock API para productos, publicaciones y recetas con ordenación, filtrado y navegación controlados.',
+        preview:
+          'En preview muestra una sección interactiva de tarjetas que obtiene datos de DummyJSON y admite diseños grid, slider o list.',
       },
       maskedFieldsDemo: {
         description:

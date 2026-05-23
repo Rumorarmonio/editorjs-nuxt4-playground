@@ -47,8 +47,7 @@ deployment.
 - Второй shared schema срез этапа CTA icons via generated SVG sprite реализован: CTA data contract расширен `contentMode`, `leftIcon`, `rightIcon` и `icon`, normalizer/guard/validation используют generated icon names, а текущий `CtaTool` сохраняет icon-поля без UI.
 - Code-срез оставшихся пунктов этапа CTA icons via generated SVG sprite реализован: добавлен `Icon.vue`, CTA renderer показывает left/right/both/icon-only icons, `CtaTool` получил searchable icon selects на базе `choices.js` с preview иконок, demo content покрывает основные icon-сценарии.
 - Этап CTA icons via generated SVG sprite завершён кодово и закрыт по решению пользователя; ручной browser smoke-check CTA icon scenarios остаётся полезной проверкой перед финальным коммитом.
-- Текущий крупный этап: Некритичные улучшения; ближайший шаг — выбрать следующий небольшой optional improvement или пройти отложенные smoke-check сценарии.
-- Следующий запланированный крупный этап после завершения Некритичных улучшений: Data-driven cards block на основе mock API, в первую очередь через DummyJSON.
+- Этап Data-driven cards block завершён.
 
 ## Активный этап
 
@@ -75,27 +74,15 @@ deployment.
 
 ## План этапа
 
-1. Держать этап открытым для небольших optional improvements после закрытия schema-changing этапов.
-2. Сначала пройти оставшиеся полезные ручные проверки: `nbsp`-сохранение на русском/английском/испанском, drag-and-drop reorder обычных и custom blocks, CTA icon scenarios после закрытого этапа.
-3. Перевести editor-side native selects на консистентный кастомный dropdown без поиска, не затрагивая Vue demo shell controls — выполнено для `createPlainSelectField` и `createTuneSelectField`.
-4. Включить inline tools в контентных custom fields, не затрагивая технические поля и code body — выполнено через lightweight inline HTML fields для коротких title/caption полей и nested rich fields для `Notice` text / media descriptions без CTA.
-5. После проверок выбрать следующий небольшой improvement с узким diff.
+1. Продолжить точечные optional improvements без расширения content contract.
+2. Сохранить уже реализованные optional improvements и smoke-check знания как базу для последующих улучшений.
+3. Не расширять scope этого этапа новыми small improvements без отдельного решения.
 
-## Критерии готовности этапа
-
-- Каждое improvement остаётся небольшим и проверяемым отдельно.
-- Базовые editor/renderer сценарии не ломаются.
-- Save/load, Import JSON, validation, localization, theme, preview, `Reset draft` и `Export JSON` остаются работоспособными.
-- `npm run check` запускается после значимых кодовых изменений; `npm run build` — после runtime/public asset изменений.
-- Editor-side selects в custom block tools и block tunes выглядят и открываются консистентно, сохраняют keyboard/focus states и не включают поиск для малых option sets.
-
-Ближайший шаг — вручную проверить новые editor-селекты в custom block tools и block tunes, затем выбрать следующий небольшой optional improvement или пройти отложенные smoke-check проверки: `nbsp`, drag-and-drop reorder и CTA icon scenarios.
-
-## Запланированный этап
+## Завершённый этап
 
 ### Data-driven cards block
 
-Статус: запланирован. Этот этап не активен, пока открыт этап `Некритичные улучшения`.
+Статус: завершён.
 
 Цель этапа: добавить typed block для карточных секций, которые получают данные из mock API и рендерятся как полноценные секции внутри editor/preview, не превращая проект в CMS и не добавляя собственный backend.
 
@@ -119,14 +106,9 @@ deployment.
 - превращение блока в generic CMS-like data management tool;
 - реализация полноценных destination pages для `View all` до отдельного решения по page routing.
 
-## Критерии готовности запланированного этапа
+Итог: typed `DataCards` block реализован как тонкий mock API-based card section для `products`, `posts` и `recipes`. Убраны source-specific filter presets и публичный `sortBy`, `AppButton` переиспользуется для ссылок и действий, `default-page` дополнен demo-секциями для каждого вида блоков, а internal DummyJSON sort key оставлен только как adapter detail, чтобы `order` продолжал менять выдачу.
 
-- Блок умеет рендерить карточные секции на основе заранее известных mock API и демонстрировать разные view modes.
-- Параметры блока остаются декларативными и ограниченными по scope.
-- `showLoadMore` не активируется для slider-сценария.
-- `showViewAllButton` не требует отдельного полноценного CMS workflow и остаётся частью конфигурации секции.
-- Базовые editor/renderer сценарии, save/load, preview и export остаются работоспособными.
-- Реализация не вводит собственный backend и не усложняет модель данных сильнее, чем это необходимо для демонстрации блока.
+Проверки: `npm run typecheck` и `npm run lint` выполнялись после правок; lint сохраняет существующие предупреждения `vue/no-v-html` в других renderer-файлах.
 
 ## Последний завершённый этап
 
@@ -340,7 +322,7 @@ keyboard-only покрытия всего внутреннего Editor.js UI.
 - Accessibility polish не ломает базовый Editor.js UX, save/load, Import JSON, validation, masks, preview, `Reset draft` и `Export JSON`.
 - `npm run check` и `npm run build` проходят.
 
-Следующий крупный этап после завершения keyboard/accessibility polish: Некритичные улучшения.
+Следующий крупный этап после завершения keyboard/accessibility polish: `Некритичные улучшения`.
 
 Итог: Клавиатурная навигация и accessibility polish завершён. Отключён autofocus Editor.js, улучшены focusability и keyboard handling для plain fields, toggles,
 select/input controls, media card buttons, Table Tool controls и floating Editor.js toolbar. Header Tab-boundary защищён от перехвата Editor.js после возврата фокуса из

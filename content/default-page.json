@@ -1480,6 +1480,148 @@
       }
     },
     {
+      "id": "data-cards-header",
+      "type": "header",
+      "data": {
+        "text": "Data-driven cards",
+        "level": 2
+      },
+      "tunes": {
+        "animation": {
+          "type": "fade-up"
+        }
+      }
+    },
+    {
+      "id": "data-cards-products",
+      "type": "header",
+      "data": {
+        "text": "Products cards",
+        "level": 3
+      },
+      "tunes": {
+        "spacing": {
+          "top": "small"
+        },
+        "animation": {
+          "type": "fade-left"
+        }
+      }
+    },
+    {
+      "id": "data-cards-products-block",
+      "type": "dataCards",
+      "data": {
+        "source": "products",
+        "viewMode": "grid",
+        "limit": 4,
+        "skip": 0,
+        "order": "desc",
+        "showLoadMore": true,
+        "loadMoreStep": 4,
+        "showViewAllButton": true,
+        "viewAllHref": "https://dummyjson.com/products",
+        "showVisitorControls": true
+      },
+      "tunes": {
+        "spacing": {
+          "top": "medium"
+        },
+        "label": {
+          "label": "Products cards"
+        },
+        "animation": {
+          "type": "fade-left"
+        }
+      }
+    },
+    {
+      "id": "data-cards-posts",
+      "type": "header",
+      "data": {
+        "text": "Posts cards",
+        "level": 3
+      },
+      "tunes": {
+        "spacing": {
+          "top": "small"
+        },
+        "animation": {
+          "type": "fade-right"
+        }
+      }
+    },
+    {
+      "id": "data-cards-posts-block",
+      "type": "dataCards",
+      "data": {
+        "source": "posts",
+        "viewMode": "list",
+        "limit": 3,
+        "skip": 0,
+        "order": "desc",
+        "showLoadMore": false,
+        "loadMoreStep": 3,
+        "showViewAllButton": true,
+        "viewAllHref": "https://dummyjson.com/posts",
+        "showVisitorControls": true
+      },
+      "tunes": {
+        "spacing": {
+          "top": "medium"
+        },
+        "label": {
+          "label": "Posts cards"
+        },
+        "animation": {
+          "type": "fade-right"
+        }
+      }
+    },
+    {
+      "id": "data-cards-recipes",
+      "type": "header",
+      "data": {
+        "text": "Recipes cards",
+        "level": 3
+      },
+      "tunes": {
+        "spacing": {
+          "top": "small"
+        },
+        "animation": {
+          "type": "fade-left"
+        }
+      }
+    },
+    {
+      "id": "data-cards-recipes-block",
+      "type": "dataCards",
+      "data": {
+        "source": "recipes",
+        "viewMode": "slider",
+        "limit": 3,
+        "skip": 0,
+        "order": "desc",
+        "showLoadMore": false,
+        "loadMoreStep": 3,
+        "showViewAllButton": true,
+        "viewAllHref": "https://dummyjson.com/recipes",
+        "showVisitorControls": true
+      },
+      "tunes": {
+        "spacing": {
+          "top": "medium"
+        },
+        "label": {
+          "label": "Recipes cards"
+        },
+        "animation": {
+          "type": "fade-left"
+        }
+      }
+    },
+    {
       "id": "accordion-header",
       "type": "header",
       "data": {
