@@ -39,13 +39,13 @@
     text-decoration: underline;
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.16em;
-    text-decoration-color: currentColor;
+    text-decoration-color: currentcolor;
   }
 
   :global(.cdx-strikethrough),
   :global(.cdx-strikethroughs) {
     text-decoration: line-through;
-    text-decoration-color: currentColor;
+    text-decoration-color: currentcolor;
   }
 
   :global(.inline-code) {

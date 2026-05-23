@@ -450,13 +450,13 @@
     text-decoration: underline;
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.16em;
-    text-decoration-color: currentColor;
+    text-decoration-color: currentcolor;
   }
 
   .cdx-strikethrough,
   .cdx-strikethroughs {
     text-decoration: line-through;
-    text-decoration-color: currentColor;
+    text-decoration-color: currentcolor;
   }
 
   .inline-code {
@@ -821,8 +821,8 @@
     padding: 0 3px;
     font-weight: 700;
     color: var(--color-text);
-    border-radius: 3px;
     background: color-mix(in srgb, var(--color-muted) 24%, transparent);
+    border-radius: 3px;
   }
 
   .ce-inline-tool--active .editor-background-color-tool__icon {
