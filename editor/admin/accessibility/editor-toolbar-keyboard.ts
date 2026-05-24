@@ -1,4 +1,5 @@
 import type { EditorUiMessages } from '~~/i18n'
+import { createRafSyncScheduler } from '~~/editor/admin/helpers/raf-sync'
 
 const patchedAttribute = 'data-editor-toolbar-keyboard-patched'
 
@@ -21,8 +22,11 @@ export function enableEditorToolbarKeyboardAccess({
   messages: EditorUiMessages
 }): EditorToolbarKeyboardPatch {
   const labels = messages.tools.editorToolbar
-  const observer = new MutationObserver(() => {
+  const scheduler = createRafSyncScheduler(() => {
     patchEditorToolbarControls(root, labels)
+  })
+  const observer = new MutationObserver(() => {
+    scheduler.schedule()
   })
 
   patchEditorToolbarControls(root, labels)
@@ -35,6 +39,7 @@ export function enableEditorToolbarKeyboardAccess({
 
   return {
     destroy() {
+      scheduler.cancel()
       observer.disconnect()
     },
   }

@@ -2,6 +2,7 @@ import tippy, { type Instance } from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
+import { createRafSyncScheduler } from '~~/editor/admin/helpers/raf-sync'
 import {
   getEditorPluginInfoMetadataMap,
   isEditorPluginInfoCustomToolKey,
@@ -34,8 +35,11 @@ export function enableEditorPluginInfoTooltips({
     ]),
   )
   const instances = new Map<HTMLElement, Instance>()
-  const observer = new MutationObserver(() => {
+  const scheduler = createRafSyncScheduler(() => {
     syncPluginInfoTooltips(root, metadataByKey, metadataByTitle, instances)
+  })
+  const observer = new MutationObserver(() => {
+    scheduler.schedule()
   })
 
   syncPluginInfoTooltips(root, metadataByKey, metadataByTitle, instances)
@@ -47,6 +51,7 @@ export function enableEditorPluginInfoTooltips({
 
   return {
     destroy() {
+      scheduler.cancel()
       observer.disconnect()
       Fancybox.close()
       instances.forEach((instance) => {
