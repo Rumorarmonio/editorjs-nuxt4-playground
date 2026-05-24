@@ -1,4 +1,5 @@
 import Choices from 'choices.js'
+import { waitForElementTransitionEnd } from '../fields/choices-close'
 import { createCustomSelectChoiceMarkup } from '../fields/custom-select-markup'
 
 export interface TuneFieldOptions {
@@ -82,6 +83,7 @@ export function createTuneSelectField({
   const dropdownHost = document.createElement('div')
   let currentValue = value
   let choices: Choices | null = null
+  let pendingCloseCleanup: (() => void) | null = null
 
   field.className = 'editor-block-tune-field editor-custom-select editor-custom-select--compact'
 
@@ -222,6 +224,8 @@ export function createTuneSelectField({
       return
     }
 
+    pendingCloseCleanup?.()
+    pendingCloseCleanup = null
     select.removeEventListener('hideDropdown', handleChoicesHide)
     choices.destroy()
     choices = null
@@ -235,7 +239,22 @@ export function createTuneSelectField({
   }
 
   function handleChoicesHide(): void {
-    window.setTimeout(() => closeChoices(true), 0)
+    if (!choices) {
+      return
+    }
+
+    const dropdownElement = choices.containerOuter.element.querySelector<HTMLElement>(
+      '.choices__list--dropdown',
+    )
+
+    field.classList.remove('editor-custom-select--open')
+    summary.setAttribute('aria-expanded', 'false')
+    select.hidden = true
+
+    pendingCloseCleanup?.()
+    pendingCloseCleanup = waitForElementTransitionEnd(dropdownElement, () => {
+      closeChoices(true)
+    })
   }
 
   function updateSummary(): void {

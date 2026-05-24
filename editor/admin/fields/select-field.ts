@@ -1,5 +1,6 @@
 import Choices from 'choices.js'
 import { createCustomSelectChoiceMarkup } from './custom-select-markup'
+import { waitForElementTransitionEnd } from './choices-close'
 import { createPlainFieldWrapper } from './field-ui'
 import type { PlainFieldControl, PlainSelectFieldOptions } from './types'
 
@@ -10,6 +11,7 @@ export function createPlainSelectField<TValue extends string = string>(
   let isReadOnly = Boolean(options.readOnly)
   let isDisabled = Boolean(options.disabled)
   let choices: Choices | null = null
+  let pendingCloseCleanup: (() => void) | null = null
   const select = document.createElement('select')
   const summary = document.createElement('button')
   const summaryLabel = document.createElement('span')
@@ -156,6 +158,8 @@ export function createPlainSelectField<TValue extends string = string>(
       return
     }
 
+    pendingCloseCleanup?.()
+    pendingCloseCleanup = null
     select.removeEventListener('hideDropdown', handleChoicesHide)
     choices.destroy()
     choices = null
@@ -169,7 +173,22 @@ export function createPlainSelectField<TValue extends string = string>(
   }
 
   function handleChoicesHide(): void {
-    window.setTimeout(() => closeChoices(true), 0)
+    if (!choices) {
+      return
+    }
+
+    const dropdownElement = choices.containerOuter.element.querySelector<HTMLElement>(
+      '.choices__list--dropdown',
+    )
+
+    wrapper.root.classList.remove('editor-custom-select--open')
+    summary.setAttribute('aria-expanded', 'false')
+    select.hidden = true
+
+    pendingCloseCleanup?.()
+    pendingCloseCleanup = waitForElementTransitionEnd(dropdownElement, () => {
+      closeChoices(true)
+    })
   }
 
   summary.addEventListener('click', openChoices)

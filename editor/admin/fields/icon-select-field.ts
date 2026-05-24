@@ -1,4 +1,5 @@
 import Choices from 'choices.js'
+import { waitForElementTransitionEnd } from './choices-close'
 import { createPlainFieldWrapper } from './field-ui'
 import type { PlainFieldControl, PlainFieldOption } from './types'
 
@@ -23,6 +24,7 @@ export function createIconSelectField<TValue extends string = string>(
   let isReadOnly = Boolean(options.readOnly)
   let isDisabled = Boolean(options.disabled)
   let choices: Choices | null = null
+  let pendingCloseCleanup: (() => void) | null = null
   const select = document.createElement('select')
   const summary = document.createElement('button')
   const dropdownHost = document.createElement('div')
@@ -174,6 +176,8 @@ export function createIconSelectField<TValue extends string = string>(
       return
     }
 
+    pendingCloseCleanup?.()
+    pendingCloseCleanup = null
     select.removeEventListener('hideDropdown', handleChoicesHide)
     choices.destroy()
     choices = null
@@ -186,7 +190,21 @@ export function createIconSelectField<TValue extends string = string>(
   }
 
   function handleChoicesHide(): void {
-    window.setTimeout(() => closeChoices(true), 0)
+    if (!choices) {
+      return
+    }
+
+    const dropdownElement = choices.containerOuter.element.querySelector<HTMLElement>(
+      '.choices__list--dropdown',
+    )
+
+    wrapper.root.classList.remove('editor-icon-select--open')
+    select.hidden = true
+
+    pendingCloseCleanup?.()
+    pendingCloseCleanup = waitForElementTransitionEnd(dropdownElement, () => {
+      closeChoices(true)
+    })
   }
 
   select.addEventListener('change', () => {
