@@ -15,6 +15,17 @@
   --color-danger: #e45649;
   --color-success: #50a14f;
   --color-warning: #986801;
+  --editor-focus-ring-border: var(--color-focus-ring);
+  --editor-focus-ring-shadow: 0 0 0 2px color-mix(
+    in srgb,
+    var(--color-focus-ring) 50%,
+    transparent
+  );
+  --editor-focus-ring-transition: border-color var(--transition-base),
+    box-shadow var(--transition-base);
+  --editor-focus-ring-transition-interactive: border-color var(--transition-base),
+    box-shadow var(--transition-base), background var(--transition-base),
+    color var(--transition-base);
   --color-code-background: #eef0f4;
   --color-code-block-background: #fafafa;
   --color-code-block-border: #c8ccd4;
