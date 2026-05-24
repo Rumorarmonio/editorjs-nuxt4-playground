@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { installToastDebugApi } from '~~/shared/notifications'
 
 const route = useRoute()
+const runtimeConfig = useRuntimeConfig()
 const { t } = useI18n()
 
 useAppLocale()
@@ -18,7 +19,7 @@ const pageTitle = computed(() =>
 useHead(() => ({
   link: [
     {
-      href: '/favicon.svg',
+      href: `${runtimeConfig.app.baseURL}favicon.svg`,
       rel: 'icon',
       type: 'image/svg+xml',
     },
