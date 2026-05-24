@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, provide, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import EditorJsEditor from '~~/editor/admin/components/EditorJsEditor/EditorJsEditor.vue'
+import { editorAdminContextKey } from '~~/editor/admin/context/editor-context'
 import {
   getValidationSummary,
   validateEditorContentData,
@@ -18,6 +19,11 @@ const {
   setLocalePreference,
 } = useAppLocale()
 const { currentTheme, setTheme } = useAppTheme()
+
+provide(editorAdminContextKey, {
+  contentLocale: currentLocale,
+  editorMessages,
+})
 
 const {
   importDraftJson,
@@ -330,9 +336,7 @@ onBeforeUnmount(() => {
           v-if="isReady"
           :key="editorRenderKey"
           ref="editorRef"
-          :content-locale="currentLocale"
           :initial-data="resolvedContent.data"
-          :editor-messages="editorMessages"
           @changed="handleChanged"
           @saved="handleSaved"
         />

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type EditorJS from '@editorjs/editorjs'
 import { nextTick, onBeforeUnmount, onMounted, shallowRef, ref } from 'vue'
+import { useEditorAdminContext } from '~~/editor/admin/context/editor-context'
 import {
   enableEditorToolbarKeyboardAccess,
   type EditorToolbarKeyboardPatch,
@@ -29,19 +30,16 @@ import {
   omitEmptyBlockTuneData,
   typographEditorContentData,
   validateEditorContentData,
-  type ContentTypographyLocale,
   type EditorContentData,
 } from '~~/editor/shared'
 import { notifyError } from '~~/shared/notifications'
-import type { EditorUiMessages } from '~~/i18n'
 
 const props = defineProps<{
   initialData: EditorContentData
-  editorMessages: EditorUiMessages
-  contentLocale: ContentTypographyLocale
 }>()
 
 const runtimeConfig = useRuntimeConfig()
+const { contentLocale, editorMessages } = useEditorAdminContext()
 
 const emit = defineEmits<{
   changed: []
@@ -72,13 +70,13 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
     const savedContent: unknown = await editor.value.save()
 
     if (!isKnownEditorContentData(savedContent)) {
-      errorMessage.value = props.editorMessages.core.unknownBlocksError
+      errorMessage.value = editorMessages.value.core.unknownBlocksError
       return false
     }
 
     const typographedContent = typographEditorContentData(
       savedContent,
-      props.contentLocale,
+      contentLocale.value,
     )
     const storageContent = omitEmptyBlockTuneData(typographedContent)
     const duplicateAnchorValues = getDuplicateAnchorValues(
@@ -86,7 +84,7 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
     )
 
     if (duplicateAnchorValues.length > 0) {
-      const duplicateAnchorsError = props.editorMessages.core.duplicateAnchorsError(
+      const duplicateAnchorsError = editorMessages.value.core.duplicateAnchorsError(
         duplicateAnchorValues.join(', '),
       )
       errorMessage.value = duplicateAnchorsError
@@ -101,7 +99,7 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
 
     if (validationSummary) {
       errorMessage.value = validationSummary
-      notifyError(props.editorMessages.core.validationSaveError)
+      notifyError(editorMessages.value.core.validationSaveError)
       scheduleScrollToFirstValidationError()
       return false
     }
@@ -112,8 +110,8 @@ async function save(options: SaveOptions = {}): Promise<boolean> {
   } catch (error) {
     const saveErrorMessage =
       error instanceof Error && error.message.includes('validation errors')
-        ? props.editorMessages.core.validationSaveError
-        : props.editorMessages.core.saveError
+        ? editorMessages.value.core.validationSaveError
+        : editorMessages.value.core.saveError
     errorMessage.value = saveErrorMessage
     notifyError(saveErrorMessage)
     return false
@@ -131,7 +129,7 @@ async function getCurrentContent(): Promise<EditorContentData | null> {
 
   return isKnownEditorContentData(savedContent)
     ? omitEmptyBlockTuneData(
-        typographEditorContentData(savedContent, props.contentLocale),
+        typographEditorContentData(savedContent, contentLocale.value),
       )
     : null
 }
@@ -153,7 +151,7 @@ onMounted(async () => {
       await Promise.all([
         import('@editorjs/editorjs'),
         import('editorjs-drag-drop'),
-        createEditorTools(props.editorMessages),
+        createEditorTools(editorMessages.value),
       ])
 
     const instance = new EditorJS({
@@ -163,8 +161,8 @@ onMounted(async () => {
       tunes: editorBlockTunes,
       inlineToolbar: editorInlineToolbar,
       autofocus: false,
-      i18n: props.editorMessages.editorJs,
-      placeholder: props.editorMessages.core.placeholder,
+      i18n: editorMessages.value.editorJs,
+      placeholder: editorMessages.value.core.placeholder,
       onChange: () => {
         if (!isReady.value) {
           return
@@ -182,20 +180,20 @@ onMounted(async () => {
     })
     editorToolbarKeyboardPatch = enableEditorToolbarKeyboardAccess({
       root: holder,
-      messages: props.editorMessages,
+      messages: editorMessages.value,
     })
     tableKeyboardPatch = enableTableToolKeyboardAccess({
       root: holder,
-      messages: props.editorMessages,
+      messages: editorMessages.value,
     })
     pluginInfoTooltipsPatch = enableEditorPluginInfoTooltips({
       root: holder,
-      messages: props.editorMessages,
+      messages: editorMessages.value,
       appBaseURL: runtimeConfig.app.baseURL,
     })
     isReady.value = true
   } catch {
-    errorMessage.value = props.editorMessages.core.initError
+    errorMessage.value = editorMessages.value.core.initError
   }
 })
 
