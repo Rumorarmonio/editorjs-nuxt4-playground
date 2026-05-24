@@ -92,6 +92,11 @@
 
 .cards,
 .slider {
+  --swiper-navigation-color: var(--color-accent);
+  --swiper-pagination-color: var(--color-accent);
+  --swiper-pagination-bullet-inactive-color: var(--color-border);
+  --swiper-pagination-bullet-inactive-opacity: 1;
+
   min-width: 0;
   max-width: 100%;
 }

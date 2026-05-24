@@ -2,7 +2,7 @@
   display: grid;
   gap: 32px;
   min-height: 100vh;
-  padding: clamp(24px, 5vw, 64px);
+  padding: clamp(12px, 5vw, 64px);
   color: var(--color-text);
   background: var(--color-background);
 }
@@ -102,11 +102,14 @@
 }
 
 .sidebar {
-  position: sticky;
   top: 24px;
   display: grid;
   gap: 12px;
   min-width: 0;
+
+  @media (width >= 1025px) {
+    position: sticky;
+  }
 }
 
 .navigationControl {
@@ -173,7 +176,7 @@
   box-shadow: var(--editor-focus-ring-shadow);
 }
 
-@media (width <= 760px) {
+@media (width <= 1024px) {
   .header {
     flex-direction: column;
     align-items: stretch;

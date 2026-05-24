@@ -665,6 +665,10 @@
     display: none;
   }
 
+  .editor-plain-field {
+    min-width: 0;
+  }
+
   .editor-plain-field__label {
     display: block;
     margin-bottom: 6px;
@@ -985,6 +989,7 @@
   .editor-code-snippet-tool {
     display: grid;
     gap: 14px;
+    min-width: 0;
     padding: 16px;
     background: var(--color-surface-muted);
     border: 1px solid var(--color-border);
@@ -1013,6 +1018,7 @@
   .editor-custom-select,
   .editor-icon-select {
     position: relative;
+    min-width: 0;
   }
 
   .editor-custom-select__dropdown-host,

@@ -9,17 +9,13 @@
 }
 
 .slider {
+  --swiper-navigation-color: var(--color-accent);
+  --swiper-pagination-color: var(--color-accent);
+  --swiper-pagination-bullet-inactive-color: var(--color-border);
+  --swiper-pagination-bullet-inactive-opacity: 1;
+
   width: 100%;
   padding-bottom: 34px;
-
-  :global(.swiper-button-prev),
-  :global(.swiper-button-next) {
-    color: var(--color-accent);
-  }
-
-  :global(.swiper-pagination-bullet-active) {
-    background: var(--color-accent);
-  }
 }
 
 .card {
