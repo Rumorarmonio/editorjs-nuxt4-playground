@@ -1,0 +1,359 @@
+@use './mixins' as editorMixins;
+
+.editor-admin-editor {
+  .codex-editor {
+    color: var(--color-text);
+  }
+
+  .codex-editor__redactor {
+    padding-bottom: 28px !important;
+  }
+
+  .codex-editor ::selection {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+  }
+
+  .ce-paragraph,
+  .ce-header,
+  .cdx-list,
+  .cdx-quote,
+  .tc-table,
+  .tc-cell {
+    color: var(--color-text);
+  }
+
+  .cdx-list {
+    --checkbox-background: var(--color-background);
+    --color-bg-checked: var(--color-accent);
+    --color-bg-checked-hover: var(--color-accent);
+    --color-tick: var(--color-on-accent);
+  }
+
+  .ce-block__content,
+  .ce-toolbar__content {
+    max-width: 720px;
+  }
+
+  .ce-block--selected .ce-block__content {
+    background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  }
+
+  .ce-toolbar__plus,
+  .ce-toolbar__settings-btn,
+  .ce-popover__item,
+  .ce-inline-toolbar__dropdown,
+  .ce-inline-tool,
+  .ce-conversion-tool,
+  .cdx-settings-button {
+    color: var(--color-text);
+    transition: var(--focus-ring-transition-interactive);
+  }
+
+  .ce-toolbar__plus:hover,
+  .ce-toolbar__plus:focus-visible,
+  .ce-toolbar__settings-btn:hover,
+  .ce-toolbar__settings-btn:focus-visible,
+  .ce-popover__item:hover,
+  .ce-popover__item:focus-visible,
+  .ce-popover__item--focused,
+  .ce-inline-toolbar__dropdown:hover,
+  .ce-inline-toolbar__dropdown:focus-visible,
+  .ce-inline-tool:hover,
+  .ce-inline-tool:focus-visible,
+  .ce-inline-tool--active,
+  .ce-conversion-tool:hover,
+  .ce-conversion-tool:focus-visible,
+  .cdx-settings-button:hover,
+  .cdx-settings-button:focus-visible,
+  .cdx-settings-button--active {
+    color: var(--color-text);
+    background: var(--color-control-hover);
+  }
+
+  .ce-toolbar__plus:focus-visible,
+  .ce-toolbar__settings-btn:focus-visible,
+  .ce-popover__item:focus-visible,
+  .ce-inline-toolbar__dropdown:focus-visible,
+  .ce-inline-tool:focus-visible,
+  .ce-conversion-tool:focus-visible,
+  .cdx-settings-button:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
+  }
+
+  .ce-popover,
+  .ce-conversion-toolbar,
+  .ce-inline-toolbar,
+  .ce-settings,
+  .ce-conversion-toolbar__tools {
+    color: var(--color-text);
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-control);
+  }
+
+  .ce-popover__search,
+  .ce-conversion-toolbar__label,
+  .ce-inline-toolbar__dropdown-content,
+  .ce-popover__nothing-found-message {
+    color: var(--color-muted);
+  }
+
+  .ce-inline-tool-input {
+    color: var(--color-text);
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
+  }
+
+  .ce-inline-tool-input::placeholder {
+    color: var(--color-muted);
+  }
+
+  .ce-inline-tool-input:focus {
+    border-color: var(--focus-ring-border);
+    box-shadow: var(--focus-ring-shadow);
+    outline: none;
+  }
+
+  .cdx-search-field,
+  .ce-popover__search {
+    color: var(--color-text);
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
+  }
+
+  .ce-popover__item-icon,
+  .ce-conversion-tool__icon {
+    color: var(--color-text);
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
+  }
+
+  .tc-wrap,
+  .tc-table,
+  .tc-row,
+  .tc-cell {
+    border-color: var(--color-table-border);
+  }
+
+  .tc-wrap {
+    --color-background: var(--color-surface-muted);
+    --color-text-secondary: var(--color-muted);
+    --color-border: var(--color-table-border);
+
+    color: var(--color-text);
+  }
+
+  .tc-table {
+    background: var(--color-surface);
+  }
+
+  .tc-table--heading .tc-row:first-child,
+  .tc-table--heading .tc-row:first-child::after,
+  .tc-row--selected,
+  .tc-row--selected::after,
+  .tc-cell--selected {
+    background: var(--color-surface-muted);
+  }
+
+  .tc-table--heading .tc-row:first-child {
+    border-bottom: 1px solid var(--color-table-border);
+  }
+
+  .tc-table--heading .tc-row:first-child::after {
+    bottom: -1px;
+    border-bottom: 1px solid var(--color-table-border);
+  }
+
+  .tc-table--heading .tc-row:first-child [contenteditable]:empty::before {
+    color: var(--color-muted);
+  }
+
+  .tc-add-column,
+  .tc-add-row {
+    color: var(--color-muted);
+  }
+
+  .tc-add-column {
+    background: var(--color-surface);
+    border-top-color: var(--color-table-border);
+  }
+
+  .tc-add-column svg {
+    z-index: 2;
+    color: var(--color-muted);
+    background-color: var(--color-surface);
+  }
+
+  .tc-add-column:hover svg {
+    color: var(--color-text);
+    background-color: var(--color-control-hover);
+  }
+
+  .tc-add-column:hover,
+  .tc-add-row:hover,
+  .tc-add-row:hover::before {
+    background-color: var(--color-control-hover);
+  }
+
+  .tc-add-column:focus-visible,
+  .tc-add-row:focus-visible,
+  .tc-toolbox__toggler:focus-visible,
+  .tc-popover__item:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
+  }
+
+  .tc-toolbox {
+    --toggler-dots-color: var(--color-muted);
+    --toggler-dots-color-hovered: var(--color-text);
+
+    z-index: 5;
+  }
+
+  .tc-toolbox:focus-within {
+    opacity: 1;
+  }
+
+  .tc-toolbox__toggler {
+    color: var(--color-muted);
+  }
+
+  .tc-toolbox__toggler:focus-visible {
+    color: var(--color-text);
+    box-shadow: var(--focus-ring-shadow);
+    opacity: 1;
+  }
+
+  .tc-toolbox__toggler:hover {
+    color: var(--color-text);
+  }
+
+  .tc-popover {
+    --color-border: var(--color-table-border);
+    --color-background: var(--color-surface);
+    --color-background-hover: var(--color-control-hover);
+    --color-background-confirm: var(--color-danger);
+    --color-background-confirm-hover: var(--color-danger);
+    --color-text-confirm: var(--color-on-accent);
+
+    z-index: 6;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border-color: var(--color-table-border);
+    box-shadow: var(--shadow-control);
+  }
+
+  .tc-popover__item {
+    color: var(--color-text);
+  }
+
+  .tc-popover__item-icon {
+    color: var(--color-text);
+    background: var(--color-surface-muted);
+    border-color: var(--color-table-border);
+  }
+
+  .tc-popover__item--confirm,
+  .tc-popover__item--confirm .tc-popover__item-icon {
+    color: var(--color-on-accent);
+    background: var(--color-danger);
+  }
+
+  .tc-popover__item--confirm .tc-popover__item-icon {
+    border-color: color-mix(in srgb, var(--color-on-accent) 24%, transparent);
+  }
+
+  .cdx-input,
+  .cdx-textarea,
+  .cdx-quote__text,
+  .cdx-quote__caption {
+    color: var(--color-text);
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    box-shadow: none;
+    transition: var(--focus-ring-transition);
+  }
+
+  .cdx-input:focus,
+  .cdx-textarea:focus,
+  .editor-plain-field__control:focus,
+  .editor-block-tune-field__control:focus,
+  .editor-embed-input__field:focus,
+  .editor-embed-input__button:focus,
+  .editor-embed-input__button:focus-visible,
+  .editor-embed-preview__button:focus,
+  .editor-embed-preview__button:focus-visible {
+    @include editorMixins.editor-interactive-focus-ring;
+  }
+
+  .editor-rich-field__editor:focus,
+  .editor-two-columns-tool__editor:focus,
+  .editor-accordion-group-tool__body-editor:focus {
+    outline: none;
+  }
+
+  .editor-rich-field__editor:focus-visible,
+  .editor-two-columns-tool__editor:focus-visible,
+  .editor-accordion-group-tool__body-editor:focus-visible {
+    @include editorMixins.editor-interactive-focus-ring;
+  }
+
+  .editor-background-color {
+    padding: 0 2px;
+    color: inherit;
+    border-radius: 2px;
+  }
+
+  .editor-background-color--accent {
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+
+  .editor-background-color--success {
+    background: color-mix(in srgb, var(--color-success) 22%, transparent);
+  }
+
+  .editor-background-color--danger {
+    background: color-mix(in srgb, var(--color-danger) 22%, transparent);
+  }
+
+  .editor-background-color--warning {
+    background: color-mix(in srgb, var(--color-warning) 22%, transparent);
+  }
+
+  .cdx-marker {
+    background: color-mix(in srgb, var(--color-warning) 22%, transparent);
+  }
+
+  .editor-background-color--muted {
+    background: color-mix(in srgb, var(--color-muted) 22%, transparent);
+  }
+
+  .cdx-underline {
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+    text-decoration-color: currentcolor;
+  }
+
+  .cdx-strikethrough,
+  .cdx-strikethroughs {
+    text-decoration: line-through;
+    text-decoration-color: currentcolor;
+  }
+
+  .inline-code {
+    padding: 1px 4px;
+    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono',
+    monospace;
+    font-size: 0.9em;
+    color: inherit;
+    background: var(--color-code-background);
+    border-radius: 4px;
+  }
+
+  .ce-toolbar {
+    z-index: 10;
+  }
+}
