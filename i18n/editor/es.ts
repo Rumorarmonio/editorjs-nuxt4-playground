@@ -38,7 +38,7 @@ export const editorEs: EditorUiMessages = {
     twoColumns: {
       toolboxTitle: 'Dos columnas',
       layoutLabel: 'Diseño',
-      reverseLabel: 'Invertir al renderizar',
+      reverseLabel: 'Intercambiar columnas',
       leftColumnLabel: 'Columna izquierda',
       rightColumnLabel: 'Columna derecha',
       placeholder: 'Añada un párrafo, título o lista',

@@ -37,7 +37,7 @@ export const editorRu: EditorUiMessages = {
     twoColumns: {
       toolboxTitle: 'Две колонки',
       layoutLabel: 'Макет',
-      reverseLabel: 'Обратить при рендере',
+      reverseLabel: 'Поменять колонки местами',
       leftColumnLabel: 'Левая колонка',
       rightColumnLabel: 'Правая колонка',
       placeholder: 'Добавьте абзац, заголовок или список',

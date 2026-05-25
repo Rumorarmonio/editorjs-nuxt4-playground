@@ -35,7 +35,7 @@ export const editorEn: EditorUiMessages = {
     twoColumns: {
       toolboxTitle: 'Two columns',
       layoutLabel: 'Layout',
-      reverseLabel: 'Reverse on render',
+      reverseLabel: 'Swap columns',
       leftColumnLabel: 'Left column',
       rightColumnLabel: 'Right column',
       placeholder: 'Add paragraph, heading, or list',
