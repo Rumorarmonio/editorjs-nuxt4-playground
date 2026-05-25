@@ -1,3 +1,5 @@
+@use './mixins' as editorMixins;
+
 .ce-popover {
   --color-border: var(--color-editor-border);
   --color-shadow: rgb(0 0 0 / 0.25);
@@ -94,8 +96,7 @@
 }
 
 .editor-plugin-info-tooltip__image-link:focus-visible {
-  outline: none;
-  box-shadow: var(--editor-focus-ring-shadow);
+  @include editorMixins.editor-focus-shadow-only;
 }
 
 .editor-plugin-info-tooltip__image {
@@ -177,7 +178,7 @@
   .ce-conversion-tool,
   .cdx-settings-button {
     color: var(--color-text);
-    transition: var(--editor-focus-ring-transition-interactive);
+    transition: var(--focus-ring-transition-interactive);
   }
 
   .ce-toolbar__plus:hover,
@@ -209,7 +210,7 @@
   .ce-conversion-tool:focus-visible,
   .cdx-settings-button:focus-visible {
     outline: none;
-    box-shadow: var(--editor-focus-ring-shadow);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .ce-popover,
@@ -241,8 +242,8 @@
   }
 
   .ce-inline-tool-input:focus {
-    border-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
+    border-color: var(--focus-ring-border);
+    box-shadow: var(--focus-ring-shadow);
     outline: none;
   }
 
@@ -332,7 +333,7 @@
   .tc-toolbox__toggler:focus-visible,
   .tc-popover__item:focus-visible {
     outline: none;
-    box-shadow: var(--editor-focus-ring-shadow);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .tc-toolbox {
@@ -352,7 +353,7 @@
 
   .tc-toolbox__toggler:focus-visible {
     color: var(--color-text);
-    box-shadow: var(--editor-focus-ring-shadow);
+    box-shadow: var(--focus-ring-shadow);
     opacity: 1;
   }
 
@@ -403,7 +404,7 @@
     background: var(--color-surface);
     border-color: var(--color-border);
     box-shadow: none;
-    transition: var(--editor-focus-ring-transition);
+    transition: var(--focus-ring-transition);
   }
 
   .cdx-input:focus,
@@ -415,9 +416,7 @@
   .editor-embed-input__button:focus-visible,
   .editor-embed-preview__button:focus,
   .editor-embed-preview__button:focus-visible {
-    outline: none;
-    border-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
+    @include editorMixins.editor-interactive-focus-ring;
   }
 
   .editor-rich-field__editor:focus,
@@ -429,8 +428,7 @@
   .editor-rich-field__editor:focus-visible,
   .editor-two-columns-tool__editor:focus-visible,
   .editor-accordion-group-tool__body-editor:focus-visible {
-    border-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
+    @include editorMixins.editor-interactive-focus-ring;
   }
 
   .editor-background-color {
@@ -500,16 +498,12 @@
   }
 
   .editor-embed-input__field {
+    @include editorMixins.editor-control-surface;
+
     width: 100%;
     min-height: 40px;
     padding: 8px 10px;
-    font: inherit;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    transition: border-color var(--transition-base),
-    box-shadow var(--transition-base);
+    transition: var(--focus-ring-transition-frame);
   }
 
   .editor-embed-input__hint {
@@ -537,18 +531,13 @@
 
   .editor-embed-input__button,
   .editor-embed-preview__button {
+    @include editorMixins.editor-control-surface;
+
     min-height: 40px;
     padding: 7px 12px;
-    font: inherit;
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    transition: border-color var(--transition-base),
-    box-shadow var(--transition-base),
-    background var(--transition-base);
+    transition: var(--focus-ring-transition-interactive);
     cursor: pointer;
   }
 
@@ -624,14 +613,14 @@
     color: inherit;
     background: transparent;
     border: 0;
-    transition: var(--editor-focus-ring-transition-interactive);
+    transition: var(--focus-ring-transition-interactive);
     cursor: pointer;
   }
 
   .editor-block-tune-toggle:focus-visible {
-    outline: none;
+    @include editorMixins.editor-focus-shadow-only;
+
     border-radius: 999px;
-    box-shadow: var(--editor-focus-ring-shadow);
   }
 
   .editor-block-tune-field__label {
@@ -640,15 +629,12 @@
   }
 
   .editor-block-tune-field__control {
+    @include editorMixins.editor-control-surface;
+
     width: 100%;
     min-height: 40px;
     padding: 6px 8px;
-    font: inherit;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    transition: var(--editor-focus-ring-transition);
+    transition: var(--focus-ring-transition);
   }
 
   .editor-block-tune-field--invalid .editor-block-tune-field__control {
@@ -705,15 +691,12 @@
   }
 
   .editor-plain-field__control {
+    @include editorMixins.editor-control-surface;
+
     width: 100%;
     min-height: 40px;
     padding: 8px 10px;
-    font: inherit;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    transition: var(--editor-focus-ring-transition);
+    transition: var(--focus-ring-transition);
   }
 
   .editor-plain-field__control--textarea {
@@ -724,9 +707,9 @@
   .editor-accordion-group-tool__body-editor:focus-within,
   .editor-rich-field__editor:focus-within,
   .editor-two-columns-tool__editor:focus-within {
-    border-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
-    transition: var(--editor-focus-ring-transition);
+    border-color: var(--focus-ring-border);
+    box-shadow: var(--focus-ring-shadow);
+    transition: var(--focus-ring-transition);
   }
 
   .editor-plain-field__hint,
@@ -778,13 +761,12 @@
     background: var(--color-border);
     border: 1px solid transparent;
     border-radius: 999px;
-    transition: var(--editor-focus-ring-transition-interactive);
+    transition: var(--focus-ring-transition-interactive);
     cursor: pointer;
   }
 
   .editor-plain-field__toggle-input:focus-visible + .editor-plain-field__toggle-track {
-    border-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
+    @include editorMixins.editor-interactive-focus-ring;
   }
 
   .editor-plain-field__toggle-thumb {
@@ -940,7 +922,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 999px;
-    transition: var(--editor-focus-ring-transition-interactive);
+    transition: var(--focus-ring-transition-interactive);
     user-select: none;
   }
 
@@ -962,9 +944,7 @@
   }
 
   .editor-block-tool-label:focus-visible {
-    outline: none;
-    border-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
+    @include editorMixins.editor-interactive-focus-ring;
   }
 
   .editor-notice-tool {
@@ -1034,13 +1014,11 @@
     border: 1px solid transparent;
     border-radius: 6px;
     outline: none;
-    transition: border-color var(--transition-base),
-    box-shadow var(--transition-base),
-    border-radius var(--transition-base);
+    transition: var(--focus-ring-transition-surface);
 
     &.is-focused {
-      border-color: var(--editor-focus-ring-border);
-      box-shadow: var(--editor-focus-ring-shadow);
+      border-color: var(--focus-ring-border);
+      box-shadow: var(--focus-ring-shadow);
     }
   }
 
@@ -1052,10 +1030,12 @@
   .editor-select .choices__inner,
   .editor-select .choices__list--dropdown,
   .editor-select .choices__input {
-    transition: var(--editor-focus-ring-transition);
+    transition: var(--focus-ring-transition);
   }
 
   .editor-select__summary {
+    @include editorMixins.editor-control-surface;
+
     position: relative;
     display: flex;
     align-items: center;
@@ -1064,15 +1044,8 @@
     width: 100%;
     min-height: 40px;
     padding: 7px 36px 7px 10px;
-    font: inherit;
     text-align: left;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    transition: border-color var(--transition-base),
-    box-shadow var(--transition-base),
-    border-radius var(--transition-base);
+    transition: var(--focus-ring-transition-surface);
     cursor: pointer;
   }
 
@@ -1087,8 +1060,7 @@
   }
 
   .editor-select__summary:focus-visible {
-    border-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
+    @include editorMixins.editor-interactive-focus-ring;
   }
 
   .editor-select__summary::after {
@@ -1123,11 +1095,9 @@
   }
 
   .editor-select__summary-label {
-    min-width: 0;
-    overflow: hidden;
+    @include editorMixins.editor-truncate-text;
+
     font-size: 0.875rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .editor-select .choices__list--dropdown {
@@ -1140,18 +1110,17 @@
     border-radius: 6px;
     box-shadow: var(--shadow-popover);
     transform: translateY(-6px);
-    transition: opacity var(--transition-base),
-    visibility var(--transition-base),
-    transform var(--transition-base);
+    transition:
+      opacity var(--transition-base),
+      visibility var(--transition-base),
+      transform var(--transition-base);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
   }
 
   .editor-select .choices__input:focus-visible {
-    border-bottom-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
-    outline: none;
+    @include editorMixins.editor-interactive-focus-ring;
   }
 
   .editor-select .choices.is-open .choices__list--dropdown {
@@ -1244,11 +1213,9 @@
   }
 
   .editor-select__option-label {
-    min-width: 0;
-    overflow: hidden;
+    @include editorMixins.editor-truncate-text;
+
     font-size: 0.875rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .editor-select--compact .editor-select__option-label {
@@ -1376,8 +1343,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    transition: border-color var(--transition-base),
-    box-shadow var(--transition-base);
+    transition: var(--focus-ring-transition-frame);
   }
 
   .editor-rich-field__editor {
@@ -1386,8 +1352,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    transition: border-color var(--transition-base),
-    box-shadow var(--transition-base);
+    transition: var(--focus-ring-transition-frame);
   }
 
   .editor-rich-field__editor--header {
@@ -1530,8 +1495,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    transition: border-color var(--transition-base),
-    box-shadow var(--transition-base);
+    transition: var(--focus-ring-transition-frame);
   }
 
   .editor-accordion-group-tool__body-editor .codex-editor__redactor {
@@ -1545,22 +1509,17 @@
 
   .editor-accordion-group-tool__button,
   .editor-media-gallery-tool__button {
+    @include editorMixins.editor-control-surface;
+
     min-height: 40px;
     padding: 6px 10px;
-    font: inherit;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    transition: var(--editor-focus-ring-transition-interactive);
+    transition: var(--focus-ring-transition-interactive);
     cursor: pointer;
   }
 
   .editor-accordion-group-tool__button:focus-visible,
   .editor-media-gallery-tool__button:focus-visible {
-    outline: none;
-    border-color: var(--editor-focus-ring-border);
-    box-shadow: var(--editor-focus-ring-shadow);
+    @include editorMixins.editor-interactive-focus-ring;
   }
 
   .editor-accordion-group-tool__button:disabled,

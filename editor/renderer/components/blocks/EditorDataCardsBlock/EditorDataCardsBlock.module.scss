@@ -61,8 +61,8 @@
 }
 
 .select:focus-visible {
-  border-color: var(--editor-focus-ring-border);
-  box-shadow: var(--editor-focus-ring-shadow);
+  border-color: var(--focus-ring-border);
+  box-shadow: var(--focus-ring-shadow);
 }
 
 .topActions {

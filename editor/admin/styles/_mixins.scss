@@ -1,0 +1,25 @@
+@mixin editor-control-surface {
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+@mixin editor-interactive-focus-ring {
+  outline: none;
+  border-color: var(--focus-ring-border);
+  box-shadow: var(--focus-ring-shadow);
+}
+
+@mixin editor-focus-shadow-only {
+  outline: none;
+  box-shadow: var(--focus-ring-shadow);
+}
+
+@mixin editor-truncate-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
