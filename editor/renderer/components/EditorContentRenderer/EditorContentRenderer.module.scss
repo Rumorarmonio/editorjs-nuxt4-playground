@@ -50,8 +50,7 @@
 
   :global(.inline-code) {
     padding: 1px 4px;
-    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono',
-      monospace;
+    font-family: var(--font-family-mono);
     font-size: 0.9em;
     color: inherit;
     background: var(--color-code-background);

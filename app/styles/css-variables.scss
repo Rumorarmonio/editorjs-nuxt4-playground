@@ -26,19 +26,23 @@
   --color-focus-ring: #4078f2;
   --shadow-control: 0 1px 3px rgb(56 58 66 / 0.18);
   --transition-base: 0.3s ease;
+  --font-family-mono: ui-monospace, sfmono-regular, consolas, 'liberation mono',
+  monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-base: 0.875rem;
+  --font-size-md: 0.9375rem;
+  --font-size-lg: 1rem;
   --focus-ring-border: var(--color-focus-ring);
   --focus-ring-shadow: 0 0 0 2px color-mix(
     in srgb,
     var(--color-focus-ring) 50%,
     transparent
   );
-  --focus-ring-transition: border-color var(--transition-base),
-  box-shadow var(--transition-base);
+  --focus-ring-transition: border-color var(--transition-base), box-shadow var(--transition-base);
   --focus-ring-transition-interactive: border-color var(--transition-base),
   box-shadow var(--transition-base), background var(--transition-base),
   color var(--transition-base);
-  --focus-ring-transition-frame: border-color var(--transition-base),
-  box-shadow var(--transition-base);
   --focus-ring-transition-surface: border-color var(--transition-base),
   box-shadow var(--transition-base), border-radius var(--transition-base);
 }

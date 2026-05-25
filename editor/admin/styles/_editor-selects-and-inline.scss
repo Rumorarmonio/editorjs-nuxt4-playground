@@ -109,7 +109,7 @@
     gap: 6px;
     min-height: 24px;
     padding: 3px 8px;
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
     font-weight: 700;
     line-height: 1.2;
     color: var(--color-accent);
@@ -291,7 +291,7 @@
   .editor-select__summary-label {
     @include editorMixins.editor-truncate-text;
 
-    font-size: 0.875rem;
+    font-size: var(--font-size-base);
   }
 
   .editor-select .choices__list--dropdown {
@@ -377,7 +377,7 @@
 
   .editor-select .choices__notice {
     padding: 10px;
-    font-size: 0.8125rem;
+    font-size: var(--font-size-sm);
     color: var(--color-muted);
   }
 
@@ -398,10 +398,6 @@
     right: 10px;
   }
 
-  .editor-select--compact .editor-select__summary-label {
-    font-size: 0.8125rem;
-  }
-
   .editor-select--compact .editor-select__option {
     padding: 7px 8px;
   }
@@ -409,11 +405,11 @@
   .editor-select__option-label {
     @include editorMixins.editor-truncate-text;
 
-    font-size: 0.875rem;
+    font-size: var(--font-size-base);
   }
 
   .editor-select--compact .editor-select__option-label {
-    font-size: 0.8125rem;
+    font-size: var(--font-size-sm);
   }
 
   .editor-plain-field--invalid .editor-select__summary {

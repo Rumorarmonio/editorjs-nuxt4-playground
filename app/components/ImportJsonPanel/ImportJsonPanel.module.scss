@@ -29,14 +29,14 @@
 
 .title {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--font-size-lg);
   line-height: 1.3;
 }
 
 .textarea {
   width: 100%;
   padding: 12px;
-  font: 0.875rem/1.5 monospace;
+  font: var(--font-size-base) / 1.5 var(--font-family-mono);
   color: var(--color-text);
   resize: vertical;
   background: var(--color-background);
@@ -59,7 +59,7 @@
 .success,
 .error {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: var(--font-size-md);
 }
 
 .success {

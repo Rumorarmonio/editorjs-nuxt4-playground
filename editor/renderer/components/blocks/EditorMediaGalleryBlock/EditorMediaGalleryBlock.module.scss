@@ -77,7 +77,7 @@
 
 .caption {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: var(--font-size-md);
   line-height: 1.55;
   white-space: pre-line;
   color: var(--color-muted);

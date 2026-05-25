@@ -17,7 +17,7 @@
 
   dt {
     margin: 0 0 4px;
-    font-size: 0.8125rem;
+    font-size: var(--font-size-sm);
     font-weight: 700;
     color: var(--color-muted);
   }
@@ -25,8 +25,7 @@
   dd {
     margin: 0;
     overflow-wrap: anywhere;
-    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono',
-      monospace;
+    font-family: var(--font-family-mono);
   }
 }
 

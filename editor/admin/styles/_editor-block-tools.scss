@@ -3,18 +3,16 @@
 .editor-admin-editor {
   .editor-code-snippet-tool__code-control {
     min-height: 220px;
-    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono',
-    monospace;
-    font-size: 0.9375rem;
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-md);
     line-height: 1.55;
     white-space: pre;
   }
 
   .ce-rawtool .ce-rawtool__textarea {
     min-height: 240px;
-    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono',
-    monospace;
-    font-size: 0.9375rem;
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-md);
     line-height: 1.55;
     letter-spacing: 0;
     color: var(--color-text);
@@ -76,7 +74,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    transition: var(--focus-ring-transition-frame);
+    transition: var(--focus-ring-transition);
   }
 
   .editor-rich-field__editor {
@@ -85,7 +83,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    transition: var(--focus-ring-transition-frame);
+    transition: var(--focus-ring-transition);
   }
 
   .editor-rich-field__editor--header {
@@ -228,7 +226,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 6px;
-    transition: var(--focus-ring-transition-frame);
+    transition: var(--focus-ring-transition);
   }
 
   .editor-accordion-group-tool__body-editor .codex-editor__redactor {
