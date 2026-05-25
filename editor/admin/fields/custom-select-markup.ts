@@ -42,8 +42,8 @@ export function createCustomSelectChoiceMarkup({
     .join(' ')
 
   return `
-    <div class="${className} editor-custom-select__option" ${attributes}>
-      <span class="editor-custom-select__option-label">${label}</span>
+    <div class="${className} editor-select__option" ${attributes}>
+      <span class="editor-select__option-label">${label}</span>
     </div>
   `
 }

@@ -17,7 +17,7 @@ export function createPlainSelectField<TValue extends string = string>(
   const summaryLabel = document.createElement('span')
   const dropdownHost = document.createElement('div')
 
-  select.className = 'editor-plain-field__control editor-custom-select__control'
+  select.className = 'editor-plain-field__control editor-select__control'
   select.name = options.name
   select.tabIndex = 0
   select.hidden = true
@@ -33,13 +33,13 @@ export function createPlainSelectField<TValue extends string = string>(
 
   select.value = currentValue
   summary.type = 'button'
-  summary.className = 'editor-custom-select__summary'
+  summary.className = 'editor-select__summary'
   summary.disabled = isDisabled || isReadOnly
   summary.setAttribute('aria-label', options.label)
   summary.setAttribute('aria-haspopup', 'listbox')
   summary.setAttribute('aria-expanded', 'false')
-  summaryLabel.className = 'editor-custom-select__summary-label'
-  dropdownHost.className = 'editor-custom-select__dropdown-host'
+  summaryLabel.className = 'editor-select__summary-label'
+  dropdownHost.className = 'editor-select__dropdown-host'
   summary.append(summaryLabel)
 
   select.addEventListener('change', () => {
@@ -65,7 +65,7 @@ export function createPlainSelectField<TValue extends string = string>(
   if (labelElement) {
     labelElement.htmlFor = summary.id
   }
-  wrapper.root.classList.add('editor-custom-select')
+  wrapper.root.classList.add('editor-select', 'editor-select--compact')
   wrapper.root.addEventListener('keydown', stopKeyboardEventPropagation)
   select.after(summary)
   summary.after(dropdownHost)
@@ -144,7 +144,7 @@ export function createPlainSelectField<TValue extends string = string>(
     })
 
     dropdownHost.append(choices.containerOuter.element)
-    wrapper.root.classList.add('editor-custom-select--open')
+    wrapper.root.classList.add('editor-select--open')
     summary.setAttribute('aria-expanded', 'true')
     choices.setChoiceByValue(currentValue)
     select.addEventListener('hideDropdown', handleChoicesHide)
@@ -163,7 +163,7 @@ export function createPlainSelectField<TValue extends string = string>(
     select.removeEventListener('hideDropdown', handleChoicesHide)
     choices.destroy()
     choices = null
-    wrapper.root.classList.remove('editor-custom-select--open')
+    wrapper.root.classList.remove('editor-select--open')
     summary.setAttribute('aria-expanded', 'false')
     select.hidden = true
     if (restoreFocus) {
@@ -181,7 +181,7 @@ export function createPlainSelectField<TValue extends string = string>(
       '.choices__list--dropdown',
     )
 
-    wrapper.root.classList.remove('editor-custom-select--open')
+    wrapper.root.classList.remove('editor-select--open')
     summary.setAttribute('aria-expanded', 'false')
     select.hidden = true
 

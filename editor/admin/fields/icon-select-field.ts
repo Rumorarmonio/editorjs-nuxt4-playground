@@ -38,7 +38,7 @@ export function createIconSelectField<TValue extends string = string>(
   )
   const summaryLabel = document.createElement('span')
 
-  select.className = 'editor-plain-field__control editor-icon-select__control'
+  select.className = 'editor-plain-field__control editor-select__control'
   select.name = options.name
   select.tabIndex = 0
   select.hidden = true
@@ -54,7 +54,7 @@ export function createIconSelectField<TValue extends string = string>(
 
   select.value = currentValue
   summary.type = 'button'
-  summary.className = 'editor-icon-select__summary'
+  summary.className = 'editor-select__summary'
   summary.disabled = isDisabled || isReadOnly
   summary.setAttribute('aria-label', options.label)
   summaryIcon.classList.add('editor-icon-select__summary-icon')
@@ -62,8 +62,8 @@ export function createIconSelectField<TValue extends string = string>(
   summaryIcon.setAttribute('height', '20px')
   summaryIcon.setAttribute('aria-hidden', 'true')
   summaryIcon.setAttribute('focusable', 'false')
-  summaryLabel.className = 'editor-icon-select__summary-label'
-  dropdownHost.className = 'editor-icon-select__dropdown-host'
+  summaryLabel.className = 'editor-select__summary-label'
+  dropdownHost.className = 'editor-select__dropdown-host'
   summaryIcon.append(summaryUse)
   summary.append(summaryIcon, summaryLabel)
 
@@ -79,7 +79,7 @@ export function createIconSelectField<TValue extends string = string>(
   if (labelElement) {
     labelElement.htmlFor = summary.id
   }
-  wrapper.root.classList.add('editor-icon-select')
+  wrapper.root.classList.add('editor-select', 'editor-icon-select')
   wrapper.root.addEventListener('keydown', stopKeyboardEventPropagation)
   select.after(summary)
   summary.after(dropdownHost)
@@ -163,7 +163,7 @@ export function createIconSelectField<TValue extends string = string>(
     })
 
     dropdownHost.append(choices.containerOuter.element)
-    wrapper.root.classList.add('editor-icon-select--open')
+    wrapper.root.classList.add('editor-select--open')
     choices.setChoiceByValue(currentValue)
     select.addEventListener('hideDropdown', handleChoicesHide)
     window.requestAnimationFrame(() => {
@@ -181,7 +181,7 @@ export function createIconSelectField<TValue extends string = string>(
     select.removeEventListener('hideDropdown', handleChoicesHide)
     choices.destroy()
     choices = null
-    wrapper.root.classList.remove('editor-icon-select--open')
+    wrapper.root.classList.remove('editor-select--open')
     select.hidden = true
     if (restoreFocus) {
       summary.focus()
@@ -198,7 +198,7 @@ export function createIconSelectField<TValue extends string = string>(
       '.choices__list--dropdown',
     )
 
-    wrapper.root.classList.remove('editor-icon-select--open')
+    wrapper.root.classList.remove('editor-select--open')
     select.hidden = true
 
     pendingCloseCleanup?.()
@@ -349,9 +349,9 @@ function createIconSelectChoiceMarkup({
     .join(' ')
 
   return `
-    <div class="${className} editor-icon-select__option" ${attributes}>
+    <div class="${className} editor-select__option editor-icon-select__option" ${attributes}>
       ${createIconMarkup(iconHref)}
-      <span class="editor-icon-select__option-label">${label}</span>
+      <span class="editor-select__option-label editor-icon-select__option-label">${label}</span>
     </div>
   `
 }

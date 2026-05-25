@@ -85,14 +85,13 @@ export function createTuneSelectField({
   let choices: Choices | null = null
   let pendingCloseCleanup: (() => void) | null = null
 
-  field.className = 'editor-block-tune-field editor-custom-select editor-custom-select--compact'
+  field.className = 'editor-block-tune-field editor-select editor-select--compact'
 
   const labelElement = document.createElement('span')
   labelElement.className = 'editor-block-tune-field__label'
   labelElement.textContent = label
 
-  select.className =
-    'editor-block-tune-field__control editor-custom-select__control'
+  select.className = 'editor-block-tune-field__control editor-select__control'
   select.hidden = true
 
   options.forEach((option) => {
@@ -104,12 +103,12 @@ export function createTuneSelectField({
 
   select.value = currentValue
   summary.type = 'button'
-  summary.className = 'editor-custom-select__summary'
+  summary.className = 'editor-select__summary'
   summary.setAttribute('aria-label', label)
   summary.setAttribute('aria-haspopup', 'listbox')
   summary.setAttribute('aria-expanded', 'false')
-  summaryLabel.className = 'editor-custom-select__summary-label'
-  dropdownHost.className = 'editor-custom-select__dropdown-host'
+  summaryLabel.className = 'editor-select__summary-label'
+  dropdownHost.className = 'editor-select__dropdown-host'
   summary.append(summaryLabel)
   updateSummary()
 
@@ -210,7 +209,7 @@ export function createTuneSelectField({
     })
 
     dropdownHost.append(choices.containerOuter.element)
-    field.classList.add('editor-custom-select--open')
+    field.classList.add('editor-select--open')
     summary.setAttribute('aria-expanded', 'true')
     choices.setChoiceByValue(currentValue)
     select.addEventListener('hideDropdown', handleChoicesHide)
@@ -229,7 +228,7 @@ export function createTuneSelectField({
     select.removeEventListener('hideDropdown', handleChoicesHide)
     choices.destroy()
     choices = null
-    field.classList.remove('editor-custom-select--open')
+    field.classList.remove('editor-select--open')
     summary.setAttribute('aria-expanded', 'false')
     select.hidden = true
     if (restoreFocus) {
@@ -247,7 +246,7 @@ export function createTuneSelectField({
       '.choices__list--dropdown',
     )
 
-    field.classList.remove('editor-custom-select--open')
+    field.classList.remove('editor-select--open')
     summary.setAttribute('aria-expanded', 'false')
     select.hidden = true
 
