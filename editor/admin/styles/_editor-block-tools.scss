@@ -53,11 +53,11 @@
   }
 
   .editor-two-columns-tool__columns[data-layout='leftWide'] {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   }
 
   .editor-two-columns-tool__columns[data-layout='rightWide'] {
-    grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   }
 
   .editor-two-columns-tool__columns[data-reversed='true'] {

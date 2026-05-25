@@ -23,6 +23,7 @@ export function createIconSelectField<TValue extends string = string>(
   let currentValue = options.value
   let isReadOnly = Boolean(options.readOnly)
   let isDisabled = Boolean(options.disabled)
+  let inputModality: 'keyboard' | 'pointer' = 'pointer'
   let choices: Choices | null = null
   let pendingCloseCleanup: (() => void) | null = null
   const select = document.createElement('select')
@@ -80,7 +81,20 @@ export function createIconSelectField<TValue extends string = string>(
     labelElement.htmlFor = summary.id
   }
   wrapper.root.classList.add('editor-select', 'editor-icon-select')
-  wrapper.root.addEventListener('keydown', stopKeyboardEventPropagation)
+  wrapper.root.dataset.inputModality = inputModality
+  wrapper.root.addEventListener('keydown', (event) => {
+    inputModality = 'keyboard'
+    wrapper.root.dataset.inputModality = inputModality
+    stopKeyboardEventPropagation(event)
+  })
+  summary.addEventListener('pointerdown', () => {
+    inputModality = 'pointer'
+    wrapper.root.dataset.inputModality = inputModality
+  })
+  summary.addEventListener('keydown', () => {
+    inputModality = 'keyboard'
+    wrapper.root.dataset.inputModality = inputModality
+  })
   select.after(summary)
   summary.after(dropdownHost)
   syncSummaryAccessibility()
@@ -164,6 +178,7 @@ export function createIconSelectField<TValue extends string = string>(
 
     dropdownHost.append(choices.containerOuter.element)
     wrapper.root.classList.add('editor-select--open')
+    wrapper.root.dataset.inputModality = inputModality
     choices.setChoiceByValue(currentValue)
     select.addEventListener('hideDropdown', handleChoicesHide)
     window.requestAnimationFrame(() => {
@@ -182,11 +197,12 @@ export function createIconSelectField<TValue extends string = string>(
     choices.destroy()
     choices = null
     wrapper.root.classList.remove('editor-select--open')
+    wrapper.root.dataset.inputModality = inputModality
     select.hidden = true
+    updateSummary()
     if (restoreFocus) {
       summary.focus()
     }
-    updateSummary()
   }
 
   function handleChoicesHide(): void {
@@ -199,6 +215,7 @@ export function createIconSelectField<TValue extends string = string>(
     )
 
     wrapper.root.classList.remove('editor-select--open')
+    wrapper.root.dataset.inputModality = inputModality
     select.hidden = true
 
     pendingCloseCleanup?.()

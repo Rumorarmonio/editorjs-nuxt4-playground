@@ -209,11 +209,12 @@
     border-radius: 6px;
     outline: none;
     transition: var(--focus-ring-transition-surface);
+  }
 
-    &.is-focused {
-      border-color: var(--focus-ring-border);
-      box-shadow: var(--focus-ring-shadow);
-    }
+  .editor-select[data-input-modality='keyboard'] .choices.is-focused .choices__list--dropdown,
+  .editor-select[data-input-modality='keyboard'] .choices.is-open .choices__list--dropdown {
+    border-color: var(--focus-ring-border);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .editor-select .choices.is-disabled {
@@ -305,6 +306,8 @@
     box-shadow: var(--shadow-popover);
     transform: translateY(-6px);
     transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base),
       opacity var(--transition-base),
       visibility var(--transition-base),
       transform var(--transition-base);
