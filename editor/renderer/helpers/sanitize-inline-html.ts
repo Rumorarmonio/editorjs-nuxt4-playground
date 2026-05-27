@@ -6,6 +6,7 @@ import {
   textColorInlineClassName,
   textColorInlineClassNames,
 } from '~~/editor/shared'
+import { normalizeTextDecorationOrder } from '~~/editor/shared/inline/text-decoration'
 
 const allowedTags = new Set([
   'A',
@@ -143,44 +144,6 @@ function sanitizeElement(element: HTMLElement): void {
   if (classes.length > 0) {
     element.className = classes.join(' ')
   }
-}
-
-function normalizeTextDecorationOrder(node: ParentNode): void {
-  Array.from(node.querySelectorAll<HTMLElement>(`.${textColorInlineClassName}`)).forEach(
-    (colorWrapper) => {
-      const decorationAncestor = findOutermostTextDecorationAncestor(colorWrapper)
-
-      if (!decorationAncestor) {
-        return
-      }
-
-      const parent = decorationAncestor.parentNode
-
-      if (!parent) {
-        return
-      }
-
-      parent.insertBefore(colorWrapper, decorationAncestor)
-      colorWrapper.append(decorationAncestor)
-    },
-  )
-}
-
-function findOutermostTextDecorationAncestor(
-  element: HTMLElement,
-): HTMLElement | null {
-  let current = element.parentElement
-  let decorationAncestor: HTMLElement | null = null
-
-  while (current) {
-    if (current.tagName === 'U' || current.tagName === 'S') {
-      decorationAncestor = current
-    }
-
-    current = current.parentElement
-  }
-
-  return decorationAncestor
 }
 
 function isAllowedHref(href: string): boolean {
