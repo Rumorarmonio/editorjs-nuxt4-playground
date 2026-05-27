@@ -337,8 +337,21 @@
     text-decoration-color: currentcolor;
   }
 
+  .cdx-underline .editor-text-color {
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+    text-decoration-color: currentcolor;
+  }
+
   .cdx-strikethrough,
   .cdx-strikethroughs {
+    text-decoration: line-through;
+    text-decoration-color: currentcolor;
+  }
+
+  .cdx-strikethrough .editor-text-color,
+  .cdx-strikethroughs .editor-text-color {
     text-decoration: line-through;
     text-decoration-color: currentcolor;
   }

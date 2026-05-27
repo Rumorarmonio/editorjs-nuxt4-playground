@@ -31,7 +31,6 @@ import {
   typographEditorContentData,
   validateEditorContentData,
   type EditorContentData,
-  normalizeTextDecorationOrder,
 } from '~~/editor/shared'
 import { notifyError } from '~~/shared/notifications'
 
@@ -169,14 +168,12 @@ onMounted(async () => {
           return
         }
 
-        normalizeTextDecorationOrder(holder)
         emit('changed')
       },
     })
 
     editor.value = instance
     await instance.isReady
-    normalizeTextDecorationOrder(holder)
     new DragDrop(instance)
     editorDragAutoScrollPatch = enableEditorDragAutoScroll({
       root: holder,

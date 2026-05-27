@@ -109,10 +109,6 @@ export {
   textBackgroundInlineClassNames,
   textBackgroundInlineOptions,
 } from './inline/text-background'
-export {
-  moveTextColorWrapperOutsideDecoration,
-  normalizeTextDecorationOrder,
-} from './inline/text-decoration'
 export { typographEditorContentData } from './typography/content-typography'
 export { isAllowedMediaUrl } from './entities/media'
 export {

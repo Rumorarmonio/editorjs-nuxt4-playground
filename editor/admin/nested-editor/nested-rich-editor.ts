@@ -5,7 +5,6 @@ import type {
   EditorOutputData,
 } from '~~/editor/shared'
 import { getCurrentEditorMessages } from '~~/i18n/editor'
-import { normalizeTextDecorationOrder } from '~~/editor/shared'
 import {
   enableNestedEditorDragDrop,
   type NestedEditorDragDropPatch,
@@ -81,14 +80,12 @@ export function createNestedRichEditor<
       minHeight: 0,
       placeholder: options.placeholder,
       onChange: () => {
-        normalizeTextDecorationOrder(holder)
         options.onChange?.()
       },
     })
 
     editor = instance
     await instance.isReady
-    normalizeTextDecorationOrder(holder)
 
     if (isDestroyed) {
       instance.destroy()

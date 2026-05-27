@@ -6,7 +6,6 @@ import {
   textColorInlineClassName,
   textColorInlineClassNames,
 } from '~~/editor/shared'
-import { normalizeTextDecorationOrder } from '~~/editor/shared/inline/text-decoration'
 
 const allowedTags = new Set([
   'A',
@@ -38,7 +37,6 @@ export function sanitizeInlineHtml(html: string): string {
 
   template.innerHTML = html
   sanitizeNode(template.content)
-  normalizeTextDecorationOrder(template.content)
 
   return template.innerHTML
 }

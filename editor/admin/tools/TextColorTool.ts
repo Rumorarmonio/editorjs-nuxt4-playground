@@ -6,7 +6,6 @@ import {
   textColorInlineOptions,
   type TextColorInlineOption,
 } from '~~/editor/shared'
-import { moveTextColorWrapperOutsideDecoration } from '~~/editor/shared/inline/text-decoration'
 import { getCurrentEditorMessages } from '~~/i18n/editor'
 
 const textColorTag = 'SPAN'
@@ -153,7 +152,6 @@ export default class TextColorTool {
     unwrapNestedColorWrappers(content)
     wrapper.append(content)
     range.insertNode(wrapper)
-    moveTextColorWrapperOutsideDecoration(wrapper)
     this.api.selection.expandToTag(wrapper)
   }
 
@@ -180,7 +178,6 @@ export default class TextColorTool {
       wrapper.classList.remove(option.className)
     })
     wrapper.classList.add(textColorInlineClassName, this.selectedColor.className)
-    moveTextColorWrapperOutsideDecoration(wrapper)
   }
 
   private findColorWrapper(range: Range | null = null): HTMLElement | null {
