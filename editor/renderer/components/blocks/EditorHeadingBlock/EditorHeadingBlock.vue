@@ -5,19 +5,39 @@ import type { EditorBlock } from '~~/editor/shared'
 defineProps<{
   block: EditorBlock<'header'>
 }>()
-
-function getHeaderTag(level: EditorBlock<'header'>['data']['level']): string {
-  return `h${level}`
-}
 </script>
 
 <template>
-  <component
-    :is="getHeaderTag(block.data.level)"
+  <h1
+    v-if="block.data.level === 1"
     :class="$style.heading"
-  >
-    <span v-html="sanitizeInlineHtml(block.data.text)" />
-  </component>
+    v-html="sanitizeInlineHtml(block.data.text)"
+  />
+  <h2
+    v-else-if="block.data.level === 2"
+    :class="$style.heading"
+    v-html="sanitizeInlineHtml(block.data.text)"
+  />
+  <h3
+    v-else-if="block.data.level === 3"
+    :class="$style.heading"
+    v-html="sanitizeInlineHtml(block.data.text)"
+  />
+  <h4
+    v-else-if="block.data.level === 4"
+    :class="$style.heading"
+    v-html="sanitizeInlineHtml(block.data.text)"
+  />
+  <h5
+    v-else-if="block.data.level === 5"
+    :class="$style.heading"
+    v-html="sanitizeInlineHtml(block.data.text)"
+  />
+  <h6
+    v-else
+    :class="$style.heading"
+    v-html="sanitizeInlineHtml(block.data.text)"
+  />
 </template>
 
 <style module lang="scss" src="./EditorHeadingBlock.module.scss" />
