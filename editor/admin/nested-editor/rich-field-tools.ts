@@ -2,6 +2,7 @@ import type {
   EditorConfig,
   ToolConstructable,
 } from '@editorjs/editorjs/types'
+import RawTool from '@editorjs/raw'
 import {
   editorInlineToolbar,
   inlineToolShortcuts,
@@ -10,11 +11,16 @@ import InlineCodeTool from '~~/editor/admin/tools/InlineCodeTool'
 import { TextBackgroundToolConstructable } from '~~/editor/admin/tools/TextBackgroundTool'
 import { TextColorToolConstructable } from '~~/editor/admin/tools/TextColorTool'
 import { CtaToolConstructable } from '~~/editor/admin/tools/blocks/CtaTool'
+import { getCurrentEditorMessages } from '~~/i18n/editor'
 
 export const nestedRichFieldInlineToolbar = editorInlineToolbar
 
 export interface NestedParagraphToolsOptions {
   allowCta?: boolean
+}
+
+export interface NestedColumnToolsOptions {
+  allowRawHtml?: boolean
 }
 
 export async function createNestedParagraphTools(
@@ -62,7 +68,9 @@ export async function createNestedHeaderTools(): Promise<EditorConfig['tools']> 
   }
 }
 
-export async function createNestedColumnTools(): Promise<EditorConfig['tools']> {
+export async function createNestedColumnTools(
+  options: NestedColumnToolsOptions = {},
+): Promise<EditorConfig['tools']> {
   const [{ default: Header }, { default: List }, inlineTools] =
     await Promise.all([
       import('@editorjs/header'),
@@ -70,7 +78,7 @@ export async function createNestedColumnTools(): Promise<EditorConfig['tools']> 
       createNestedInlineTools(),
     ])
 
-  return {
+  const tools: EditorConfig['tools'] = {
     header: {
       class: Header as unknown as ToolConstructable,
       inlineToolbar: nestedRichFieldInlineToolbar,
@@ -89,6 +97,17 @@ export async function createNestedColumnTools(): Promise<EditorConfig['tools']> 
     cta: CtaToolConstructable,
     ...inlineTools,
   }
+
+  if (options.allowRawHtml ?? false) {
+    tools.rawHtml = {
+      class: RawTool as unknown as ToolConstructable,
+      config: {
+        placeholder: getCurrentEditorMessages().tools.rawHtml.htmlPlaceholder,
+      },
+    }
+  }
+
+  return tools
 }
 
 async function createNestedInlineTools(): Promise<EditorConfig['tools']> {

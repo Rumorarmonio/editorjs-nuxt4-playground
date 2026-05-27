@@ -124,6 +124,7 @@ Standalone `Nuxt 4` + `Vue 3` + `TypeScript` проект для отработ�
 - Reusable `RichParagraphField` / `RichHeaderField` реализованы после проверки первого nested editor lifecycle и являются базой для composite blocks.
 - Первый composite block выбран как `TwoColumns`: он должен хранить layout/reversed state и две отдельные nested editor outputs `left` / `right`.
 - Для `TwoColumns` выбран минимальный column whitelist: paragraph, header и list без media tools и без общего composite block manager.
+- `Raw HTML` теперь допускается только в `TwoColumns` nested editor как targeted escape hatch; `AccordionGroup` body intentionally keeps the paragraph/header/list/cta whitelist, чтобы recursive validation and lifecycle не наследовали unsafe HTML-сценарий. `content/default-page.json` содержит demo raw HTML code snippet inside `TwoColumns`.
 - Кастомный text color inline tool должен использовать собственную inline-разметку и CSS class, ограниченную палитру на первом шаге и безопасный renderer allowlist, а не свободную HTML-стилизацию.
 - Media gallery / slider block на первом этапе должен быть одним общим block type с режимами `gallery` и `slider`; slider-сценарии реализуются через Swiper, viewer-сценарии через Fancybox basics.
 - Для custom media blocks изображения и видео должны редактироваться через отдельные media fields, а не через nested Editor.js с единственным media tool.

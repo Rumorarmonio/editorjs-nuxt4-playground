@@ -187,7 +187,7 @@ export default class TwoColumnsTool implements BlockTool {
       className: 'editor-two-columns-tool__editor',
       inlineToolbar: nestedRichFieldInlineToolbar,
       normalizeData: normalizeTwoColumnsContentData,
-      createTools: createNestedColumnTools,
+      createTools: () => createNestedColumnTools({ allowRawHtml: true }),
       placeholder: getCurrentEditorMessages().tools.twoColumns.placeholder,
       onChange: () => {
         this.leftColumnField?.setError(undefined)
@@ -223,10 +223,12 @@ export default class TwoColumnsTool implements BlockTool {
     const result = validateTwoColumnsBlockData(data)
 
     this.leftColumnField?.setError(
-      result.issues.find((issue) => issue.path === 'left')?.message,
+      result.issues.find((issue) => issue.path.startsWith('left.'))?.message ??
+        result.issues.find((issue) => issue.path === 'left')?.message,
     )
     this.rightColumnField?.setError(
-      result.issues.find((issue) => issue.path === 'right')?.message,
+      result.issues.find((issue) => issue.path.startsWith('right.'))?.message ??
+        result.issues.find((issue) => issue.path === 'right')?.message,
     )
 
     return result.valid

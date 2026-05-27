@@ -1212,6 +1212,13 @@
                 "eventName": "",
                 "eventPayloadJson": ""
               }
+            },
+            {
+              "id": "two-columns-left-raw-html",
+              "type": "rawHtml",
+              "data": {
+                "html": "<style>.two-columns-raw-html-demo{padding:20px;border:1px solid #0f172a;border-radius:12px;background:linear-gradient(135deg,#eff6ff,#f8fafc);color:#0f172a}.two-columns-raw-html-demo__badge{display:inline-flex;padding:4px 10px;border-radius:999px;background:#0f172a;color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.two-columns-raw-html-demo pre{margin:14px 0 0;overflow:auto;padding:16px;border-radius:10px;background:#0f172a;color:#e2e8f0}.two-columns-raw-html-demo code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;line-height:1.5}</style><section class=\"two-columns-raw-html-demo\" aria-label=\"Two columns raw HTML example\"><span class=\"two-columns-raw-html-demo__badge\">Raw HTML</span><h3>Code example inside TwoColumns</h3><p>This block is available only in TwoColumns and can host trusted HTML when you need a literal snippet.</p><pre><code>&lt;section class=\"feature-card\"&gt;\n  &lt;h3&gt;Feature title&lt;/h3&gt;\n  &lt;p&gt;Feature description&lt;/p&gt;\n&lt;/section&gt;</code></pre></section>"
+              }
             }
           ],
           "version": "2.31.6"

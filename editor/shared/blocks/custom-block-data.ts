@@ -37,8 +37,14 @@ export type RichHeaderFieldData = EditorOutputData<RichHeaderBlockData>
 
 export type AccordionHeaderData = RichHeaderFieldData
 
+export type AccordionBodyContentBlock =
+  | EditorOutputBlock<'paragraph', ParagraphBlockData>
+  | EditorOutputBlock<'header', HeaderBlockData>
+  | EditorOutputBlock<'list', ListBlockData>
+  | EditorOutputBlock<'cta', CtaBlockData>
+
 export type AccordionBodyBlock =
-  | TwoColumnsContentBlock
+  | AccordionBodyContentBlock
   | EditorOutputBlock<'accordionGroup', AccordionGroupBlockData>
 
 export type AccordionBodyData = EditorOutputData<AccordionBodyBlock>
@@ -96,6 +102,7 @@ export type TwoColumnsContentBlock =
   | EditorOutputBlock<'header', HeaderBlockData>
   | EditorOutputBlock<'list', ListBlockData>
   | EditorOutputBlock<'cta', CtaBlockData>
+  | EditorOutputBlock<'rawHtml', RawHtmlBlockData>
 
 export type TwoColumnsContentData = EditorOutputData<TwoColumnsContentBlock>
 
@@ -892,6 +899,33 @@ function isTwoColumnsContentBlock(
       return isListBlock(value)
     case 'cta':
       return isCtaBlock(value)
+    case 'rawHtml':
+      return (
+        (value.id === undefined || typeof value.id === 'string') &&
+        isRawHtmlBlockData(value.data) &&
+        (value.tunes === undefined || isRecord(value.tunes))
+      )
+    default:
+      return false
+  }
+}
+
+function isAccordionBodyContentBlock(
+  value: unknown,
+): value is AccordionBodyContentBlock {
+  if (!isRecord(value)) {
+    return false
+  }
+
+  switch (value.type) {
+    case 'paragraph':
+      return isRichParagraphFieldBlock(value)
+    case 'header':
+      return isRichHeaderFieldBlock(value)
+    case 'list':
+      return isListBlock(value)
+    case 'cta':
+      return isCtaBlock(value)
     default:
       return false
   }
@@ -906,7 +940,7 @@ function isAccordionBodyBlock(value: unknown): value is AccordionBodyBlock {
     return isAccordionGroupBlock(value)
   }
 
-  return isTwoColumnsContentBlock(value)
+  return isAccordionBodyContentBlock(value)
 }
 
 function isAccordionGroupBlock(

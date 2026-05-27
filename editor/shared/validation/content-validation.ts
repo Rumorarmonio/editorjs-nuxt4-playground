@@ -208,6 +208,12 @@ export function validateTwoColumnsBlockData(
   }
   issues.push(...validateTwoColumnsContentCtaData(data.left, 'left', messages))
   issues.push(...validateTwoColumnsContentCtaData(data.right, 'right', messages))
+  issues.push(
+    ...validateTwoColumnsContentRawHtmlData(data.left, 'left', messages),
+  )
+  issues.push(
+    ...validateTwoColumnsContentRawHtmlData(data.right, 'right', messages),
+  )
 
   return createValidationResult(issues)
 }
@@ -569,6 +575,23 @@ function validateTwoColumnsContentCtaData(
   })
 }
 
+function validateTwoColumnsContentRawHtmlData(
+  data: TwoColumnsContentData,
+  basePath: string,
+  messages: EditorValidationMessages,
+): ValidationIssue[] {
+  return data.blocks.flatMap((block, index) => {
+    if (block.type !== 'rawHtml') {
+      return []
+    }
+
+    return prefixValidationIssues(
+      validateRawHtmlBlockData(block.data, messages).issues,
+      `${basePath}.blocks.${index}`,
+    )
+  })
+}
+
 function validateAccordionGroupItem(
   item: AccordionGroupItemData,
   index: number,
@@ -783,6 +806,8 @@ function hasTwoColumnsContent(data: TwoColumnsContentData): boolean {
         return block.data.items.some(hasListItemContent)
       case 'cta':
         return hasText(block.data.label)
+      case 'rawHtml':
+        return hasText(block.data.html)
       default:
         return false
     }
