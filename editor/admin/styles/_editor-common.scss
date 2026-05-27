@@ -14,6 +14,10 @@
     background: color-mix(in srgb, var(--color-accent) 28%, transparent);
   }
 
+  .editor-text-color::selection {
+    color: currentcolor;
+  }
+
   .ce-paragraph,
   .ce-header,
   .cdx-list,
